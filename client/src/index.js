@@ -2,10 +2,18 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {Provider as StyletronProvider} from "styletron-react";
+import {Client as Styletron} from "styletron-engine-atomic";
+
+const engine = new Styletron({
+  hydrate: document.getElementsByClassName("_styletron_hydrate_")
+});
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <StyletronProvider value={engine}>
+      <App />
+    </StyletronProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
