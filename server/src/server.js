@@ -4,6 +4,8 @@ const cors = require('cors');
 const { connectToDb } = require('./mongo');
 require("dotenv").config();
 
+//import Routes
+const recipeRouter = require('./routes/recipe.routes')
 
 //Runs the database
 connectToDb();
@@ -23,6 +25,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 //TODO: API resources
+app.use('/api/recipes', recipeRouter);
 
 //TODO Error Handling
 
