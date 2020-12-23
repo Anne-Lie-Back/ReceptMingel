@@ -11,6 +11,9 @@ GET http://localhost:8080/api/recipes/5fe349bcef487237387d42e1
 //GET RECIPE BY FREETEXT
 
 //GET RECIPE BY DIFFICULTY
+GET http://localhost:8080/api/recipes/difficulty/SVÅR
+
+###
 
 //GET RECIPE BY COOKINGTIME
 
@@ -26,7 +29,7 @@ Content-Type: application/json
     "imageURL" : "https://img.koket.se/standard-mega/fisktacos-med-guacamole-och-mangosalsa.jpg.webp",
     "portions" : 4,
     "cookingTime" : "10-20min",
-    "difficulty" : "LÄTT",
+    "difficulty" : "HARD",
     "ingredients" : [
         {
             "quantityFraction" : "8",
@@ -76,6 +79,7 @@ Content-Type: application/json
 }
 
 ###
+
 //PUT RECIPE
 PUT http://localhost:8080/api/recipes/5fe3473b058baa3cac7d8689
 Content-Type: application/json

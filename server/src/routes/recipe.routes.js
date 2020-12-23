@@ -4,6 +4,7 @@ const router = express.Router();
 const {
     getAllRecipes, 
     getRecipeByID,
+    getRecipesByDifficulty,
     createRecipe,
     updateRecipe,
     deleteRecipe
@@ -28,6 +29,9 @@ router.get('/:id', getRecipeByID, (req, res) => {
 //GET RECIPE BY FREETEXT
 
 //GET RECIPE BY DIFFICULTY
+router.get('/difficulty/:difficulty', getRecipesByDifficulty, (req, res) => {
+    res.status(200).json(res.recipesByDifficulty)
+})
 
 //GET RECIPE BY COOKINGTIME
 

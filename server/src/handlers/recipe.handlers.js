@@ -32,6 +32,20 @@ const getRecipeByID = (req, res, next) => {
     })
 }
 
+//GET RECIPE BY DIFFICULTY
+const getRecipesByDifficulty = (req, res, next) => {
+    Recipe.find({difficulty: req.params.difficulty}, (error, recipesByDifficulty) => {
+        try{
+            if(error) next(error);
+            if(!recipesByDifficulty || recipesByDifficulty.length === 0) throw new ErrorHandler(404, "Vi kunde inte hitta några recept som matchade vald svårighetsgrad");
+            res.recipesByDifficulty = recipesByDifficulty
+            next()
+        }catch(error){
+            next(error);
+        };
+    });
+}; 
+
 
 //CREATE NEW RECIPE
 const createRecipe = (req, res, next) => {
@@ -78,6 +92,7 @@ const deleteRecipe = (req, res, next) => {
 module.exports = {
     getAllRecipes,
     getRecipeByID,
+    getRecipesByDifficulty,
     createRecipe,
     updateRecipe,
     deleteRecipe
