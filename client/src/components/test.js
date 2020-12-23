@@ -22,7 +22,7 @@ const SubTitle = withStyleDeep(Title, {
 const Test = () => (
     <Wrapper>
         <Title>
-            Hellu!
+            Recipes is cooking
         </Title>
         <SubTitle>Hellu!</SubTitle>
     </Wrapper>
