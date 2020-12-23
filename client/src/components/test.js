@@ -2,7 +2,7 @@ import React from 'react';
 import { styled, withStyleDeep} from 'styletron-react';
 
 const Wrapper = styled('div', {
-    width: '500px',
+    width: '400px',
     height: '500px',
     backgroundColor: 'lightblue',
     display: 'flex',
