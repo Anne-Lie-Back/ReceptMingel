@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const { handleError } = require('./helpers/error.helper')
 const { connectToDb } = require('./mongo');
 require("dotenv").config();
 
@@ -27,7 +28,10 @@ app.use(express.urlencoded({ extended: false }));
 //TODO: API resources
 app.use('/api/recipes', recipeRouter);
 
-//TODO Error Handling
+//Error Handling
+app.use((err, req, res, next) => {
+    handleError(err, res)
+})
 
 const PORT = process.env.PORT || 8080;
 

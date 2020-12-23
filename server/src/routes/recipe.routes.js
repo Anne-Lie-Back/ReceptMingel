@@ -1,6 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
+const {
+    getAllRecipes, 
+    createRecipe 
+} = require('../handlers/recipe.handlers');
+
 // MIDDLEWARES
 
 //HANDLERS
@@ -8,8 +13,8 @@ const router = express.Router();
 //ENDPOINTS
 
 //GET ALL RECIPES
-router.get('/', (req, res) => {
-    console.log('Hello!')
+router.get('/', getAllRecipes, (req, res) => {
+    res.status(200).json(res.allRecipes)
 });
 
 //GET ONE RECIPE
@@ -22,7 +27,10 @@ router.get('/', (req, res) => {
 
 //GET RECIPE BY AUTHOR
 
-//POST RECIPE
+//CREATE RECIPE
+router.post('/', createRecipe, (req, res) => {
+    res.status(200).json(res.createdRecipe);
+});
 
 //PUT RECIPE
 
