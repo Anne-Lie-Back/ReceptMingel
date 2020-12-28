@@ -1,5 +1,6 @@
-//const express = require('express');
-//const router = express.Router();
+const { json } = require('express');
+const express = require('express');
+const router = express.Router();
 
 // MIDDLEWARES
 
@@ -7,20 +8,34 @@
 
 //ENDPOINTS
 
-//GET ALL RECIPES
+//GET ALL USERS
+router.get('/all', (req, res) => {
+    res.status(200).json(res.allUsers);
+})
 
-//GET ONE RECIPE
+//GET ONE USER
+router.get('/:id', (req, res) => {
+    res.status(200).json(res.user);
+})
 
-//GET RECIPE BY FREETEXT
+//GET SESSION USER
 
-//GET RECIPE BY DIFFICULTY
+//REGISTER NEW USER
+//TODO add ({ message: "Authenticated", user: res.user }) in json response
+router.post('/', (req, res) => {
+    res.status(201).json(res.user)
+})
 
-//GET RECIPE BY COOKINGTIME
+//UPDATE USER
+router.put('/:id', (req, res) => {
+    res.status(200).json(res.updateUser);
+})
 
-//GET RECIPE BY AUTHOR
+//DELETE USER
+router.delete('/:id', (req, res) => {
+    res.status(200).json(res.deletedUser)
+})
 
-//POST RECIPE
+//LOGIN USER
 
-//PUT RECIPE
-
-//DELETE RECIPE
+//LOGOUT USER
