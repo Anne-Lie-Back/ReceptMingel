@@ -2,7 +2,7 @@ import React from 'react';
 import { styled, withStyleDeep} from 'styletron-react';
 
 const Wrapper = styled('div', {
-    width: '500px',
+    width: '400px',
     height: '500px',
     backgroundColor: 'lightblue',
     display: 'flex',
@@ -22,7 +22,7 @@ const SubTitle = withStyleDeep(Title, {
 const Test = () => (
     <Wrapper>
         <Title>
-            Hellu!
+            Recipes is cooking
         </Title>
         <SubTitle>Hellu!</SubTitle>
     </Wrapper>

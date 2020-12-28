@@ -3,7 +3,11 @@ const router = express.Router();
 
 const {
     getAllRecipes, 
-    createRecipe 
+    getRecipeByID,
+    getRecipesByAuthor,
+    createRecipe,
+    updateRecipe,
+    deleteRecipe
 } = require('../handlers/recipe.handlers');
 
 // MIDDLEWARES
@@ -18,10 +22,16 @@ router.get('/', getAllRecipes, (req, res) => {
 });
 
 //GET ONE RECIPE
+router.get('/:id', getRecipeByID, (req, res) => {
+    res.status(200).json(res.recipe)
+})
 
 //GET RECIPE BY FREETEXT
 
 //GET RECIPE BY DIFFICULTY
+router.get('/author/:author', getRecipesByAuthor, (req, res) => {
+    res.status(200).json(res.recipesByAuthor)
+})
 
 //GET RECIPE BY COOKINGTIME
 
@@ -32,8 +42,14 @@ router.post('/', createRecipe, (req, res) => {
     res.status(200).json(res.createdRecipe);
 });
 
-//PUT RECIPE
+//UPDATE RECIPE
+router.put('/:id', updateRecipe, (req, res) => {
+    res.status(200).json(res.updatedRecipe);
+});
 
 //DELETE RECIPE
+router.delete('/:id', deleteRecipe, (req, res) => {
+    res.status(200).json(res.deletedRecipe);
+});
 
 module.exports = router

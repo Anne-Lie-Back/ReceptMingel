@@ -4,10 +4,16 @@ GET http://localhost:8080/api/recipes/
 ###
 
 //GET ONE RECIPE
+GET http://localhost:8080/api/recipes/5fe349bcef487237387d42e1
+
+###
 
 //GET RECIPE BY FREETEXT
 
 //GET RECIPE BY DIFFICULTY
+GET http://localhost:8080/api/recipes/author/Starstoft
+
+###
 
 //GET RECIPE BY COOKINGTIME
 
@@ -18,17 +24,79 @@ POST http://localhost:8080/api/recipes/
 Content-Type: application/json
 
 {
-    "title" : "Fredagsfisk med frukt",
-    "preambleHTML" : "En fräsch taco med panerad torsk. Den sötstarka mangosalsan ger mycket fraschör. Var inte rädd för att dunka på en del med chilin, mangon och limedressingen tar ut en del styrka.",
+    "title" : "Havregrynsgröt extra allt",
+    "preambleHTML" : "En bra morgon startar med havregrynsgrött, men den bästa startar med havregrynsgröt EXTRA ALLT. Nötter, frön och frukt kan ampa vilken gröt som helst. ",
+    "imageURL" : "https://img.koket.se/standard-mega/fisktacos-med-guacamole-och-mangosalsa.jpg.webp",
+    "portions" : 1,
+    "cookingTime" : "5-10min",
+    "difficulty" : "JÄTTELÄTT",
+    "ingredients" : [
+        {
+            "quantityFraction" : "1",
+            "unit" : "dl",
+            "ingredient" : "havregryn"
+        },
+                {
+            "quantityFraction" : "2,5",
+            "unit" : "dl",
+            "ingredient" : "vatten"
+        },
+                {
+            "quantityFraction" : "1",
+            "unit" : "msk",
+            "ingredient" : "frön"
+        },
+                {
+            "quantityFraction" : "1",
+            "unit" : "msk",
+            "ingredient" : "Nötter"
+        },
+                {
+            "quantityFraction" : "1",
+            "unit" : "st",
+            "ingredient" : "banan"
+        },
+                {
+            "quantityFraction" : "0.5",
+            "unit" : "tsk",
+            "ingredient" : "kardemumma"
+        }
+    ],
+    "cookingSteps" : [
+        "mät upp torra ingredienser",
+        "finhacka bananen och blanda i",
+        "häll på vätska",
+        "blanda och smaka av med salt tills vattnet smakar lagom saltigt för dig",
+        "kör på 2,5 min i micron",
+        "avnjut med valfri mjölksort och kanske lite sirap eller honung?"
+    ],
+    "mdsaCategories" : [
+        "frukost",
+        "mellanmål",
+        "gröt"
+    ],
+    "author" : "Starstoft",
+    "isShared" : false
+}
+
+###
+
+//PUT RECIPE
+PUT http://localhost:8080/api/recipes/5fe3473b058baa3cac7d8689
+Content-Type: application/json
+
+{
+    "title" : "Exotiska Tacos",
+    "preambleHTML" : "Smakar som sådana man äter på Jamaica",
     "imageURL" : "https://img.koket.se/standard-mega/fisktacos-med-guacamole-och-mangosalsa.jpg.webp",
     "portions" : 4,
-    "cookingTime" : "10-20min",
-    "difficulty" : "LÄTT",
+    "cookingTime" : "15min",
+    "difficulty" : "SVÅR",
     "ingredients" : [
         {
             "quantityFraction" : "8",
             "unit" : "st",
-            "ingredient" : "Färdigpanerad Torsk"
+            "ingredient" : "Tonfiskar"
         },
                 {
             "quantityFraction" : "4",
@@ -73,6 +141,6 @@ Content-Type: application/json
 }
 
 ###
-//PUT RECIPE
 
 //DELETE RECIPE
+DELETE http://localhost:8080/api/recipes/5fe3484a33aeeb1cc01876f5
