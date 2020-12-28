@@ -32,13 +32,13 @@ const getRecipeByID = (req, res, next) => {
     })
 }
 
-//GET RECIPE BY DIFFICULTY
-const getRecipesByDifficulty = (req, res, next) => {
-    Recipe.find({difficulty: req.params.difficulty}, (error, recipesByDifficulty) => {
+//GET RECIPE BY AUTHOR
+const getRecipesByAuthor = (req, res, next) => {
+    Recipe.find({author: req.params.author}, (error, recipesByAuthor) => {
         try{
             if(error) next(error);
-            if(!recipesByDifficulty || recipesByDifficulty.length === 0) throw new ErrorHandler(404, "Vi kunde inte hitta några recept som matchade vald svårighetsgrad");
-            res.recipesByDifficulty = recipesByDifficulty
+            if(!recipesByAuthor || recipesByAuthor.length === 0) throw new ErrorHandler(404, "Vi kunde inte hitta några recept");
+            res.recipesByAuthor = recipesByAuthor
             next()
         }catch(error){
             next(error);
@@ -92,7 +92,7 @@ const deleteRecipe = (req, res, next) => {
 module.exports = {
     getAllRecipes,
     getRecipeByID,
-    getRecipesByDifficulty,
+    getRecipesByAuthor,
     createRecipe,
     updateRecipe,
     deleteRecipe
