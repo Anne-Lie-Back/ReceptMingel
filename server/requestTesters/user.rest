@@ -8,18 +8,18 @@ POST http://localhost:8080/api/users/
 Content-Type: application/json
 
 {
-    "username" : "starstoft",
+    "username" : "Lee",
     "password" : "secret",
-    "firstName" : "Lee",
+    "firstName" : "Annely",
     "lastName" : "Back",
     "avatar" : "https://img.koket.se/standard-mega/fisktacos-med-guacamole-och-mangosalsa.jpg.webp",
-    "userInfo" : "Jag gillar mat",
+    "userInfo" : "Jag gillar mat ännu mer",
     "recipeBook" : [],
     "externalRecipes" : []
 }
 
 ###
-PUT http://localhost:8080/api/users/:id
+PUT http://localhost:8080/api/users/5fea279db50fe3329c55f910
 Content-Type: application/json
 
 {
@@ -34,14 +34,17 @@ Content-Type: application/json
 
 ###
 DELETE http://localhost:8080/api/users/:id
+
 ###
 POST http://localhost:8080/api/users/session/login/
 Content-Type: application/json
 
 {
-    "username" : "admin@admin.com",
-    "password" : "hansonjansson"
+    "username" : "starstoft",
+    "password" : "secret"
 }
 
 ###
+
+//TODO Fixa denna?
 DELETE http://localhost:8080/api/users/session/logout/

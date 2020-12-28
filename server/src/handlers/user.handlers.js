@@ -111,7 +111,8 @@ const logoutUser = (req, res, next) => {
         if(req.session){
             req.session.destroy((error) => {
                 if(error) next(error);
-                res.redirect('/');
+                //TODO få in denna när front end är klar
+                //res.redirect('/')
                 next();
             });
         }else{
