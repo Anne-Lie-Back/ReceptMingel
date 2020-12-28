@@ -1,4 +1,3 @@
-const { json } = require('express');
 const express = require('express');
 const router = express.Router();
 
@@ -19,11 +18,14 @@ router.get('/:id', (req, res) => {
 })
 
 //GET SESSION USER
+router.get('/', (req, res) => {
+    res.status(200).json({ message: "Authenticated", user: res.user});
+})
 
 //REGISTER NEW USER
 //TODO add ({ message: "Authenticated", user: res.user }) in json response
 router.post('/', (req, res) => {
-    res.status(201).json(res.user)
+    res.status(200).json({ message: "Authenticated", user: res.user});
 })
 
 //UPDATE USER
@@ -37,5 +39,11 @@ router.delete('/:id', (req, res) => {
 })
 
 //LOGIN USER
+router.post('/session/login', (req, res) => {
+    res.status(200).json({ message: "Authenticated", user: res.user });
+})
 
 //LOGOUT USER
+router.delete('/session/logout', (req, res) => {
+    res.status(200).json({message: "session deleted"})
+})

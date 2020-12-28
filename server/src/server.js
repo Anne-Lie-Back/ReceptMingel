@@ -1,12 +1,15 @@
 const express = require('express');
 const app = express();
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 const cors = require('cors');
 const { handleError } = require('./helpers/error.helper')
-const { connectToDb } = require('./mongo');
+const { connectToDb, mongoose } = require('./mongo');
 require("dotenv").config();
 
 //import Routes
-const recipeRouter = require('./routes/recipe.routes')
+const recipeRouter = require('./routes/recipe.routes');
+const userRouter = require('./routes/user.route');
 
 //Runs the database
 connectToDb();
@@ -20,6 +23,15 @@ app.use(
 ); 
 
 //TODO: Add sessions for login-tracking
+app.use(
+    session({
+        name: "If you can be anything, be",
+        secret: "a unicorn",
+        resave: false,
+        saveUninitialized: false,
+        store: new MongoStore({ mongooseConnection: mongoose.connection})
+    })
+)
 
 //Parses reg.body as JSON
 app.use(express.json());
