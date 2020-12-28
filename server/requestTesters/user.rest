@@ -1,0 +1,47 @@
+GET http://localhost:8080/api/users/all
+
+###
+GET http://localhost:8080/api/users/
+
+###
+POST http://localhost:8080/api/users/
+Content-Type: application/json
+
+{
+    "username" : "starstoft",
+    "password" : "secret",
+    "firstName" : "Lee",
+    "lastName" : "Back",
+    "avatar" : "https://img.koket.se/standard-mega/fisktacos-med-guacamole-och-mangosalsa.jpg.webp",
+    "userInfo" : "Jag gillar mat",
+    "recipeBook" : [],
+    "externalRecipes" : []
+}
+
+###
+PUT http://localhost:8080/api/users/:id
+Content-Type: application/json
+
+{
+    "username" : "starstoft",
+    "password" : "secret",
+    "firstName" : "Lee",
+    "lastName" : "Back",
+    "avatar" : "https://img.koket.se/standard-mega/fisktacos-med-guacamole-och-mangosalsa.jpg.webp",
+    "userInfo" : "Jag gillar mat",
+    "recipeBook" : ["5fe9c4c8e576571ac025cf3f"]
+}
+
+###
+DELETE http://localhost:8080/api/users/:id
+###
+POST http://localhost:8080/api/users/session/login/
+Content-Type: application/json
+
+{
+    "username" : "admin@admin.com",
+    "password" : "hansonjansson"
+}
+
+###
+DELETE http://localhost:8080/api/users/session/logout/

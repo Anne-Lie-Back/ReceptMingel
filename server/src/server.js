@@ -8,8 +8,8 @@ const { connectToDb, mongoose } = require('./mongo');
 require("dotenv").config();
 
 //import Routes
+const userRouter = require('./routes/user.routes');
 const recipeRouter = require('./routes/recipe.routes');
-const userRouter = require('./routes/user.route');
 
 //Runs the database
 connectToDb();
@@ -38,6 +38,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 //TODO: API resources
+app.use('/api/users', userRouter);
 app.use('/api/recipes', recipeRouter);
 
 //Error Handling
