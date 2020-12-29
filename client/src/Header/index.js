@@ -1,4 +1,5 @@
 //import React from 'react';
+import { Link } from 'react-router-dom';
 import { styled } from 'styletron-react';
 import MainNavbar from './MainNavbar';
 
@@ -20,7 +21,9 @@ const Headline = styled('h1', {
 const Header = () => {
     return(
         <Wrapper>
-            <Headline>ReceptMingel</Headline>
+            <Link to = {'/'} style = {{textDecoration: 'none'}}>
+                <Headline>ReceptMingel</Headline>
+            </Link>
             <MainNavbar/>
         </Wrapper>
     )
