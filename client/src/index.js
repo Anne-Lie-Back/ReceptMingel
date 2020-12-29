@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {BrowserRouter} from 'react-router-dom';
 import {Provider as StyletronProvider} from "styletron-react";
 import {Client as Styletron} from "styletron-engine-atomic";
 
@@ -11,9 +12,11 @@ const engine = new Styletron({
 
 ReactDOM.render(
   <React.StrictMode>
-    <StyletronProvider value={engine}>
-      <App />
-    </StyletronProvider>
+    <BrowserRouter>
+      <StyletronProvider value={engine}>
+        <App />
+      </StyletronProvider>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );
