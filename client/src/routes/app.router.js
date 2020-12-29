@@ -1,4 +1,4 @@
-import {Route, Switch, Redirect} from 'react-router-dom';
+import {Route, Switch} from 'react-router-dom';
 
 //TODO Import Protected routes and authentication check
 
