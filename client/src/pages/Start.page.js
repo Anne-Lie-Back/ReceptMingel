@@ -1,5 +1,7 @@
+import RegisterNewUser from '../components/RegisterNewUser'
+
 const StartPage = () => (
-    <h1>START FINNS HÄR</h1>
+    <RegisterNewUser/>
 )
 
 export default StartPage;
