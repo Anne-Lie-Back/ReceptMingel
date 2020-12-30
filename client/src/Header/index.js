@@ -9,6 +9,7 @@ const Wrapper = styled('div', {
     backgroundColor: 'lightblue',
     display: 'flex',
     flexDirection: 'row',
+    flexWrap: 'wrap',
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: '0 30px'
