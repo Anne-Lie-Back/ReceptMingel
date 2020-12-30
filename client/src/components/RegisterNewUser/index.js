@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { styled } from 'styletron-react';
 
 const Wrapper = styled('div', {
@@ -32,31 +33,48 @@ const Button = styled('button', {
 })
 
 const RegisterNewUser = () => {
+    const [inputValue, setInputValues] = useState({
+        username: '',
+        password: '',
+        firstname: '',
+        lastname: '',
+        avatar: '',
+        userInfo: ''
+    });
+    const handleChange = (event) => {
+        const {name, value} = event.target;
+        setInputValues({
+            ...inputValue,
+            [name]: value,
+          });
+    }
+
+    const handleSubmit = () => {
+        console.log('inputValues', inputValue);
+    }
+
     return(
         <Wrapper>
             <FormWrapper>
                 <label for = "username">Användarnamn (unikt):</label>
-                <InputField type = "text" autofocus name = "username" id= "username"></InputField>
+                <InputField type = "text" autofocus name = "username" id= "username" onChange = {(event) => handleChange(event)}></InputField>
 
-                <label for = "password1">Lösenord:</label>
-                <InputField type = "password" name = "password1" id = "password1"></InputField>
-
-                <label for = "password2">Upprepa lösenord:</label>
-                <InputField type = "password" name = "password2" id= "password2"></InputField>
+                <label for = "password">Lösenord:</label>
+                <InputField type = "password" name = "password" id = "password" onChange = {(event) => handleChange(event)}></InputField>
 
                 <label for = "firstname">Förnamn:</label>
-                <InputField type = "text" name = "firstname" id = "firstname"></InputField>
+                <InputField type = "text" name = "firstname" id = "firstname" onChange = {(event) => handleChange(event)}></InputField>
 
                 <label for = "lastname">Efternamn: </label>
-                <InputField type = "text"  name = "lastname" id = "lastname"></InputField>
+                <InputField type = "text"  name = "lastname" id = "lastname" onChange = {(event) => handleChange(event)}></InputField>
 
                 <label for = "avatar">Profilbild:</label>
-                <InputField type = "text" name = "avatar" id = "avatar"></InputField>
+                <InputField type = "text" name = "avatar" id = "avatar" onChange = {(event) => handleChange(event)}></InputField>
 
                 <label for = "userInfo">Berätta något om dig själv?</label>
-                <InputField type = "text" name = "userInfo" id = "userInfo"></InputField>
+                <InputField type = "text" name = "userInfo" id = "userInfo" onChange = {(event) => handleChange(event)}></InputField>
 
-                <Button>Register</Button>
+                <Button onClick = {handleSubmit}>Register</Button>
             </FormWrapper>
         </Wrapper>
     )
