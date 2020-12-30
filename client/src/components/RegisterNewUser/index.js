@@ -36,11 +36,13 @@ const RegisterNewUser = () => {
     const [inputValue, setInputValues] = useState({
         username: '',
         password: '',
-        firstname: '',
-        lastname: '',
+        firstName: '',
+        lastName: '',
         avatar: '',
         userInfo: ''
     });
+    const [errorMessage, setErrorMessage] = useState(null);
+
     const handleChange = (event) => {
         const {name, value} = event.target;
         setInputValues({
@@ -51,6 +53,23 @@ const RegisterNewUser = () => {
 
     const handleSubmit = () => {
         console.log('inputValues', inputValue);
+
+        fetch('http://localhost:8080/api/users/', {
+            method: 'POST',
+            headers: {
+                "Content-Type" : "application/json"
+            },
+            body: JSON.stringify(inputValue)
+        })
+        .then((res) => {
+            res.json()
+        })
+        .catch((error) => {
+            console.log('error', error)
+        })
+        .then((res) => {
+            console.log(JSON.stringify(res))
+        })
     }
 
     return(
@@ -62,11 +81,11 @@ const RegisterNewUser = () => {
                 <label for = "password">Lösenord:</label>
                 <InputField type = "password" name = "password" id = "password" onChange = {(event) => handleChange(event)}></InputField>
 
-                <label for = "firstname">Förnamn:</label>
-                <InputField type = "text" name = "firstname" id = "firstname" onChange = {(event) => handleChange(event)}></InputField>
+                <label for = "firstName">Förnamn:</label>
+                <InputField type = "text" name = "firstName" id = "firstName" onChange = {(event) => handleChange(event)}></InputField>
 
-                <label for = "lastname">Efternamn: </label>
-                <InputField type = "text"  name = "lastname" id = "lastname" onChange = {(event) => handleChange(event)}></InputField>
+                <label for = "lastName">Efternamn: </label>
+                <InputField type = "text"  name = "lastName" id = "lastName" onChange = {(event) => handleChange(event)}></InputField>
 
                 <label for = "avatar">Profilbild:</label>
                 <InputField type = "text" name = "avatar" id = "avatar" onChange = {(event) => handleChange(event)}></InputField>
