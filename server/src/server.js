@@ -29,7 +29,8 @@ app.use(
         secret: "a unicorn",
         resave: false,
         saveUninitialized: false,
-        store: new MongoStore({ mongooseConnection: mongoose.connection})
+        store: new MongoStore({ mongooseConnection: mongoose.connection}),
+        expires: new Date(Date.now() + (30 * 86400 * 1000))
     })
 )
 
