@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { styled } from 'styletron-react';
 
 const Wrapper = styled('div', {
@@ -41,7 +42,8 @@ const RegisterNewUser = () => {
         avatar: '',
         userInfo: ''
     });
-    const [errorMessage, setErrorMessage] = useState(null);
+    //const [errorMessage, setErrorMessage] = useState(null);
+    const history = useHistory();
 
     const handleChange = (event) => {
         const {name, value} = event.target;
@@ -52,8 +54,6 @@ const RegisterNewUser = () => {
     }
 
     const handleSubmit = () => {
-        console.log('inputValues', inputValue);
-
         fetch('http://localhost:8080/api/users/', {
             method: 'POST',
             headers: {
@@ -62,15 +62,13 @@ const RegisterNewUser = () => {
             body: JSON.stringify(inputValue)
         })
         .then((res) => {
+            if(res.ok) history.push('/user');
             res.json()
         })
         .catch((error) => {
-            console.log('error', error)
+            console.log('error', error);
         })
-        .then((res) => {
-            console.log(JSON.stringify(res))
-        })
-    }
+    };
 
     return(
         <Wrapper>
@@ -91,7 +89,7 @@ const RegisterNewUser = () => {
                 <InputField type = "text" name = "avatar" id = "avatar" onChange = {(event) => handleChange(event)}></InputField>
 
                 <label for = "userInfo">Berätta något om dig själv?</label>
-                <InputField type = "text" name = "userInfo" id = "userInfo" onChange = {(event) => handleChange(event)}></InputField>
+                <InputField $as = "textarea" rows="4" cols="80" name = "userInfo" id = "userInfo" onChange = {(event) => handleChange(event)}></InputField>
 
                 <Button onClick = {handleSubmit}>Register</Button>
             </FormWrapper>

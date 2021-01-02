@@ -3,7 +3,7 @@ import {Route, Switch} from 'react-router-dom';
 //TODO Import Protected routes and authentication check
 
 import StartPage from '../pages/Start.page';
-import SearchPage from '../pages/Start.page';
+import SearchPage from '../pages/Search.page';
 import RecipeEditPage from '../pages/RecipeEdit.page';
 import RecipeViewPage from '../pages/RecipeView.page';
 import RecipeBookPage from '../pages/RecipeBook.page';
