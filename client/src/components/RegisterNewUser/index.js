@@ -43,10 +43,12 @@ const RegisterNewUser = () => {
         userInfo: ''
     });
 
+    //stores file-data that goes up to image-bucket at server
     const [file, setFile] = useState(null);
-    //const [errorMessage, setErrorMessage] = useState(null);
+    
     const history = useHistory();
 
+    //handle input-changes
     const handleChange = (event) => {
         const {name, value} = event.target;
         setInputValues({
@@ -55,6 +57,8 @@ const RegisterNewUser = () => {
           });
     }
 
+    //Listens after changes to file-state. If changed to not null, the image will be sent to the bucket and id 
+    // set to inputValues.image to link correct image in bucket to user in database.
     useEffect(() => {
         if (!file) return;
         
@@ -68,13 +72,13 @@ const RegisterNewUser = () => {
         })
           .then((res) => res.json())
           .then((data) => {
-            console.log('data', data)
             if (data && data.message === "success") {  
               setInputValues((prev) => ({ ...prev, image: data.id }));
             }
           })
       }, [file]);
 
+    //sends inputvalues to db
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log('inputValues', inputValues);
@@ -87,6 +91,7 @@ const RegisterNewUser = () => {
             body: JSON.stringify(inputValues)
         })
         .then((res) => {
+            //if response is good the user will be redirected to their userpage
             if(res.ok) history.push('/user');
             res.json()
         })
@@ -99,24 +104,52 @@ const RegisterNewUser = () => {
         <Wrapper>
             <FormWrapper>
                 <label for = "username">Användarnamn (unikt):</label>
-                <InputField type = "text" autofocus name = "username" id= "username" onChange = {(event) => handleChange(event)}></InputField>
+                <InputField 
+                    type = "text" 
+                    autofocus 
+                    name = "username" 
+                    id= "username" 
+                    onChange = {(event) => handleChange(event)}
+                />
 
                 <label for = "password">Lösenord:</label>
-                <InputField type = "password" name = "password" id = "password" onChange = {(event) => handleChange(event)}></InputField>
+                <InputField 
+                    type = "password" 
+                    name = "password" 
+                    id = "password" 
+                    onChange = {(event) => handleChange(event)}
+                />
 
                 <label for = "firstName">Förnamn:</label>
-                <InputField type = "text" name = "firstName" id = "firstName" onChange = {(event) => handleChange(event)}></InputField>
+                <InputField 
+                    type = "text" 
+                    name = "firstName" 
+                    id = "firstName" 
+                    onChange = {(event) => handleChange(event)}
+                />
 
                 <label for = "lastName">Efternamn: </label>
-                <InputField type = "text"  name = "lastName" id = "lastName" onChange = {(event) => handleChange(event)}></InputField>
+                <InputField 
+                    type = "text"  
+                    name = "lastName" 
+                    id = "lastName" 
+                    onChange = {(event) => handleChange(event)}
+                />
 
                 <label for = "userInfo">Berätta något om dig själv?</label>
-                <InputField $as = "textarea" rows="4" cols="80" name = "userInfo" id = "userInfo" onChange = {(event) => handleChange(event)}></InputField>
+                <InputField 
+                    $as = "textarea" 
+                    name = "userInfo" 
+                    id = "userInfo"
+                    rows="4" 
+                    cols="80"  
+                    onChange = {(event) => handleChange(event)}/>
 
                 <label for = "image">Profilbild:</label>
                 <InputField 
                     type = "file" 
                     name = "image" 
+                    id = "image"
                     accept = "image/*"
                     onChange = {(event) => setFile(event.target.files[0])}
                 />

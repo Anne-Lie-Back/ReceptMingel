@@ -31,6 +31,7 @@ const UserSchema = new Schema({
         type: String,
         required: false,
     },
+    //sets referense to profile-picture in image-bucket at mongoDb
     image: {
       type: mongoose.ObjectId,
       ref: "File",

@@ -4,17 +4,18 @@ const mongodb = require("mongodb");
 const GridFsStorage = require("multer-gridfs-storage");
 const { ErrorHandler } = require("../helpers/error.helper")
 
-// let db
 let bucket;
 let storage;
 
-
+//gets a random string for making filename unique
 const randomString = [...Array(6)]
   .map((i) => (~~(Math.random() * 36)).toString(36))
   .join("");
 
+//Name of bucket for images at MongoDb
 const BUCKET = "image";
 
+//Opens connection to mongoDB and the image collection-bucket
 mongoose.connection.once("open", () => {
   db = mongoose.connection.db;
   bucket = new mongodb.GridFSBucket(db, {
@@ -23,7 +24,8 @@ mongoose.connection.once("open", () => {
   storage = new GridFsStorage({
     db: db,
     file: (req, file) => {
-      const match = ["image/png", "image/jpeg"];
+      //Checks if the image is of correct mimetype
+      const match = ["image/png", "image/jpeg", "image/gif"];
       if (match.indexOf(file.mimetype) === -1) {
         return null;
       }
@@ -41,6 +43,7 @@ mongoose.connection.once("open", () => {
   });
 });
 
+//Saves single image to bucket
 const writeSingleImage = (req, res, next) => {
   const upload = multer({ storage }).single("image");
   upload(req, res, (error) => {
@@ -55,7 +58,7 @@ const writeSingleImage = (req, res, next) => {
   });
 };
 
-
+//Gets single image from bucket
 const readSingleImage = async (req, res, next) => {
   try {
     const filter = mongoose.Types.ObjectId(req.params.id);
@@ -82,6 +85,7 @@ const readSingleImage = async (req, res, next) => {
   }
 };
 
+//deletes image in bucket
 const deleteSingleImage = (req, res, next) => {
   try {
     if(!req.params.id) throw new ErrorHandler(400, "No image ID was submitted")
