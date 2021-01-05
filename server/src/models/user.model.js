@@ -27,14 +27,14 @@ const UserSchema = new Schema({
         type: String,
         required: true,
     },
-    avatar: {
-        type: mongoose.ObjectId,
-        ref: "File",
-    },
     userInfo: {
         type: String,
         required: false,
     },
+    image: {
+      type: mongoose.ObjectId,
+      ref: "File",
+  },
     //TODO update to [RecipeSchema] ? (see order-schema)
     recipeBook: [{
         type: String,
@@ -57,9 +57,9 @@ UserSchema.pre("save", function (next) {
   });
 
   //handles getting avatar-image-file
-  UserSchema.virtual("avatarImageURL").get(() => {
-    return process.env.DOMAIN + this.avatar.toString();
-  })
+  UserSchema.virtual("imageURL").get(function () {
+    return process.env.DOMAIN + this.image.toString();
+  });
 
   //TODO: Refactorize later
 /* UserSchema.pre('save', (next) => {
