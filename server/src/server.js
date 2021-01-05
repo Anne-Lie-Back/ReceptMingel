@@ -10,6 +10,7 @@ require("dotenv").config();
 //import Routes
 const userRouter = require('./routes/user.routes');
 const recipeRouter = require('./routes/recipe.routes');
+const imageStorageRouter = require('./routes/imageStorage.routes');
 
 //Runs the database
 connectToDb();
@@ -41,6 +42,7 @@ app.use(express.urlencoded({ extended: false }));
 //TODO: API resources
 app.use('/api/users', userRouter);
 app.use('/api/recipes', recipeRouter);
+app.use("/api/images", imageStorageRouter);
 
 //Error Handling
 app.use((err, req, res, next) => {

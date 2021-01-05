@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-const { ErrorHandler } = require('../helpers/error.helper');
 
-const { RecipeSchema } = require('./recipe.model');
+//TODO just save id for schema or save ref to whole schema?
+//const { RecipeSchema } = require('./recipe.model');
 
 mongoose.set("useCreateIndex", true);
 mongoose.set("useFindAndModify", false);
@@ -27,14 +27,15 @@ const UserSchema = new Schema({
         type: String,
         required: true,
     },
-    avatar: {
-        type: String,
-        required: false,
-    },
     userInfo: {
         type: String,
         required: false,
     },
+    //sets referense to profile-picture in image-bucket at mongoDb
+    image: {
+      type: mongoose.ObjectId,
+      ref: "File",
+  },
     //TODO update to [RecipeSchema] ? (see order-schema)
     recipeBook: [{
         type: String,
@@ -54,6 +55,11 @@ UserSchema.pre("save", function (next) {
       user.password = hash;
       next();
     });
+  });
+
+  //handles getting avatar-image-file
+  UserSchema.virtual("imageURL").get(function () {
+    return process.env.DOMAIN + this.image.toString();
   });
 
   //TODO: Refactorize later

@@ -1,0 +1,18 @@
+// GET SINGLE IMAGE FROM DATABASE
+GET http://localhost:8080/api/images/5ff4654f7464651950d563e5
+
+###
+// POST A SINGLE IMAGE
+POST http://localhost:8080/api/images
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="image"; filename="Hafling.png"
+Content-Type: image/png
+
+< ./Hafling.png
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+###
+// DELETE A SINGLE IMAGE
+DELETE http://localhost:8080/api/images
