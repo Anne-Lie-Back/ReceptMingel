@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { styled } from 'styletron-react';
+import InputField from '../inputFields/inputFieldText'
 
 const Wrapper = styled('div', {
     display: 'flex',
@@ -14,10 +15,6 @@ const FormWrapper = styled('div', {
     display: 'flex',
     flexDirection: 'column',
     width: '600px'
-})
-
-const InputField = styled('input', {
-    marginBottom: '1rem'
 })
 
 const Button = styled('button', {
@@ -100,60 +97,55 @@ const RegisterNewUser = () => {
         })
     };
 
+    console.log('inputValues', inputValues);
+
     return(
         <Wrapper>
             <FormWrapper>
-                <label for = "username">Användarnamn (unikt):</label>
                 <InputField 
-                    type = "text" 
-                    autofocus 
+                    type = "text"  
                     name = "username" 
-                    id= "username" 
-                    onChange = {(event) => handleChange(event)}
+                    label = "Användarnamn (unikt):"
+                    handleChange = {handleChange}
                 />
 
-                <label for = "password">Lösenord:</label>
                 <InputField 
                     type = "password" 
                     name = "password" 
-                    id = "password" 
-                    onChange = {(event) => handleChange(event)}
+                    label = "Lösenord:"
+                    handleChange = {handleChange}
                 />
-
-                <label for = "firstName">Förnamn:</label>
+                
                 <InputField 
                     type = "text" 
                     name = "firstName" 
-                    id = "firstName" 
-                    onChange = {(event) => handleChange(event)}
+                    label = "Förnamn:"
+                    handleChange = {handleChange}
                 />
 
-                <label for = "lastName">Efternamn: </label>
                 <InputField 
                     type = "text"  
                     name = "lastName" 
-                    id = "lastName" 
-                    onChange = {(event) => handleChange(event)}
+                    label = "Efternamn:" 
+                    handleChange = {handleChange}
                 />
-
-                <label for = "userInfo">Berätta något om dig själv?</label>
                 <InputField 
                     $as = "textarea" 
                     name = "userInfo" 
-                    id = "userInfo"
+                    label = "Berätta något om dig själv?"
                     rows="4" 
                     cols="80"  
-                    onChange = {(event) => handleChange(event)}/>
+                    handleChange = {handleChange}
+                />
 
-                <label for = "image">Profilbild:</label>
                 <InputField 
                     type = "file" 
                     name = "image" 
-                    id = "image"
+                    label = "Profilbild:"
                     accept = "image/*"
-                    onChange = {(event) => setFile(event.target.files[0])}
-                />
-
+                    handleChange = {(event) => setFile(event.target.files[0])}
+                /> 
+                
                 <Button onClick = {handleSubmit}>Register</Button>
             </FormWrapper>
         </Wrapper>
