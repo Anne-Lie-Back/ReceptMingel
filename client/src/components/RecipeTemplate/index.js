@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import {useEffect, useHistory, useState} from 'react';
 import { styled } from 'styletron-react';
 import InputField from '../inputField'
 
@@ -30,20 +29,26 @@ const Button = styled('button', {
     }
 })
 
-const RegisterNewUser = () => {
+const RecipeTemplate = () => {
+    
     const [inputValues, setInputValues] = useState({
-        username: '',
-        password: '',
-        firstName: '',
-        lastName: '',
+        title: '',
+        preambleHTML: '',
         image: null,
-        userInfo: ''
+        portions: null,
+        cookingTime: '',
+        difficulty: '',
+        ingredients: [],
+        cookingSteps: [],
+        mdsaCategories: [],
+        author: '',
+        isShared: false
     });
 
     //stores file-data that goes up to image-bucket at server
     const [file, setFile] = useState(null);
-    
-    const history = useHistory();
+
+    const history = useHistory;
 
     //handle input-changes
     const handleChange = (event) => {
@@ -79,7 +84,7 @@ const RegisterNewUser = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log('inputValues', inputValues);
-        fetch('http://localhost:8080/api/users/', {
+        fetch('http://localhost:8080/api/recipes/', {
             method: 'POST',
             credentials: "include",
             headers: {
@@ -89,7 +94,8 @@ const RegisterNewUser = () => {
         })
         .then((res) => {
             //if response is good the user will be redirected to their userpage
-            if(res.ok) history.push('/user');
+            //TODO, do I really need this?
+            if(res.ok) history.push('/recipe');
             res.json()
         })
         .catch((error) => {
@@ -152,4 +158,4 @@ const RegisterNewUser = () => {
     )
 };
 
-export default RegisterNewUser;
+export default RecipeTemplate;

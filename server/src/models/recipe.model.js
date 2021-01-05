@@ -13,7 +13,7 @@ const RecipeSchema = new Schema(
             required: true
         },
         //TODO Change to handle "real" images
-        imageURL: {
+        image: {
             type:String,
             required: true,
         },
@@ -29,23 +29,10 @@ const RecipeSchema = new Schema(
             type: String,
             required: true,
         },
-        //TODO remove object _ID for ingredients
-        ingredients: [
-            {
-                quantityFraction: {
-                    type: String,
-                    required: true,
-                },
-                unit: {
-                    type: String,
-                    required: true,
-                },
-                ingredient: {
-                    type: String,
-                    required: true,
-                },
-            },
-        ],
+        ingredients: [{
+            type: String,
+            required: true
+        }],
         cookingSteps: [{
             type: String,
             required: true

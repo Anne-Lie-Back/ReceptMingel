@@ -1,9 +1,12 @@
 import { Fragment } from 'react';
 import { styled } from 'styletron-react';
 
+//Styling in here
 const StyledInputField = styled('input', {
     marginBottom: '1rem'
 })
+
+//Error handling in here
 
 const InputField = ( {type, name, label, handleChange, ...rest} ) => (
     <Fragment>

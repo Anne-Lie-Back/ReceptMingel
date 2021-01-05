@@ -1,5 +1,7 @@
+import RecipeTemplate from '../components/RecipeTemplate';
+
 const RecipeEditPage = () => (
-    <h1>RECEPT ATT REDIGERA FINNS HÄR</h1>
+    <RecipeTemplate/>
 )
 
 export default RecipeEditPage;
