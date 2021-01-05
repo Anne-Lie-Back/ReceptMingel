@@ -34,13 +34,13 @@ const Button = styled('button', {
 })
 
 const RegisterNewUser = () => {
-    const [inputValue, setInputValues] = useState({
+    const [inputValues, setInputValues] = useState({
         username: '',
         password: '',
         firstName: '',
         lastName: '',
-        userInfo: '',
-        image: ''
+        image: null,
+        userInfo: ''
     });
 
     const [file, setFile] = useState(null);
@@ -50,48 +50,41 @@ const RegisterNewUser = () => {
     const handleChange = (event) => {
         const {name, value} = event.target;
         setInputValues({
-            ...inputValue,
+            ...inputValues,
             [name]: value,
           });
     }
 
     useEffect(() => {
         if (!file) return;
-    
+        
         const formData = new FormData();
         formData.append("image", file);
     
-        fetch("http://localhost:8080/api/images", {
-            method: 'POST',
+        fetch('http://localhost:8080/api/images', {
+            method: "POST",
             credentials: "include",
-            body: formData
+            body: formData, 
         })
           .then((res) => res.json())
           .then((data) => {
-            if (data && data.message === "success") {
+            console.log('data', data)
+            if (data && data.message === "success") {  
               setInputValues((prev) => ({ ...prev, image: data.id }));
             }
           })
       }, [file]);
 
-    const handleSubmit = () => {
-
-        const userToRegister = {
-            username: inputValue.username,
-            password: inputValue.password,
-            firstName: inputValue.firstName,
-            lastName: inputValue.lastName,
-            userInfo: inputValue.userInfo,
-            image: file
-        }
-
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        console.log('inputValues', inputValues);
         fetch('http://localhost:8080/api/users/', {
             method: 'POST',
             credentials: "include",
             headers: {
                 "Content-Type" : "application/json"
             },
-            body: JSON.stringify(userToRegister)
+            body: JSON.stringify(inputValues)
         })
         .then((res) => {
             if(res.ok) history.push('/user');
