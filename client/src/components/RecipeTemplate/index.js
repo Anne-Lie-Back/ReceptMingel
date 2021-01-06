@@ -2,6 +2,8 @@ import {useEffect, useHistory, useState} from 'react';
 import { styled } from 'styletron-react';
 import InputField from '../inputField'
 
+import AddIcon from '../../config/icons'
+
 const Wrapper = styled('div', {
     display: 'flex',
     alignItems: 'center',
@@ -35,13 +37,13 @@ const RecipeTemplate = () => {
         title: '',
         preambleHTML: '',
         image: null,
-        portions: null,
+        portions: 4,
         cookingTime: '',
         difficulty: '',
         ingredients: [],
         cookingSteps: [],
         mdsaCategories: [],
-        author: '',
+        author: 'användarnamn',
         isShared: false
     });
 
@@ -110,35 +112,15 @@ const RecipeTemplate = () => {
             <FormWrapper>
                 <InputField 
                     type = "text"  
-                    name = "username" 
-                    label = "Användarnamn (unikt):"
+                    name = "title" 
+                    label = "Titel:"
                     handleChange = {handleChange}
                 />
 
-                <InputField 
-                    type = "password" 
-                    name = "password" 
-                    label = "Lösenord:"
-                    handleChange = {handleChange}
-                />
-                
-                <InputField 
-                    type = "text" 
-                    name = "firstName" 
-                    label = "Förnamn:"
-                    handleChange = {handleChange}
-                />
-
-                <InputField 
-                    type = "text"  
-                    name = "lastName" 
-                    label = "Efternamn:" 
-                    handleChange = {handleChange}
-                />
                 <InputField 
                     $as = "textarea" 
-                    name = "userInfo" 
-                    label = "Berätta något om dig själv?"
+                    name = "preambleHTML" 
+                    label = "Beskrivning:"
                     rows="4" 
                     cols="80"  
                     handleChange = {handleChange}
@@ -147,11 +129,61 @@ const RecipeTemplate = () => {
                 <InputField 
                     type = "file" 
                     name = "image" 
-                    label = "Profilbild:"
+                    label = "Bild:"
                     accept = "image/*"
                     handleChange = {(event) => setFile(event.target.files[0])}
                 /> 
+
+                <label for="cookingTime">Beräknad tillagningstid:</label>
+                <select name="cookingTime" id="cookingTime">
+                    <option value="0-15min">0-15min</option>
+                    <option value="16-30min">16-30min</option>
+                    <option value="31-45min">31-45min</option>
+                    <option value="46-60min">46-60min</option>
+                    <option value="1h - 1:30h">1h - 1:30h</option>
+                    <option value="1:31h - 2:00h">1:31h - 2:00h</option>
+                    <option value="mer än 2:00h">mer än 2:00h</option>
+                </select>
+
+                <label for="difficulty">Svårighetsgrad:</label>
+                <select name="difficulty" id="difficulty">
+                    <option value="lätt">LÄTT</option>
+                    <option value="medel">MEDEL</option>
+                    <option value="omständigt">OMSTÄNDIGT</option>
+                    <option value="svårt">SVÅRT</option>
+                </select>
+
+                <InputField 
+                    type = "text" 
+                    name = "mdsaCategories" 
+                    label = "mdsaCategories"
+                    handleChange = {handleChange}
+                />
+                <AddIcon size = "24px" color = "orange"/>
+
+                <InputField 
+                    type = "number" 
+                    name = "portions" 
+                    label = "Antal portioner:"
+                    min="1" 
+                    max="16"
+                    handleChange = {handleChange}
+                />
                 
+                <InputField 
+                    type = "text" 
+                    name = "ingredients" 
+                    label = "Ingredients"
+                    handleChange = {handleChange}
+                />
+
+                <InputField 
+                    type = "text"  
+                    name = "cookingSteps" 
+                    label = "steg 1:" 
+                    handleChange = {handleChange}
+                />
+  
                 <Button onClick = {handleSubmit}>Register</Button>
             </FormWrapper>
         </Wrapper>
