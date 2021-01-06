@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@iconify/icons-eva": "^1.1.0",
     "@iconify/icons-gridicons": "^1.1.0",
     "@iconify/react": "^1.1.3",
     "@testing-library/jest-dom": "^5.11.4",

@@ -2,7 +2,7 @@ import {useEffect, useHistory, useState} from 'react';
 import { styled } from 'styletron-react';
 import InputField from '../inputField'
 
-import AddIcon from '../../config/icons'
+import Icons from '../../config/icons'
 
 const Wrapper = styled('div', {
     display: 'flex',
@@ -51,6 +51,8 @@ const RecipeTemplate = () => {
     const [file, setFile] = useState(null);
 
     const history = useHistory;
+    const AddIcon = Icons.Add;
+    const RemoveIcon = Icons.Minus;
 
     //handle input-changes
     const handleChange = (event) => {
@@ -104,8 +106,6 @@ const RecipeTemplate = () => {
             console.log('error', error);
         })
     };
-
-    console.log('inputValues', inputValues);
 
     return(
         <Wrapper>
