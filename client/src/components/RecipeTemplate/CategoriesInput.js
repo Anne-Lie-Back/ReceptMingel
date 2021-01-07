@@ -14,9 +14,9 @@ const Wrapper = styled('div', {
 const CategoriesInput = ({inputValues, updateInputValues}) => {
     const [newCategory, setNewCategory] = useState('');
     const AddIcon = Icons.Add;
+    console.log('inputValues from Categories', inputValues)
 
     const handleAddingListItems = () => {
-        console.log('Kategori!')
         const newItem = newCategory;
          if(newItem.text !==""){
             const newList = [...inputValues.mdsaCategories, newItem];
@@ -30,9 +30,10 @@ const CategoriesInput = ({inputValues, updateInputValues}) => {
     //TODO fix bug that removes two categories with same name
     const handleListDeletion = (category) => {
         const newList = inputValues.mdsaCategories.filter((item) => item !== category);
-        updateInputValues({
-            mdsaCategories: newList
-        });  
+        updateInputValues({                    
+            ...inputValues,    
+            mdsaCategories: newList         
+        }) 
     }
     
     return(

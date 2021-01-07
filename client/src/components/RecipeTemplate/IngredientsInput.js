@@ -37,12 +37,12 @@ const IngredientsInput = ({inputValues, updateInputValues}) => {
     }
 
     //TODO fix bug that removes two categories with same name
-    const handleListDeletion = () => {
-        console.log('DELETE ME!')
-/*         const newList = inputValues.mdsaCategories.filter((item) => item !== category);
-        updateInputValues({
-            mdsaCategories: newList
-        });   */
+    const handleListDeletion = (ingredient) => {
+        const newList = inputValues.ingredients.filter((item) => item !== ingredient);
+        updateInputValues({                    
+            ...inputValues,    
+            ingredients: newList         
+        }) 
     }
 
     console.log('newIngredient', newIngredient)
