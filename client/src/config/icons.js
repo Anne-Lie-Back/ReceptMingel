@@ -20,22 +20,22 @@ const Add = ({size, color, handleClick}) => (
 );
 
 // For removing
-const Minus = ({size, color}) => (
-    <StyledIcon icon={minusCircleOutline} $size = {size} $color = {color}/>
+const Minus = ({size, color, handleClick}) => (
+    <StyledIcon icon={minusCircleOutline} $size = {size} $color = {color} onClick = {handleClick}/>
 );
 
 // For edit
-const EditSimple = ({size, color}) => (
-    <StyledIcon icon={bxEditAlt} $size = {size} $color = {color}/>
+const EditSimple = ({size, color, handleClick}) => (
+    <StyledIcon icon={bxEditAlt} $size = {size} $color = {color} onClick = {handleClick}/>
 );
 
-const EditBox = ({size, color}) => (
-    <StyledIcon icon={bxEdit} $size = {size} $color = {color}/>
+const EditBox = ({size, color, handleClick}) => (
+    <StyledIcon icon={bxEdit} $size = {size} $color = {color} onClick = {handleClick}/>
 );
 
 // For file-upload
-const ImageUpload = ({size, color}) => (
-    <StyledIcon icon={bxsCameraPlus} $size = {size} $color = {color}/>
+const ImageUpload = ({size, color, handleClick}) => (
+    <StyledIcon icon={bxsCameraPlus} $size = {size} $color = {color} onClick = {handleClick}/>
 );
 
 // For LOGO?

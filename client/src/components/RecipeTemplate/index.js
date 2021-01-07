@@ -155,7 +155,7 @@ const RecipeTemplate = () => {
                     <option value="svårt">SVÅRT</option>
                 </select>
 
-                <CategoriesInput inputValues = {inputValues} addToInputValues = {setInputValues}/>
+                <CategoriesInput inputValues = {inputValues} updateInputValues = {setInputValues}/>
 
                 <InputField 
                     type = "number" 

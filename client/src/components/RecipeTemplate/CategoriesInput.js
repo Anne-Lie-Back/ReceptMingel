@@ -7,47 +7,44 @@ import Icons from '../../config/icons'
 const Wrapper = styled('div', {
     width: '100%',
     border: '1px solid #DEEFFF',
-    padding: '1rem',
+    margin: '0.5rem',
+    padding: '0.5rem',
 })
 
-const CategoriesInput = ({inputValues, addToInputValues}) => {
+const CategoriesInput = ({inputValues, updateInputValues}) => {
     const [newCategory, setNewCategory] = useState('');
     const AddIcon = Icons.Add;
-
-    console.log('inputValues', inputValues)
-    //console.log('addToInputValues', addToInputValues);
 
     const handleAddingListItems = () => {
         const newItem = newCategory;
          if(newItem.text !==""){
-            const categories = [...inputValues.mdsaCategories, newItem];
-            addToInputValues({
-                mdsaCategories: categories
+            const newList = [...inputValues.mdsaCategories, newItem];
+            updateInputValues({
+                mdsaCategories: newList
             })
         }   
     }
 
-    
-    const handleListEdits = () => {
-        console.log('edit me!');
+    //TODO fix bug that removes two categories with same name
+    const handleListDeletion = (category) => {
+        const newList = inputValues.mdsaCategories.filter((item) => item !== category);
+        updateInputValues({
+            mdsaCategories: newList
+        });  
     }
-
-    const handleListDeletion = () => {
-        console.log('Delete me!')
-    } 
     
     return(
         <Wrapper>
             <InputField 
                 type = "text" 
                 name = "mdsaCategories" 
-                label = "mdsaCategories"
+                label = "Kategorier:"
                 handleChange = {(event) => setNewCategory(event.target.value)}
             />
             <AddIcon size = "24px" color = "orange" handleClick = {handleAddingListItems}/> 
             
             {inputValues.mdsaCategories.map(category => (
-                    <ListItemCategories handleEdit = {handleListEdits} handleRemove = {handleListDeletion}>
+                    <ListItemCategories handleRemove = { () => handleListDeletion(category) }>
                         {category}
                     </ListItemCategories>
             ))} 

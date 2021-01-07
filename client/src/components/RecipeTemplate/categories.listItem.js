@@ -20,16 +20,14 @@ const IconWrapper = styled('div', {
     marginLeft: '1rem'
 })
 
-const ListItemCategories = ({children, handleEdit, handleRemove}) => {
+const ListItemCategories = ({children, handleRemove}) => {
     //icons
-    const EditIcon = Icons.EditSimple
     const RemoveIcon = Icons.Minus
 
     return(
         <Wrapper>
             {children}
             <IconWrapper>
-                <EditIcon size = "1rem" handleClick = {handleEdit}/>
                 <RemoveIcon size = "1rem" handleClick = {handleRemove}/>
             </IconWrapper>
         </Wrapper>
