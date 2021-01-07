@@ -43,22 +43,24 @@ const RecipeTemplate = () => {
         preambleHTML: '',
         image: null,
         portions: 4,
-        cookingTime: '',
-        difficulty: '',
-        ingredients: ['5st äpplen', '2dl vatten'],
+        cookingTime: '0-15min',
+        difficulty: 'lätt',
+        ingredients: [],
         cookingSteps: [],
-        mdsaCategories: ['tacos', 'fredagsmys'],
+        mdsaCategories: [],
         author: 'användarnamn',
         isShared: false
     });
 
+    console.log('inputValues', inputValues)
+
     //stores file-data that goes up to image-bucket at server
     const [file, setFile] = useState(null);
 
-    const history = useHistory;
+    const history = useHistory();
 
     //icons
-    const AddIcon = Icons.Add;
+    //const AddIcon = Icons.Add;
 
     //handle input-changes
     const handleChange = (event) => {
@@ -104,7 +106,7 @@ const RecipeTemplate = () => {
         .then((res) => {
             //if response is good the user will be redirected to their userpage
             //TODO, do I really need this?
-            if(res.ok) history.push('/recipe');
+            if(res.ok) history.push('/user');
             res.json()
         })
         .catch((error) => {
@@ -112,7 +114,6 @@ const RecipeTemplate = () => {
         })
     };
 
-    console.log('inputValues', inputValues)
 
     return(
         <Wrapper>

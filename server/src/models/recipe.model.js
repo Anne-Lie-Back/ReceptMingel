@@ -14,8 +14,8 @@ const RecipeSchema = new Schema(
         },
         //TODO Change to handle "real" images
         image: {
-            type:String,
-            required: true,
+            type: mongoose.ObjectId,
+            ref: "File",
         },
         portions: {
             type: Number,
@@ -51,6 +51,11 @@ const RecipeSchema = new Schema(
         }
     }
 )
+
+//handles getting avatar-image-file
+RecipeSchema.virtual("imageURL").get(function () {
+return process.env.DOMAIN + this.image.toString();
+});
 
 const Recipe = mongoose.model("Recipe", RecipeSchema);
 module.exports = { Recipe, RecipeSchema }

@@ -13,7 +13,7 @@ const List = styled('ul', {
 })
 
 const IngredientsInput = ({inputValues, updateInputValues}) => {
-    console.log('inputValues Ingredients', inputValues)
+
     const [newIngredient, setNewIngredient] = useState('');
     //const [list, setList] = useState(inputValues.ingredients)
     //const [isEditThis, setEditThis] = useState(false);
@@ -21,7 +21,6 @@ const IngredientsInput = ({inputValues, updateInputValues}) => {
     const AddIcon = Icons.Add;
 
     const handleAddingListItems = () => {
-        console.log('INGREDIENS!')
         const newItem = newIngredient;
          if(newItem.text !==""){
             const newList = [...inputValues.ingredients, newItem];
@@ -44,8 +43,6 @@ const IngredientsInput = ({inputValues, updateInputValues}) => {
             ingredients: newList         
         }) 
     }
-
-    console.log('newIngredient', newIngredient)
 
     return(
         <Wrapper>
