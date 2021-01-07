@@ -4,17 +4,19 @@ import { styled } from 'styletron-react';
 import addOutline from '@iconify/icons-gridicons/add-outline';
 import minusCircleOutline from '@iconify/icons-eva/minus-circle-outline';
 import bxsCameraPlus from '@iconify/icons-bx/bxs-camera-plus';
+import bxEditAlt from '@iconify/icons-bx/bx-edit-alt';
+import bxEdit from '@iconify/icons-bx/bx-edit';
 
 
 
 const StyledIcon = styled(Icon, ({$size, $color}) => ({
     fontSize: $size,
-    color: $color,
+    color: $color || 'black',
 }));
 
 // For adding
-const Add = ({size, color}) => (
-    <StyledIcon icon={addOutline} $size = {size} $color = {color}/>
+const Add = ({size, color, handleClick}) => (
+    <StyledIcon icon={addOutline} $size = {size} $color = {color} onClick = {handleClick}/>
 );
 
 // For removing
@@ -23,6 +25,13 @@ const Minus = ({size, color}) => (
 );
 
 // For edit
+const EditSimple = ({size, color}) => (
+    <StyledIcon icon={bxEditAlt} $size = {size} $color = {color}/>
+);
+
+const EditBox = ({size, color}) => (
+    <StyledIcon icon={bxEdit} $size = {size} $color = {color}/>
+);
 
 // For file-upload
 const ImageUpload = ({size, color}) => (
@@ -41,6 +50,8 @@ const ImageUpload = ({size, color}) => (
 
 const Icons = {
     Add,
+    EditSimple,
+    EditBox,
     ImageUpload,
     Minus
 }

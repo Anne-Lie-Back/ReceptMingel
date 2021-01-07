@@ -1,6 +1,7 @@
 import {useEffect, useHistory, useState} from 'react';
 import { styled } from 'styletron-react';
 import InputField from '../inputField'
+import ListItemCategories from './categories.listItem'
 
 import Icons from '../../config/icons'
 
@@ -42,17 +43,19 @@ const RecipeTemplate = () => {
         difficulty: '',
         ingredients: [],
         cookingSteps: [],
-        mdsaCategories: [],
+        mdsaCategories: ['FREDAGSMYS'],
         author: 'användarnamn',
         isShared: false
     });
 
     //stores file-data that goes up to image-bucket at server
     const [file, setFile] = useState(null);
+    const [newCategory, setNewCategory] = useState('');
 
     const history = useHistory;
+
+    //icons
     const AddIcon = Icons.Add;
-    const RemoveIcon = Icons.Minus;
 
     //handle input-changes
     const handleChange = (event) => {
@@ -61,6 +64,40 @@ const RecipeTemplate = () => {
             ...inputValues,
             [name]: value,
           });
+    }
+
+    console.log('inputValues.mdsaCategories', inputValues.mdsaCategories);
+
+    const handleAddingListItems = (list) => {
+        console.log('category', newCategory);
+        //TODO make this more effecive
+        if (list === "mdsaCategories"){
+            const newItem = newCategory;
+            if(newItem.text !==""){
+                const categories = [...inputValues.mdsaCategories, newItem];
+                setInputValues({
+                    mdsaCategories: categories
+                })
+            }  
+        } /* else if (list === "ingredients"){
+            console.log('Ingredienser!')
+            setInputValues(previous => ({
+                ingredients: [...previous, value]
+            })) 
+        }else if (list === "cookingSteps"){
+            console.log('Tillagningssteg!')
+            setInputValues(previous => ({
+                cookingSteps: [...previous, value]
+            })) 
+        } */
+    }
+
+    const handleListEdits = () => {
+        console.log('edit me!');
+    }
+
+    const handleListDeletion = () => {
+        console.log('Delete me!')
     }
 
     //Listens after changes to file-state. If changed to not null, the image will be sent to the bucket and id 
@@ -157,9 +194,15 @@ const RecipeTemplate = () => {
                     type = "text" 
                     name = "mdsaCategories" 
                     label = "mdsaCategories"
-                    handleChange = {handleChange}
+                    handleChange = {(event) => setNewCategory(event.target.value)}
                 />
-                <AddIcon size = "24px" color = "orange"/>
+                <AddIcon size = "24px" color = "orange" handleClick = {() => handleAddingListItems("mdsaCategories")}/>
+                
+                {inputValues.mdsaCategories.map(category => (
+                        <ListItemCategories /* handleEdit = {handleListEdits} handleRemove = {handleListDeletion}  */>
+                            {category}
+                        </ListItemCategories>
+                ))}
 
                 <InputField 
                     type = "number" 
@@ -176,6 +219,8 @@ const RecipeTemplate = () => {
                     label = "Ingredients"
                     handleChange = {handleChange}
                 />
+                <AddIcon size = "24px"/>
+
 
                 <InputField 
                     type = "text"  
@@ -183,6 +228,7 @@ const RecipeTemplate = () => {
                     label = "steg 1:" 
                     handleChange = {handleChange}
                 />
+                <AddIcon size = "24px" color = 'pink'/>
   
                 <Button onClick = {handleSubmit}>Register</Button>
             </FormWrapper>
