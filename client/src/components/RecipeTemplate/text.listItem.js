@@ -7,24 +7,45 @@ const Wrapper = styled('li', {
     alignItems: 'center',
     margin: '0.5rem 1rem',
     padding: '0.5rem 1rem',
+    borderBottom: '1px solid #E3E3E3'
+})
+
+const Dot = styled('div', {
+    width: '5px',
+    height: '5px',
+    marginRight: '2rem',
+    backgroundColor: '#000000',
+    borderRadius: '50%'
+})
+
+const TextWrapper = styled('div', {
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: 'row'
 })
 
 const IconWrapper = styled('div', {
     display: 'flex',
     flexDirection: 'row',
-    marginLeft: '1rem'
+    justifyContent:'space-between',
+    alignItems: 'center',
+    width:'50px',
+    marginLeft: '1rem',
 })
 
 const TextListItem = ({children, handleEdit, handleRemove}) => {
-    //const EditIcon = Icons.EditSimple
+    const EditIcon = Icons.EditSimple
     const RemoveIcon = Icons.Minus
 
     return(
         <Wrapper>
-            {children}
+            <TextWrapper>
+                <Dot/>
+                {children}
+            </TextWrapper>
             <IconWrapper>
-                {/* <EditIcon size = "1rem" handleClick = {handleEdit}/> */}
-                <RemoveIcon size = "1rem" handleClick = {handleRemove}/>
+                <EditIcon size = "20px" handleClick = {handleEdit}/>
+                <RemoveIcon size = "20px" handleClick = {handleRemove}/>
             </IconWrapper>
         </Wrapper>
     )

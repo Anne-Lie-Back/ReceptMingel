@@ -5,6 +5,7 @@ import CategoriesInput from './CategoriesInput';
 import CookingTimeInput from './CookingTimeInput';
 import DifficultyInput from './DifficultyInput';
 import IngredientsInput from './IngredientsInput';
+import CookingStepsInput from './CookingStepsInput';
 
 import Icons from '../../config/icons'
 
@@ -157,13 +158,7 @@ const RecipeTemplate = () => {
 
                 <IngredientsInput inputValues = {inputValues} updateInputValues = {setInputValues} />
 
-                <InputField 
-                    type = "text"  
-                    name = "cookingSteps" 
-                    label = "Steg för steg:" 
-                    handleChange = {handleChange}
-                />
-                <AddIcon size = "24px" color = 'pink'/>
+                <CookingStepsInput inputValues = {inputValues} updateInputValues = {setInputValues} />
   
                 <Button onClick = {handleSubmit}>Register</Button>
             </FormWrapper>
