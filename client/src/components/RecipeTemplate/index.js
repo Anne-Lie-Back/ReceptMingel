@@ -1,7 +1,7 @@
 import {useEffect, useHistory, useState} from 'react';
 import { styled } from 'styletron-react';
-import InputField from '../inputField'
-import ListItemCategories from './categories.listItem'
+import InputField from '../inputField';
+import CategoriesInput from './CategoriesInput';
 
 import Icons from '../../config/icons'
 
@@ -50,7 +50,6 @@ const RecipeTemplate = () => {
 
     //stores file-data that goes up to image-bucket at server
     const [file, setFile] = useState(null);
-    const [newCategory, setNewCategory] = useState('');
 
     const history = useHistory;
 
@@ -64,40 +63,6 @@ const RecipeTemplate = () => {
             ...inputValues,
             [name]: value,
           });
-    }
-
-    console.log('inputValues.mdsaCategories', inputValues.mdsaCategories);
-
-    const handleAddingListItems = (list) => {
-        console.log('category', newCategory);
-        //TODO make this more effecive
-        if (list === "mdsaCategories"){
-            const newItem = newCategory;
-            if(newItem.text !==""){
-                const categories = [...inputValues.mdsaCategories, newItem];
-                setInputValues({
-                    mdsaCategories: categories
-                })
-            }  
-        } /* else if (list === "ingredients"){
-            console.log('Ingredienser!')
-            setInputValues(previous => ({
-                ingredients: [...previous, value]
-            })) 
-        }else if (list === "cookingSteps"){
-            console.log('Tillagningssteg!')
-            setInputValues(previous => ({
-                cookingSteps: [...previous, value]
-            })) 
-        } */
-    }
-
-    const handleListEdits = () => {
-        console.log('edit me!');
-    }
-
-    const handleListDeletion = () => {
-        console.log('Delete me!')
     }
 
     //Listens after changes to file-state. If changed to not null, the image will be sent to the bucket and id 
@@ -190,19 +155,7 @@ const RecipeTemplate = () => {
                     <option value="svårt">SVÅRT</option>
                 </select>
 
-                <InputField 
-                    type = "text" 
-                    name = "mdsaCategories" 
-                    label = "mdsaCategories"
-                    handleChange = {(event) => setNewCategory(event.target.value)}
-                />
-                <AddIcon size = "24px" color = "orange" handleClick = {() => handleAddingListItems("mdsaCategories")}/>
-                
-                {inputValues.mdsaCategories.map(category => (
-                        <ListItemCategories handleEdit = {handleListEdits} handleRemove = {handleListDeletion}>
-                            {category}
-                        </ListItemCategories>
-                ))}
+                <CategoriesInput inputValues = {inputValues} addToInputValues = {setInputValues}/>
 
                 <InputField 
                     type = "number" 
