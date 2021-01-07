@@ -16,14 +16,16 @@ const CategoriesInput = ({inputValues, updateInputValues}) => {
     const AddIcon = Icons.Add;
 
     const handleAddingListItems = () => {
+        console.log('Kategori!')
         const newItem = newCategory;
          if(newItem.text !==""){
             const newList = [...inputValues.mdsaCategories, newItem];
-            updateInputValues({
-                mdsaCategories: newList
+            updateInputValues({                    
+                ...inputValues,    
+                mdsaCategories: newList         
             })
-        }   
-    }
+        };
+    };
 
     //TODO fix bug that removes two categories with same name
     const handleListDeletion = (category) => {

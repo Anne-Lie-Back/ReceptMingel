@@ -4,22 +4,23 @@ import InputField from '../inputField';
 import CategoriesInput from './CategoriesInput';
 import CookingTimeInput from './CookingTimeInput';
 import DifficultyInput from './DifficultyInput';
+import IngredientsInput from './IngredientsInput';
 
 import Icons from '../../config/icons'
 
 const Wrapper = styled('div', {
     display: 'flex',
-    alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
-    height: '800px'
-})
+    height: '800px',
+    margin: '2rem 1rem'
+});
 
 const FormWrapper = styled('div', {
     display: 'flex',
     flexDirection: 'column',
     width: '600px'
-})
+});
 
 const Button = styled('button', {
     padding: '1rem 2rem',
@@ -43,9 +44,9 @@ const RecipeTemplate = () => {
         portions: 4,
         cookingTime: '',
         difficulty: '',
-        ingredients: [],
+        ingredients: ['5st äpplen', '2dl vatten'],
         cookingSteps: [],
-        mdsaCategories: [],
+        mdsaCategories: ['tacos', 'fredagsmys'],
         author: 'användarnamn',
         isShared: false
     });
@@ -91,7 +92,6 @@ const RecipeTemplate = () => {
     //sends inputvalues to db
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log('inputValues', inputValues);
         fetch('http://localhost:8080/api/recipes/', {
             method: 'POST',
             credentials: "include",
@@ -111,7 +111,7 @@ const RecipeTemplate = () => {
         })
     };
 
-    console.log('inputValues', inputValues);
+    console.log('inputValues', inputValues)
 
     return(
         <Wrapper>
@@ -154,20 +154,13 @@ const RecipeTemplate = () => {
                     max="16"
                     handleChange = {handleChange}
                 />
-                
-                <InputField 
-                    type = "text" 
-                    name = "ingredients" 
-                    label = "Ingredients"
-                    handleChange = {handleChange}
-                />
-                <AddIcon size = "24px"/>
 
+                <IngredientsInput inputValues = {inputValues} updateInputValues = {setInputValues} />
 
                 <InputField 
                     type = "text"  
                     name = "cookingSteps" 
-                    label = "steg 1:" 
+                    label = "Steg för steg:" 
                     handleChange = {handleChange}
                 />
                 <AddIcon size = "24px" color = 'pink'/>
