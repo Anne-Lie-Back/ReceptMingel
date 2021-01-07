@@ -4,16 +4,21 @@ import Icons from '../../config/icons'
 const Wrapper = styled('div', {
     display: 'flex',
     justifyContent: 'space-between',
-    margin: '1rem 2rem',
-    padding: '1rem 2rem',
-    color: 'DEEFFF',
+    alignItems: 'center',
+    width: '180px',
+    margin: '0.5rem 1rem',
+    padding: '0.5rem 1rem',
+    backgroundColor: '#DEEFFF',
     border: '1px solid black',
-    borderRadius: '5px'
+    borderRadius: '5px',
+    textTransform: 'uppercase'
 })
 
-const IconWrapper = () => {
-    
-}
+const IconWrapper = styled('div', {
+    display: 'flex',
+    flexDirection: 'row',
+    marginLeft: '1rem'
+})
 
 const ListItemCategories = ({children, handleEdit, handleRemove}) => {
     //icons
@@ -23,10 +28,10 @@ const ListItemCategories = ({children, handleEdit, handleRemove}) => {
     return(
         <Wrapper>
             {children}
-{/*             <IconWrapper>
-                <EditIcon size = "2rem" handleClick = {handleEdit}/>
-                <RemoveIcon size = "2rem" handleClick = {handleRemove}/>
-            </IconWrapper> */}
+            <IconWrapper>
+                <EditIcon size = "1rem" handleClick = {handleEdit}/>
+                <RemoveIcon size = "1rem" handleClick = {handleRemove}/>
+            </IconWrapper>
         </Wrapper>
     );
 };

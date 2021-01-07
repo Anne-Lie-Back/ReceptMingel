@@ -43,7 +43,7 @@ const RecipeTemplate = () => {
         difficulty: '',
         ingredients: [],
         cookingSteps: [],
-        mdsaCategories: ['FREDAGSMYS'],
+        mdsaCategories: [],
         author: 'användarnamn',
         isShared: false
     });
@@ -199,7 +199,7 @@ const RecipeTemplate = () => {
                 <AddIcon size = "24px" color = "orange" handleClick = {() => handleAddingListItems("mdsaCategories")}/>
                 
                 {inputValues.mdsaCategories.map(category => (
-                        <ListItemCategories /* handleEdit = {handleListEdits} handleRemove = {handleListDeletion}  */>
+                        <ListItemCategories handleEdit = {handleListEdits} handleRemove = {handleListDeletion}>
                             {category}
                         </ListItemCategories>
                 ))}
