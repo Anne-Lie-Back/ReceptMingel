@@ -17,38 +17,50 @@ const IngredientsInput = ({inputValues, updateInputValues}) => {
     const [editInput, setEditedInput] = useState('');
     const [activeEdit, setActiveEdit] = useState(null);
 
+    //Icons
     const AddIcon = Icons.Add;
 
+    //Adds items to official ingredients-array
     const handleAddingListItems = () => {
         const newItem = newIngredient;
-         if(newItem.text !==""){
+        //checks if input is empty
+        if(newItem !==""){
             const newList = [...inputValues.ingredients, newItem];
             updateInputValues({                    
                 ...inputValues,    
                 ingredients: newList         
             })
+            //empties inputfield
             setNewIngredient('');
         }  
     }
 
+    //Opens edit-mode for single listitem
     const handleOpenEdit = (index, ingredient) => {
         setActiveEdit(activeEdit === index ? null : index)
         setEditedInput(ingredient)
     }
     
-
+    //updates official ingredient-array
     const handleEditItem = (index) => {
-        inputValues.ingredients.splice(index, 1, editInput)
-        setActiveEdit(null);
+        //checks if input is empty
+        if(editInput !==""){
+            inputValues.ingredients.splice(index, 1, editInput)
+            //empties inputfield
+            setActiveEdit(null);
+        }
+        //TODO set old value if input empty
     }
 
+    //Deletes item from official ingredients-array
     //TODO fix bug that removes two categories with same name
-    const handleListDeletion = (ingredient, targetValue) => {
+    const handleListDeletion = (ingredient) => {
         const newList = inputValues.ingredients.filter((item) => item !== ingredient);
         updateInputValues({                    
             ...inputValues,    
             ingredients: newList         
         })
+        //empties inputfield
         setActiveEdit(null);
     }
 
@@ -57,13 +69,13 @@ const IngredientsInput = ({inputValues, updateInputValues}) => {
             <List>      
                 {inputValues.ingredients.map((ingredient, index)=> (
                         <TextListItem 
-                            isEditThis={activeEdit === index}
+                            isEditIngredient={activeEdit === index}
                             value = {editInput}
                             handleOpenEdit = {() => handleOpenEdit(index, ingredient)} 
                             handleEditItem = {() => handleEditItem(index)}
                             handleChange = {(event) => setEditedInput(event.target.value)}
                             //TODO change to index?
-                            handleRemove = { () => handleListDeletion(ingredient, index) }>
+                            handleRemove = { () => handleListDeletion(ingredient) }>
                             {ingredient}
                         </TextListItem>
                 ))}  
@@ -72,6 +84,7 @@ const IngredientsInput = ({inputValues, updateInputValues}) => {
                 type = "text" 
                 name = "ingredients" 
                 label = 'Ingredienser (mängd och råvara i format: "1 tsk vaniljpulver"):'
+                value = {newIngredient}
                 handleChange = {(event) => setNewIngredient(event.target.value)}
             />
             <AddIcon size = "24px" handleClick = {handleAddingListItems}/> 

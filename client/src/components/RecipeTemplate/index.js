@@ -50,13 +50,8 @@ const RecipeTemplate = () => {
         isShared: false
     });
 
-    console.log('inputValues', inputValues)
-
     //stores file-data that goes up to image-bucket at server
     const [file, setFile] = useState(null);
-
-    //icons
-    //const AddIcon = Icons.Add;
 
     //handle input-changes
     const handleChange = (event) => {
@@ -100,6 +95,7 @@ const RecipeTemplate = () => {
             body: JSON.stringify(inputValues)
         })
         .then((res) => {
+            console.log('Recipe uploaded successfully!')
             res.json()
         })
         .catch((error) => {
@@ -116,7 +112,6 @@ const RecipeTemplate = () => {
                     label = "Titel:"
                     handleChange = {handleChange}
                 />
-
                 <InputField 
                     $as = "textarea" 
                     name = "preambleHTML" 
@@ -125,7 +120,6 @@ const RecipeTemplate = () => {
                     cols="80"  
                     handleChange = {handleChange}
                 />
-
                 <InputField 
                     type = "file" 
                     name = "image" 
@@ -133,13 +127,9 @@ const RecipeTemplate = () => {
                     accept = "image/*"
                     handleChange = {(event) => setFile(event.target.files[0])}
                 /> 
-
                 <CookingTimeInput handleChange = {handleChange}/>
-
                 <DifficultyInput handleChange = {handleChange}/>
-
                 <CategoriesInput inputValues = {inputValues} updateInputValues = {setInputValues}/>
-
                 <InputField 
                     type = "number" 
                     name = "portions" 
@@ -148,11 +138,8 @@ const RecipeTemplate = () => {
                     max="16"
                     handleChange = {handleChange}
                 />
-
-                <IngredientsInput inputValues = {inputValues} updateInputValues = {setInputValues} />
-
-                <CookingStepsInput inputValues = {inputValues} updateInputValues = {setInputValues} />
-  
+                <IngredientsInput inputValues = {inputValues} updateInputValues = {setInputValues}/>
+                <CookingStepsInput inputValues = {inputValues} updateInputValues = {setInputValues}/>
                 <Button onClick = {handleSubmit}>Register</Button>
             </FormWrapper>
         </Wrapper>

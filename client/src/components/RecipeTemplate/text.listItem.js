@@ -35,26 +35,32 @@ const IconWrapper = styled('div', {
     marginLeft: '1rem',
 })
 
-const TextListItem = ({children, isEditThis, isEditThisStep, value, handleOpenEdit, handleEditItem, handleChange, handleRemove}) => {
-    //const [currentInputValue, setcurrentInputValue] = useState();
+const TextListItem = ({children, isEditIngredient, isEditStep, value, handleOpenEdit, handleEditItem, handleChange, handleRemove}) => {
+
+    //Icons
     const EditIcon = Icons.EditSimple;
     const RemoveIcon = Icons.Minus;
     const DoneIcon = Icons.Done;
 
+    // JSX checks if edit from ingredient or step is active for this element (checks in parent)
+    // If it is it will render different inputField-types depending on if it is ingredient or step that wants to be edited
+    // If both edit-bools are false, the element will display the child as ordinary text
     return(
         <Wrapper>
-            {isEditThis || isEditThisStep?
+            {isEditIngredient || isEditStep?
                 <>
-                    {console.log('isEdiThisStep', isEditThisStep)}
-                    <InputField 
-                        $as = {isEditThisStep? 'textarea' : null}
-                        type = {isEditThis? 'text' : null} 
-                        name = "ingredients" 
-                        value = {value}
-                        rows="2" 
-                        cols="80" 
-                        handleChange = {handleChange}
-                    />
+                    <TextWrapper>
+                        <Dot/>
+                        <InputField 
+                            $as = {isEditStep? 'textarea' : null}
+                            type = {isEditIngredient? 'text' : null} 
+                            name = "ingredients" 
+                            value = {value}
+                            rows="2" 
+                            cols="80" 
+                            handleChange = {handleChange}
+                        />
+                    </TextWrapper>
                     <IconWrapper>
                         <DoneIcon size = "20px" handleClick = {handleEditItem}/>
                         <RemoveIcon size = "20px" handleClick = {handleRemove}/>
