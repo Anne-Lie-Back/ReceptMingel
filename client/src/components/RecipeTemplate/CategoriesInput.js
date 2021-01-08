@@ -17,12 +17,13 @@ const CategoriesInput = ({inputValues, updateInputValues}) => {
 
     const handleAddingListItems = () => {
         const newItem = newCategory;
-         if(newItem.text !==""){
+        if(newItem.text !==""){
             const newList = [...inputValues.mdsaCategories, newItem];
             updateInputValues({                    
                 ...inputValues,    
                 mdsaCategories: newList         
             })
+            setNewCategory('');
         };
     };
 

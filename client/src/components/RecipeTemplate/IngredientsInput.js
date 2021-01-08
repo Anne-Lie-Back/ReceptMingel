@@ -16,7 +16,6 @@ const IngredientsInput = ({inputValues, updateInputValues}) => {
     const [newIngredient, setNewIngredient] = useState('');
     const [editInput, setEditedInput] = useState('');
     const [activeEdit, setActiveEdit] = useState(null);
-    //const [isEditThis, setEditThis] = useState(false);
 
     const AddIcon = Icons.Add;
 
@@ -28,7 +27,8 @@ const IngredientsInput = ({inputValues, updateInputValues}) => {
                 ...inputValues,    
                 ingredients: newList         
             })
-        }   
+            setNewIngredient('');
+        }  
     }
 
     const handleOpenEdit = (index, ingredient) => {
@@ -38,10 +38,7 @@ const IngredientsInput = ({inputValues, updateInputValues}) => {
     
 
     const handleEditItem = (index) => {
-        console.log('index', index);
-        console.log('editInput', editInput)
         inputValues.ingredients.splice(index, 1, editInput)
-
         setActiveEdit(null);
     }
 

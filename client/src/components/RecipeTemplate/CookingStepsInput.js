@@ -14,23 +14,31 @@ const List = styled('ul', {
 
 const CookingStepsInput = ({inputValues, updateInputValues}) => {
     const [newStep, setNewStep] = useState('');
-    //const [isEditThis, setEditThis] = useState(false);
+    const [editInput, setEditedInput] = useState('');
+    const [activeEdit, setActiveEdit] = useState(null);
 
     const AddIcon = Icons.Add;
 
     const handleAddingListItems = () => {
         const newItem = newStep;
-         if(newItem.text !==""){
+        if(newItem.text !==""){
             const newList = [...inputValues.cookingSteps, newItem];
             updateInputValues({                    
                 ...inputValues,    
                 cookingSteps: newList         
             })
-        }   
+            setNewStep('');
+        }
     }
 
-    const handleEditListItems = () => {
-        console.log('EDIT ME!')
+    const handleOpenEdit = (index, step) => {
+        setActiveEdit(activeEdit === index ? null : index)
+        setEditedInput(step)
+    }
+
+    const handleEditItem = (index) => {
+        inputValues.cookingSteps.splice(index, 1, editInput)
+        setActiveEdit(null);
     }
 
     //TODO fix bug that removes two categories with same name
@@ -45,8 +53,16 @@ const CookingStepsInput = ({inputValues, updateInputValues}) => {
     return(
         <Wrapper>
             <List>      
-                {inputValues.cookingSteps.map(step => (
-                        <TextListItem handleEdit = {handleEditListItems} handleRemove = { () => handleListDeletion(step) }>
+                {inputValues.cookingSteps.map((step, index) => (
+                        <TextListItem 
+                            isEditThisStep={activeEdit === index}
+                            value = {editInput}
+                            handleOpenEdit = {() => handleOpenEdit(index, step)}
+                            handleEditItem = {() => handleEditItem(index)}
+                            handleChange = {(event) => setEditedInput(event.target.value)}
+                            //Todo, change to index instead of step?
+                            handleRemove = { () => handleListDeletion(step) }
+                        >
                             {step}
                         </TextListItem>
                 ))}  
@@ -56,7 +72,8 @@ const CookingStepsInput = ({inputValues, updateInputValues}) => {
                 name = "cookingSteps" 
                 label = 'Steg för steg-instruktioner:'
                 rows="2" 
-                cols="80" 
+                cols="80"
+                value = {newStep}
                 handleChange = {(event) => setNewStep(event.target.value)}
             />
             <AddIcon size = "24px" handleClick = {handleAddingListItems}/> 

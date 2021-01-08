@@ -35,7 +35,7 @@ const IconWrapper = styled('div', {
     marginLeft: '1rem',
 })
 
-const TextListItem = ({children, isEditThis, value, handleOpenEdit, handleEditItem, handleChange, handleRemove}) => {
+const TextListItem = ({children, isEditThis, isEditThisStep, value, handleOpenEdit, handleEditItem, handleChange, handleRemove}) => {
     //const [currentInputValue, setcurrentInputValue] = useState();
     const EditIcon = Icons.EditSimple;
     const RemoveIcon = Icons.Minus;
@@ -43,12 +43,16 @@ const TextListItem = ({children, isEditThis, value, handleOpenEdit, handleEditIt
 
     return(
         <Wrapper>
-            {isEditThis?
+            {isEditThis || isEditThisStep?
                 <>
+                    {console.log('isEdiThisStep', isEditThisStep)}
                     <InputField 
-                        type = "text" 
+                        $as = {isEditThisStep? 'textarea' : null}
+                        type = {isEditThis? 'text' : null} 
                         name = "ingredients" 
                         value = {value}
+                        rows="2" 
+                        cols="80" 
                         handleChange = {handleChange}
                     />
                     <IconWrapper>
