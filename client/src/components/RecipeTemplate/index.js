@@ -1,4 +1,4 @@
-import {useEffect, useHistory, useState} from 'react';
+import {useEffect, useState} from 'react';
 import { styled } from 'styletron-react';
 import InputField from '../inputField';
 import CategoriesInput from './CategoriesInput';
@@ -6,8 +6,6 @@ import CookingTimeInput from './CookingTimeInput';
 import DifficultyInput from './DifficultyInput';
 import IngredientsInput from './IngredientsInput';
 import CookingStepsInput from './CookingStepsInput';
-
-import Icons from '../../config/icons'
 
 const Wrapper = styled('div', {
     display: 'flex',
@@ -57,8 +55,6 @@ const RecipeTemplate = () => {
     //stores file-data that goes up to image-bucket at server
     const [file, setFile] = useState(null);
 
-    const history = useHistory();
-
     //icons
     //const AddIcon = Icons.Add;
 
@@ -104,16 +100,12 @@ const RecipeTemplate = () => {
             body: JSON.stringify(inputValues)
         })
         .then((res) => {
-            //if response is good the user will be redirected to their userpage
-            //TODO, do I really need this?
-            if(res.ok) history.push('/user');
             res.json()
         })
         .catch((error) => {
             console.log('error', error);
         })
     };
-
 
     return(
         <Wrapper>

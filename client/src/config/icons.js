@@ -6,6 +6,8 @@ import minusCircleOutline from '@iconify/icons-eva/minus-circle-outline';
 import bxsCameraPlus from '@iconify/icons-bx/bxs-camera-plus';
 import bxEditAlt from '@iconify/icons-bx/bx-edit-alt';
 import bxEdit from '@iconify/icons-bx/bx-edit';
+import bxCheckCircle from '@iconify/icons-bx/bx-check-circle';
+
 
 
 
@@ -33,6 +35,10 @@ const EditBox = ({size, color, handleClick}) => (
     <StyledIcon icon={bxEdit} $size = {size} $color = {color} onClick = {handleClick}/>
 );
 
+const Done = ({size, color, handleClick}) => (
+    <StyledIcon icon={bxCheckCircle} $size = {size} $color = {color} onClick = {handleClick}/>
+);
+
 // For file-upload
 const ImageUpload = ({size, color, handleClick}) => (
     <StyledIcon icon={bxsCameraPlus} $size = {size} $color = {color} onClick = {handleClick}/>
@@ -52,6 +58,7 @@ const Icons = {
     Add,
     EditSimple,
     EditBox,
+    Done,
     ImageUpload,
     Minus
 }

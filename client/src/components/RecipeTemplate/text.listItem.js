@@ -1,5 +1,7 @@
+import {useState} from 'react';
 import { styled } from 'styletron-react';
 import Icons from '../../config/icons'
+import InputField from '../inputField';
 
 const Wrapper = styled('li', {
     display: 'flex',
@@ -33,20 +35,39 @@ const IconWrapper = styled('div', {
     marginLeft: '1rem',
 })
 
-const TextListItem = ({children, handleEdit, handleRemove}) => {
-    const EditIcon = Icons.EditSimple
-    const RemoveIcon = Icons.Minus
+const TextListItem = ({children, isEditThis, value, handleOpenEdit, handleEditItem, handleChange, handleRemove}) => {
+    const [currentInputValue, setcurrentInputValue] = useState(value);
+    const EditIcon = Icons.EditSimple;
+    const RemoveIcon = Icons.Minus;
+    const DoneIcon = Icons.Done;
 
     return(
         <Wrapper>
-            <TextWrapper>
-                <Dot/>
-                {children}
-            </TextWrapper>
-            <IconWrapper>
-                <EditIcon size = "20px" handleClick = {handleEdit}/>
-                <RemoveIcon size = "20px" handleClick = {handleRemove}/>
-            </IconWrapper>
+            {isEditThis?
+                <>
+                    <InputField 
+                        type = "text" 
+                        name = "ingredients" 
+                        //value = {currentInputValue}
+                        handleChange = {handleChange}
+                    />
+                    <IconWrapper>
+                        <DoneIcon size = "20px" handleClick = {handleEditItem}/>
+                        <RemoveIcon size = "20px" handleClick = {handleRemove}/>
+                    </IconWrapper>
+                </>
+                :
+                <>
+                    <TextWrapper>
+                        <Dot/>
+                        {children}
+                    </TextWrapper>
+                    <IconWrapper>
+                        <EditIcon size = "20px" handleClick = {handleOpenEdit}/>
+                        <RemoveIcon size = "20px" handleClick = {handleRemove}/>
+                    </IconWrapper>
+                </>
+            }
         </Wrapper>
     )
 }
