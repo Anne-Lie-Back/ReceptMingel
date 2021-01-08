@@ -31,10 +31,11 @@ const IngredientsInput = ({inputValues, updateInputValues}) => {
         }   
     }
 
-    const handleOpenEdit = (targetValue) => {
+    const handleOpenEdit = (targetValue, ingredient) => {
         if (activeEdits.indexOf(targetValue) > -1) {
             setActiveEdits(activeEdits.filter(value => value !== targetValue));
         } else {
+            setEditedInput(ingredient)
             setActiveEdits(activeEdits.concat(targetValue));
         }
     }
@@ -64,8 +65,8 @@ const IngredientsInput = ({inputValues, updateInputValues}) => {
                 {inputValues.ingredients.map((ingredient, index)=> (
                         <TextListItem 
                             isEditThis={activeEdits.indexOf(index) > -1}
-                            value = {ingredient}
-                            handleOpenEdit = {() => handleOpenEdit(index)} 
+                            value = {editInput}
+                            handleOpenEdit = {() => handleOpenEdit(index, ingredient)} 
                             handleEditItem = {() => handleEditItem(index)}
                             handleChange = {(event) => setEditedInput(event.target.value)}
                             //TODO change to index?

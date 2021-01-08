@@ -36,7 +36,7 @@ const IconWrapper = styled('div', {
 })
 
 const TextListItem = ({children, isEditThis, value, handleOpenEdit, handleEditItem, handleChange, handleRemove}) => {
-    const [currentInputValue, setcurrentInputValue] = useState(value);
+    //const [currentInputValue, setcurrentInputValue] = useState();
     const EditIcon = Icons.EditSimple;
     const RemoveIcon = Icons.Minus;
     const DoneIcon = Icons.Done;
@@ -48,7 +48,7 @@ const TextListItem = ({children, isEditThis, value, handleOpenEdit, handleEditIt
                     <InputField 
                         type = "text" 
                         name = "ingredients" 
-                        //value = {currentInputValue}
+                        value = {value}
                         handleChange = {handleChange}
                     />
                     <IconWrapper>
