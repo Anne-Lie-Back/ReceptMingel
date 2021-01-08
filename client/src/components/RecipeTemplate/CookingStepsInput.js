@@ -70,7 +70,7 @@ const CookingStepsInput = ({inputValues, updateInputValues}) => {
             <List>      
                 {inputValues.cookingSteps.map((step, index) => (
                         <TextListItem 
-                            isEditThisStep={activeEdit === index}
+                            isEditStep={activeEdit === index}
                             value = {editInput}
                             handleOpenEdit = {() => handleOpenEdit(index, step)}
                             handleEditItem = {() => handleEditItem(index)}
