@@ -15,7 +15,7 @@ const List = styled('ul', {
 const IngredientsInput = ({inputValues, updateInputValues}) => {
     const [newIngredient, setNewIngredient] = useState('');
     const [editInput, setEditedInput] = useState('');
-    const [activeEdits, setActiveEdits] = useState([]);
+    const [activeEdit, setActiveEdit] = useState(null);
     //const [isEditThis, setEditThis] = useState(false);
 
     const AddIcon = Icons.Add;
@@ -31,13 +31,9 @@ const IngredientsInput = ({inputValues, updateInputValues}) => {
         }   
     }
 
-    const handleOpenEdit = (targetValue, ingredient) => {
-        if (activeEdits.indexOf(targetValue) > -1) {
-            setActiveEdits(activeEdits.filter(value => value !== targetValue));
-        } else {
-            setEditedInput(ingredient)
-            setActiveEdits(activeEdits.concat(targetValue));
-        }
+    const handleOpenEdit = (index, ingredient) => {
+        setActiveEdit(activeEdit === index ? null : index)
+        setEditedInput(ingredient)
     }
     
 
@@ -46,7 +42,7 @@ const IngredientsInput = ({inputValues, updateInputValues}) => {
         console.log('editInput', editInput)
         inputValues.ingredients.splice(index, 1, editInput)
 
-        setActiveEdits(activeEdits.filter(value => value !== index));
+        setActiveEdit(null);
     }
 
     //TODO fix bug that removes two categories with same name
@@ -56,7 +52,7 @@ const IngredientsInput = ({inputValues, updateInputValues}) => {
             ...inputValues,    
             ingredients: newList         
         })
-        setActiveEdits(activeEdits.filter(value => value !== targetValue));
+        setActiveEdit(null);
     }
 
     return(
@@ -64,7 +60,7 @@ const IngredientsInput = ({inputValues, updateInputValues}) => {
             <List>      
                 {inputValues.ingredients.map((ingredient, index)=> (
                         <TextListItem 
-                            isEditThis={activeEdits.indexOf(index) > -1}
+                            isEditThis={activeEdit === index}
                             value = {editInput}
                             handleOpenEdit = {() => handleOpenEdit(index, ingredient)} 
                             handleEditItem = {() => handleEditItem(index)}
