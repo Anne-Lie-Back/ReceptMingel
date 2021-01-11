@@ -14,6 +14,10 @@ import bxBookReader from '@iconify/icons-bx/bx-book-reader';
 //import outlineFoodBank from '@iconify/icons-ic/outline-food-bank';
 //import roundFoodBank from '@iconify/icons-ic/round-food-bank';
 import roundRestaurantMenu from '@iconify/icons-ic/round-restaurant-menu';
+import bxCopyright from '@iconify/icons-bx/bx-copyright';
+import bxlLinkedinSquare from '@iconify/icons-bx/bxl-linkedin-square';
+
+
 
 const StyledIcon = styled(Icon, ({$size, $color}) => ({
     fontSize: $size,
@@ -70,6 +74,16 @@ const RecipeBook = ({size, color, handleClick}) => (
     <StyledIcon icon={bxBookReader} $size = {size} $color = {color} onClick = {handleClick}/>
 );
 
+//Copyright symbol
+const CopyrightIcon = ({size, color, handleClick}) => (
+    <StyledIcon icon={bxCopyright} $size = {size} $color = {color} onClick = {handleClick}/>
+);
+
+//Linkedin
+const LinkedinIcon = ({size, color, handleClick}) => (
+    <StyledIcon icon={bxlLinkedinSquare} $size = {size} $color = {color} onClick = {handleClick}/>
+);
+
 const Icons = {
     Add,
     EditSimple,
@@ -80,7 +94,9 @@ const Icons = {
     User,
     Search,
     Recipe,
-    RecipeBook
+    RecipeBook,
+    CopyrightIcon,
+    LinkedinIcon
 }
 
 export default Icons
