@@ -1,4 +1,3 @@
-import { Fragment } from 'react';
 import { styled } from 'styletron-react';
 
 const Wrapper = styled('div', {

@@ -38,7 +38,6 @@ const StartPage = () => {
                 </>
                 :
                 <RegisterNewUser handleClick = {() => setIsLoggedIn(true)}/>
-            
             }
         </HeroWrapper>
     );
