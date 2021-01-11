@@ -1,7 +1,8 @@
-import { useState } from 'react'
-import RegisterNewUser from '../components/startPage/RegisterNewUser'
-import LogInUser from '../components/startPage/LogInUser'
-import heroImage from '../assets/images/heroImage.jpg'
+import { useState } from 'react';
+import THEME from '../config/theme'
+import RegisterNewUser from '../components/startPage/RegisterNewUser';
+import LogInUser from '../components/startPage/LogInUser';
+import heroImage from '../assets/images/heroImage.jpg';
 
 import { styled } from 'styletron-react';
 
@@ -20,7 +21,8 @@ const HeroWrapper = styled('div', {
 const Headline = styled('h2', {
     width: '100%',
     margin: '15% 2rem 1rem 2rem',
-    fontSize: '2.5rem',
+    fontFamily: THEME.fonts.text,
+    fontSize: '40px',
     textAlign: 'center',
     fontStyle: 'italic',
     textShadow: '0 0 1px #ffffff'

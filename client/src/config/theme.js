@@ -15,8 +15,8 @@ const THEME = {
     },
 
     fontSizes: {
-        small: '16px',
-        normal: '18px',
+        small: '12px',
+        normal: '16px',
         smallHeader: '24px',
         largeHeader: '30px',
         hero: '80px'

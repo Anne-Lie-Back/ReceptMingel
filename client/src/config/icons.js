@@ -7,6 +7,13 @@ import bxsCameraPlus from '@iconify/icons-bx/bxs-camera-plus';
 import bxEditAlt from '@iconify/icons-bx/bx-edit-alt';
 import bxEdit from '@iconify/icons-bx/bx-edit';
 import bxCheckCircle from '@iconify/icons-bx/bx-check-circle';
+import bxSearch from '@iconify/icons-bx/bx-search';
+
+import userAvatarFilledAlt from '@iconify/icons-carbon/user-avatar-filled-alt';
+import bxBookReader from '@iconify/icons-bx/bx-book-reader';
+import roundFoodBank from '@iconify/icons-ic/round-food-bank';
+
+
 
 
 
@@ -47,12 +54,24 @@ const ImageUpload = ({size, color, handleClick}) => (
 // For LOGO?
 
 // For header - USER
+const User = ({size, color, handleClick}) => (
+    <StyledIcon icon={userAvatarFilledAlt} $size = {size} $color = {color} onClick = {handleClick}/>
+);
 
 // For header - SEARCH
+const Search = ({size, color, handleClick}) => (
+    <StyledIcon icon={bxSearch} $size = {size} $color = {color} onClick = {handleClick}/>
+);
 
 // For header - RECIPE
+const Recipe = ({size, color, handleClick}) => (
+    <StyledIcon icon={roundFoodBank} $size = {size} $color = {color} onClick = {handleClick}/>
+);
 
 //For header - RECIPEBOOK
+const RecipeBook = ({size, color, handleClick}) => (
+    <StyledIcon icon={bxBookReader} $size = {size} $color = {color} onClick = {handleClick}/>
+);
 
 const Icons = {
     Add,
@@ -60,7 +79,12 @@ const Icons = {
     EditBox,
     Done,
     ImageUpload,
-    Minus
+    Minus,
+    User,
+    Search,
+    Recipe,
+    RecipeBook
+
 }
 
 export default Icons
