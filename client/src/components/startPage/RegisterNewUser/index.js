@@ -7,7 +7,7 @@ const Wrapper = styled('div', {
     display: 'flex',
     flexDirection: 'column',
     width: '430px',
-    height: '400px',
+    height: '440px',
     padding: '30px',
     marginTop: '7%',
     backgroundColor: '#ffffff',
@@ -29,7 +29,16 @@ const Button = styled('button', {
     }
 })
 
-const RegisterNewUser = () => {
+const Text = styled('p', {
+    width: '100%',
+    textAlign: 'center',
+    ':hover': {
+        cursor:'pointer',
+        color:'darkorange' 
+    }
+});
+
+const RegisterNewUser = ({handleClick}) => {
     const [inputValues, setInputValues] = useState({
         username: '',
         password: '',
@@ -145,6 +154,7 @@ const RegisterNewUser = () => {
                 /> 
                 
                 <Button onClick = {handleSubmit}>Register</Button>
+                <Text onClick = {handleClick}>Redan registrerad? Logga in här</Text>
         </Wrapper>
     )
 };

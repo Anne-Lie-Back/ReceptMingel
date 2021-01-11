@@ -4,31 +4,23 @@ import { styled } from 'styletron-react';
 import InputField from '../../inputField'
 
 const Wrapper = styled('div', {
-    display: 'flex',
-    flexDirection: 'column',
+    display: 'grid',
+    gridTemplateColumns: '1fr 1fr',
+    gridTemplateRows: '1fr 1fr',
+    columnGap: '15px',
+    rowGap: '15px',
     width: '430px',
-    height: '200px',
+    height: '180px',
     padding: '30px',
-    marginTop: '15%',
+    marginTop: '20px',
     backgroundColor: '#ffffff',
     border: '1px solid black',
     borderRadius: '5px',
     boxShadow: '0 0 3px black'
 });
 
-const InputWrapper = styled('div', {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
-});
-
 const Button = styled('button', {
-    //width: '50px',
-    flexGrow: 1,
-    height: '50px',
-    padding: '1rem 2rem',
-    margin: '1rem 0',
+    height: '40px',
     backgroundColor: 'orange',
     color: 'white',
     textTransform: 'uppercase',
@@ -40,10 +32,13 @@ const Button = styled('button', {
 })
 
 const Text = styled('p', {
-    flexGrow: 1,
+    ':hover': {
+        cursor:'pointer',
+        color:'darkorange' 
+    }
 });
 
-const LogInUser = () => {
+const LogInUser = ({handleClick}) => {
     //TODO Add functionality
     const [inputValues, setInputValues] = useState({
         username: '',
@@ -60,24 +55,20 @@ const LogInUser = () => {
 
     return(
         <Wrapper>
-            <InputWrapper>
-                <InputField 
-                    type = "text"  
-                    name = "username" 
-                    label = "Användarnamn:"
-                    handleChange = {handleChange}
-                />
-                <InputField 
-                    type = "password" 
-                    name = "password" 
-                    label = "Lösenord:"
-                    handleChange = {handleChange}
-                />
-            </InputWrapper>
-            <InputWrapper>
-                <Button> Logga in </Button>
-                <Text>Inte medlem? <br/> Registrera dig gratis här</Text>
-            </InputWrapper>
+            <InputField 
+                type = "text"  
+                name = "username" 
+                label = "Användarnamn:"
+                handleChange = {handleChange}
+            />
+            <InputField 
+                type = "password" 
+                name = "password" 
+                label = "Lösenord:"
+                handleChange = {handleChange}
+            />
+            <Button> Logga in </Button>
+            <Text onClick = {handleClick}> Inte medlem? <br/> Registrera dig gratis här </Text>
     </Wrapper>
     );
 };
