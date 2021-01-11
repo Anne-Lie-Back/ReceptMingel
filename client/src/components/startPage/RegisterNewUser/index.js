@@ -1,25 +1,24 @@
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { styled } from 'styletron-react';
-import InputField from '../inputField'
+import InputField from '../../inputField'
 
 const Wrapper = styled('div', {
     display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
-    height: '800px'
-})
-
-const FormWrapper = styled('div', {
-    display: 'flex',
     flexDirection: 'column',
-    width: '600px'
+    width: '430px',
+    height: '440px',
+    padding: '30px',
+    marginTop: '7%',
+    backgroundColor: '#ffffff',
+    border: '1px solid black',
+    borderRadius: '5px',
+    boxShadow: '0 0 3px black'
 })
 
 const Button = styled('button', {
     padding: '1rem 2rem',
-    margin: '1rem',
+    margin: '1rem 0',
     backgroundColor: 'orange',
     color: 'white',
     textTransform: 'uppercase',
@@ -30,7 +29,16 @@ const Button = styled('button', {
     }
 })
 
-const RegisterNewUser = () => {
+const Text = styled('p', {
+    width: '100%',
+    textAlign: 'center',
+    ':hover': {
+        cursor:'pointer',
+        color:'darkorange' 
+    }
+});
+
+const RegisterNewUser = ({handleClick}) => {
     const [inputValues, setInputValues] = useState({
         username: '',
         password: '',
@@ -101,7 +109,6 @@ const RegisterNewUser = () => {
 
     return(
         <Wrapper>
-            <FormWrapper>
                 <InputField 
                     type = "text"  
                     name = "username" 
@@ -147,7 +154,7 @@ const RegisterNewUser = () => {
                 /> 
                 
                 <Button onClick = {handleSubmit}>Register</Button>
-            </FormWrapper>
+                <Text onClick = {handleClick}>Redan registrerad? Logga in här</Text>
         </Wrapper>
     )
 };
