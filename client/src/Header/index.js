@@ -16,7 +16,7 @@ const Wrapper = styled('div', {
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: '0 30px'
-})
+});
 
 const Headline = styled('h1', {
     fontFamily: THEME.fonts.special,
@@ -25,7 +25,7 @@ const Headline = styled('h1', {
     letterSpacing: '0.05rem',
     textShadow: '0 0 2px black',
     fontWeight: 400
-})
+});
 
 const Header = () => {
     return(
@@ -35,8 +35,8 @@ const Header = () => {
             </Link>
             <MainNavbar/>
         </Wrapper>
-    )
-}
+    );
+};
 
 
 export default Header;

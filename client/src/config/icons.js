@@ -1,4 +1,4 @@
-import { Icon, InlineIcon } from "@iconify/react";
+import { Icon } from "@iconify/react";
 import { styled } from 'styletron-react';
 //import THEME from '../config/theme';
 
@@ -97,6 +97,6 @@ const Icons = {
     RecipeBook,
     CopyrightIcon,
     LinkedinIcon
-}
+};
 
-export default Icons
+export default Icons;

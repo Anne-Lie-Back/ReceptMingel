@@ -21,7 +21,6 @@ const THEME = {
         largeHeader: '30px',
         hero: '80px'
     }
+};
 
-}
-
-export default THEME
+export default THEME;

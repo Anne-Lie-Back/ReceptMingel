@@ -1,6 +1,6 @@
 import { styled } from 'styletron-react';
 import THEME from '../config/theme';
-import Icons from '../config/icons'
+import Icons from '../config/icons';
 
 const Wrapper = styled('div', {
     display: 'flex',
@@ -12,7 +12,7 @@ const Wrapper = styled('div', {
     fontFamily: THEME.fonts.text,
     fontSize: THEME.fontSizes.small,
     color: THEME.colors.white[0],
-})
+});
 
 const TextWrapper = styled('div', {
     display: 'flex',
@@ -22,7 +22,7 @@ const TextWrapper = styled('div', {
     margin: '2rem 0 3rem 0',
     textAlign: 'center',
     lineHeight: '20px',
-})
+});
 
 const BottomWrapper = styled('div', {
     display: 'flex',
@@ -31,7 +31,7 @@ const BottomWrapper = styled('div', {
     alignItems: 'center',
     width: '100%',
     marginBottom: '0.5rem'
-})
+});
 
 const FooterLogo = styled('div', {
     fontFamily: THEME.fonts.special,
@@ -40,13 +40,13 @@ const FooterLogo = styled('div', {
     letterSpacing: '0.05rem',
     textShadow: '0 0 2px black',
     fontWeight: 400
-})
+});
 
 const CopyrightWrapper = styled('div', {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center'
-})
+});
 
 const LinkedinLink = styled('a', {
     display: 'flex',
@@ -56,7 +56,7 @@ const LinkedinLink = styled('a', {
     alignItems: 'center',
     color: THEME.colors.white[0],
     textDecoration: 'none'
-})
+});
 
 const Footer = () => {
     const {
@@ -89,7 +89,7 @@ const Footer = () => {
                 </CopyrightWrapper>
             </BottomWrapper>
         </Wrapper>
-    )
+    );
 };
 
 export default Footer;
