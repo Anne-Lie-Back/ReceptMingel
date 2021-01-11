@@ -1,6 +1,7 @@
 import { useState} from 'react';
 //import { useHistory } from 'react-router-dom';
 import { styled } from 'styletron-react';
+import THEME from '../../../config/theme'
 import InputField from '../../inputField'
 
 const Wrapper = styled('div', {
@@ -10,13 +11,15 @@ const Wrapper = styled('div', {
     columnGap: '15px',
     rowGap: '15px',
     width: '430px',
-    height: '180px',
+    height: '160px',
     padding: '30px',
     marginTop: '20px',
     backgroundColor: '#ffffff',
     border: '1px solid black',
     borderRadius: '5px',
-    boxShadow: '0 0 3px black'
+    boxShadow: '0 0 3px black',
+    fontFamily: THEME.fonts.text,
+    fontSize: THEME.fontSizes.small
 });
 
 const Button = styled('button', {
