@@ -1,5 +1,6 @@
 import { Icon, InlineIcon } from "@iconify/react";
 import { styled } from 'styletron-react';
+//import THEME from '../config/theme';
 
 import addOutline from '@iconify/icons-gridicons/add-outline';
 import minusCircleOutline from '@iconify/icons-eva/minus-circle-outline';
@@ -8,15 +9,11 @@ import bxEditAlt from '@iconify/icons-bx/bx-edit-alt';
 import bxEdit from '@iconify/icons-bx/bx-edit';
 import bxCheckCircle from '@iconify/icons-bx/bx-check-circle';
 import bxSearch from '@iconify/icons-bx/bx-search';
-
 import userAvatarFilledAlt from '@iconify/icons-carbon/user-avatar-filled-alt';
 import bxBookReader from '@iconify/icons-bx/bx-book-reader';
-import roundFoodBank from '@iconify/icons-ic/round-food-bank';
-
-
-
-
-
+//import outlineFoodBank from '@iconify/icons-ic/outline-food-bank';
+//import roundFoodBank from '@iconify/icons-ic/round-food-bank';
+import roundRestaurantMenu from '@iconify/icons-ic/round-restaurant-menu';
 
 const StyledIcon = styled(Icon, ({$size, $color}) => ({
     fontSize: $size,
@@ -65,7 +62,7 @@ const Search = ({size, color, handleClick}) => (
 
 // For header - RECIPE
 const Recipe = ({size, color, handleClick}) => (
-    <StyledIcon icon={roundFoodBank} $size = {size} $color = {color} onClick = {handleClick}/>
+    <StyledIcon icon={roundRestaurantMenu} $size = {size} $color = {color} onClick = {handleClick}/>
 );
 
 //For header - RECIPEBOOK
@@ -84,7 +81,6 @@ const Icons = {
     Search,
     Recipe,
     RecipeBook
-
 }
 
 export default Icons

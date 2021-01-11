@@ -1,6 +1,7 @@
 //import React from 'react';
 import { Link } from 'react-router-dom';
 import { styled } from 'styletron-react';
+import THEME from '../config/theme';
 import MainNavbar from './MainNavbar';
 
 const Wrapper = styled('div', {
@@ -18,7 +19,12 @@ const Wrapper = styled('div', {
 })
 
 const Headline = styled('h1', {
-    color: 'darkblue'
+    fontFamily: THEME.fonts.special,
+    fontSize: THEME.fontSizes.largeHeader,
+    color: THEME.colors.white[0],
+    letterSpacing: '0.05rem',
+    textShadow: '0 0 2px black',
+    fontWeight: 400
 })
 
 const Header = () => {
