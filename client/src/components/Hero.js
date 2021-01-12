@@ -30,7 +30,6 @@ const Title = styled('h2', {
 
 const Hero = ({children, image, title, icon}) => (
     <Wrapper $image = {image}>
-        {console.log('image', image)}
         <TitleWrapper>
             {title && <Title>{title}</Title>}
             {icon && <Title>{title}</Title>}
