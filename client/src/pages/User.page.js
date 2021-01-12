@@ -33,23 +33,24 @@ const DescWrapper = styled('div', {
 
 const ContentWrapper = styled('div', {
     width: '100%',
-    height: '1000px',
     backgroundColor: THEME.colors.white[0]
 });
 
 
 const UserPage = () => {
+    //TODO remove and replace with userDescription
     const userDesc = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
     return(
         <>
-            <Hero image = {heroImage}>
+            <Hero>
                 <Avatar $avatar = {imageTest}/>
                 <DescWrapper>
                     {userDesc}
                 </DescWrapper>
             </Hero>
             <ContentWrapper>
-                <RecipeWheel/>
+                <RecipeWheel bannerTitle = "In Progress"/>
+                <RecipeWheel bannerTitle = "Senast publicerade"/>
             </ContentWrapper>
         </>
     );

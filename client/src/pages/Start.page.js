@@ -1,10 +1,9 @@
 import { useState } from 'react';
+import { styled } from 'styletron-react';
 import THEME from '../config/theme'
 import RegisterNewUser from '../components/startPage/RegisterNewUser';
 import LogInUser from '../components/startPage/LogInUser';
 import heroImage from '../assets/images/heroImage.jpg';
-
-import { styled } from 'styletron-react';
 
 const HeroWrapper = styled('div', {
     display: 'flex',
@@ -16,7 +15,7 @@ const HeroWrapper = styled('div', {
     backgroundPosition: 'center',
     backgroundRepeat:' no-repeat',
     backgroundSize: 'cover',
-})
+});
 
 const Headline = styled('h2', {
     width: '100%',
@@ -26,7 +25,7 @@ const Headline = styled('h2', {
     textAlign: 'center',
     fontStyle: 'italic',
     textShadow: '0 0 1px #ffffff'
-})
+});
 
 const StartPage = () => {
     const [isLoggIn, setIsLoggedIn] = useState(true)

@@ -8,7 +8,8 @@ const Wrapper = styled('div', ({$image}) => ({
     alignItems: 'center',
     width: '100%',
     height: '600px',
-    backgroundImage: `url(${$image})` || `url(${heroImage})`,
+    //if no image is recieved, i will use a default for hero
+    backgroundImage: $image? `url(${$image})` : `url(${heroImage})`,
     backgroundPosition: 'center',
     backgroundRepeat:' no-repeat',
     backgroundSize: 'cover',
@@ -29,9 +30,10 @@ const Title = styled('h2', {
 
 const Hero = ({children, image, title, icon}) => (
     <Wrapper $image = {image}>
+        {console.log('image', image)}
         <TitleWrapper>
-            <Title>{title}</Title>
-            {icon}
+            {title && <Title>{title}</Title>}
+            {icon && <Title>{title}</Title>}
             {children}
         </TitleWrapper>
     </Wrapper>
