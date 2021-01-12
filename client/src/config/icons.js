@@ -65,7 +65,7 @@ const Search = ({size, color, handleClick}) => (
 );
 
 // For header - RECIPE
-const Recipe = ({size, color, handleClick}) => (
+const RecipeIcon = ({size, color, handleClick}) => (
     <StyledIcon icon={roundRestaurantMenu} $size = {size} $color = {color} onClick = {handleClick}/>
 );
 
@@ -93,7 +93,7 @@ const Icons = {
     Minus,
     User,
     Search,
-    Recipe,
+    RecipeIcon,
     RecipeBook,
     CopyrightIcon,
     LinkedinIcon
