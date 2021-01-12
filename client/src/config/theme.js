@@ -2,7 +2,7 @@ const THEME = {
     colors: {
         white: ['#ffffff'],
         black: ['#000000'],
-        grey: ['E5E5E5'],
+        grey: ['#E5E5E5'],
         primary: ['#416788', '#DEEFFF'],
         secondary: ['#AEE2A2'], 
         contrast: ['#FA824C'],
@@ -17,6 +17,7 @@ const THEME = {
     fontSizes: {
         small: '12px',
         normal: '16px',
+        large: '18px',
         smallHeader: '24px',
         largeHeader: '30px',
         hero: '80px'

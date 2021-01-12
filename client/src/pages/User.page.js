@@ -1,6 +1,7 @@
 import { styled } from 'styletron-react';
 import THEME from './../config/theme';
 import Hero from './../components/Hero';
+import RecipeWheel from './../components/RecipeWheel';
 import heroImage from '../assets/images/heroImage.jpg';
 import imageTest from '../assets/images/imageTest.png';
 
@@ -48,7 +49,7 @@ const UserPage = () => {
                 </DescWrapper>
             </Hero>
             <ContentWrapper>
-                Content goes here
+                <RecipeWheel/>
             </ContentWrapper>
         </>
     );
