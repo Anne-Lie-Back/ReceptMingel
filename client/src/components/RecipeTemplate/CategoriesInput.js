@@ -13,7 +13,7 @@ const Wrapper = styled('div', {
 
 const CategoriesInput = ({inputValues, updateInputValues}) => {
     const [newCategory, setNewCategory] = useState('');
-    const AddIcon = Icons.Add;
+    const {AddIcon} = Icons;
 
     const handleAddingListItems = () => {
         const newItem = newCategory;

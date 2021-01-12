@@ -25,7 +25,7 @@ const StyledIcon = styled(Icon, ({$size, $color}) => ({
 }));
 
 // For adding
-const Add = ({size, color, handleClick}) => (
+const AddIcon = ({size, color, handleClick}) => (
     <StyledIcon icon={addOutline} $size = {size} $color = {color} onClick = {handleClick}/>
 );
 
@@ -85,7 +85,7 @@ const LinkedinIcon = ({size, color, handleClick}) => (
 );
 
 const Icons = {
-    Add,
+    AddIcon,
     EditSimple,
     EditBox,
     Done,

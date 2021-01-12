@@ -1,11 +1,17 @@
 import { styled } from 'styletron-react';
 import THEME from '../config/theme';
-import RecipeTemplate from '../components/RecipeTemplate';
 import Hero from '../components/Hero';
 import roundRestaurantMenu from '@iconify/icons-ic/round-restaurant-menu';
+import RecipeTemplate from '../components/RecipeTemplate';
+import SideMenu from '../components/SideMenu';
 
 const ContentWrapper = styled('div', {
-    width: '100%'
+    display: 'grid',
+    gridTemplateColumns: '220px auto',
+    gridTemplateRows: 'auto',
+    width: '100%',
+    height: '100%',
+    backgroundColor: THEME.colors.white[0]
 });
 
 const RecipeEditPage = () => {
@@ -17,6 +23,7 @@ const RecipeEditPage = () => {
                 icon = {roundRestaurantMenu} 
             />
             <ContentWrapper>
+                <SideMenu/>
                 <RecipeTemplate/>
             </ContentWrapper>
         </>

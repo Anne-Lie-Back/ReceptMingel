@@ -18,7 +18,7 @@ const CookingStepsInput = ({inputValues, updateInputValues}) => {
     const [activeEdit, setActiveEdit] = useState(null);
 
     //Icons
-    const AddIcon = Icons.Add;
+    const { AddIcon } = Icons;
 
     //Adds items to official cookingSteps-array
     const handleAddingListItems = () => {

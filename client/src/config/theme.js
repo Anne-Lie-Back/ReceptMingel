@@ -10,8 +10,8 @@ const THEME = {
     },
 
     fonts: {
-        special: '"Fredoka One", cursive;',
-        text: '"Quicksand", sans-serif',
+        special: '"Fredoka One", cursive;', //Available at font-weight 400
+        text: '"Quicksand", sans-serif', //Available at font-weight 400, 500, 700
     },
 
     fontSizes: {

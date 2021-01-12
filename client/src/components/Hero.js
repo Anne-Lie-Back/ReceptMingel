@@ -19,18 +19,21 @@ const Wrapper = styled('div', ({$image}) => ({
 const TitleWrapper = styled('div', {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
+    width: '100%',
+    maxWidth: '500px'
 });
 
 const Title = styled('h2', {
     fontFamily: THEME.fonts.text,
     fontSize: THEME.fontSizes.hero,
-    color: THEME.colors.white[0]
+    color: THEME.colors.white[0],
+    textShadow: '0 0 1px black'
 });
 
 const StyledIcon = styled(Icon, {
-    fontSize: THEME.fontSizes.hero,
+    fontSize: '240px',
     color: THEME.colors.white[0],
 });
 
