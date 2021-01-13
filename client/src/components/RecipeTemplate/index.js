@@ -71,6 +71,12 @@ const EffortWrapper = styled('div', {
     justifyContent: 'space-between'
 });
 
+const FlexRow = styled('div', {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center'
+});
+
 const Button = styled('button', {
     padding: '1rem 2rem',
     margin: '1rem',
@@ -202,15 +208,14 @@ const RecipeTemplate = () => {
                 </TopFormWrapper>
 
                 <EffortWrapper>
-                    <div>
+                    <FlexRow>
                         <Label for = "difficulty"> Svårighetsgrad: </Label>
                         <DifficultyInput handleChange = {handleChange}/>
-                    </div>
-
-                    <div>
+                    </FlexRow>
+                    <FlexRow>
                         <Label for = "CookingTime"> Tidsåtgång: </Label>
                         <CookingTimeInput handleChange = {handleChange}/>
-                    </div>
+                    </FlexRow>
                 </EffortWrapper>
                 
 
