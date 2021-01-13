@@ -59,18 +59,20 @@ const CategoriesInput = ({inputValues, updateInputValues}) => {
             })
             setNewCategory('');
         };
-        console.log('inputValues', inputValues)
     };
 
     //TODO fix bug that removes two categories with same name
     const handleListDeletion = (category) => {
-        console.log('category', category)
         const newList = inputValues.mdsaCategories.filter((item) => item !== category);
         updateInputValues({                    
             ...inputValues,    
             mdsaCategories: newList         
         }) 
     }
+
+    const handleEnter = (event) => {
+        event.key === 'Enter' && handleAddingListItems();
+    };
     
     return(
         <Wrapper>
@@ -79,8 +81,10 @@ const CategoriesInput = ({inputValues, updateInputValues}) => {
                 <InputField 
                     type = "text" 
                     name = "mdsaCategories" 
+                    value = {newCategory}
                     styling = "basic"
                     handleChange = {(event) => setNewCategory(event.target.value)}
+                    onKeyDown={(event) => handleEnter(event)}
                 />
                 <StyledAddIcon icon = {addOutline} onClick = {handleAddingListItems}/>
             </InputWrapper>
