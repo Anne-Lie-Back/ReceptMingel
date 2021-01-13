@@ -1,4 +1,5 @@
 import { styled } from 'styletron-react';
+import THEME from '../../config/theme'
 
 const Wrapper = styled('div', {
     margin: '0.5rem 0'
@@ -6,7 +7,16 @@ const Wrapper = styled('div', {
 
 const CookingTimeInput = ({handleChange}) => (
     <Wrapper>
-        <select name="cookingTime" id="cookingTime" onChange = {handleChange}>
+        <select 
+            name="cookingTime" 
+            id="cookingTime" 
+            onChange = {handleChange}
+            style = {{
+                padding: "0.2rem 0.5rem",
+                fontFamily: THEME.fonts.text,
+                color: THEME.colors.black[0]
+            }} 
+        >
             <option value="0-15min">0-15min</option>
             <option value="16-30min">16-30min</option>
             <option value="31-45min">31-45min</option>

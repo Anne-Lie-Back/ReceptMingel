@@ -9,13 +9,17 @@ const Wrapper = styled('div', {
 //Styling in here
 const StyledInputField = styled('input', {
     width: '100%',
-    paddingLeft: '2rem',
     fontFamily: THEME.fonts.text,
     fontSize: THEME.fontSizes.small,
     letterSpacing: '0.05rem',
 });
 
+const BasicInputField = styled(StyledInputField, {
+    padding: '1rem 2rem'
+});
+
 const UnderlineInputField = styled(StyledInputField, {
+    paddingLeft: '2rem',
     border: 0,
     outline: 0,
     background: 'transparent',
@@ -29,6 +33,8 @@ const BoxInputField = styled(StyledInputField, {
     outline: 0,
     background: 'transparent',
 });
+
+
 
 //Error handling in here
 
@@ -61,7 +67,7 @@ const InputField = ( {type, name, label, styling, handleChange, ...rest} ) => (
         {styling === "basic" && 
             <>
                 {label && <label for = {name}>{label}</label>}
-                <StyledInputField
+                <BasicInputField
                     type = {type}
                     name = {name} 
                     id = {name}
