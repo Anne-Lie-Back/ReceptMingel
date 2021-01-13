@@ -48,7 +48,7 @@ const Done = ({size, color, handleClick}) => (
 );
 
 // For file-upload
-const ImageUpload = ({size, color, handleClick}) => (
+const ImageIcon = ({size, color, handleClick}) => (
     <StyledIcon icon={bxsCameraPlus} $size = {size} $color = {color} onClick = {handleClick}/>
 );
 
@@ -89,7 +89,7 @@ const Icons = {
     EditSimple,
     EditBox,
     Done,
-    ImageUpload,
+    ImageIcon,
     Minus,
     User,
     Search,

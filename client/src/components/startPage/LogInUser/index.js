@@ -62,12 +62,14 @@ const LogInUser = ({handleClick}) => {
                 type = "text"  
                 name = "username" 
                 label = "Användarnamn:"
+                styling = "basic"
                 handleChange = {handleChange}
             />
             <InputField 
                 type = "password" 
                 name = "password" 
                 label = "Lösenord:"
+                styling = "basic"
                 handleChange = {handleChange}
             />
             <Button> Logga in </Button>

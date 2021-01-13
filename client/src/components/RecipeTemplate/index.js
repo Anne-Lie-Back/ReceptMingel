@@ -1,5 +1,7 @@
 import {useEffect, useState} from 'react';
 import { styled } from 'styletron-react';
+import THEME from '../../config/theme';
+import Icons from '../../config/icons';
 import InputField from '../inputField';
 import CategoriesInput from './CategoriesInput';
 import CookingTimeInput from './CookingTimeInput';
@@ -7,18 +9,59 @@ import DifficultyInput from './DifficultyInput';
 import IngredientsInput from './IngredientsInput';
 import CookingStepsInput from './CookingStepsInput';
 
+
 const Wrapper = styled('div', {
     display: 'flex',
     justifyContent: 'center',
     width: '100%',
-    height: '800px',
-    margin: '2rem 1rem'
+    padding: '2rem 0'
 });
 
 const FormWrapper = styled('div', {
     display: 'flex',
     flexDirection: 'column',
-    width: '600px'
+    width: '700px',
+    maxWidth: '800px',
+    padding: '1rem 2rem'
+});
+
+const TopFormWrapper = styled('div', {
+    display: 'grid',
+    gridTemplateColumns: '400px 200px',
+    gridTemplateRows: 'auto auto',
+    columnGap: '1rem',
+    width: '100%'
+});
+
+const Label = styled('label', {
+    fontFamily: THEME.fonts.text,
+    fontSize: THEME.fontSizes.normal,
+    fontWeight: 500
+});
+
+const FileUploadWrapper = styled('div', {
+    gridColumn: '2/3',
+    gridRow: '1/3',
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
+    fontFamily: THEME.fonts.text,
+    fontSize: THEME.fontSizes.small,
+    fontWeight: 400
+});
+
+const FileUpload = styled('div', {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    height: '90%',
+    backgroundColor: THEME.colors.grey[0],
+
+    ':hover' : {
+        backgroundColor: THEME.colors.black[0],
+        cursor: 'pointer'
+    }
 });
 
 const Button = styled('button', {
@@ -52,6 +95,8 @@ const RecipeTemplate = () => {
 
     //stores file-data that goes up to image-bucket at server
     const [file, setFile] = useState(null);
+
+    const { ImageIcon } = Icons;
 
     //handle input-changes
     const handleChange = (event) => {
@@ -106,27 +151,42 @@ const RecipeTemplate = () => {
     return(
         <Wrapper>
             <FormWrapper>
-                <InputField 
-                    type = "text"  
-                    name = "title" 
-                    label = "Titel:"
-                    handleChange = {handleChange}
-                />
-                <InputField 
-                    $as = "textarea" 
-                    name = "preambleHTML" 
-                    label = "Beskrivning:"
-                    rows="4" 
-                    cols="80"  
-                    handleChange = {handleChange}
-                />
-                <InputField 
-                    type = "file" 
-                    name = "image" 
-                    label = "Bild:"
-                    accept = "image/*"
-                    handleChange = {(event) => setFile(event.target.files[0])}
-                /> 
+                <TopFormWrapper>
+                    <InputField 
+                        type = "text"  
+                        name = "title"
+                        placeholder = "Titel"
+                        styling = "underline"
+                        $style = {{ fontWeight: 700 }}
+                        handleChange = {handleChange}
+                    />
+                    <FileUploadWrapper>
+                        <label htmlFor="upload-image" style = {{height: '100%'}}>
+                            <FileUpload>
+                                <ImageIcon color = {THEME.colors.white[0]} size = "70px"/>
+                            </FileUpload>
+                        <p>{file && file.name }</p>
+                        </label>
+                        <InputField 
+                            type = "file" 
+                            name = "image" 
+                            accept = "image/*"
+                            id = "upload-image"
+                            styling = "basic"
+                            $style = {{display: 'none'}}
+                            handleChange = {(event) => setFile(event.target.files[0])}
+                        />
+                    </FileUploadWrapper>
+                    <InputField 
+                        $as = "textarea" 
+                        name = "preambleHTML" 
+                        placeholder = "Beskrivning"
+                        rows="6" 
+                        cols="80"  
+                        styling = "box"
+                        handleChange = {handleChange}
+                    />
+                </TopFormWrapper>
                 <CookingTimeInput handleChange = {handleChange}/>
                 <DifficultyInput handleChange = {handleChange}/>
                 <CategoriesInput inputValues = {inputValues} updateInputValues = {setInputValues}/>

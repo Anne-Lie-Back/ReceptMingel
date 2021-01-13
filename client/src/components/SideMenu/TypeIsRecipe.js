@@ -9,6 +9,7 @@ const List = styled('ul', {
     fontSize: THEME.fontSizes.small,
     color: THEME.colors.white[0],
     fontWeight: 400,
+    textTransform: 'capitalize',
     letterSpacing: '0.05rem'
 });
 

@@ -20,9 +20,7 @@ const TitleWrapper = styled('div', {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
-    width: '100%',
-    maxWidth: '500px'
+    alignItems: 'center'
 });
 
 const Title = styled('h2', {
