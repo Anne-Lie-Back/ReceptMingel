@@ -217,17 +217,20 @@ const RecipeTemplate = () => {
                         <CookingTimeInput handleChange = {handleChange}/>
                     </FlexRow>
                 </EffortWrapper>
-                
-
                 <CategoriesInput inputValues = {inputValues} updateInputValues = {setInputValues}/>
-                <InputField 
-                    type = "number" 
-                    name = "portions" 
-                    label = "Antal portioner:"
-                    min="1" 
-                    max="16"
-                    handleChange = {handleChange}
-                />
+                
+                <FlexRow>
+                    <Label>Antal portioner: </Label>
+                    <InputField 
+                        type = "number" 
+                        name = "portions" 
+                        min="1" 
+                        max="16"
+                        styling = "basic"
+                        $style = {{width: '55px', padding: "0.2rem 0.5rem"}}
+                        handleChange = {handleChange}
+                    />
+                </FlexRow>
                 <IngredientsInput inputValues = {inputValues} updateInputValues = {setInputValues}/>
                 <CookingStepsInput inputValues = {inputValues} updateInputValues = {setInputValues}/>
                 <Button onClick = {handleSubmit}>Register</Button>
