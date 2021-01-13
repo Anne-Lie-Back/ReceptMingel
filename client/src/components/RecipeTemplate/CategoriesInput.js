@@ -11,7 +11,7 @@ const Wrapper = styled('div', {
     width: '100%',
     border: `1px solid ${THEME.colors.primary[1]}`,
     margin: '0.5rem 0',
-    padding: '0.5rem',
+    padding: '1rem 0.5rem',
 });
 
 const Label = styled('label', {

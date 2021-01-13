@@ -7,7 +7,6 @@ const Wrapper = styled('li', {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    margin: '0.5rem 1rem',
     padding: '0.5rem 1rem',
     borderBottom: '1px solid #E3E3E3'
 })

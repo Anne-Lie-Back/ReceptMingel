@@ -68,7 +68,8 @@ const EffortWrapper = styled('div', {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    margin: '1rem 0'
 });
 
 const FlexRow = styled('div', {
@@ -219,7 +220,7 @@ const RecipeTemplate = () => {
                 </EffortWrapper>
                 <CategoriesInput inputValues = {inputValues} updateInputValues = {setInputValues}/>
                 
-                <FlexRow>
+                <FlexRow $style = {{margin: '3rem 0 0 0'}}>
                     <Label>Antal portioner: </Label>
                     <InputField 
                         type = "number" 

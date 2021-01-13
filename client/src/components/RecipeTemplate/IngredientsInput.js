@@ -1,24 +1,50 @@
 import { useState } from 'react';
 import { styled } from 'styletron-react';
+import THEME from '../../config/theme';
 import InputField from '../inputField';
-import Icons from '../../config/icons';
+import addOutline from '@iconify/icons-gridicons/add-outline';
+import { Icon } from "@iconify/react";
 import TextListItem from './text.listItem';
 
 const Wrapper = styled('div', {
-     margin: '0.5rem 0',
+     margin: '2rem 0',
+});
+
+const Label = styled('label', {
+    margin: '0 1rem 0 0',
+    fontFamily: THEME.fonts.text,
+    fontSize: THEME.fontSizes.normal,
+    fontWeight: 500
+});
+
+const StyledAddIcon = styled(Icon, {
+    marginLeft: '1rem',
+    colors: THEME.colors.black[0],
+    fontSize: '25px',
+
+    ':hover' : {
+        color: THEME.colors.contrast[0],
+        cursor: 'pointer'
+    }
 });
 
 const List = styled('ul', {
-    width: '100%'
+    width: '100%',
+    margin: '1rem 0 2rem 0'
 })
 
-const IngredientsInput = ({inputValues, updateInputValues}) => {
-    const [newIngredient, setNewIngredient] = useState('');
-    const [editInput, setEditedInput] = useState('');
-    const [activeEdit, setActiveEdit] = useState(null);
+const FlexRow = styled('div', {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '100%',
+    margin: '1rem 0'
+});
 
-    //Icons
-    const { AddIcon } = Icons;
+const IngredientsInput = ({inputValues, updateInputValues}) => {
+    const [newIngredient, setNewIngredient] = useState(null);
+    const [editInput, setEditedInput] = useState(null);
+    const [activeEdit, setActiveEdit] = useState(null);
 
     //Adds items to official ingredients-array
     const handleAddingListItems = () => {
@@ -64,8 +90,13 @@ const IngredientsInput = ({inputValues, updateInputValues}) => {
         setActiveEdit(null);
     }
 
+    const handleEnter = (event) => {
+        event.key === 'Enter' && handleAddingListItems();
+    };
+
     return(
         <Wrapper>
+            <Label>Ingredienser:</Label>
             <List>      
                 {inputValues.ingredients.map((ingredient, index)=> (
                         <TextListItem 
@@ -80,14 +111,27 @@ const IngredientsInput = ({inputValues, updateInputValues}) => {
                         </TextListItem>
                 ))}  
             </List> 
-            <InputField 
-                type = "text" 
-                name = "ingredients" 
-                label = 'Ingredienser (mängd och råvara i format: "1 tsk vaniljpulver"):'
-                value = {newIngredient}
-                handleChange = {(event) => setNewIngredient(event.target.value)}
-            />
-            <AddIcon size = "24px" handleClick = {handleAddingListItems}/> 
+            
+            <FlexRow>
+                <InputField 
+                    type = "text" 
+                    name = "ingredients" 
+                    value = {newIngredient}
+                    styling = "underline"
+                    placeholder = "I format: Antal Enhet Råvara"
+                    $style = {{
+                        width: '570px',
+                        fontWeight: 400, 
+                            fontSize: '18px', 
+                            '::placeholder': {
+                                fontWeight: 400, 
+                                fontSize: THEME.fontSizes.normal
+                    }}}
+                    handleChange = {(event) => setNewIngredient(event.target.value)}
+                    onKeyDown={(event) => handleEnter(event)}
+                />
+                <StyledAddIcon icon = {addOutline} onClick = {handleAddingListItems}/> 
+            </FlexRow>
 
         </Wrapper>
     )
