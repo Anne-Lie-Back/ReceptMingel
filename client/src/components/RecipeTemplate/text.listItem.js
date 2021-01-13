@@ -1,13 +1,16 @@
 import { styled } from 'styletron-react';
 import THEME from './../../config/theme';
-import Icons from '../../config/icons';
+import { Icon } from "@iconify/react";
+import bxCheckCircle from '@iconify/icons-bx/bx-check-circle';
+import minusCircleOutline from '@iconify/icons-eva/minus-circle-outline';
+import bxEditAlt from '@iconify/icons-bx/bx-edit-alt';
 import InputField from '../inputField';
 
 const Wrapper = styled('li', {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: '0.5rem 1rem',
+    padding: '0.5rem 0.4rem 0.5rem 1rem',
     borderBottom: '1px solid #E3E3E3'
 });
 
@@ -34,17 +37,22 @@ const IconWrapper = styled('div', {
     flexDirection: 'row',
     justifyContent:'space-between',
     alignItems: 'center',
-    width:'50px',
     marginLeft: '1rem',
 });
 
+const StyledIcon = styled(Icon, {
+    marginLeft: '1rem',
+    colors: THEME.colors.black[0],
+    fontSize: '25px',
+
+    ':hover' : {
+        color: THEME.colors.contrast[0],
+        cursor: 'pointer'
+    }
+});
+
 const TextListItem = ({children, isEditIngredient, isEditStep, value, handleOpenEdit, handleEditItem, handleEnterKey, handleChange, handleRemove}) => {
-
-    //Icons
-    const EditIcon = Icons.EditSimple;
-    const RemoveIcon = Icons.Minus;
-    const DoneIcon = Icons.Done;
-
+    
     // JSX checks if edit from ingredient or step is active for this element (checks in parent)
     // If it is it will render different inputField-types depending on if it is ingredient or step that wants to be edited
     // If both edit-bools are false, the element will display the child as ordinary text
@@ -67,8 +75,8 @@ const TextListItem = ({children, isEditIngredient, isEditStep, value, handleOpen
                         />
                     </TextWrapper>
                     <IconWrapper>
-                        <DoneIcon size = "25px" handleClick = {handleEditItem}/>
-                        <RemoveIcon size = "25px" handleClick = {handleRemove}/>
+                        <StyledIcon icon = {bxCheckCircle} onClick = {handleEditItem}/> 
+                        <StyledIcon icon = {minusCircleOutline} onClick = {handleRemove}/> 
                     </IconWrapper>
                 </>
                 :
@@ -78,8 +86,8 @@ const TextListItem = ({children, isEditIngredient, isEditStep, value, handleOpen
                         {children}
                     </TextWrapper>
                     <IconWrapper>
-                        <EditIcon size = "25px" handleClick = {handleOpenEdit}/>
-                        <RemoveIcon size = "25px" handleClick = {handleRemove}/>
+                        <StyledIcon icon = {bxEditAlt} onClick = {handleOpenEdit}/> 
+                        <StyledIcon icon = {minusCircleOutline} onClick = {handleRemove}/> 
                     </IconWrapper>
                 </>
             }

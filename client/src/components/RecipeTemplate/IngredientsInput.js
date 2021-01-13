@@ -110,7 +110,6 @@ const IngredientsInput = ({inputValues, updateInputValues}) => {
                             handleEditItem = {() => handleEditItem(index)}
                             handleEnterKey = {(event) => handleEnterEdit(event, index)}
                             handleChange = {(event) => setEditedInput(event.target.value)}
-                            //TODO change to index?
                             handleRemove = { () => handleListDeletion(ingredient) }
                             >
                             {ingredient}
