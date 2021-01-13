@@ -1,4 +1,5 @@
 import { styled } from 'styletron-react';
+import THEME from '../../config/theme';
 
 const Wrapper = styled('div', {
     margin: '0.5rem 0'
@@ -6,8 +7,16 @@ const Wrapper = styled('div', {
 
 const DifficultyInput = ({handleChange}) => (
     <Wrapper>
-        <label for="difficulty">Svårighetsgrad:</label>
-        <select name="difficulty" id="difficulty" onChange = {handleChange}>
+        <select 
+            name="difficulty" 
+            id="difficulty"
+            style = {{
+                padding: "0.2rem 0.5rem",
+                backgroundColor: THEME.colors.secondary[0],
+                fontFamily: THEME.fonts.text,
+                color: THEME.colors.black[0]
+            }} 
+            onChange = {handleChange}>
             <option value="lätt">LÄTT</option>
             <option value="medel">MEDEL</option>
             <option value="omständigt">OMSTÄNDIGT</option>

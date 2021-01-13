@@ -1,6 +1,7 @@
 import { styled } from 'styletron-react';
 import THEME from './../config/theme';
 import heroImage from '../assets/images/heroImage.jpg';
+import { Icon } from "@iconify/react";
 
 const Wrapper = styled('div', ({$image}) => ({
     display: 'flex',
@@ -18,21 +19,27 @@ const Wrapper = styled('div', ({$image}) => ({
 const TitleWrapper = styled('div', {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: 'space-between',
+    alignItems: 'center'
 });
 
 const Title = styled('h2', {
     fontFamily: THEME.fonts.text,
-    fontSize: THEME.fontSizes.largeHeader,
-    color: THEME.colors.white[0]
+    fontSize: THEME.fontSizes.hero,
+    color: THEME.colors.white[0],
+    textShadow: '0 0 1px black'
+});
+
+const StyledIcon = styled(Icon, {
+    fontSize: '240px',
+    color: THEME.colors.white[0],
 });
 
 const Hero = ({children, image, title, icon}) => (
     <Wrapper $image = {image}>
         <TitleWrapper>
             {title && <Title>{title}</Title>}
-            {icon && <Title>{title}</Title>}
+            {icon && <StyledIcon icon={icon}/>}
             {children}
         </TitleWrapper>
     </Wrapper>

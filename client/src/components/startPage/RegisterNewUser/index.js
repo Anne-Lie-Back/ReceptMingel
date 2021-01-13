@@ -113,6 +113,7 @@ const RegisterNewUser = ({handleClick}) => {
                     type = "text"  
                     name = "username" 
                     label = "Användarnamn (unikt):"
+                    styling = "basic"
                     handleChange = {handleChange}
                 />
 
@@ -120,6 +121,7 @@ const RegisterNewUser = ({handleClick}) => {
                     type = "password" 
                     name = "password" 
                     label = "Lösenord:"
+                    styling = "basic"
                     handleChange = {handleChange}
                 />
                 
@@ -127,6 +129,7 @@ const RegisterNewUser = ({handleClick}) => {
                     type = "text" 
                     name = "firstName" 
                     label = "Förnamn:"
+                    styling = "basic"
                     handleChange = {handleChange}
                 />
 
@@ -134,6 +137,7 @@ const RegisterNewUser = ({handleClick}) => {
                     type = "text"  
                     name = "lastName" 
                     label = "Efternamn:" 
+                    styling = "basic"
                     handleChange = {handleChange}
                 />
                 <InputField 
@@ -141,7 +145,8 @@ const RegisterNewUser = ({handleClick}) => {
                     name = "userInfo" 
                     label = "Berätta något om dig själv?"
                     rows="4" 
-                    cols="80"  
+                    cols="80" 
+                    styling = "box"
                     handleChange = {handleChange}
                 />
 
@@ -150,6 +155,7 @@ const RegisterNewUser = ({handleClick}) => {
                     name = "image" 
                     label = "Profilbild:"
                     accept = "image/*"
+                    styling = "basic"
                     handleChange = {(event) => setFile(event.target.files[0])}
                 /> 
                 

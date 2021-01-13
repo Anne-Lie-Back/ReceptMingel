@@ -22,7 +22,7 @@ const NavLink = styled(Link, {
 const MainNavbar = () => {
   const { 
     Search,
-    Recipe,
+    RecipeIcon,
     RecipeBook,
     User
    } = Icons
@@ -33,7 +33,7 @@ const MainNavbar = () => {
           <Search color = {THEME.colors.white[0]} size = '40px'/>
         </NavLink>
         <NavLink to = '/recipe-edit'>
-          <Recipe color = {THEME.colors.white[0]} size = '45px'/>
+          <RecipeIcon color = {THEME.colors.white[0]} size = '45px'/>
         </NavLink>
         <NavLink to = '/recipebook'>
           <RecipeBook color = {THEME.colors.white[0]} size = '45px'/>

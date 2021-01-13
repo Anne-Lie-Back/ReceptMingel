@@ -25,7 +25,7 @@ const StyledIcon = styled(Icon, ({$size, $color}) => ({
 }));
 
 // For adding
-const Add = ({size, color, handleClick}) => (
+const AddIcon = ({size, color, handleClick}) => (
     <StyledIcon icon={addOutline} $size = {size} $color = {color} onClick = {handleClick}/>
 );
 
@@ -48,7 +48,7 @@ const Done = ({size, color, handleClick}) => (
 );
 
 // For file-upload
-const ImageUpload = ({size, color, handleClick}) => (
+const ImageIcon = ({size, color, handleClick}) => (
     <StyledIcon icon={bxsCameraPlus} $size = {size} $color = {color} onClick = {handleClick}/>
 );
 
@@ -65,7 +65,7 @@ const Search = ({size, color, handleClick}) => (
 );
 
 // For header - RECIPE
-const Recipe = ({size, color, handleClick}) => (
+const RecipeIcon = ({size, color, handleClick}) => (
     <StyledIcon icon={roundRestaurantMenu} $size = {size} $color = {color} onClick = {handleClick}/>
 );
 
@@ -85,15 +85,15 @@ const LinkedinIcon = ({size, color, handleClick}) => (
 );
 
 const Icons = {
-    Add,
+    AddIcon,
     EditSimple,
     EditBox,
     Done,
-    ImageUpload,
+    ImageIcon,
     Minus,
     User,
     Search,
-    Recipe,
+    RecipeIcon,
     RecipeBook,
     CopyrightIcon,
     LinkedinIcon
