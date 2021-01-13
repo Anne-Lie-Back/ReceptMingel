@@ -34,7 +34,7 @@ const ListItemCategories = ({children, handleRemove}) => {
     const RemoveIcon = Icons.Minus
 
     return(
-        <Wrapper handleClick = {handleRemove}>
+        <Wrapper onClick = {handleRemove}>
             {children}
             <IconWrapper>
                 <RemoveIcon size = "1.2rem" />

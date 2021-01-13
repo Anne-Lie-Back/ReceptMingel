@@ -50,6 +50,7 @@ const CategoriesInput = ({inputValues, updateInputValues}) => {
 
     const handleAddingListItems = () => {
         const newItem = newCategory;
+        
         if(newItem.text !==""){
             const newList = [...inputValues.mdsaCategories, newItem];
             updateInputValues({                    
@@ -58,10 +59,12 @@ const CategoriesInput = ({inputValues, updateInputValues}) => {
             })
             setNewCategory('');
         };
+        console.log('inputValues', inputValues)
     };
 
     //TODO fix bug that removes two categories with same name
     const handleListDeletion = (category) => {
+        console.log('category', category)
         const newList = inputValues.mdsaCategories.filter((item) => item !== category);
         updateInputValues({                    
             ...inputValues,    
