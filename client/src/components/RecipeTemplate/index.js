@@ -97,7 +97,7 @@ const RecipeTemplate = () => {
         title: '',
         preambleHTML: '',
         image: null,
-        portions: 4,
+        portions: 0,
         cookingTime: '0-15min',
         difficulty: 'lätt',
         ingredients: [],
@@ -180,6 +180,7 @@ const RecipeTemplate = () => {
                             }}}
                         handleChange = {handleChange}
                     />
+                    {/* TODO break out file upload to own file? */}
                     <FileUploadWrapper>
                         <label htmlFor="upload-image" style = {{height: '100%'}}>
                             <FileUpload>
@@ -204,6 +205,17 @@ const RecipeTemplate = () => {
                         rows="6" 
                         cols="80"  
                         styling = "box"
+                        $style = {{
+                            fontFamily: THEME.fonts.text,
+                            fontWeight: 400, 
+                            fontSize: THEME.fontSizes.small,
+                            
+                            '::-webkit-input-placeholder': {
+                                fontFamily: THEME.fonts.text,
+                                fontWeight: 400, 
+                                fontSize: THEME.fontSizes.small
+                            }
+                        }}
                         handleChange = {handleChange}
                     />
                 </TopFormWrapper>
@@ -225,6 +237,7 @@ const RecipeTemplate = () => {
                     <InputField 
                         type = "number" 
                         name = "portions" 
+                        value = {inputValues.portions}
                         min="1" 
                         max="16"
                         styling = "basic"

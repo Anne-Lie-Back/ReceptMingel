@@ -32,6 +32,10 @@ const TextWrapper = styled('div', {
     fontWeight: 400
 });
 
+const RestrictWidth = styled('div', {
+    width: '440px'
+})
+
 const IconWrapper = styled('div', {
     display: 'flex',
     flexDirection: 'row',
@@ -67,9 +71,18 @@ const TextListItem = ({children, isEditIngredient, isEditStep, value, handleOpen
                             type = {isEditIngredient? 'text' : null} 
                             name = "ingredients" 
                             value = {value}
-                            rows="2" 
-                            cols="80" 
+                            rows="3" 
                             styling = "basic"
+                            $style = {{
+                                width: '457px',
+                                fontFamily: THEME.fonts.text,
+                                fontWeight: 400, 
+                                fontSize: THEME.fontSizes.small,
+                                '::-webkit-input-placeholder': {
+                                    fontFamily: THEME.fonts.text,
+                                    fontWeight: 400, 
+                                    fontSize: THEME.fontSizes.small
+                            }}}
                             handleChange = {handleChange}
                             onKeyDown = {handleEnterKey}
                         />
@@ -83,7 +96,9 @@ const TextListItem = ({children, isEditIngredient, isEditStep, value, handleOpen
                 <>
                     <TextWrapper>
                         <Dot/>
-                        {children}
+                        <RestrictWidth>
+                            {children}
+                        </RestrictWidth>
                     </TextWrapper>
                     <IconWrapper>
                         <StyledIcon icon = {bxEditAlt} onClick = {handleOpenEdit}/> 

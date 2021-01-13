@@ -29,7 +29,7 @@ const UnderlineInputField = styled(StyledInputField, {
 
 const BoxInputField = styled(StyledInputField, {
     margin: '1rem 0',
-    padding: '1rem',
+    padding: '0.75rem 1rem',
     border: 1,
     outline: 0,
     background: 'transparent',

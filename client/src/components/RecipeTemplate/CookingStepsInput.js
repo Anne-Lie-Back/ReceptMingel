@@ -1,24 +1,51 @@
 import { useState } from 'react';
 import { styled } from 'styletron-react';
+import THEME from '../../config/theme';
 import InputField from '../inputField';
-import Icons from '../../config/icons'
+import { Icon } from "@iconify/react";
+import addOutline from '@iconify/icons-gridicons/add-outline';
 import TextListItem from './text.listItem'
 
 const Wrapper = styled('div', {
-     margin: '0.5rem 0',
+    margin: '0.5rem 0',
+});
+
+const FlexRow = styled('div', {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '100%',
+    margin: '1rem 0'
+});
+
+const Label = styled('label', {
+    margin: '0 1rem 0 0',
+    fontFamily: THEME.fonts.text,
+    fontSize: THEME.fontSizes.normal,
+    fontWeight: 700
+});
+
+const StyledAddIcon = styled(Icon, {
+    marginLeft: '1rem',
+    colors: THEME.colors.black[0],
+    fontSize: '25px',
+
+    ':hover' : {
+        color: THEME.colors.contrast[0],
+        cursor: 'pointer'
+    }
 });
 
 const List = styled('ul', {
-    width: '100%'
+    width: '100%',
+    margin: '1rem 0 2rem 0'
 })
+
 
 const CookingStepsInput = ({inputValues, updateInputValues}) => {
     const [newStep, setNewStep] = useState('');
     const [editInput, setEditedInput] = useState('');
     const [activeEdit, setActiveEdit] = useState(null);
-
-    //Icons
-    const { AddIcon } = Icons;
 
     //Adds items to official cookingSteps-array
     const handleAddingListItems = () => {
@@ -65,8 +92,13 @@ const CookingStepsInput = ({inputValues, updateInputValues}) => {
         setActiveEdit(null);
     }
 
+    const handleEnter = (event) => {
+        event.key === 'Enter' && handleAddingListItems();
+    };
+
     return(
         <Wrapper>
+            <Label>Steg för steg-instruktioner:</Label>
             <List>      
                 {inputValues.cookingSteps.map((step, index) => (
                         <TextListItem 
@@ -82,17 +114,30 @@ const CookingStepsInput = ({inputValues, updateInputValues}) => {
                         </TextListItem>
                 ))}  
             </List> 
-            <InputField 
-                $as = "textarea"  
-                name = "cookingSteps" 
-                label = 'Steg för steg-instruktioner:'
-                rows="2" 
-                cols="80"
-                value = {newStep}
-                handleChange = {(event) => setNewStep(event.target.value)}
-            />
-            <AddIcon size = "24px" handleClick = {handleAddingListItems}/> 
-
+            <FlexRow>
+                <InputField 
+                    $as = "textarea"  
+                    name = "cookingSteps" 
+                    placeholder = "Förklara ett steg här. Tryck sedan ENTER eller på plus-knappen."
+                    rows = "2" 
+                    //cols = "80"
+                    value = {newStep}
+                    styling = "box"
+                    $style = {{
+                        width: '570px',
+                        fontFamily: THEME.fonts.text,
+                        fontWeight: 400, 
+                        fontSize: THEME.fontSizes.small,
+                        '::-webkit-input-placeholder': {
+                            fontFamily: THEME.fonts.text,
+                            fontWeight: 400, 
+                            fontSize: THEME.fontSizes.small
+                    }}}
+                    handleChange = {(event) => setNewStep(event.target.value)}
+                    onKeyDown={(event) => handleEnter(event)}
+                />
+                <StyledAddIcon icon = {addOutline} onClick = {handleAddingListItems}/>  
+            </FlexRow>
         </Wrapper>
     )
 };
