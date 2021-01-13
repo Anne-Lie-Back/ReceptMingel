@@ -18,7 +18,7 @@ const Label = styled('label', {
     margin: '0 2.55rem 0 0',
     fontFamily: THEME.fonts.text,
     fontSize: THEME.fontSizes.normal,
-    fontWeight: 500
+    fontWeight: 700
 });
 
 const StyledAddIcon = styled(Icon, {

@@ -8,7 +8,7 @@ import CookingTimeInput from './CookingTimeInput';
 import DifficultyInput from './DifficultyInput';
 import IngredientsInput from './IngredientsInput';
 import CookingStepsInput from './CookingStepsInput';
-
+import PartingStrip from './../PartingStrip';
 
 const Wrapper = styled('div', {
     display: 'flex',
@@ -36,7 +36,7 @@ const Label = styled('label', {
     margin: '0 1rem 0 0',
     fontFamily: THEME.fonts.text,
     fontSize: THEME.fontSizes.normal,
-    fontWeight: 500
+    fontWeight: 700
 });
 
 const FileUploadWrapper = styled('div', {
@@ -165,6 +165,7 @@ const RecipeTemplate = () => {
     return(
         <Wrapper>
             <FormWrapper>
+
                 <TopFormWrapper>
                     <InputField 
                         type = "text"  
@@ -209,7 +210,7 @@ const RecipeTemplate = () => {
                             fontFamily: THEME.fonts.text,
                             fontWeight: 400, 
                             fontSize: THEME.fontSizes.small,
-                            
+
                             '::-webkit-input-placeholder': {
                                 fontFamily: THEME.fonts.text,
                                 fontWeight: 400, 
@@ -230,6 +231,7 @@ const RecipeTemplate = () => {
                         <CookingTimeInput handleChange = {handleChange}/>
                     </FlexRow>
                 </EffortWrapper>
+
                 <CategoriesInput inputValues = {inputValues} updateInputValues = {setInputValues}/>
                 
                 <FlexRow $style = {{margin: '3rem 0 0 0'}}>
@@ -245,8 +247,11 @@ const RecipeTemplate = () => {
                         handleChange = {handleChange}
                     />
                 </FlexRow>
+
                 <IngredientsInput inputValues = {inputValues} updateInputValues = {setInputValues}/>
+                <PartingStrip width = "200px"/>
                 <CookingStepsInput inputValues = {inputValues} updateInputValues = {setInputValues}/>
+                <PartingStrip width = "200px"/>
                 <Button onClick = {handleSubmit}>Register</Button>
             </FormWrapper>
         </Wrapper>
