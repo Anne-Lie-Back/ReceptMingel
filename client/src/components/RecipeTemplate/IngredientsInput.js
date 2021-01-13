@@ -14,7 +14,7 @@ const Label = styled('label', {
     margin: '0 1rem 0 0',
     fontFamily: THEME.fonts.text,
     fontSize: THEME.fontSizes.normal,
-    fontWeight: 500
+    fontWeight: 700
 });
 
 const StyledAddIcon = styled(Icon, {
@@ -94,6 +94,10 @@ const IngredientsInput = ({inputValues, updateInputValues}) => {
         event.key === 'Enter' && handleAddingListItems();
     };
 
+    const handleEnterEdit = (event, index) => {
+        event.key === 'Enter' && handleEditItem(index);
+    };
+
     return(
         <Wrapper>
             <Label>Ingredienser:</Label>
@@ -104,9 +108,11 @@ const IngredientsInput = ({inputValues, updateInputValues}) => {
                             value = {editInput}
                             handleOpenEdit = {() => handleOpenEdit(index, ingredient)} 
                             handleEditItem = {() => handleEditItem(index)}
+                            handleEnterKey = {(event) => handleEnterEdit(event, index)}
                             handleChange = {(event) => setEditedInput(event.target.value)}
                             //TODO change to index?
-                            handleRemove = { () => handleListDeletion(ingredient) }>
+                            handleRemove = { () => handleListDeletion(ingredient) }
+                            >
                             {ingredient}
                         </TextListItem>
                 ))}  

@@ -1,6 +1,6 @@
-import {useState} from 'react';
 import { styled } from 'styletron-react';
-import Icons from '../../config/icons'
+import THEME from './../../config/theme';
+import Icons from '../../config/icons';
 import InputField from '../inputField';
 
 const Wrapper = styled('li', {
@@ -9,7 +9,7 @@ const Wrapper = styled('li', {
     alignItems: 'center',
     padding: '0.5rem 1rem',
     borderBottom: '1px solid #E3E3E3'
-})
+});
 
 const Dot = styled('div', {
     width: '5px',
@@ -17,13 +17,17 @@ const Dot = styled('div', {
     marginRight: '2rem',
     backgroundColor: '#000000',
     borderRadius: '50%'
-})
+});
 
 const TextWrapper = styled('div', {
     display: 'flex',
     alignItems: 'center',
-    flexDirection: 'row'
-})
+    flexDirection: 'row',
+    fontFamily: THEME.fonts.text,
+    fontSize: THEME.fonts.small,
+    color: THEME.colors.black[0],
+    fontWeight: 400
+});
 
 const IconWrapper = styled('div', {
     display: 'flex',
@@ -32,9 +36,9 @@ const IconWrapper = styled('div', {
     alignItems: 'center',
     width:'50px',
     marginLeft: '1rem',
-})
+});
 
-const TextListItem = ({children, isEditIngredient, isEditStep, value, handleOpenEdit, handleEditItem, handleChange, handleRemove}) => {
+const TextListItem = ({children, isEditIngredient, isEditStep, value, handleOpenEdit, handleEditItem, handleEnterKey, handleChange, handleRemove}) => {
 
     //Icons
     const EditIcon = Icons.EditSimple;
@@ -57,12 +61,14 @@ const TextListItem = ({children, isEditIngredient, isEditStep, value, handleOpen
                             value = {value}
                             rows="2" 
                             cols="80" 
+                            styling = "basic"
                             handleChange = {handleChange}
+                            onKeyDown = {handleEnterKey}
                         />
                     </TextWrapper>
                     <IconWrapper>
-                        <DoneIcon size = "20px" handleClick = {handleEditItem}/>
-                        <RemoveIcon size = "20px" handleClick = {handleRemove}/>
+                        <DoneIcon size = "25px" handleClick = {handleEditItem}/>
+                        <RemoveIcon size = "25px" handleClick = {handleRemove}/>
                     </IconWrapper>
                 </>
                 :
@@ -72,8 +78,8 @@ const TextListItem = ({children, isEditIngredient, isEditStep, value, handleOpen
                         {children}
                     </TextWrapper>
                     <IconWrapper>
-                        <EditIcon size = "20px" handleClick = {handleOpenEdit}/>
-                        <RemoveIcon size = "20px" handleClick = {handleRemove}/>
+                        <EditIcon size = "25px" handleClick = {handleOpenEdit}/>
+                        <RemoveIcon size = "25px" handleClick = {handleRemove}/>
                     </IconWrapper>
                 </>
             }
