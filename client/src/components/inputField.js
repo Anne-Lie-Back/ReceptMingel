@@ -9,14 +9,15 @@ const Wrapper = styled('div', {
 //Styling in here
 const StyledInputField = styled('input', {
     width: '100%',
+    
     fontFamily: THEME.fonts.text,
     fontSize: THEME.fontSizes.small,
     letterSpacing: '0.05rem',
 });
 
 const BasicInputField = styled(StyledInputField, {
-    padding: '1rem 2rem'
-});
+    padding: '0.5rem 1rem'
+})
 
 const UnderlineInputField = styled(StyledInputField, {
     paddingLeft: '2rem',
