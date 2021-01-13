@@ -20,20 +20,20 @@ const Wrapper = styled('div', {
 const FormWrapper = styled('div', {
     display: 'flex',
     flexDirection: 'column',
-    width: '700px',
-    maxWidth: '800px',
+    width: '680px',
     padding: '1rem 2rem'
 });
 
 const TopFormWrapper = styled('div', {
     display: 'grid',
-    gridTemplateColumns: '400px 200px',
+    gridTemplateColumns: '380px 220px',
     gridTemplateRows: 'auto auto',
     columnGap: '1rem',
-    width: '100%'
+    width: '700px'
 });
 
 const Label = styled('label', {
+    margin: '0 1rem 0 0',
     fontFamily: THEME.fonts.text,
     fontSize: THEME.fontSizes.normal,
     fontWeight: 500
@@ -62,6 +62,13 @@ const FileUpload = styled('div', {
         backgroundColor: THEME.colors.black[0],
         cursor: 'pointer'
     }
+});
+
+const EffortWrapper = styled('div', {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between'
 });
 
 const Button = styled('button', {
@@ -157,7 +164,13 @@ const RecipeTemplate = () => {
                         name = "title"
                         placeholder = "Titel"
                         styling = "underline"
-                        $style = {{ fontWeight: 700 }}
+                        $style = {{ 
+                            fontWeight: 700, 
+                            fontSize: THEME.fontSizes.large, 
+                            '::placeholder': {
+                                fontWeight: 700, 
+                                fontSize: THEME.fontSizes.normal
+                            }}}
                         handleChange = {handleChange}
                     />
                     <FileUploadWrapper>
@@ -187,8 +200,20 @@ const RecipeTemplate = () => {
                         handleChange = {handleChange}
                     />
                 </TopFormWrapper>
-                <CookingTimeInput handleChange = {handleChange}/>
-                <DifficultyInput handleChange = {handleChange}/>
+
+                <EffortWrapper>
+                    <div>
+                        <Label for = "difficulty"> Svårighetsgrad: </Label>
+                        <DifficultyInput handleChange = {handleChange}/>
+                    </div>
+
+                    <div>
+                        <Label for = "CookingTime"> Tidsåtgång: </Label>
+                        <CookingTimeInput handleChange = {handleChange}/>
+                    </div>
+                </EffortWrapper>
+                
+
                 <CategoriesInput inputValues = {inputValues} updateInputValues = {setInputValues}/>
                 <InputField 
                     type = "number" 

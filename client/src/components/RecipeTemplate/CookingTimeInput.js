@@ -6,7 +6,6 @@ const Wrapper = styled('div', {
 
 const CookingTimeInput = ({handleChange}) => (
     <Wrapper>
-        <label for="cookingTime">Beräknad tillagningstid:</label>
         <select name="cookingTime" id="cookingTime" onChange = {handleChange}>
             <option value="0-15min">0-15min</option>
             <option value="16-30min">16-30min</option>

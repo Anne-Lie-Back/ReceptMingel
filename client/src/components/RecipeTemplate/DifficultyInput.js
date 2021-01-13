@@ -6,7 +6,6 @@ const Wrapper = styled('div', {
 
 const DifficultyInput = ({handleChange}) => (
     <Wrapper>
-        <label for="difficulty">Svårighetsgrad:</label>
         <select name="difficulty" id="difficulty" onChange = {handleChange}>
             <option value="lätt">LÄTT</option>
             <option value="medel">MEDEL</option>
