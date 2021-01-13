@@ -79,15 +79,23 @@ const FlexRow = styled('div', {
 });
 
 const Button = styled('button', {
-    padding: '1rem 2rem',
-    margin: '1rem',
-    backgroundColor: 'orange',
-    color: 'white',
-    textTransform: 'uppercase',
+    width: '100%',
+    padding: '0.5rem',
+    margin: '1rem 0',
+    border: 'none',
+    borderRadius: '5px',
+    boxShadow: '0 0 2px black',
+    backgroundColor: THEME.colors.contrast[0],
+    fontFamily: THEME.fonts.text,
+    fontSize: THEME.fontSizes.normal,
+    fontWeight: 700,
+    textAlign: 'center',
+    color: THEME.colors.white[0],
+    letterSpacing: '0.05rem',
 
     ':hover': {
         cursor:'pointer',
-        backgroundColor:'darkorange' 
+        backgroundColor: THEME.colors.black[0]
     }
 })
 
@@ -252,7 +260,7 @@ const RecipeTemplate = () => {
                 <PartingStrip width = "200px"/>
                 <CookingStepsInput inputValues = {inputValues} updateInputValues = {setInputValues}/>
                 <PartingStrip width = "200px"/>
-                <Button onClick = {handleSubmit}>Register</Button>
+                <Button onClick = {handleSubmit}>Spara Recept</Button>
             </FormWrapper>
         </Wrapper>
     )

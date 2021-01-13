@@ -33,6 +33,7 @@ const AddButtonText = styled('div', {
     fontWeight: 700,
     textAlign: 'center',
     color: THEME.colors.white[0],
+    letterSpacing: '0.05rem',
 
     ':hover': {
         cursor:'pointer',
@@ -42,6 +43,7 @@ const AddButtonText = styled('div', {
 
 const FilterInput = styled(InputField, {
     padding: '0.5rem 1rem',
+    marginTop: '1rem',
     backgroundColor: THEME.colors.grey[0],
     border: 'none',
     fontFamily: THEME.fonts.text,
@@ -63,7 +65,7 @@ const TypeIsRecipe = ({recipeList}) => {
         <>
         {console.log('filterInput', filterInput)}
             <AddButtonText onClick = {handleClick}>Skapa nytt recept</AddButtonText>
-            <FilterInput handleChange = {(event) => handleChange(event)} placeholder = 'Sök bland dina recept...'/>
+            <FilterInput styling = "basic" handleChange = {(event) => handleChange(event)} placeholder = 'Sök bland dina recept...'/>
             <List>
                 {recipeList.map((item, index) => (
                     <ListItem key = {index}> {item} </ListItem>

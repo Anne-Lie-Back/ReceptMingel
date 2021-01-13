@@ -31,7 +31,7 @@ const StyledAddIcon = styled(Icon, {
 const List = styled('ul', {
     width: '100%',
     margin: '1rem 0 2rem 0'
-})
+});
 
 const FlexRow = styled('div', {
     display: 'flex',
@@ -59,13 +59,13 @@ const IngredientsInput = ({inputValues, updateInputValues}) => {
             //empties inputfield
             setNewIngredient('');
         }  
-    }
+    };
 
     //Opens edit-mode for single listitem
     const handleOpenEdit = (index, ingredient) => {
         setActiveEdit(activeEdit === index ? null : index)
         setEditedInput(ingredient)
-    }
+    };
     
     //updates official ingredient-array
     const handleEditItem = (index) => {
@@ -76,7 +76,7 @@ const IngredientsInput = ({inputValues, updateInputValues}) => {
             setActiveEdit(null);
         }
         //TODO set old value if input empty
-    }
+    };
 
     //Deletes item from official ingredients-array
     //TODO fix bug that removes two categories with same name
@@ -88,7 +88,7 @@ const IngredientsInput = ({inputValues, updateInputValues}) => {
         })
         //empties inputfield
         setActiveEdit(null);
-    }
+    };
 
     const handleEnter = (event) => {
         event.key === 'Enter' && handleAddingListItems();

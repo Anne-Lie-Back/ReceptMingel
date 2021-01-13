@@ -13,6 +13,7 @@ const CookingTimeInput = ({handleChange}) => (
             onChange = {handleChange}
             style = {{
                 padding: "0.2rem 0.5rem",
+                backgroundColor: THEME.colors.secondary[0],
                 fontFamily: THEME.fonts.text,
                 color: THEME.colors.black[0]
             }} 

@@ -5,7 +5,6 @@ const Wrapper = styled('div', {
     margin: '0.5rem 0'
 });
 
-
 const DifficultyInput = ({handleChange}) => (
     <Wrapper>
         <select 
@@ -13,6 +12,7 @@ const DifficultyInput = ({handleChange}) => (
             id="difficulty"
             style = {{
                 padding: "0.2rem 0.5rem",
+                backgroundColor: THEME.colors.secondary[0],
                 fontFamily: THEME.fonts.text,
                 color: THEME.colors.black[0]
             }} 

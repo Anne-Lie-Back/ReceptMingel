@@ -4,7 +4,7 @@ import THEME from '../../config/theme';
 import InputField from '../inputField';
 import { Icon } from "@iconify/react";
 import addOutline from '@iconify/icons-gridicons/add-outline';
-import TextListItem from './text.listItem'
+import TextListItem from './text.listItem';
 
 const Wrapper = styled('div', {
     margin: '0.5rem 0',
@@ -39,7 +39,7 @@ const StyledAddIcon = styled(Icon, {
 const List = styled('ul', {
     width: '100%',
     margin: '1rem 0 2rem 0'
-})
+});
 
 
 const CookingStepsInput = ({inputValues, updateInputValues}) => {
@@ -96,6 +96,10 @@ const CookingStepsInput = ({inputValues, updateInputValues}) => {
         event.key === 'Enter' && handleAddingListItems();
     };
 
+    const handleEnterEdit = (event, index) => {
+        event.key === 'Enter' && handleEditItem(index);
+    };
+
     return(
         <Wrapper>
             <Label>Steg för steg-instruktioner:</Label>
@@ -106,6 +110,7 @@ const CookingStepsInput = ({inputValues, updateInputValues}) => {
                             value = {editInput}
                             handleOpenEdit = {() => handleOpenEdit(index, step)}
                             handleEditItem = {() => handleEditItem(index)}
+                            handleEnterKey = {(event) => handleEnterEdit(event, index)}
                             handleChange = {(event) => setEditedInput(event.target.value)}
                             //Todo, change to index instead of step?
                             handleRemove = { () => handleListDeletion(step) }

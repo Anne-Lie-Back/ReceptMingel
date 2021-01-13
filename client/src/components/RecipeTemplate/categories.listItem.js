@@ -7,7 +7,7 @@ const Wrapper = styled('div', {
     justifyContent: 'space-between',
     alignItems: 'center',
     width: '150px',
-    margin: '0.5rem 1rem',
+    margin: '0.5rem 1rem 0.5rem 0',
     padding: '0.25rem 1rem',
     backgroundColor: '#DEEFFF',
     border: '1px solid black',
