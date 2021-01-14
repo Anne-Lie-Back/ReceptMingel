@@ -1,12 +1,13 @@
 import { styled } from 'styletron-react';
 import THEME from './../../config/theme';
 import imageTest from '../../assets/images/imageTest.png';
+import PartingStrip from '../PartingStrip'
 
 const Wrapper = styled('div', {
     display: 'flex',
     justifyContent: 'center',
     width: '100%',
-    padding: '2rem 0',
+    margin: '3rem 0',
 });
 
 const FlexRow = styled('div', {
@@ -52,16 +53,17 @@ const HeadlineSmall = styled ('h4', {
 const RecipeWrapper = styled('div', {
     display: 'flex',
     flexDirection: 'column',
-    width: '800px',
-    padding: '1rem 2rem'
+    width: '812px',
+    margin: '1rem 2rem'
 });
 
-const TopWrapper = styled('div', {
+const TopGridWrapper = styled('div', {
     display: 'grid',
-    gridTemplateColumns: '460px 340px',
+    gridTemplateColumns: '450px 330px',
     gridTemplateRows: '50px 170px 40px',
     columnGap: '2rem',
-    width: '832px'
+    width: '812px',
+    marginBottom: '4rem'
 });
 
 const Image = styled('div',({$image}) => ({
@@ -83,13 +85,13 @@ const Box = styled('div', {
     border: `1px solid ${THEME.colors.black[0]}`
 });
 
-const Box1 = styled(Box, {
+const EffortBox = styled(Box, {
     width: '80px',
     marginLeft: '1rem',
     backgroundColor: THEME.colors.secondary[0],
 });
 
-const Box2 = styled(Box, {
+const PortionBox = styled(Box, {
     width: '35px',
     marginLeft: '1rem',
     backgroundColor: THEME.colors.white[0],
@@ -99,19 +101,26 @@ const ListContentWrapper = styled('div', {
     display: 'flex',
     flexDirection: 'column',
     width: '100%',
-    marginTop: '3rem'
+    margin: '3rem 0'
 });
 
-const StepListItem = styled('li', {
-    margin: '2rem 0 0 1.65rem', 
+const ListItem = styled('li', {
     fontSize: THEME.fontSizes.small,
     fontFamily: THEME.fonts.text,
     color: THEME.colors.black[0],
     fontWeight: 500,
     letterSpacing: '0.05rem',
     lineHeight: '167%',
-    counterIncrement: 'item',
+});
 
+const IngredientListItem = styled(ListItem, {
+    margin: '1rem 0 0 0.75rem',
+    paddingLeft: '1rem'
+});
+
+const StepListItem = styled(ListItem, {
+    margin: '2rem 0 0 1.65rem', 
+    counterIncrement: 'item',
 
     '::marker' : {
         content: 'counter(item) ".   "',
@@ -121,10 +130,31 @@ const StepListItem = styled('li', {
     },
 });
 
+const CategoryContainer = styled(FlexRow, {
+    flexWrap: 'wrap',
+    width: '100%',
+    maxWidth: '465px',
+    height: '30px',
+});
+
+const CategoryBox = styled(Box, {
+    width: '120px',
+    margin: '0 0.5rem 0.5rem 0',
+    padding: '0.5rem 0.5rem',
+    backgroundColor: THEME.colors.primary[1],
+    //borderRadius: '5px',
+    fontSize: THEME.fontSizes.Xsmall,
+    fontFamily: THEME.fonts.text,
+    color: THEME.colors.black[0],
+    fontWeight: 500,
+    letterSpacing: '0.05rem',
+    textTransform: 'uppercase',
+});
+
 const RecipeView = () => {
     const recipe = {
         title : "Exotiska Tacos",
-        preambleHTML : "En fräsch taco med panerad torsk. Den sötstarka mangosalsan ger mycket fraschör. Var inte rädd för att dunka på en del med chilin, mangon och limedressingen tar ut en del styrka. Detta är en perfekt sommar-rätt! ",
+        preambleHTML : "En fräsch taco med panerad tofu. Den sötstarka mangosalsan ger mycket fraschör. Var inte rädd för att dunka på en del med chilin, mangon och limedressingen tar ut en del styrka. Detta är en perfekt sommar-rätt! ",
         imageURL : "https://img.koket.se/standard-mega/fisktacos-med-guacamole-och-mangosalsa.jpg.webp",
         portions : 4,
         cookingTime : "10-20min",
@@ -147,59 +177,61 @@ const RecipeView = () => {
         "mdsaCategories" : [
             "taco",
             "fisk",
-            "fredagsmys"
+            "fredagsmys",
+            "moffafredag"
         ],
-        "author" : "Lee",
+        "author" : "Hjortronbåt",
         "isShared" : false
     }
 
     return(
         <Wrapper>
             <RecipeWrapper>
-                <TopWrapper>
+                <TopGridWrapper>
                     <Title>{recipe.title}</Title>
                     <Image/>
                     <Text>{recipe.preambleHTML}</Text>
                     <FlexRow $style = {{ justifyContent: 'space-between', alignItems: 'flex-end' }}>
                         <FlexRow>
                             <HeadlineSmall >Svårighetsgrad: </HeadlineSmall>
-                            <Box1>
+                            <EffortBox>
                                 <Text>
                                     {recipe.difficulty}
                                 </Text>
-                            </Box1>
+                            </EffortBox>
                         </FlexRow>
                         <FlexRow>
                             <HeadlineSmall>Tidsestimering: </HeadlineSmall>
-                            <Box1>
+                            <EffortBox>
                                 <Text>
                                     {recipe.cookingTime}
                                 </Text>
-                            </Box1>
+                            </EffortBox>
                         </FlexRow>
                     </FlexRow>
-                </TopWrapper>
-                <FlexRow style = {{marginTop: '5rem'}}>
+                </TopGridWrapper>
+                <PartingStrip width = '100%'/>
+                <FlexRow style = {{marginTop: '4rem'}}>
                     <HeadlineSmall>Portioner:</HeadlineSmall>
-                    <Box2>
+                    <PortionBox>
                         <Text>
                             {recipe.portions}
                         </Text>
-                    </Box2>
+                    </PortionBox>
                 </FlexRow>
                 <ListContentWrapper>
                     <HeadlineMedium>Ingredienser:</HeadlineMedium>
                     <ul style = {{marginTop: '0.5rem'}}>
                         {recipe.ingredients.map(item => (
-                            <Text $as = 'li' $style = {{margin: '1rem 0 0 0.75rem'}}>{item}</Text>
+                            <IngredientListItem>{item}</IngredientListItem>
                         ))}
                     </ul>
                 </ListContentWrapper>
+                <PartingStrip width = "150px" />
                 <ListContentWrapper>
                     <HeadlineMedium>Gör så här:</HeadlineMedium>
                     <ol 
                         style = {{
-                            marginTop: '0.5rem', 
                             listStyle: 'none',
                             counterReset: 'item',
                             }}>
@@ -210,7 +242,18 @@ const RecipeView = () => {
                         ))}
                     </ol>
                 </ListContentWrapper>
-
+                <PartingStrip width = "100%" />
+                <FlexRow $style = {{justifyContent: 'space-between', margin: '4rem 1.5rem 3rem 0'}}>
+                    <CategoryContainer>
+                            {recipe.mdsaCategories.map(item => (
+                              <CategoryBox>{item}</CategoryBox>  
+                            ))}
+                    </CategoryContainer>
+                    <FlexRow>
+                    <HeadlineSmall>Författat av:</HeadlineSmall>
+                        <Text $style = {{marginLeft: '1rem', lineHeight: '100%'}}>{recipe.author}</Text>
+                    </FlexRow>
+                </FlexRow>
             </RecipeWrapper>
         </Wrapper>
     );

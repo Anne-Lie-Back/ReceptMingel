@@ -14,7 +14,7 @@ const Wrapper = styled('div', {
     display: 'flex',
     justifyContent: 'center',
     width: '100%',
-    padding: '2rem 0',
+    padding: '3rem 0',
 });
 
 const FormWrapper = styled('div', {
