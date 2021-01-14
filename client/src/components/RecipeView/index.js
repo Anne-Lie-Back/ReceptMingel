@@ -1,9 +1,13 @@
 import {useState} from 'react';
 import { styled } from 'styletron-react';
 import THEME from './../../config/theme';
+
 import { Icon } from "@iconify/react";
 import roundStarOutline from '@iconify/icons-ic/round-star-outline';
 import roundStarRate from '@iconify/icons-ic/round-star-rate';
+import roundRadioButtonUnchecked from '@iconify/icons-ic/round-radio-button-unchecked';
+import roundRadioButtonChecked from '@iconify/icons-ic/round-radio-button-checked';
+
 import PartingStrip from '../PartingStrip';
 import TopSection from './TopSection';
 import IngredientSection from './IngredientSection';
@@ -23,7 +27,7 @@ const FlexRow = styled('div', {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: '2rem'
+    marginBottom: '1rem'
 });
 
 const HeadlineSmall = styled ('h4', {
@@ -42,8 +46,8 @@ const RecipeWrapper = styled('div', {
 });
 
 const StarIcon = styled(Icon,({$isStarred})=> ({
-    marginRight: '0.5rem',
-    fontSize: '35px',
+    margin: '0 0.5rem 0 -0.3rem',
+    fontSize: '40px',
     color: $isStarred ? 'gold' : THEME.colors.black[0],
 
     ':hover' : {
@@ -52,9 +56,25 @@ const StarIcon = styled(Icon,({$isStarred})=> ({
     }
 }));
 
+const SharedIcon = styled(Icon,({$isSharedRecipe})=> ({
+    margin: ' 0 0.5rem 0 -0.2rem',
+    fontSize: '30px',
+    color: $isSharedRecipe ? 'ForestGreen' : THEME.colors.black[0],
+
+    ':hover' : {
+        cursor: 'pointer',
+        color: THEME.colors.contrast[0],
+    }
+}));
+
 const RecipeView = () => {
-    //const [isShared, setIsShared] = useState(isShared);
+    //TODO assign startvalue from DB - recipe instead
+    const [isSharedRecipe, setIsShared] = useState(false);
     const [isStarred, setIsStarred] = useState(false);
+
+    //TODO remove and lift, decide by PROP from parent
+    // eslint-disable-next-line no-unused-vars
+    const [isSessionUsersRecipe, setSessionUsersRecipe] = useState(false);
 
     //TODO remove
     const recipe = {
@@ -101,6 +121,7 @@ const RecipeView = () => {
         ingredients,
         mdsaCategories,
         author,
+        // eslint-disable-next-line no-unused-vars
         isShared
     } = recipe;
 
@@ -108,9 +129,27 @@ const RecipeView = () => {
         <Wrapper>
             <RecipeWrapper>
                 <FlexRow>
-                    <StarIcon $isStarred = {isStarred} icon={isStarred? roundStarRate : roundStarOutline} onClick = {() => setIsStarred(!isStarred)}/>
-                    <HeadlineSmall> {isStarred? 'SPARAD I DIN RECEPTBOK':'SPARA I DIN RECEPTBOK'}</HeadlineSmall>
+                    {isSessionUsersRecipe?
+                        <>
+                            <StarIcon 
+                                $isStarred = {isStarred} 
+                                icon={isStarred? roundStarRate : roundStarOutline} 
+                                onClick = {() => setIsStarred(!isStarred)}
+                            />
+                            <HeadlineSmall> {isStarred? 'SPARAD I DIN RECEPTBOK':'SPARA I DIN RECEPTBOK'}</HeadlineSmall>
+                        </>
+                        :
+                        <>
+                            <SharedIcon 
+                                $isSharedRecipe = {isSharedRecipe} 
+                                icon={isSharedRecipe ? roundRadioButtonChecked : roundRadioButtonUnchecked} 
+                                onClick = {() => setIsShared(!isSharedRecipe)}
+                            />
+                            <HeadlineSmall> {isSharedRecipe? 'DELAD MED DINA VÄNNER':'FÄRDIG? DELA MED DINA VÄNNER'}</HeadlineSmall>
+                        </>                    
+                    }
                 </FlexRow>
+                <PartingStrip width = '100%'/>
                 <TopSection 
                     title = {title} 
                     description = {preambleHTML} 
@@ -120,7 +159,7 @@ const RecipeView = () => {
                 />
                 <PartingStrip width = '100%'/>
                 <IngredientSection portions = {portions} ingredients = {ingredients}/>
-                <PartingStrip width = "150px" />
+                <PartingStrip width = "200px" />
                 <CookingStepsSection cookingSteps = {cookingSteps}/>
                 <PartingStrip width = "100%" />
                 <BottomSection categories = {mdsaCategories} author = {author}/>

@@ -9,7 +9,7 @@ const TopGridWrapper = styled('div', {
     gridTemplateRows: '50px 170px 40px',
     columnGap: '2rem',
     width: '812px',
-    marginBottom: '4rem'
+    margin: '4rem 0'
 });
 
 const FlexRow = styled('div', {

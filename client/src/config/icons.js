@@ -33,6 +33,13 @@ import roundStarOutline from '@iconify/icons-ic/round-star-outline';
 //ACTIVE STARICON for favourite
 import roundStarRate from '@iconify/icons-ic/round-star-rate';
 
+//OFF, not shared
+import roundRadioButtonUnchecked from '@iconify/icons-ic/round-radio-button-unchecked';
+//ON, shared
+import roundRadioButtonChecked from '@iconify/icons-ic/round-radio-button-checked';
+
+
+
 
 
 
@@ -110,6 +117,18 @@ const StarIconActive = ({size, color, handleClick}) => (
     <StyledIcon icon={roundStarRate} $size = {size} $color = {color} onClick = {handleClick}/>
 );
 
+//Shared / unshared
+
+const UnsharedIcon = ({size, color, handleClick}) => (
+    <StyledIcon icon={roundRadioButtonUnchecked} $size = {size} $color = {color} onClick = {handleClick}/>
+);
+
+const SharedIcon = ({size, color, handleClick}) => (
+    <StyledIcon icon={roundRadioButtonChecked} $size = {size} $color = {color} onClick = {handleClick}/>
+);
+
+
+
 const Icons = {
     AddIcon,
     EditSimple,
@@ -124,7 +143,9 @@ const Icons = {
     CopyrightIcon,
     LinkedinIcon,
     StarIconUnactive,
-    StarIconActive
+    StarIconActive,
+    UnsharedIcon,
+    SharedIcon
 };
 
 export default Icons;
