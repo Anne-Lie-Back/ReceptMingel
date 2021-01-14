@@ -3,6 +3,7 @@ import THEME from './../../config/theme';
 import PartingStrip from '../PartingStrip';
 import TopSection from './TopSection';
 import IngredientSection from './IngredientSection';
+import CookingStepsSection from './CookingStepsSection'
 //TODO remove
 import imageTest from '../../assets/images/imageTest.png';
 
@@ -28,13 +29,7 @@ const Text = styled('p', {
     letterSpacing: '0.05rem'
 });
 
-const HeadlineMedium = styled ('h3', {
-    fontFamily: THEME.fonts.text,
-    color: THEME.colors.black[0], 
-    fontSize: THEME.fontSizes.normal,
-    fontWeight: 700,
-    letterSpacing: '0.05rem'
-});
+
 
 const HeadlineSmall = styled ('h4', {
     fontFamily: THEME.fonts.text,
@@ -60,39 +55,6 @@ const Box = styled('div', {
     justifyContent: 'center',
     height: '30px',
     border: `1px solid ${THEME.colors.black[0]}`
-});
-
-
-
-
-
-const ListContentWrapper = styled('div', {
-    display: 'flex',
-    flexDirection: 'column',
-    width: '100%',
-    margin: '3rem 0'
-});
-
-const ListItem = styled('li', {
-    fontSize: THEME.fontSizes.small,
-    fontFamily: THEME.fonts.text,
-    color: THEME.colors.black[0],
-    fontWeight: 500,
-    letterSpacing: '0.05rem',
-    lineHeight: '167%',
-});
-
-
-const StepListItem = styled(ListItem, {
-    margin: '2rem 0 0 1.65rem', 
-    counterIncrement: 'item',
-
-    '::marker' : {
-        content: 'counter(item) ".   "',
-        paddingRight: '1rem',
-        fontFamily: THEME.fonts.text,
-        fontWeight: 700,
-    },
 });
 
 const CategoryContainer = styled(FlexRow, {
@@ -178,22 +140,7 @@ const RecipeView = () => {
                 <PartingStrip width = '100%'/>
                 <IngredientSection portions = {portions} ingredients = {ingredients}/>
                 <PartingStrip width = "150px" />
-
-                <ListContentWrapper>
-                    <HeadlineMedium>Gör så här:</HeadlineMedium>
-                    <ol 
-                        style = {{
-                            listStyle: 'none',
-                            counterReset: 'item',
-                            }}>
-                        {recipe.cookingSteps.map(item => (
-                            <StepListItem>
-                                {item}
-                            </StepListItem>
-                        ))}
-                    </ol>
-                </ListContentWrapper>
-
+                <CookingStepsSection cookingSteps = {cookingSteps}/>
                 <PartingStrip width = "100%" />
 
                 <FlexRow $style = {{justifyContent: 'space-between', margin: '4rem 1.5rem 3rem 0'}}>
