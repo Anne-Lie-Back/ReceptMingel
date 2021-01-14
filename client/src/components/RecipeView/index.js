@@ -1,7 +1,9 @@
 import { styled } from 'styletron-react';
 import THEME from './../../config/theme';
+import PartingStrip from '../PartingStrip';
+import TopContent from './TopContent';
+//TODO remove
 import imageTest from '../../assets/images/imageTest.png';
-import PartingStrip from '../PartingStrip'
 
 const Wrapper = styled('div', {
     display: 'flex',
@@ -14,14 +16,6 @@ const FlexRow = styled('div', {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center'
-});
-
-const Title = styled('h2', {
-    fontSize: THEME.fontSizes.smallHeader,
-    fontFamily: THEME.fonts.text,
-    color: THEME.colors.black[0],
-    fontWeight: 700,
-    letterSpacing: '0.05rem'
 });
 
 const Text = styled('p', {
@@ -57,25 +51,7 @@ const RecipeWrapper = styled('div', {
     margin: '1rem 2rem'
 });
 
-const TopGridWrapper = styled('div', {
-    display: 'grid',
-    gridTemplateColumns: '450px 330px',
-    gridTemplateRows: '50px 170px 40px',
-    columnGap: '2rem',
-    width: '812px',
-    marginBottom: '4rem'
-});
 
-const Image = styled('div',({$image}) => ({
-    gridColumn: '2/3',
-    gridRow: '1/4',
-    width: '100%',
-    height: '100%',
-    backgroundImage: $image? `url(${$image})` : `url(${imageTest})`,
-    backgroundPosition: 'center',
-    backgroundRepeat:' no-repeat',
-    backgroundSize: 'cover',
-}));
 
 const Box = styled('div', {
     display: 'flex',
@@ -85,11 +61,7 @@ const Box = styled('div', {
     border: `1px solid ${THEME.colors.black[0]}`
 });
 
-const EffortBox = styled(Box, {
-    width: '80px',
-    marginLeft: '1rem',
-    backgroundColor: THEME.colors.secondary[0],
-});
+
 
 const PortionBox = styled(Box, {
     width: '35px',
@@ -155,7 +127,7 @@ const RecipeView = () => {
     const recipe = {
         title : "Exotiska Tacos",
         preambleHTML : "En fräsch taco med panerad tofu. Den sötstarka mangosalsan ger mycket fraschör. Var inte rädd för att dunka på en del med chilin, mangon och limedressingen tar ut en del styrka. Detta är en perfekt sommar-rätt! ",
-        imageURL : "https://img.koket.se/standard-mega/fisktacos-med-guacamole-och-mangosalsa.jpg.webp",
+        image : imageTest,
         portions : 4,
         cookingTime : "10-20min",
         difficulty : "LÄTT",
@@ -184,33 +156,30 @@ const RecipeView = () => {
         "isShared" : false
     }
 
+    const {
+        title,
+        preambleHTML,
+        image,
+        portions,
+        cookingTime,
+        difficulty,
+        ingredients,
+        author,
+        isShared
+    } = recipe;
+
     return(
         <Wrapper>
             <RecipeWrapper>
-                <TopGridWrapper>
-                    <Title>{recipe.title}</Title>
-                    <Image/>
-                    <Text>{recipe.preambleHTML}</Text>
-                    <FlexRow $style = {{ justifyContent: 'space-between', alignItems: 'flex-end' }}>
-                        <FlexRow>
-                            <HeadlineSmall >Svårighetsgrad: </HeadlineSmall>
-                            <EffortBox>
-                                <Text>
-                                    {recipe.difficulty}
-                                </Text>
-                            </EffortBox>
-                        </FlexRow>
-                        <FlexRow>
-                            <HeadlineSmall>Tidsestimering: </HeadlineSmall>
-                            <EffortBox>
-                                <Text>
-                                    {recipe.cookingTime}
-                                </Text>
-                            </EffortBox>
-                        </FlexRow>
-                    </FlexRow>
-                </TopGridWrapper>
+                <TopContent 
+                    title = {title} 
+                    description = {preambleHTML} 
+                    image = {image} 
+                    difficulty = {difficulty} 
+                    cookingTime = {cookingTime}
+                />
                 <PartingStrip width = '100%'/>
+
                 <FlexRow style = {{marginTop: '4rem'}}>
                     <HeadlineSmall>Portioner:</HeadlineSmall>
                     <PortionBox>
@@ -219,6 +188,7 @@ const RecipeView = () => {
                         </Text>
                     </PortionBox>
                 </FlexRow>
+
                 <ListContentWrapper>
                     <HeadlineMedium>Ingredienser:</HeadlineMedium>
                     <ul style = {{marginTop: '0.5rem'}}>
@@ -227,7 +197,9 @@ const RecipeView = () => {
                         ))}
                     </ul>
                 </ListContentWrapper>
+
                 <PartingStrip width = "150px" />
+
                 <ListContentWrapper>
                     <HeadlineMedium>Gör så här:</HeadlineMedium>
                     <ol 
@@ -242,7 +214,9 @@ const RecipeView = () => {
                         ))}
                     </ol>
                 </ListContentWrapper>
+
                 <PartingStrip width = "100%" />
+
                 <FlexRow $style = {{justifyContent: 'space-between', margin: '4rem 1.5rem 3rem 0'}}>
                     <CategoryContainer>
                             {recipe.mdsaCategories.map(item => (
@@ -254,6 +228,7 @@ const RecipeView = () => {
                         <Text $style = {{marginLeft: '1rem', lineHeight: '100%'}}>{recipe.author}</Text>
                     </FlexRow>
                 </FlexRow>
+
             </RecipeWrapper>
         </Wrapper>
     );
