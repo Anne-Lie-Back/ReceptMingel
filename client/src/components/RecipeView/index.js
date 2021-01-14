@@ -1,5 +1,9 @@
+import {useState} from 'react';
 import { styled } from 'styletron-react';
 import THEME from './../../config/theme';
+import { Icon } from "@iconify/react";
+import roundStarOutline from '@iconify/icons-ic/round-star-outline';
+import roundStarRate from '@iconify/icons-ic/round-star-rate';
 import PartingStrip from '../PartingStrip';
 import TopSection from './TopSection';
 import IngredientSection from './IngredientSection';
@@ -12,13 +16,22 @@ const Wrapper = styled('div', {
     display: 'flex',
     justifyContent: 'center',
     width: '100%',
-    margin: '3rem 0',
+    margin: '4rem 0',
 });
 
 const FlexRow = styled('div', {
     display: 'flex',
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginBottom: '2rem'
+});
+
+const HeadlineSmall = styled ('h4', {
+    fontFamily: THEME.fonts.text,
+    color: THEME.colors.black[0],
+    fontSize: THEME.fontSizes.normal,
+    fontWeight: 500,
+    letterSpacing: '0.05rem',
 });
 
 const RecipeWrapper = styled('div', {
@@ -28,7 +41,20 @@ const RecipeWrapper = styled('div', {
     margin: '1rem 2rem'
 });
 
+const StarIcon = styled(Icon,({$isStarred})=> ({
+    marginRight: '0.5rem',
+    fontSize: '35px',
+    color: $isStarred ? 'gold' : THEME.colors.black[0],
+
+    ':hover' : {
+        cursor: 'pointer',
+        color: $isStarred ? THEME.colors.black[0] : THEME.colors.contrast[0],
+    }
+}));
+
 const RecipeView = () => {
+    //const [isShared, setIsShared] = useState(isShared);
+    const [isStarred, setIsStarred] = useState(false);
 
     //TODO remove
     const recipe = {
@@ -81,6 +107,10 @@ const RecipeView = () => {
     return(
         <Wrapper>
             <RecipeWrapper>
+                <FlexRow>
+                    <StarIcon $isStarred = {isStarred} icon={isStarred? roundStarRate : roundStarOutline} onClick = {() => setIsStarred(!isStarred)}/>
+                    <HeadlineSmall> {isStarred? 'SPARAD I DIN RECEPTBOK':'SPARA I DIN RECEPTBOK'}</HeadlineSmall>
+                </FlexRow>
                 <TopSection 
                     title = {title} 
                     description = {preambleHTML} 

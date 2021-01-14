@@ -67,7 +67,7 @@ const EffortBox = styled('div', {
 
 const TopSection = ({title, description, image, difficulty, cookingTime}) => (
     <TopGridWrapper>
-        <Title>{title}</Title>
+            <Title>{title}</Title>
         <Image $image = {image}/>
         <Text>{description}</Text>
         <FlexRow $style = {{ justifyContent: 'space-between', alignItems: 'flex-end' }}>
