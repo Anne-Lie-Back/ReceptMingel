@@ -6,8 +6,6 @@ const Wrapper = styled('div', {
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
-    //height: 'px',
-    margin: '1rem 0 3rem 0',
 });
 
 const DecorativeLine = styled('div',({$width}) => ({

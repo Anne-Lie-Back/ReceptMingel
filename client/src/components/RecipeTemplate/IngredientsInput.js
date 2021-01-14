@@ -7,7 +7,7 @@ import { Icon } from "@iconify/react";
 import TextListItem from './text.listItem';
 
 const Wrapper = styled('div', {
-    margin: '2rem 0',
+    margin: '2.5rem 0',
 });
 
 const Label = styled('label', {

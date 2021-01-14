@@ -10,7 +10,7 @@ const Wrapper = styled('div', {
     padding: '0 2rem',
     backgroundColor: THEME.colors.primary[0],
     fontFamily: THEME.fonts.text,
-    fontSize: THEME.fontSizes.small,
+    fontSize: THEME.fontSizes.Xsmall,
     color: THEME.colors.white[0],
 });
 
