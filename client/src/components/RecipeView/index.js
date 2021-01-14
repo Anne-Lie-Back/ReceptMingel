@@ -2,6 +2,7 @@ import { styled } from 'styletron-react';
 import THEME from './../../config/theme';
 import PartingStrip from '../PartingStrip';
 import TopContent from './TopContent';
+import IngredientContent from './IngredientContent';
 //TODO remove
 import imageTest from '../../assets/images/imageTest.png';
 
@@ -63,11 +64,7 @@ const Box = styled('div', {
 
 
 
-const PortionBox = styled(Box, {
-    width: '35px',
-    marginLeft: '1rem',
-    backgroundColor: THEME.colors.white[0],
-});
+
 
 const ListContentWrapper = styled('div', {
     display: 'flex',
@@ -85,10 +82,6 @@ const ListItem = styled('li', {
     lineHeight: '167%',
 });
 
-const IngredientListItem = styled(ListItem, {
-    margin: '1rem 0 0 0.75rem',
-    paddingLeft: '1rem'
-});
 
 const StepListItem = styled(ListItem, {
     margin: '2rem 0 0 1.65rem', 
@@ -124,6 +117,8 @@ const CategoryBox = styled(Box, {
 });
 
 const RecipeView = () => {
+
+    //TODO remove
     const recipe = {
         title : "Exotiska Tacos",
         preambleHTML : "En fräsch taco med panerad tofu. Den sötstarka mangosalsan ger mycket fraschör. Var inte rädd för att dunka på en del med chilin, mangon och limedressingen tar ut en del styrka. Detta är en perfekt sommar-rätt! ",
@@ -139,7 +134,7 @@ const RecipeView = () => {
             "3dl gräddfil eller mjölkfritt alternativ",
             "1st Lime"
         ],
-        "cookingSteps" : [
+        cookingSteps : [
             "Riv av skalet av limen och blanda ner det i gräddfilen. Ställ såsen i kylen. TIPS! Ju längre såsen får stå med limeskalen i, desto mer lime kommer såsen att smaka.",
             "Tärna mangon i centimeterstora bitar. Skiva chilin tunnt. Blanda ihop och låt götta sig en stund. Även Salsan mår ra av att stå i någon timme innan servering, men smakar fint även om den serveras direkt.",
             "Tillaga Torsken efter beskrivningen på paketet.",
@@ -156,12 +151,14 @@ const RecipeView = () => {
         "isShared" : false
     }
 
+    //Transform for easier follow on where the different items are showing and are styled.
     const {
         title,
         preambleHTML,
         image,
         portions,
         cookingTime,
+        cookingSteps,
         difficulty,
         ingredients,
         author,
@@ -179,25 +176,7 @@ const RecipeView = () => {
                     cookingTime = {cookingTime}
                 />
                 <PartingStrip width = '100%'/>
-
-                <FlexRow style = {{marginTop: '4rem'}}>
-                    <HeadlineSmall>Portioner:</HeadlineSmall>
-                    <PortionBox>
-                        <Text>
-                            {recipe.portions}
-                        </Text>
-                    </PortionBox>
-                </FlexRow>
-
-                <ListContentWrapper>
-                    <HeadlineMedium>Ingredienser:</HeadlineMedium>
-                    <ul style = {{marginTop: '0.5rem'}}>
-                        {recipe.ingredients.map(item => (
-                            <IngredientListItem>{item}</IngredientListItem>
-                        ))}
-                    </ul>
-                </ListContentWrapper>
-
+                <IngredientContent portions = {portions} ingredients = {ingredients}/>
                 <PartingStrip width = "150px" />
 
                 <ListContentWrapper>
