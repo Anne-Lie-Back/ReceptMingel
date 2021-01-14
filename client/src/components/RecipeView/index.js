@@ -3,7 +3,8 @@ import THEME from './../../config/theme';
 import PartingStrip from '../PartingStrip';
 import TopSection from './TopSection';
 import IngredientSection from './IngredientSection';
-import CookingStepsSection from './CookingStepsSection'
+import CookingStepsSection from './CookingStepsSection';
+import BottomSection from './BottomSection';
 //TODO remove
 import imageTest from '../../assets/images/imageTest.png';
 
@@ -20,62 +21,11 @@ const FlexRow = styled('div', {
     alignItems: 'center'
 });
 
-const Text = styled('p', {
-    fontSize: THEME.fontSizes.small,
-    fontFamily: THEME.fonts.text,
-    color: THEME.colors.black[0],
-    fontWeight: 500,
-    lineHeight: '167%',
-    letterSpacing: '0.05rem'
-});
-
-
-
-const HeadlineSmall = styled ('h4', {
-    fontFamily: THEME.fonts.text,
-    color: THEME.colors.black[0],
-    fontSize: THEME.fontSizes.small,
-    fontWeight: 700,
-    letterSpacing: '0.05rem'
-});
-
-
 const RecipeWrapper = styled('div', {
     display: 'flex',
     flexDirection: 'column',
     width: '812px',
     margin: '1rem 2rem'
-});
-
-
-
-const Box = styled('div', {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: '30px',
-    border: `1px solid ${THEME.colors.black[0]}`
-});
-
-const CategoryContainer = styled(FlexRow, {
-    flexWrap: 'wrap',
-    width: '100%',
-    maxWidth: '465px',
-    height: '30px',
-});
-
-const CategoryBox = styled(Box, {
-    width: '120px',
-    margin: '0 0.5rem 0.5rem 0',
-    padding: '0.5rem 0.5rem',
-    backgroundColor: THEME.colors.primary[1],
-    //borderRadius: '5px',
-    fontSize: THEME.fontSizes.Xsmall,
-    fontFamily: THEME.fonts.text,
-    color: THEME.colors.black[0],
-    fontWeight: 500,
-    letterSpacing: '0.05rem',
-    textTransform: 'uppercase',
 });
 
 const RecipeView = () => {
@@ -103,14 +53,14 @@ const RecipeView = () => {
             "Skiva torsken på hälften på längden. Ta fram ett tortilla-bröd. Lägg en eller två torskbitar på brödet. Häll på mangosalsa och klicka sedan på några klickar limesås.",
             "Vik din tortilla. Tadaaa~! Redo att avnjutas"
         ],
-        "mdsaCategories" : [
+        mdsaCategories : [
             "taco",
             "fisk",
             "fredagsmys",
             "moffafredag"
         ],
-        "author" : "Hjortronbåt",
-        "isShared" : false
+        author : "Hjortronbåt",
+        isShared : false
     }
 
     //Transform for easier follow on where the different items are showing and are styled.
@@ -123,6 +73,7 @@ const RecipeView = () => {
         cookingSteps,
         difficulty,
         ingredients,
+        mdsaCategories,
         author,
         isShared
     } = recipe;
@@ -142,19 +93,7 @@ const RecipeView = () => {
                 <PartingStrip width = "150px" />
                 <CookingStepsSection cookingSteps = {cookingSteps}/>
                 <PartingStrip width = "100%" />
-
-                <FlexRow $style = {{justifyContent: 'space-between', margin: '4rem 1.5rem 3rem 0'}}>
-                    <CategoryContainer>
-                            {recipe.mdsaCategories.map(item => (
-                              <CategoryBox>{item}</CategoryBox>  
-                            ))}
-                    </CategoryContainer>
-                    <FlexRow>
-                    <HeadlineSmall>Författat av:</HeadlineSmall>
-                        <Text $style = {{marginLeft: '1rem', lineHeight: '100%'}}>{recipe.author}</Text>
-                    </FlexRow>
-                </FlexRow>
-
+                <BottomSection categories = {mdsaCategories} author = {author}/>
             </RecipeWrapper>
         </Wrapper>
     );
