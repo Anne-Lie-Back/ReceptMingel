@@ -81,7 +81,7 @@ const FlexRow = styled('div', {
 const Button = styled('button', {
     width: '100%',
     padding: '0.5rem',
-    margin: '1rem 0',
+    margin: '2.5rem 0 1rem 0',
     border: 'none',
     borderRadius: '5px',
     boxShadow: '0 0 2px black',

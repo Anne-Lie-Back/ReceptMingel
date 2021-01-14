@@ -7,7 +7,7 @@ import addOutline from '@iconify/icons-gridicons/add-outline';
 import TextListItem from './text.listItem';
 
 const Wrapper = styled('div', {
-    margin: '0.5rem 0',
+    margin: '2.5rem 0 1.5rem 0',
 });
 
 const FlexRow = styled('div', {
