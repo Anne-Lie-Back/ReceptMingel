@@ -20,6 +20,7 @@ const Title = styled('h2', {
     fontFamily: THEME.fonts.text,
     color: THEME.colors.black[0],
     fontWeight: 700,
+    letterSpacing: '0.05rem'
 });
 
 const Text = styled('p', {
@@ -36,13 +37,15 @@ const HeadlineMedium = styled ('h3', {
     color: THEME.colors.black[0], 
     fontSize: THEME.fontSizes.normal,
     fontWeight: 700,
+    letterSpacing: '0.05rem'
 });
 
 const HeadlineSmall = styled ('h4', {
     fontFamily: THEME.fonts.text,
     color: THEME.colors.black[0],
     fontSize: THEME.fontSizes.small,
-    fontWeight: 500,
+    fontWeight: 700,
+    letterSpacing: '0.05rem'
 });
 
 
@@ -57,8 +60,8 @@ const TopWrapper = styled('div', {
     display: 'grid',
     gridTemplateColumns: '460px 340px',
     gridTemplateRows: '50px 170px 40px',
-    columnGap: '1rem',
-    width: '800px'
+    columnGap: '2rem',
+    width: '832px'
 });
 
 const Image = styled('div',({$image}) => ({
@@ -72,15 +75,50 @@ const Image = styled('div',({$image}) => ({
     backgroundSize: 'cover',
 }));
 
-const Box1 = styled('div', {
+const Box = styled('div', {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    height: '30px',
+    border: `1px solid ${THEME.colors.black[0]}`
+});
+
+const Box1 = styled(Box, {
     width: '80px',
-    padding: '0.25rem 0',
     marginLeft: '1rem',
     backgroundColor: THEME.colors.secondary[0],
-    border: `1px solid ${THEME.colors.black[0]}`
+});
+
+const Box2 = styled(Box, {
+    width: '35px',
+    marginLeft: '1rem',
+    backgroundColor: THEME.colors.white[0],
+});
+
+const ListContentWrapper = styled('div', {
+    display: 'flex',
+    flexDirection: 'column',
+    width: '100%',
+    marginTop: '3rem'
+});
+
+const StepListItem = styled('li', {
+    margin: '2rem 0 0 1.65rem', 
+    fontSize: THEME.fontSizes.small,
+    fontFamily: THEME.fonts.text,
+    color: THEME.colors.black[0],
+    fontWeight: 500,
+    letterSpacing: '0.05rem',
+    lineHeight: '167%',
+    counterIncrement: 'item',
+
+
+    '::marker' : {
+        content: 'counter(item) ".   "',
+        paddingRight: '1rem',
+        fontFamily: THEME.fonts.text,
+        fontWeight: 700,
+    },
 });
 
 const RecipeView = () => {
@@ -141,6 +179,37 @@ const RecipeView = () => {
                         </FlexRow>
                     </FlexRow>
                 </TopWrapper>
+                <FlexRow style = {{marginTop: '5rem'}}>
+                    <HeadlineSmall>Portioner:</HeadlineSmall>
+                    <Box2>
+                        <Text>
+                            {recipe.portions}
+                        </Text>
+                    </Box2>
+                </FlexRow>
+                <ListContentWrapper>
+                    <HeadlineMedium>Ingredienser:</HeadlineMedium>
+                    <ul style = {{marginTop: '0.5rem'}}>
+                        {recipe.ingredients.map(item => (
+                            <Text $as = 'li' $style = {{margin: '1rem 0 0 0.75rem'}}>{item}</Text>
+                        ))}
+                    </ul>
+                </ListContentWrapper>
+                <ListContentWrapper>
+                    <HeadlineMedium>Gör så här:</HeadlineMedium>
+                    <ol 
+                        style = {{
+                            marginTop: '0.5rem', 
+                            listStyle: 'none',
+                            counterReset: 'item',
+                            }}>
+                        {recipe.cookingSteps.map(item => (
+                            <StepListItem>
+                                {item}
+                            </StepListItem>
+                        ))}
+                    </ol>
+                </ListContentWrapper>
 
             </RecipeWrapper>
         </Wrapper>
