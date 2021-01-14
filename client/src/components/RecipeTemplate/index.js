@@ -14,7 +14,7 @@ const Wrapper = styled('div', {
     display: 'flex',
     justifyContent: 'center',
     width: '100%',
-    padding: '2rem 0'
+    padding: '2rem 0',
 });
 
 const FormWrapper = styled('div', {
@@ -242,7 +242,7 @@ const RecipeTemplate = () => {
 
                 <CategoriesInput inputValues = {inputValues} updateInputValues = {setInputValues}/>
                 
-                <FlexRow $style = {{margin: '3rem 0 0 0'}}>
+                <FlexRow $style = {{margin: '3.5rem 0 0.5rem 0'}}>
                     <Label>Antal portioner: </Label>
                     <InputField 
                         type = "number" 

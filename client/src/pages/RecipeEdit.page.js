@@ -19,7 +19,7 @@ const RecipeEditPage = () => {
     return(
         <>
             <Hero 
-                title = 'Mina Recept' 
+                title = 'Recept' 
                 icon = {roundRestaurantMenu} 
             />
             <ContentWrapper>
