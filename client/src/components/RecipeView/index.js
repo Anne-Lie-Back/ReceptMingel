@@ -1,8 +1,8 @@
 import { styled } from 'styletron-react';
 import THEME from './../../config/theme';
 import PartingStrip from '../PartingStrip';
-import TopContent from './TopContent';
-import IngredientContent from './IngredientContent';
+import TopSection from './TopSection';
+import IngredientSection from './IngredientSection';
 //TODO remove
 import imageTest from '../../assets/images/imageTest.png';
 
@@ -168,7 +168,7 @@ const RecipeView = () => {
     return(
         <Wrapper>
             <RecipeWrapper>
-                <TopContent 
+                <TopSection 
                     title = {title} 
                     description = {preambleHTML} 
                     image = {image} 
@@ -176,7 +176,7 @@ const RecipeView = () => {
                     cookingTime = {cookingTime}
                 />
                 <PartingStrip width = '100%'/>
-                <IngredientContent portions = {portions} ingredients = {ingredients}/>
+                <IngredientSection portions = {portions} ingredients = {ingredients}/>
                 <PartingStrip width = "150px" />
 
                 <ListContentWrapper>

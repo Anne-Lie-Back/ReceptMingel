@@ -1,5 +1,5 @@
 import { styled } from 'styletron-react';
-import THEME from './../../config/theme';
+import THEME from '../../config/theme';
 //TODO change to a default image
 import owlTest from '../../assets/images/owlTest.jpg';
 
@@ -65,7 +65,7 @@ const EffortBox = styled('div', {
     border: `1px solid ${THEME.colors.black[0]}`,
 });
 
-const TopContent = ({title, description, image, difficulty, cookingTime}) => (
+const TopSection = ({title, description, image, difficulty, cookingTime}) => (
     <TopGridWrapper>
         <Title>{title}</Title>
         <Image $image = {image}/>
@@ -91,4 +91,4 @@ const TopContent = ({title, description, image, difficulty, cookingTime}) => (
     </TopGridWrapper>
 );
 
-export default TopContent;
+export default TopSection;

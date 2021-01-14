@@ -1,5 +1,5 @@
 import { styled } from 'styletron-react';
-import THEME from './../../config/theme';
+import THEME from '../../config/theme';
 
 const FlexRow = styled('div', {
     display: 'flex',
@@ -63,7 +63,7 @@ const ListItem = styled('li', {
     lineHeight: '167%',
 });
 
-const IngredientContent = ({portions, ingredients}) => (
+const IngredientSection = ({portions, ingredients}) => (
     <>
         <FlexRow>
             <HeadlineSmall>Portioner:</HeadlineSmall>
@@ -84,4 +84,4 @@ const IngredientContent = ({portions, ingredients}) => (
     </>
 );
 
-export default IngredientContent;
+export default IngredientSection;
