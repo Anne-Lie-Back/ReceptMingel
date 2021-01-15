@@ -20,7 +20,7 @@ const Wrapper = styled('div', {
     display: 'flex',
     justifyContent: 'center',
     width: '100%',
-    margin: '4rem 0',
+    margin: '3rem 0',
 });
 
 const FlexRow = styled('div', {
