@@ -23,10 +23,11 @@ const GridContentWrapper = ({children}) => {
     //Checks the containerSize, which is desired maxWidth, and forces objects that would like to expand 
     //outside of grid to stay inside the grid by setting a "hard coded" width for column
     useEffect(() => {
-        function handleResize() {
+        const handleResize = () => {
             setColumn2width(containerRef.current.offsetWidth - 240)
         }
     
+        //Removes eventlistener when component is unmounted
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
