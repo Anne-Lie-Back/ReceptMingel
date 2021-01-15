@@ -34,7 +34,6 @@ const SearchInputField = styled(InputField, {
 const Button = styled('button', {
     width: '75px',
     padding: '0.55rem',
-    //margin: '2.5rem 0 1rem 0',
     backgroundColor: THEME.colors.contrast[0],
     border: 'none',
     borderTopRightRadius: '5px',
