@@ -11,7 +11,7 @@ const ContentWrapper = styled('div', ({$col2width}) => ({
     gridTemplateRows: 'auto',
     width: '100%',
     height: '100%',
-    //backgroundColor: THEME.colors.white[0]
+    backgroundColor: THEME.colors.white[0]
 
 }));
 
