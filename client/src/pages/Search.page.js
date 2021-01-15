@@ -1,5 +1,5 @@
-import { styled } from 'styletron-react';
-import THEME from '../config/theme';
+//import { styled } from 'styletron-react';
+//import THEME from '../config/theme';
 import bxSearch from '@iconify/icons-bx/bx-search';
 import GridContentWrapper from '../components/GridContentWrapper';
 import Hero from '../components/Hero';

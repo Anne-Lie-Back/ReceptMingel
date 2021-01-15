@@ -1,5 +1,5 @@
 import { styled } from 'styletron-react';
-import THEME from '../../config/theme';
+//import THEME from '../../config/theme';
 
 const Wrapper = styled('div', {
     width: '100%'

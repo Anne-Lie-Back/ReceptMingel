@@ -1,5 +1,5 @@
-import { styled } from 'styletron-react';
-import THEME from '../config/theme';
+//import { styled } from 'styletron-react';
+//import THEME from '../config/theme';
 import Hero from '../components/Hero';
 import roundRestaurantMenu from '@iconify/icons-ic/round-restaurant-menu';
 import GridContentWrapper from '../components/GridContentWrapper';

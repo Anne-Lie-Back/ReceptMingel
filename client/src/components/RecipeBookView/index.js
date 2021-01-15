@@ -1,13 +1,15 @@
 import { styled } from 'styletron-react';
 import THEME from '../../config/theme';
+import RecipeWheel from '../RecipeWheel';
 
 const Wrapper = styled('div', {
-    width: '100%'
+    width: '100%',
+    backgroundColor: 'pink'
 });
 
 const RecipeBookView = () => (
     <Wrapper>
-        <h1>Här finns en bok</h1>
+        <RecipeWheel bannerTitle = "Filter-resultat"/>
     </Wrapper>
 );
 
