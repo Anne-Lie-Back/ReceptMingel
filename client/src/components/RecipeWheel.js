@@ -38,7 +38,7 @@ const ScrollWrapper = styled('div', {
 
     '::-webkit-scrollbar' : { 
         //'-webkit-appearance': 'none',
-        height: '0.4rem',
+        height: '0.6rem',
         backgroundColor: THEME.colors.grey[0]
     },
 

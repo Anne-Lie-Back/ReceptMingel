@@ -2,6 +2,8 @@ import { Icon } from "@iconify/react";
 import { styled } from 'styletron-react';
 //import THEME from '../config/theme';
 
+//TODO Clean and organize this file
+
 //ADD
 import addOutline from '@iconify/icons-gridicons/add-outline';
 //REMOVE
