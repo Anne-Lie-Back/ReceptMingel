@@ -8,7 +8,7 @@ const Wrapper = styled('div', {
     width: '100%',
     maxWidth: '800px',
     margin: '1rem 0',
-})
+});
 
 const ContentWrapper = styled('div', {
     display: 'flex',
@@ -34,17 +34,17 @@ const FlexRow = styled('div', {
     flexDirection: 'row',
     alignItems: 'center',
     //width: '100%'
-})
+});
 
 const FlexRowSpecial = styled(FlexRow, {
     justifyContent: 'space-between',
     width: '100%'
-})
+});
 
 const Title = styled('h3', {
     fontSize: THEME.fontSizes.normal,
     fontWeight: 700
-})
+});
 
 const Text = styled('p', {
     fontSize: THEME.fontSizes.Xsmall,
@@ -66,7 +66,6 @@ const EffortBox = styled('div', {
 });
 
 const Image = styled('div',({$image}) => ({
-    
     width: '165px',
     height: '90px',
     backgroundImage: $image? `url(${$image})` : `url(${owlTest})`,
@@ -77,7 +76,6 @@ const Image = styled('div',({$image}) => ({
 }));
 
 const ResultCard = () => {
-
     //TODO remove all this and make it only return JSX
     const recipe = {
         title : "Exotiska Tacos",
@@ -122,7 +120,6 @@ const ResultCard = () => {
         <Wrapper>
             {/* TODO: remove this partingStrip */}
             <PartingStrip width = "100%"/>
-
             <ContentWrapper>
                 <Image/>
                 <TextWrapper>

@@ -31,7 +31,6 @@ const ResultArea = styled('div', {
         border: `1px solid grey`,
         backgroundColor: THEME.colors.secondary[0]
     }
-
 });
 
 const SearchView = () => (

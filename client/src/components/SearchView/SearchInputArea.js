@@ -7,13 +7,12 @@ const Wrapper = styled('div', {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    //alignItems: 'center',
     padding: '3rem 4rem 3rem 4rem',
     backgroundColor: THEME.colors.primary[0],
     borderRadius: '5px',
-    boxShadow: '0 0 2px black'
-    
-})
+    boxShadow: '0 0 2px black'  
+});
+
 const FlexRow = styled('div', {
     display: 'flex',
     flexDirection: 'row',
@@ -50,10 +49,14 @@ const Button = styled('button', {
         cursor:'pointer',
         backgroundColor: THEME.colors.black[0]
     }
-})
+});
 
 const SearchInputArea = () => {
     const [searchInput, setSearchInput] = useState('');
+
+    const handleClick = () => {
+        console.log(`Can you please find recipes with ${searchInput} in db?`)
+    };
 
     return(
         <Wrapper>
@@ -65,7 +68,7 @@ const SearchInputArea = () => {
                     styling = "basic"
                     handleChange = {(event) => {setSearchInput(event.target.value)}}
                 />
-                <Button>Sök</Button>
+                <Button onClick = {handleClick}>Sök</Button>
             </FlexRow>
         </Wrapper>
     )  
