@@ -45,7 +45,10 @@ mongoose.connection.once("open", () => {
 
 //Saves single image to bucket
 const writeSingleImage = (req, res, next) => {
-  const upload = multer({ storage }).single("image");
+  const upload = multer({ 
+    storage,
+    limits: { fileSize: 400 * 1000 }
+    }).single("image");
   upload(req, res, (error) => {
     try {
       if (error) next(error)

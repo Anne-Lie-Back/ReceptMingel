@@ -86,7 +86,6 @@ const RegisterNewUser = ({handleClick}) => {
     //sends inputvalues to db
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log('inputValues', inputValues);
         fetch('http://localhost:8080/api/users/', {
             method: 'POST',
             credentials: "include",
@@ -104,8 +103,6 @@ const RegisterNewUser = ({handleClick}) => {
             console.log('error', error);
         })
     };
-
-    console.log('inputValues', inputValues);
 
     return(
         <Wrapper>
