@@ -13,16 +13,33 @@ const Wrapper = styled('div', {
 const ContentWrapper = styled('div', {
     display: 'flex',
     flexDirection: 'row',
-    margin: '1rem 0'
+    padding: '0.5rem',
+
+    ':hover': {
+        backgroundColor: THEME.colors.contrast[0],
+        cursor: 'pointer'
+    }
 });
 
 const TextWrapper = styled('div', {
     display: 'flex',
     flexDirection: 'column',
-    padding: '0 1rem',
+    padding: '0 0 0 1rem',
     fontFamily: THEME.fonts.text,
     color: THEME.colors.black[0]
 });
+
+const FlexRow = styled('div', {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    //width: '100%'
+})
+
+const FlexRowSpecial = styled(FlexRow, {
+    justifyContent: 'space-between',
+    width: '100%'
+})
 
 const Title = styled('h3', {
     fontSize: THEME.fontSizes.normal,
@@ -30,13 +47,28 @@ const Title = styled('h3', {
 })
 
 const Text = styled('p', {
-    fontSize: THEME.fontSizes.Xsmall
+    fontSize: THEME.fontSizes.Xsmall,
+    marginTop: '0.5rem'
+});
+
+const EffortBox = styled('div', {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '25px',
+    width: '60px',
+    marginLeft: '1rem',
+    backgroundColor: THEME.colors.secondary[0],
+    border: `1px solid ${THEME.colors.black[0]}`,
+    fontFamily: THEME.fonts.text,
+    fontSize: '10px',
+    fontWeight: 400
 });
 
 const Image = styled('div',({$image}) => ({
     
-    width: '248px',
-    height: '135px',
+    width: '165px',
+    height: '90px',
     backgroundImage: $image? `url(${$image})` : `url(${owlTest})`,
     backgroundPosition: 'center',
     backgroundRepeat:' no-repeat',
@@ -49,7 +81,7 @@ const ResultCard = () => {
     //TODO remove all this and make it only return JSX
     const recipe = {
         title : "Exotiska Tacos",
-        preambleHTML : "En fräsch taco med panerad tofu. Den sötstarka mangosalsan ger mycket fraschör. Var inte rädd för att dunka på en del med chilin, mangon och limedressingen tar ut en del styrka. Detta är en perfekt sommar-rätt! ",
+        preambleHTML : "En fräsch taco med panerad torsk. Den sötstarka mangosalsan ger mycket fraschör. Var inte rädd för att dunka på en del med chilin, mangon och limedressingen tar ut en del styrka. Detta är en perfekt sommar-rätt! ",
         image : owlTest,
         portions : 4,
         cookingTime : "10-20min",
@@ -82,13 +114,8 @@ const ResultCard = () => {
     const {
         title,
         preambleHTML,
-        //image,
         cookingTime,
         difficulty,
-        //ingredients,
-        mdsaCategories,
-        // eslint-disable-next-line no-unused-vars
-        isShared
     } = recipe;
 
     return(
@@ -99,15 +126,24 @@ const ResultCard = () => {
             <ContentWrapper>
                 <Image/>
                 <TextWrapper>
-                    <Title>
-                        {title}
-                    </Title>
+                    <FlexRowSpecial>
+                        <Title>
+                            {title}
+                        </Title>
+                        <FlexRow>
+                            <EffortBox>
+                                {difficulty}
+                            </EffortBox>
+                            <EffortBox>
+                                {cookingTime}
+                            </EffortBox>
+                        </FlexRow>
+                    </FlexRowSpecial>
                     <Text>
                         {preambleHTML}
                     </Text>
                 </TextWrapper>
             </ContentWrapper>
-            
             <PartingStrip width = "100%"/>
         </Wrapper>
     );
