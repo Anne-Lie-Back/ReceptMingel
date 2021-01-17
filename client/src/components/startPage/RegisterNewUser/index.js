@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { styled } from 'styletron-react';
 import InputField from '../../inputField'
+import axios from '../../../axios'
 
 const Wrapper = styled('div', {
     display: 'flex',
@@ -53,6 +54,13 @@ const RegisterNewUser = ({handleClick}) => {
     
     const history = useHistory();
 
+/*     const axiosConfig = {
+        headers: {
+            'Content-Type': 'application/json;charset=UTF-8',
+            "Access-Control-Allow-Origin": "*",
+        }
+    }; */
+
     //handle input-changes
     const handleChange = (event) => {
         const {name, value} = event.target;
@@ -83,8 +91,19 @@ const RegisterNewUser = ({handleClick}) => {
           })
       }, [file]);
 
+
+    const handleSubmit = async () => {
+        await axios
+        .post('/users', inputValues)
+        .then((res) => {
+            //if response is good the user will be redirected to their userpage
+            if(res.status === 200) history.push('/user');
+            console.log(res.data)
+        })
+        .catch(error => console.log(error))  
+    }
     //sends inputvalues to db
-    const handleSubmit = (event) => {
+    /* const handleSubmit = (event) => {
         event.preventDefault();
         fetch('http://localhost:8080/api/users/', {
             method: 'POST',
@@ -102,7 +121,7 @@ const RegisterNewUser = ({handleClick}) => {
         .catch((error) => {
             console.log('error', error);
         })
-    };
+    }; */
 
     return(
         <Wrapper>
