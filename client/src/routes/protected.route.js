@@ -7,9 +7,10 @@ const ProtectedRoute = ({
   component: Component,
   ...rest
 }) => {
-  const { isAuthenticated, isLoading } = useContext(AuthenticationContext);
-  if(isLoading) return <div>Loading...</div>
-  console.log('isLoading', isLoading)
+  const { isAuthenticated, isLoadingUser, isLoadingUnauthorized } = useContext(AuthenticationContext);
+  //if(isLoadingUnauthorized) return <div>Loading...</div>
+  console.log('isLoading', isLoadingUser)
+
   return (
     <Route
       {...rest}
@@ -17,7 +18,7 @@ const ProtectedRoute = ({
         isAuthenticated ? (
           <Component {...rest} {...props} />
         ) : (
-          <Redirect to="/login" />
+          <Redirect to="/" />
         )
       }
     />

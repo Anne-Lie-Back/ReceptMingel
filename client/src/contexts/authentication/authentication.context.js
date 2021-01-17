@@ -4,7 +4,8 @@ import AuthenticationContext from './context';
 
 const AuthenticationContextProvider = (props) => {
     const [user, setUser] = useState(null);
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoadingUser, setIsLoadingUser] = useState(true);
+    const [isLoadingUnauthorized, setIsLoadingUnauthorized] = useState(false);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     useEffect(() => {
@@ -15,10 +16,11 @@ const AuthenticationContextProvider = (props) => {
                 if(res.data.message && res.data.message === "Authenticated"){
                     setIsAuthenticated(true);
                     setUser(res.data.user);
-                    setIsLoading(false);
+                    setIsLoadingUser(false);
                 } else {
                     setIsAuthenticated(false);
                     setUser(null);
+                    setIsLoadingUnauthorized(true)
                 }
             })
             .catch(error => console.log(error))
@@ -66,7 +68,8 @@ const AuthenticationContextProvider = (props) => {
             value={{
                 user,
                 isAuthenticated,
-                isLoading,
+                isLoadingUser,
+                isLoadingUnauthorized,
                 login,
                 logout,
                 //register,
