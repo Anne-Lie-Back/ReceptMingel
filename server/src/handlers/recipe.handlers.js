@@ -32,7 +32,7 @@ const getRecipeByID = (req, res, next) => {
     })
 }
 
-//GET RECIPE BY AUTHOR
+//GET RECIPES BY AUTHOR
 const getRecipesByAuthor = (req, res, next) => {
     Recipe.find({author: req.params.author}, (error, recipesByAuthor) => {
         try{

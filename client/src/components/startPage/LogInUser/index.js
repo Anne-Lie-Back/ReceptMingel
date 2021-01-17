@@ -1,8 +1,9 @@
-import { useState} from 'react';
-//import { useHistory } from 'react-router-dom';
+import { useContext, useState} from 'react';
+import { useHistory } from 'react-router-dom';
 import { styled } from 'styletron-react';
-import THEME from '../../../config/theme'
-import InputField from '../../inputField'
+import THEME from '../../../config/theme';
+import InputField from '../../inputField';
+import AuthenticationContext from '../../../contexts/authentication/context';
 
 const Wrapper = styled('div', {
     display: 'grid',
@@ -48,14 +49,43 @@ const LogInUser = ({handleClick}) => {
         password: '',
     });
 
+    const [loginError, setLoginError] = useState({
+        isOk: true,
+        message: ''
+    })
+
+    let history = useHistory();
+
+    const { login } = useContext(AuthenticationContext);
+
     const handleChange = (event) => {
         const {name, value} = event.target;
         setInputValues({
             ...inputValues,
             [name]: value,
           });
-    }
+    };
 
+    const handleLoginReq = async() => {
+        console.log('hello')
+    
+        const message = await login(inputValues.username, inputValues.password);
+        if(message !== "Authenticated"){
+            setLoginError({
+                isOk: false,
+                message: "Användarnamn och/eller lösenord är felaktigt"
+            })
+            history.push("/user");
+            setInputValues({username: '', password: ''})
+            
+        } else {
+            setLoginError({
+                isOk: true,
+                message: ""
+              })
+        } 
+    };
+    
     return(
         <Wrapper>
             <InputField 
@@ -72,7 +102,8 @@ const LogInUser = ({handleClick}) => {
                 styling = "basic"
                 handleChange = {handleChange}
             />
-            <Button> Logga in </Button>
+            <p style = {{color: 'red'}}>{loginError.message}</p>
+            <Button onClick = {handleLoginReq}> Logga in </Button>
             <Text onClick = {handleClick}> Inte medlem? <br/> Registrera dig gratis här </Text>
     </Wrapper>
     );

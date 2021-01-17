@@ -4,7 +4,8 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from 'react-router-dom';
 import {Provider as StyletronProvider} from "styletron-react";
-import {Client as Styletron} from "styletron-engine-atomic";
+import {Client as Styletron} from "styletron-engine-atomic"
+import ApplicationContextProvider from './contexts';
 
 const engine = new Styletron({
   hydrate: document.getElementsByClassName("_styletron_hydrate_")
@@ -13,9 +14,11 @@ const engine = new Styletron({
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <StyletronProvider value={engine}>
-        <App />
-      </StyletronProvider>
+      <ApplicationContextProvider>
+        <StyletronProvider value={engine}>
+          <App />
+        </StyletronProvider>
+      </ApplicationContextProvider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
