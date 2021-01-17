@@ -2,6 +2,7 @@ import { createContext } from 'react';
  
  const AuthenticationContext = createContext({
     isAuthenticated: true,
+    isLoading: true,
     user: null,
     login: (username, password) =>
       new Promise((resolve, reject) => {

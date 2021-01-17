@@ -46,9 +46,9 @@ const UserPage = () => {
     return(
         <>
             <Hero>
-                <Avatar $avatar = {imageTest}/>
+                <Avatar $avatar = {user}/>
                 <DescWrapper>
-                    {userDesc}
+                    {user.userInfo}
                 </DescWrapper>
             </Hero>
             <ContentWrapper>
