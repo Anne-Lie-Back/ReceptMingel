@@ -48,6 +48,11 @@ const RecipeSchema = new Schema(
         isShared:{
             type: Boolean,
             required: true
+        },
+        timeStamp: {
+            type: Date,
+            required: true,
+            default: Date.now,
         }
     },
     {
