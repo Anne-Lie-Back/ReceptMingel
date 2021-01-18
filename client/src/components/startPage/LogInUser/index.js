@@ -12,8 +12,7 @@ const Wrapper = styled('div', {
     columnGap: '15px',
     rowGap: '15px',
     width: '430px',
-    height: '160px',
-    padding: '30px',
+    padding: '30px 25px 25px 25px',
     marginTop: '20px',
     backgroundColor: '#ffffff',
     border: '1px solid black',
@@ -102,7 +101,6 @@ const LogInUser = ({handleClick}) => {
                 styling = "basic"
                 handleChange = {handleChange}
             />
-            <p style = {{color: 'red'}}>{loginError.message}</p>
             <Button onClick = {handleLoginReq}> Logga in </Button>
             <Text onClick = {handleClick}> Inte medlem? <br/> Registrera dig gratis här </Text>
     </Wrapper>
