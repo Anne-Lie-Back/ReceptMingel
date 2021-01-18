@@ -87,8 +87,8 @@ const UserPage = () => {
                 <DescWrapper>
                     {user.userInfo}
                     <FlexRow>
-                        <Button onCLick = {handleEdit}>Uppdatera Profil?</Button>
-                        <Button onCLick = {() => logout()}>Logga ut?</Button>
+                        <Button onClick = {handleEdit}>Uppdatera Profil?</Button>
+                        <Button onClick = {() => logout()}>Logga ut?</Button>
                     </FlexRow>
                 </DescWrapper>
                     
