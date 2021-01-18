@@ -20,9 +20,12 @@ const Avatar = styled('div', ({$avatar}) => ({
 }));
 
 const DescWrapper = styled('div', {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-Between',
     width: '500px',
     height: '320px',
-    margin: '1.5rem',
+    margin: '1.5rem 1.5rem 0 1.5rem',
     padding: '1rem 2rem',
     backgroundColor: THEME.colors.white[0],
     borderRadius: '5px',
@@ -33,6 +36,34 @@ const DescWrapper = styled('div', {
     lineHeight: '30px'
 });
 
+const FlexRow = styled('div', {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    width: '100%',
+});
+
+const Button = styled('button', {
+    marginLeft: '1rem',
+    padding: '0.25rem 0.5rem',
+    backgroundColor: THEME.colors.contrast[0],
+    border: 'none',
+    borderRadius: '5px',
+    boxShadow: '0 0 1px black',
+    fontFamily: THEME.fonts.text,
+    fontSize: THEME.fontSizes.Xsmall,
+    fontWeight: 700,
+    letterSpacing: '0.05rem',
+    color: THEME.colors.white[0],
+    textTransform: 'uppercase',
+
+    ':hover': {
+        cursor:'pointer',
+        backgroundColor:THEME.colors.black[0] 
+    }
+});
+
 const ContentWrapper = styled('div', {
     width: '100%',
     backgroundColor: THEME.colors.white[0]
@@ -40,9 +71,13 @@ const ContentWrapper = styled('div', {
 
 
 const UserPage = () => {
-    const { user } = useContext(AuthenticationContext);
-    console.log('imageURL',user.imageURL)
-    //console.log(user)
+    const { logout, user } = useContext(AuthenticationContext);
+    
+    const handleEdit = () => {
+        console.log('EDIT ME!');
+    }
+
+
     //TODO remove and replace with userDescription
     //const userDesc = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
     return(
@@ -51,7 +86,12 @@ const UserPage = () => {
                 <Avatar $avatar = {user.imageURL && user.imageURL} />
                 <DescWrapper>
                     {user.userInfo}
+                    <FlexRow>
+                        <Button onCLick = {handleEdit}>Uppdatera Profil?</Button>
+                        <Button onCLick = {() => logout()}>Logga ut?</Button>
+                    </FlexRow>
                 </DescWrapper>
+                    
             </Hero>
             <ContentWrapper>
                 <RecipeWheel bannerTitle = "In Progress"/>

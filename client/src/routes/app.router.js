@@ -28,8 +28,8 @@ const AppRouter = () => {
         <ProtectedRoute exact path = '/search' component = {SearchPage} />
         <ProtectedRoute exact path = '/user/:id' component = {UserPage} />
         <ProtectedRoute exact path = '/recipebook' component = {RecipeBookPage} />
-        <ProtectedRoute exact path = '/recipe-edit' component = {RecipeEditPage} />
-        <ProtectedRoute exact path = '/recipe' component = {RecipeViewPage} />
+        <ProtectedRoute exact path = '/recipe-edit/' component = {RecipeEditPage} />
+        <ProtectedRoute exact path = '/recipe/' component = {RecipeViewPage} />
     </Switch>
 )};
 
