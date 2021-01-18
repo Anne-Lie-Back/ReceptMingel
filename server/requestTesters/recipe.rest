@@ -10,7 +10,7 @@ GET http://localhost:8080/api/recipes/5fe349bcef487237387d42e1
 
 //GET RECIPE BY FREETEXT
 
-//GET RECIPE BY DIFFICULTY
+//GET RECIPE BY Author
 GET http://localhost:8080/api/recipes/author/Starstoft
 
 ###

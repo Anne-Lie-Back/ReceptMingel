@@ -7,14 +7,18 @@ import GridContentWrapper from '../components/GridContentWrapper';
 import RecipeView from '../components/RecipeView';
 import SideMenu from '../components/SideMenu';
 import RecipeContext from '../contexts/recipe/context';
+import AuthenticationContext from '../contexts/authentication/context';
 
 const RecipeViewPage = () => {
-    const { getAllRecipes } = useContext(RecipeContext);
+    // eslint-disable-next-line no-unused-vars
+    const { getAllRecipes, recipesAll, getRecipesByAuthor } = useContext(RecipeContext);
+    const {user} = useContext(AuthenticationContext);
 
     useEffect(() => {
-        getAllRecipes();
+        //getAllRecipes();
+        getRecipesByAuthor(user.username);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
-
     return(
         <>
             <Hero 

@@ -4,6 +4,7 @@ import { createContext } from 'react';
     recipesAll: [],
     recipesUser: [],
     getAllRecipes: () => {},
+    getRecipeByAuthor: () => {}
     //editRecipe: () => {},
     //deleteRecipe: () => {}
 

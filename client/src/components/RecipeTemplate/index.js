@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import { styled } from 'styletron-react';
 import THEME from '../../config/theme';
 import Icons from '../../config/icons';
@@ -9,6 +9,7 @@ import DifficultyInput from './DifficultyInput';
 import IngredientsInput from './IngredientsInput';
 import CookingStepsInput from './CookingStepsInput';
 import PartingStrip from './../PartingStrip';
+import AuthenticationContext from '../../contexts/authentication/context';
 
 const Wrapper = styled('div', {
     display: 'flex',
@@ -104,6 +105,7 @@ const Button = styled('button', {
 })
 
 const RecipeTemplate = () => {
+    const {user} = useContext(AuthenticationContext);
     
     const [inputValues, setInputValues] = useState({
         title: '',
@@ -115,7 +117,7 @@ const RecipeTemplate = () => {
         ingredients: [],
         cookingSteps: [],
         mdsaCategories: [],
-        author: 'användarnamn',
+        author: user.username,
         isShared: false
     });
 
