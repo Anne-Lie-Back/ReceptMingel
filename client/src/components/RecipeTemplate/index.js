@@ -225,6 +225,7 @@ const RecipeTemplate = () => {
                                 fontSize: THEME.fontSizes.small
                             }
                         }}
+                        margin = "1rem 0"
                         handleChange = {handleChange}
                     />
                 </TopFormWrapper>

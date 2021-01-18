@@ -1,8 +1,9 @@
-import { useState} from 'react';
-//import { useHistory } from 'react-router-dom';
+import { useContext, useState} from 'react';
+import { useHistory } from 'react-router-dom';
 import { styled } from 'styletron-react';
-import THEME from '../../../config/theme'
-import InputField from '../../inputField'
+import THEME from '../../../config/theme';
+import InputField from '../../inputField';
+import AuthenticationContext from '../../../contexts/authentication/context';
 
 const Wrapper = styled('div', {
     display: 'grid',
@@ -11,33 +12,41 @@ const Wrapper = styled('div', {
     columnGap: '15px',
     rowGap: '15px',
     width: '430px',
-    height: '160px',
-    padding: '30px',
+    padding: '30px 25px 25px 25px',
     marginTop: '20px',
-    backgroundColor: '#ffffff',
+    backgroundColor: THEME.colors.white[0],
     border: '1px solid black',
     borderRadius: '5px',
     boxShadow: '0 0 3px black',
     fontFamily: THEME.fonts.text,
-    fontSize: THEME.fontSizes.small
+    fontSize: THEME.fontSizes.small,
+    fontWeight: 500,
+    letterSpacing: '0.05rem',
 });
 
 const Button = styled('button', {
     height: '40px',
-    backgroundColor: 'orange',
-    color: 'white',
+    backgroundColor: THEME.colors.contrast[0],
+    border: 'none',
+    borderRadius: '5px',
+    boxShadow: '0 0 1px black',
+    fontFamily: THEME.fonts.text,
+    fontSize: THEME.fontSizes.normal,
+    fontWeight: 700,
+    letterSpacing: '0.05rem',
+    color: THEME.colors.white[0],
     textTransform: 'uppercase',
 
     ':hover': {
         cursor:'pointer',
-        backgroundColor:'darkorange' 
+        backgroundColor:THEME.colors.black[0] 
     }
-})
+});
 
 const Text = styled('p', {
     ':hover': {
         cursor:'pointer',
-        color:'darkorange' 
+        color: THEME.colors.contrast[0]
     }
 });
 
@@ -48,14 +57,43 @@ const LogInUser = ({handleClick}) => {
         password: '',
     });
 
+    //Helps to hold redirect until fetch is done so user isn't null onload of userpage
+    // eslint-disable-next-line no-unused-vars
+    const [loginError, setLoginError] = useState({
+        isOk: true,
+        message: ''
+    });
+
+    let history = useHistory();
+    const { login } = useContext(AuthenticationContext);
+
     const handleChange = (event) => {
         const {name, value} = event.target;
         setInputValues({
             ...inputValues,
             [name]: value,
           });
-    }
+    };
 
+    const handleLoginReq = async() => {
+        console.log('hello')
+    
+        const message = await login(inputValues.username, inputValues.password);
+        if(message !== "Authenticated"){
+            setLoginError({
+                isOk: false,
+                message: "Användarnamn och/eller lösenord är felaktigt"
+            });
+            history.push("/user");
+            setInputValues({username: '', password: ''});
+        } else {
+            setLoginError({
+                isOk: true,
+                message: ""
+            });
+        };
+    };
+    
     return(
         <Wrapper>
             <InputField 
@@ -72,9 +110,9 @@ const LogInUser = ({handleClick}) => {
                 styling = "basic"
                 handleChange = {handleChange}
             />
-            <Button> Logga in </Button>
+            <Button onClick = {handleLoginReq}> Logga in </Button>
             <Text onClick = {handleClick}> Inte medlem? <br/> Registrera dig gratis här </Text>
-    </Wrapper>
+        </Wrapper>
     );
 };
 

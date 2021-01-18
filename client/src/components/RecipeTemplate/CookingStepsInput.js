@@ -138,6 +138,7 @@ const CookingStepsInput = ({inputValues, updateInputValues}) => {
                             fontWeight: 400, 
                             fontSize: THEME.fontSizes.small
                     }}}
+                    margin = '0 0 1rem 0'
                     handleChange = {(event) => setNewStep(event.target.value)}
                     onKeyDown={(event) => handleEnter(event)}
                 />
