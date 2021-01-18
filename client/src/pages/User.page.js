@@ -71,7 +71,7 @@ const ContentWrapper = styled('div', {
 
 
 const UserPage = () => {
-    const { isLoadingUser, logout, user } = useContext(AuthenticationContext);
+    const { logout, user } = useContext(AuthenticationContext);
     
     const handleEdit = () => {
         console.log('EDIT ME!');
