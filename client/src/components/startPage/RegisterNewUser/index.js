@@ -5,8 +5,6 @@ import { styled } from 'styletron-react';
 import Icons from '../../../config/icons';
 import THEME from '../../../config/theme';
 import InputField from '../../inputField';
-import imageTest from '../../../assets/images/imageTest.png'
-
 
 const Wrapper = styled('div', {
     display: 'flex',

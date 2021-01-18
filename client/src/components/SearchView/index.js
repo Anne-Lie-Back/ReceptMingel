@@ -21,7 +21,6 @@ const ResultArea = styled('div', {
     overflow: 'auto',
 
     '::-webkit-scrollbar' : { 
-        //'-webkit-appearance': 'none',
         height: '0.6rem',
         backgroundColor: THEME.colors.grey[0]
     },

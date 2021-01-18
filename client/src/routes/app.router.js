@@ -15,21 +15,21 @@ import UserPage from '../pages/User.page';
 //TODO import some sort of authentication for logged in user
 //Maybe need to fix some more dynamic routes when I start to fetch backend data
 const AppRouter = () => {
-    const { isAuthenticated, isLoadingUser } = useContext(AuthenticationContext);
+    const { isAuthenticated, isLoadingUser, user } = useContext(AuthenticationContext);
 
     return(
     <Switch>
         <Route 
             exact path = '/' 
             render={(props) =>
-                isAuthenticated && !isLoadingUser? <Redirect to="/user"/>  : <StartPage/>
+                isAuthenticated && !isLoadingUser? <Redirect to={`/user/${user._id}`}/>  : <StartPage/>
             }
         />
         <ProtectedRoute exact path = '/search' component = {SearchPage} />
-        <ProtectedRoute exact path = '/user' component = {UserPage} />
+        <ProtectedRoute exact path = '/user/:id' component = {UserPage} />
         <ProtectedRoute exact path = '/recipebook' component = {RecipeBookPage} />
-        <ProtectedRoute exact path = '/recipe-edit' component = {RecipeEditPage} />
-        <ProtectedRoute exact path = '/recipe' component = {RecipeViewPage} />
+        <ProtectedRoute exact path = '/recipe-edit/' component = {RecipeEditPage} />
+        <ProtectedRoute exact path = '/recipe/' component = {RecipeViewPage} />
     </Switch>
 )};
 
