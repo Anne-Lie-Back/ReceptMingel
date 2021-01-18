@@ -5,6 +5,7 @@ import { styled } from 'styletron-react';
 import Icons from '../../../config/icons';
 import THEME from '../../../config/theme';
 import InputField from '../../inputField';
+import imageTest from '../../../assets/images/imageTest.png'
 
 
 const Wrapper = styled('div', {
@@ -65,20 +66,24 @@ const FileUploadWrapper = styled('div', {
     fontWeight: 400
 });
 
-const FileUpload = styled('div', {
+const FileUpload = styled('div', ({$preview}) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     width: '120px',
     height: '120px',
     borderRadius: '50%',
+    backgroundImage: $preview && `url(${$preview})`,
     backgroundColor: THEME.colors.grey[0],
+    backgroundPosition: 'center',
+    backgroundRepeat:' no-repeat',
+    backgroundSize: 'cover',
 
     ':hover' : {
         backgroundColor: THEME.colors.black[0],
         cursor: 'pointer'
     }
-});
+}));
 
 const RegisterNewUser = ({handleClick}) => {
     const [inputValues, setInputValues] = useState({
@@ -210,11 +215,15 @@ const RegisterNewUser = ({handleClick}) => {
 
                 <FileUploadWrapper>
                         <label htmlFor="upload-image" style = {{height: '100%'}}>
-                            <FileUpload>
-                                <ImageIcon color = {THEME.colors.white[0]} size = "70px"/>
+                            <FileUpload
+                                 $preview = {
+                                    file && URL.createObjectURL(file)
+                                }
+                            >
+                                 {console.log(file)} 
+                                {!file && <ImageIcon color = {THEME.colors.white[0]} size = "70px"/>}
                             </FileUpload>
-                            <p style = {{textAlign: 'center'}}>Filnamn.jpeg</p>
-                        {/* <p>{file && file.name }</p> */}
+                        <p style = {{textAlign: 'center'}}>{file && file.name }</p>
                         </label>
                         <InputField 
                             type = "file" 
