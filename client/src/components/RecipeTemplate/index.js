@@ -50,19 +50,23 @@ const FileUploadWrapper = styled('div', {
     fontWeight: 400
 });
 
-const FileUpload = styled('div', {
+const FileUpload = styled('div', ({$preview}) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
     height: '90%',
+    backgroundImage: $preview && `url(${$preview})`,
     backgroundColor: THEME.colors.grey[0],
+    backgroundPosition: 'center',
+    backgroundRepeat:' no-repeat',
+    backgroundSize: 'cover',
 
     ':hover' : {
         backgroundColor: THEME.colors.black[0],
         cursor: 'pointer'
     }
-});
+}));
 
 const EffortWrapper = styled('div', {
     display: 'flex',
@@ -192,8 +196,12 @@ const RecipeTemplate = () => {
                     {/* TODO break out file upload to own file? */}
                     <FileUploadWrapper>
                         <label htmlFor="upload-image" style = {{height: '100%'}}>
-                            <FileUpload>
-                                <ImageIcon color = {THEME.colors.white[0]} size = "70px"/>
+                            <FileUpload
+                                $preview = {
+                                    file && URL.createObjectURL(file)
+                                }
+                            >
+                                {!file && <ImageIcon color = {THEME.colors.white[0]} size = "70px"/>}
                             </FileUpload>
                         <p>{file && file.name }</p>
                         </label>

@@ -220,7 +220,6 @@ const RegisterNewUser = ({handleClick}) => {
                                     file && URL.createObjectURL(file)
                                 }
                             >
-                                 {console.log(file)} 
                                 {!file && <ImageIcon color = {THEME.colors.white[0]} size = "70px"/>}
                             </FileUpload>
                         <p style = {{textAlign: 'center'}}>{file && file.name }</p>
