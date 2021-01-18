@@ -14,30 +14,39 @@ const Wrapper = styled('div', {
     width: '430px',
     padding: '30px 25px 25px 25px',
     marginTop: '20px',
-    backgroundColor: '#ffffff',
+    backgroundColor: THEME.colors.white[0],
     border: '1px solid black',
     borderRadius: '5px',
     boxShadow: '0 0 3px black',
     fontFamily: THEME.fonts.text,
-    fontSize: THEME.fontSizes.small
+    fontSize: THEME.fontSizes.small,
+    fontWeight: 500,
+    letterSpacing: '0.05rem',
 });
 
 const Button = styled('button', {
     height: '40px',
-    backgroundColor: 'orange',
-    color: 'white',
+    backgroundColor: THEME.colors.contrast[0],
+    border: 'none',
+    borderRadius: '5px',
+    boxShadow: '0 0 1px black',
+    fontFamily: THEME.fonts.text,
+    fontSize: THEME.fontSizes.normal,
+    fontWeight: 700,
+    letterSpacing: '0.05rem',
+    color: THEME.colors.white[0],
     textTransform: 'uppercase',
 
     ':hover': {
         cursor:'pointer',
-        backgroundColor:'darkorange' 
+        backgroundColor:THEME.colors.black[0] 
     }
-})
+});
 
 const Text = styled('p', {
     ':hover': {
         cursor:'pointer',
-        color:'darkorange' 
+        color: THEME.colors.contrast[0]
     }
 });
 

@@ -1,10 +1,11 @@
 import { styled } from 'styletron-react';
 import THEME from '../config/theme';
 
-const Wrapper = styled('div', {
+const Wrapper = styled('div', ({$margin}) => ({
     display: 'flex',
+    margin: $margin && $margin,
     flexDirection: 'column'
-});
+}));
 
 //Styling in here
 const StyledInputField = styled('input', {
@@ -28,7 +29,6 @@ const UnderlineInputField = styled(StyledInputField, {
 });
 
 const BoxInputField = styled(StyledInputField, {
-    margin: '1rem 0',
     padding: '0.75rem 1rem',
     border: 1,
     outline: 0,
@@ -39,8 +39,8 @@ const BoxInputField = styled(StyledInputField, {
 
 //Error handling in here
 
-const InputField = ( {type, name, label, styling, handleChange, ...rest} ) => (
-    <Wrapper>
+const InputField = ( {type, name, label, styling, margin, handleChange, ...rest} ) => (
+    <Wrapper $margin = {margin}>
         {styling === 'underline' &&
             <>
                 {label && <label for = {name}>{label}</label>}
