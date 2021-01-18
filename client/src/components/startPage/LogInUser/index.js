@@ -65,7 +65,7 @@ const LogInUser = ({handleClick}) => {
     });
 
     let history = useHistory();
-    const { login, user } = useContext(AuthenticationContext);
+    const { isAuthenticated, login, user } = useContext(AuthenticationContext);
 
     const handleChange = (event) => {
         const {name, value} = event.target;
@@ -76,21 +76,19 @@ const LogInUser = ({handleClick}) => {
     };
 
     const handleLoginReq = async() => {
-        console.log('hello')
-    
-        const message = await login(inputValues.username, inputValues.password);
-        if(message !== "Authenticated"){
+        await login(inputValues.username, inputValues.password);
+        if(!isAuthenticated){
             setLoginError({
                 isOk: false,
                 message: "Användarnamn och/eller lösenord är felaktigt"
             });
-            history.push(`/user/${user._id}`);
-            setInputValues({username: '', password: ''});
         } else {
             setLoginError({
                 isOk: true,
                 message: ""
             });
+            history.push(`/user/${user._id}`);
+            setInputValues({username: '', password: ''}); 
         };
     };
     

@@ -30,28 +30,25 @@ const AuthenticationContextProvider = (props) => {
 
     const login = async (username, password) => {
 
-        await axios.post('/users/session/login', {username, password}, {withCredentials: true})
+        await axios
+        .post('/users/session/login', {username, password}, {withCredentials: true})
         .then((res) => {
             if(res.data.message){
                 if (res.data.message === "Authenticated") {
                     setIsAuthenticated(true);
                     setUser(res.data.user);
-                    console.log('res.data.user', res.data.user)
-                }
+                    setIsLoadingUser(false)
+                } 
                 return res.data.message
-            };
+            };  
         })
-        .catch(error => console.log(error));
-
-        console.log('user in context', user);
-
-        return "Failed to log in";
     };
-
+    
     const logout = async () => {
         setUser(null);
         setIsAuthenticated(false);
         setIsLoadingUnauthorized(true);
+        setIsLoadingUser(true);
         await axios.delete('users/session/logout',{ withCredentials: true })
     };
 
