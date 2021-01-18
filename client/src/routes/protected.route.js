@@ -9,7 +9,6 @@ const ProtectedRoute = ({
   const { isAuthenticated, isLoadingUser} = useContext(AuthenticationContext);
   //TODO remove?
   //if(isLoadingUnauthorized) return <div>Loading...</div>
-  console.log('isLoading', isLoadingUser)
 
   return (
     <Route
