@@ -22,7 +22,7 @@ const AppRouter = () => {
         <Route 
             exact path = '/' 
             render={(props) =>
-                isAuthenticated && !isLoadingUser? <Redirect to="/user" />  : <StartPage/>
+                isAuthenticated && !isLoadingUser? <Redirect to="/user"/>  : <StartPage/>
             }
         />
         <ProtectedRoute exact path = '/search' component = {SearchPage} />

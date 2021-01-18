@@ -35,8 +35,6 @@ const BoxInputField = styled(StyledInputField, {
     background: 'transparent',
 });
 
-
-
 //Error handling in here
 
 const InputField = ( {type, name, label, styling, margin, handleChange, ...rest} ) => (

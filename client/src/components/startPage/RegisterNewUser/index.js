@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import axios from '../../../axios';
 import { styled } from 'styletron-react';
 import Icons from '../../../config/icons';
 import THEME from '../../../config/theme';
 import InputField from '../../inputField';
-import axios from '../../../axios';
+
 
 const Wrapper = styled('div', {
     display: 'flex',
@@ -21,7 +22,7 @@ const Wrapper = styled('div', {
     fontSize: THEME.fontSizes.small,
     fontWeight: 500,
     letterSpacing: '0.05rem'
-})
+});
 
 const Button = styled('button', {
     height: '40px',
@@ -41,7 +42,7 @@ const Button = styled('button', {
         cursor:'pointer',
         backgroundColor:THEME.colors.black[0] 
     }
-})
+});
 
 const Text = styled('p', {
     width: '100%',
@@ -91,17 +92,9 @@ const RegisterNewUser = ({handleClick}) => {
 
     //stores file-data that goes up to image-bucket at server
     const [file, setFile] = useState(null);
-
-    const { ImageIcon } = Icons;
-    
     const history = useHistory();
 
-/*     const axiosConfig = {
-        headers: {
-            'Content-Type': 'application/json;charset=UTF-8',
-            "Access-Control-Allow-Origin": "*",
-        }
-    }; */
+    const { ImageIcon } = Icons;
 
     //handle input-changes
     const handleChange = (event) => {
@@ -109,8 +102,8 @@ const RegisterNewUser = ({handleClick}) => {
         setInputValues({
             ...inputValues,
             [name]: value,
-          });
-    }
+        });
+    };
 
     //Listens after changes to file-state. If changed to not null, the image will be sent to the bucket and id 
     // set to inputValues.image to link correct image in bucket to user in database.
@@ -143,7 +136,9 @@ const RegisterNewUser = ({handleClick}) => {
             console.log(res.data)
         })
         .catch(error => console.log(error))  
-    }
+    };
+
+    //TODO remove later when sure everything is still working
     //sends inputvalues to db
     /* const handleSubmit = (event) => {
         event.preventDefault();
@@ -212,15 +207,6 @@ const RegisterNewUser = ({handleClick}) => {
                     margin = "0.5rem 0"
                     handleChange = {handleChange}
                 />
-
-    {/*                 <InputField 
-                        type = "file" 
-                        name = "image" 
-                        label = "Profilbild:"
-                        accept = "image/*"
-                        styling = "basic"
-                        handleChange = {(event) => setFile(event.target.files[0])}
-                    />  */}
 
                 <FileUploadWrapper>
                         <label htmlFor="upload-image" style = {{height: '100%'}}>

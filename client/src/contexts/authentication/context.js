@@ -10,11 +10,12 @@ import { createContext } from 'react';
         resolve("");
       }),
     logout: () => {},
-/*     register: (user) =>
+/*    TODO, remove or insert?
+      register: (user) =>
       new Promise((resolve, reject) => {
         resolve("");
       }), */
     //updateUser: (key, value) => {},
   });
 
-  export default AuthenticationContext
+  export default AuthenticationContext;

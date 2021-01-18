@@ -21,42 +21,38 @@ const AuthenticationContextProvider = (props) => {
                     setIsAuthenticated(false);
                     setUser(null);
                     setIsLoadingUnauthorized(true)
-                }
+                };
             })
             .catch(error => console.log(error))
-        }
-        fetchData()
+        };
+        fetchData();
     },[]); 
 
     const login = async (username, password) => {
-/*         const options = {
-            credentials: "include"
-        } */
 
         await axios.post('/users/session/login', {username, password}, {withCredentials: true})
         .then((res) => {
-            console.log('data Login:', res)
             if(res.data.message){
                 if (res.data.message === "Authenticated") {
                     setIsAuthenticated(true);
                     setUser(res.data.user);
                 }
                 return res.data.message
-            }
+            };
         })
         .catch(error => console.log(error));
 
-        console.log('user in context', user)
+        console.log('user in context', user);
 
-        return "Failed to log in"
-    }
+        return "Failed to log in";
+    };
 
     const logout = async () => {
         setUser(null);
         setIsAuthenticated(false);
-
+        setIsLoadingUnauthorized(true);
         await axios.delete('users/session/logout',{ withCredentials: true })
-    }
+    };
 
     //TODO move register to here?
 
@@ -76,7 +72,7 @@ const AuthenticationContextProvider = (props) => {
                 //updateUser,
             }}
         />
-    )
-}
+    );
+};
 
 export default AuthenticationContextProvider;

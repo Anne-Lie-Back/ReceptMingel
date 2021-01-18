@@ -57,13 +57,14 @@ const LogInUser = ({handleClick}) => {
         password: '',
     });
 
+    //Helps to hold redirect until fetch is done so user isn't null onload of userpage
+    // eslint-disable-next-line no-unused-vars
     const [loginError, setLoginError] = useState({
         isOk: true,
         message: ''
-    })
+    });
 
     let history = useHistory();
-
     const { login } = useContext(AuthenticationContext);
 
     const handleChange = (event) => {
@@ -82,16 +83,15 @@ const LogInUser = ({handleClick}) => {
             setLoginError({
                 isOk: false,
                 message: "Användarnamn och/eller lösenord är felaktigt"
-            })
+            });
             history.push("/user");
-            setInputValues({username: '', password: ''})
-            
+            setInputValues({username: '', password: ''});
         } else {
             setLoginError({
                 isOk: true,
                 message: ""
-              })
-        } 
+            });
+        };
     };
     
     return(
@@ -112,7 +112,7 @@ const LogInUser = ({handleClick}) => {
             />
             <Button onClick = {handleLoginReq}> Logga in </Button>
             <Text onClick = {handleClick}> Inte medlem? <br/> Registrera dig gratis här </Text>
-    </Wrapper>
+        </Wrapper>
     );
 };
 
