@@ -35,7 +35,7 @@ const UserSchema = new Schema({
     image: {
       type: mongoose.ObjectId,
       ref: "File",
-  },
+    },
     //TODO update to [RecipeSchema] ? (see order-schema)
     recipeBook: [{
         type: String,
@@ -45,6 +45,13 @@ const UserSchema = new Schema({
         type: String,
         required: false
     }],
+  },
+  {
+    //inkludes the virtual object to data so fetcher gets url to image
+    id: false,
+    toJSON: {
+      virtuals: true,
+  },
 });
 
 //hashes password when user is created

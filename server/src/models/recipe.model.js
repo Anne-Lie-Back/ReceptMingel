@@ -49,8 +49,15 @@ const RecipeSchema = new Schema(
             type: Boolean,
             required: true
         }
+    },
+    {
+        //inkludes the virtual object to data so fetcher gets url to image
+        id: false,
+        toJSON: {
+          virtuals: true,
+        },
     }
-)
+);
 
 //handles getting avatar-image-file
 RecipeSchema.virtual("imageURL").get(function () {
