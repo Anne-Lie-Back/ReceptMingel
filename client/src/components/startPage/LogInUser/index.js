@@ -65,7 +65,7 @@ const LogInUser = ({handleClick}) => {
     });
 
     let history = useHistory();
-    const { login } = useContext(AuthenticationContext);
+    const { login, user } = useContext(AuthenticationContext);
 
     const handleChange = (event) => {
         const {name, value} = event.target;
@@ -84,7 +84,7 @@ const LogInUser = ({handleClick}) => {
                 isOk: false,
                 message: "Användarnamn och/eller lösenord är felaktigt"
             });
-            history.push("/user");
+            history.push(`/user/${user._id}`);
             setInputValues({username: '', password: ''});
         } else {
             setLoginError({

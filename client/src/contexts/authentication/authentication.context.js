@@ -36,6 +36,7 @@ const AuthenticationContextProvider = (props) => {
                 if (res.data.message === "Authenticated") {
                     setIsAuthenticated(true);
                     setUser(res.data.user);
+                    console.log('res.data.user', res.data.user)
                 }
                 return res.data.message
             };
