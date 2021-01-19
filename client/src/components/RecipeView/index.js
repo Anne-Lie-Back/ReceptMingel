@@ -7,6 +7,7 @@ import roundStarOutline from '@iconify/icons-ic/round-star-outline';
 import roundStarRate from '@iconify/icons-ic/round-star-rate';
 import roundRadioButtonUnchecked from '@iconify/icons-ic/round-radio-button-unchecked';
 import roundRadioButtonChecked from '@iconify/icons-ic/round-radio-button-checked';
+import bxEdit from '@iconify/icons-bx/bx-edit';
 
 import PartingStrip from '../PartingStrip';
 import TopSection from './TopSection';
@@ -30,6 +31,14 @@ const FlexRow = styled('div', {
     marginBottom: '1rem'
 });
 
+const SpaceBetweenWrapper = styled('div', {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '100%'
+});
+
 const HeadlineSmall = styled ('h4', {
     fontFamily: THEME.fonts.text,
     color: THEME.colors.black[0],
@@ -43,6 +52,16 @@ const RecipeWrapper = styled('div', {
     flexDirection: 'column',
     width: '812px',
     margin: '1rem 2rem'
+});
+
+const EditIcon = styled(Icon,{
+    fontSize: '35px',
+    color: THEME.colors.black[0],
+
+    ':hover' : {
+        cursor: 'pointer',
+        color: THEME.colors.contrast[0],
+    }
 });
 
 const StarIcon = styled(Icon,({$isStarred})=> ({
@@ -67,7 +86,7 @@ const SharedIcon = styled(Icon,({$isSharedRecipe})=> ({
     }
 }));
 
-const RecipeView = () => {
+const RecipeView = ({setIsEdit}) => {
     //TODO assign startvalue from DB - recipe instead
     const [isSharedRecipe, setIsShared] = useState(false);
     const [isStarred, setIsStarred] = useState(false);
@@ -139,14 +158,20 @@ const RecipeView = () => {
                             <HeadlineSmall> {isStarred? 'SPARAD I DIN RECEPTBOK':'SPARA I DIN RECEPTBOK'}</HeadlineSmall>
                         </>
                         :
-                        <>
+                        <SpaceBetweenWrapper>  
+                            <FlexRow $style = {{margin: 0}}>
                             <SharedIcon 
                                 $isSharedRecipe = {isSharedRecipe} 
                                 icon={isSharedRecipe ? roundRadioButtonChecked : roundRadioButtonUnchecked} 
                                 onClick = {() => setIsShared(!isSharedRecipe)}
                             />
                             <HeadlineSmall> {isSharedRecipe? 'DELAD MED DINA VÄNNER':'FÄRDIG? DELA MED DINA VÄNNER'}</HeadlineSmall>
-                        </>                    
+                            </FlexRow>
+                            <EditIcon 
+                                icon = {bxEdit}
+                                onClick = {() => setIsEdit(true)}
+                            />
+                        </SpaceBetweenWrapper>                  
                     }
                 </FlexRow>
                 <PartingStrip width = '100%'/>
