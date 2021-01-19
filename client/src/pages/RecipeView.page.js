@@ -32,6 +32,7 @@ const RecipeViewPage = () => {
                 let data = await axios.get(`recipes/author/${author}`, { withCredentials: true })
                 .then(({data}) => data);
                 setUsersRecipes(data)
+                setRecipe(data[0])
                 setIsLoading(false)
             }catch(error){
                 console.log(error)
@@ -62,20 +63,26 @@ const RecipeViewPage = () => {
     }, [slug]) 
 
     return(
-        <>
+        <> 
             <Hero 
                 title = 'Mina Recept' 
                 icon = {roundRestaurantMenu} 
             />
-            <GridContentWrapper>
-                
-                    <SideMenu  recipeList = {usersRecipes}   setIsEdit = {setIsEdit} />
-                    {isEdit? 
-                        <RecipeTemplate setIsEdit = {setIsEdit} /* recipe = {recipe} */ /> 
-                        : 
-                        <RecipeView setIsEdit = {setIsEdit} slug = {slug} isLoading = {isLoading} /* recipe = {recipe && recipesUser[0]} */  /* recipeId = {slug} */ />
-                    }
-            </GridContentWrapper>
+            
+                <GridContentWrapper>
+                    
+                        <SideMenu  recipeList = {usersRecipes}   setIsEdit = {setIsEdit} />
+                        {isLoading? <p>is Loading...</p> : 
+                            <>
+                                {isEdit? 
+                                    <RecipeTemplate setIsEdit = {setIsEdit} /* recipe = {recipe} */ /> 
+                                    : 
+                                    <RecipeView setIsEdit = {setIsEdit} slug = {slug} isLoading = {isLoading} recipe = {recipe}  /* recipeId = {slug} */ />
+                                }
+                            </>
+                        }
+                </GridContentWrapper>
+            
         </>
 
     );

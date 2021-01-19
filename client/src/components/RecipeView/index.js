@@ -149,7 +149,7 @@ const RecipeView = ({setIsEdit, slug, isLoading, recipe}) => {
         author,
         // eslint-disable-next-line no-unused-vars
         isShared
-    } = recipeTest; 
+    } = recipe; 
 
     return(
         <Wrapper>
