@@ -86,7 +86,7 @@ const SharedIcon = styled(Icon,({$isSharedRecipe})=> ({
     }
 }));
 
-const RecipeView = ({setIsEdit}) => {
+const RecipeView = ({setIsEdit, recipe}) => {
     //TODO assign startvalue from DB - recipe instead
     const [isSharedRecipe, setIsShared] = useState(false);
     const [isStarred, setIsStarred] = useState(false);
@@ -95,8 +95,10 @@ const RecipeView = ({setIsEdit}) => {
     // eslint-disable-next-line no-unused-vars
     const [isSessionUsersRecipe, setSessionUsersRecipe] = useState(false);
 
+    console.log('recipe', recipe)
+
     //TODO remove
-    const recipe = {
+ /*      const recipe = {
         title : "Exotiska Tacos",
         preambleHTML : "En fräsch taco med panerad tofu. Den sötstarka mangosalsan ger mycket fraschör. Var inte rädd för att dunka på en del med chilin, mangon och limedressingen tar ut en del styrka. Detta är en perfekt sommar-rätt! ",
         image : imageTest,
@@ -126,13 +128,13 @@ const RecipeView = ({setIsEdit}) => {
         ],
         author : "Hjortronbåt",
         isShared : false
-    }
+    }  */
 
     //Transform for easier follow on where the different items are showing and are styled.
     const {
         title,
         preambleHTML,
-        image,
+        imageURL,
         portions,
         cookingTime,
         cookingSteps,
@@ -142,7 +144,7 @@ const RecipeView = ({setIsEdit}) => {
         author,
         // eslint-disable-next-line no-unused-vars
         isShared
-    } = recipe;
+    } = recipe; 
 
     return(
         <Wrapper>
@@ -178,7 +180,7 @@ const RecipeView = ({setIsEdit}) => {
                 <TopSection 
                     title = {title} 
                     description = {preambleHTML} 
-                    image = {image} 
+                    image = {imageURL} 
                     difficulty = {difficulty} 
                     cookingTime = {cookingTime}
                 />

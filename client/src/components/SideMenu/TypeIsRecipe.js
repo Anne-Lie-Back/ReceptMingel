@@ -53,6 +53,7 @@ const FilterInput = styled(InputField, {
 });
 
 const TypeIsRecipe = ({recipeList}) => {
+    // eslint-disable-next-line no-unused-vars
     const[filterInput, setFilterInput] = useState('');
 
     const handleClick = () => {
@@ -65,7 +66,6 @@ const TypeIsRecipe = ({recipeList}) => {
 
     return(
         <>
-        {console.log('filterInput', filterInput)}
             <AddButtonText onClick = {handleClick}>Skapa nytt recept</AddButtonText>
             <FilterInput styling = "basic" handleChange = {(event) => handleChange(event)} placeholder = 'Sök bland dina recept...'/>
             <List>

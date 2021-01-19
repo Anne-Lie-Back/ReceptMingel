@@ -14,15 +14,10 @@ const Wrapper = styled('div', {
 
 
 
-const SideMenu = ({type, recipeList}) => {
-    const RecipesTest = ['Fisktacos', 'choklabollar','Chana masala','Gröt','Fisktacos', 'choklabollar','Chana masala','Gröt',]
-    console.log('recipeList', recipeList)
-
-    return(
+const SideMenu = ({type, recipeList}) => (
         <Wrapper>
             <TypeIsRecipe recipeList = {recipeList}/>
         </Wrapper>
-    );
-};
+);
 
 export default SideMenu;
