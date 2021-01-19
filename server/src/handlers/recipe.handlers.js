@@ -18,7 +18,7 @@ const getAllRecipes = (req, res, next) => {
     });
 }
 
-//GET ONE RECIPE
+//GET RECIPE BY ID
 const getRecipeByID = (req, res, next) => {
     Recipe.findById(req.params.id, (error, recipe) => {
         try{
@@ -31,6 +31,20 @@ const getRecipeByID = (req, res, next) => {
         }
     })
 }
+
+//GET RECIPE BY IsShared
+const getRecipesByIsShared = (req, res, next) => {
+    Recipe.find({isShared: true}, (error, recipesByIsShared) => {
+        try{
+            if(error) next(error);
+            if(!recipesByIsShared || recipesByIsShared.length === 0) throw new ErrorHandler(404, "Vi kunde inte hitta några recept");
+            res.recipesByIsShared = recipesByIsShared
+            next()
+        }catch(error){
+            next(error);
+        };
+    });
+};
 
 //GET RECIPES BY AUTHOR
 const getRecipesByAuthor = (req, res, next) => {
@@ -61,7 +75,7 @@ const createRecipe = (req, res, next) => {
     });
 };
 
-//UPDATE RECIPE
+//UPDATE RECIPE (both patch and put)
 const updateRecipe = (req, res, next) => {
     Recipe.findByIdAndUpdate(req.params.id, req.body, {new: true}, (error, updatedRecipe) => {
         try{
@@ -92,6 +106,7 @@ const deleteRecipe = (req, res, next) => {
 module.exports = {
     getAllRecipes,
     getRecipeByID,
+    getRecipesByIsShared,
     getRecipesByAuthor,
     createRecipe,
     updateRecipe,

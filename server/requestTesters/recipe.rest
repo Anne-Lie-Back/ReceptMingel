@@ -4,7 +4,7 @@ GET http://localhost:8080/api/recipes/
 ###
 
 //GET ONE RECIPE
-GET http://localhost:8080/api/recipes/5fe349bcef487237387d42e1
+GET http://localhost:8080/api/recipes/6005daeb83df2937ec206ee6
 
 ###
 
@@ -138,6 +138,16 @@ Content-Type: application/json
     ],
     "author" : "Lee",
     "isShared" : false
+}
+
+###
+
+//PATCH
+PATCH http://localhost:8080/api/recipes/6005daeb83df2937ec206ee6
+Content-Type: application/json
+
+{
+    "isShared" : true
 }
 
 ###

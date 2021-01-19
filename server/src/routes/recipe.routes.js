@@ -6,6 +6,7 @@ const router = express.Router();
 const {
     getAllRecipes, 
     getRecipeByID,
+    getRecipesByIsShared,
     getRecipesByAuthor,
     createRecipe,
     updateRecipe,
@@ -22,20 +23,21 @@ router.get('/', isAuthenticated, getAllRecipes, (req, res) => {
     res.status(200).json(res.allRecipes)
 });
 
-//GET ONE RECIPE
+//GET RECIPE BY ID
 //TODO maybe remove so you can chare recipe to others
 router.get('/:id', isAuthenticated, getRecipeByID, (req, res) => {
     res.status(200).json(res.recipe)
-})
+});
 
-//GET RECIPE BY FREETEXT
+//GET RECIPE BY isShared
+router.get('/public', isAuthenticated, getRecipesByIsShared, (req, res) => {
+    res.status(200).json(res.recipesByIsShared)
+});
 
-//GET RECIPE BY DIFFICULTY
+//GET RECIPE BY AUTHOR
 router.get('/author/:author', isAuthenticated, getRecipesByAuthor, (req, res) => {
     res.status(200).json(res.recipesByAuthor)
-})
-
-//GET RECIPE BY COOKINGTIME
+});
 
 
 //CREATE RECIPE
@@ -46,6 +48,11 @@ router.post('/', isAuthenticated, createRecipe, (req, res) => {
 //UPDATE RECIPE
 router.put('/:id', isAuthenticated, updateRecipe, (req, res) => {
     res.status(200).json(res.updatedRecipe);
+});
+
+//PATCH RECIPE
+router.patch('/:id', isAuthenticated, updateRecipe, (req, res) => {
+    res.status(200).json(res.patchedRecipe);
 });
 
 //DELETE RECIPE
