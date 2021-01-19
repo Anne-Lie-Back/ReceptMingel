@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { styled } from 'styletron-react';
 import THEME from '../../config/theme';
 import InputField from '../inputField';
@@ -69,7 +70,7 @@ const TypeIsRecipe = ({recipeList}) => {
             <FilterInput styling = "basic" handleChange = {(event) => handleChange(event)} placeholder = 'Sök bland dina recept...'/>
             <List>
                 {recipeList.map((item, index) => (
-                    <ListItem key = {index}> {item.title} </ListItem>
+                    <ListItem key = {index}> <Link to = {`/recipe/${item._id}`}>{item.title}</Link></ListItem>
                 ))}
             </List>
         </>

@@ -29,6 +29,7 @@ const AppRouter = () => {
         <ProtectedRoute exact path = '/user/:id' component = {UserPage} />
         <ProtectedRoute exact path = '/recipebook' component = {RecipeBookPage} />
         <ProtectedRoute exact path = '/recipe/' component = {RecipeViewPage} />
+        <ProtectedRoute exact path = '/recipe/:id' component = {RecipeViewPage} />
     </Switch>
 )};
 
