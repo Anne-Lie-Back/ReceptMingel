@@ -47,7 +47,8 @@ mongoose.connection.once("open", () => {
 const writeSingleImage = (req, res, next) => {
   const upload = multer({ 
     storage,
-    limits: { fileSize: 400 * 1000 }
+    //Will be able to take larger images when de delete unused image function is done.
+    limits: { fileSize: 500 * 1000 }
     }).single("image");
   upload(req, res, (error) => {
     try {

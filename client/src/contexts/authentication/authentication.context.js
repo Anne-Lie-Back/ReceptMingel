@@ -4,6 +4,7 @@ import AuthenticationContext from './context';
 
 const AuthenticationContextProvider = (props) => {
     const [user, setUser] = useState(null);
+    const [recipeBook, setRecipeBook] = useState([]);
     const [isLoadingUser, setIsLoadingUser] = useState(true);
     const [isLoadingUnauthorized, setIsLoadingUnauthorized] = useState(false);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -27,6 +28,29 @@ const AuthenticationContextProvider = (props) => {
         };
         fetchData();
     },[]); 
+
+    const removeRecipeBookItem = (list, id) => {
+        const newList = list.filter((item) => item !== id);
+        setRecipeBook({newList}) 
+    };
+
+    const addRecipeBookItem = (listItem) => {
+        const newItem = listItem;
+        
+        const newList = [...recipeBook, newItem];
+        setRecipeBook({                    
+            mdsaCategories: newList         
+        });
+    };
+
+    const patchRecipeBook = async(id) => {
+        await axios
+        .patch(`/users/${id}`, { recipeBook: recipeBook})
+        .then((res) => {
+            console.log('bookPatch', res);
+        })
+        .catch(error => console.log(error))
+    };
 
     const login = async (username, password) => {
 
@@ -66,6 +90,9 @@ const AuthenticationContextProvider = (props) => {
                 isLoadingUnauthorized,
                 login,
                 logout,
+                removeRecipeBookItem,
+                addRecipeBookItem,
+                patchRecipeBook,
                 //register,
                 //updateUser,
             }}

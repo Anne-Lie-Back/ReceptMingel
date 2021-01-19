@@ -62,7 +62,7 @@ const getSessionUser = (req, res, next) => {
     });
 };
 
-//UPDATE USER
+//UPDATE USER (both patch and put)
 const updateUser = (req, res, next) => {
     User.findOneAndUpdate(
       { _id: req.params.id },

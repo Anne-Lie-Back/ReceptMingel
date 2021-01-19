@@ -32,7 +32,7 @@ const MainNavbar = () => {
         <NavLink to = '/search'>
           <Search color = {THEME.colors.white[0]} size = '40px'/>
         </NavLink>
-        <NavLink to = '/recipe-edit'>
+        <NavLink to = '/recipe'>
           <RecipeIcon color = {THEME.colors.white[0]} size = '45px'/>
         </NavLink>
         <NavLink to = '/recipebook'>

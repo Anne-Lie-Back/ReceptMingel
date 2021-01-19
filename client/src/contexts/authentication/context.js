@@ -10,6 +10,9 @@ import { createContext } from 'react';
         resolve("");
       }),
     logout: () => {},
+    removeRecipeBookItem: () => {},
+    addRecipeBookItem: () => {},
+    patchRecipeBook: () => {},
 /*    TODO, remove or insert?
       register: (user) =>
       new Promise((resolve, reject) => {

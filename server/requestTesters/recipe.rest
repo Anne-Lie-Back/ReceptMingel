@@ -3,21 +3,19 @@ GET http://localhost:8080/api/recipes/
 
 ###
 
-//GET ONE RECIPE
-GET http://localhost:8080/api/recipes/5fe349bcef487237387d42e1
+//GET RECIPE BY ID
+GET http://localhost:8080/api/recipes/6005daeb83df2937ec206ee6
 
 ###
 
 //GET RECIPE BY FREETEXT
 
-//GET RECIPE BY DIFFICULTY
+//GET RECIPE BY Author
 GET http://localhost:8080/api/recipes/author/Starstoft
 
 ###
 
 //GET RECIPE BY COOKINGTIME
-
-//GET RECIPE BY AUTHOR
 
 //POST RECIPE
 POST http://localhost:8080/api/recipes/
@@ -138,6 +136,16 @@ Content-Type: application/json
     ],
     "author" : "Lee",
     "isShared" : false
+}
+
+###
+
+//PATCH
+PATCH http://localhost:8080/api/recipes/6005daeb83df2937ec206ee6
+Content-Type: application/json
+
+{
+    "isShared" : true
 }
 
 ###

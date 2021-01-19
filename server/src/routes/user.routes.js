@@ -43,6 +43,11 @@ router.put('/:id', getSessionUser, isAuthenticated, updateUser, (req, res) => {
     res.status(200).json(res.updateUser);
 })
 
+//PATCH recipeBook
+router.patch('/:id', getSessionUser, isAuthenticated, updateUser, (req, res) => {
+    res.status(200).json(res.updateUser);
+})
+
 //DELETE USER
 router.delete('/:id', getSessionUser, isAuthenticated, deleteUser,(req, res) => {
     res.status(200).json(res.deletedUser)
