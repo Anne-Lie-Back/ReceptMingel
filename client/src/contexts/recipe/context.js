@@ -3,13 +3,15 @@ import { createContext } from 'react';
  const RecipeContext = createContext({
     recipesAll: [],
     recipesUser: [],
+    isLoadingRecipe: true,
     getAllRecipes: () => {},
     getRecipeByAuthor: () => {},
     getRecipeByIsShared: () => {},
     getRecipeById: () => {},
     updateRecipe: () => {},
     patchRecipe: () => {},
-    deleteRecipe: () => {}
+    deleteRecipe: () => {},
+    setIsLoadingRecipe: () => {}
     
     //editRecipe: () => {},
     //deleteRecipe: () => {}

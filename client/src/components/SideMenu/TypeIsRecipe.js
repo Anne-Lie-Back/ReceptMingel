@@ -52,13 +52,9 @@ const FilterInput = styled(InputField, {
     fontSize: THEME.fontSizes.small,
 });
 
-const TypeIsRecipe = ({recipeList}) => {
+const TypeIsRecipe = ({recipeList, setIsEdit }) => {
     // eslint-disable-next-line no-unused-vars
     const[filterInput, setFilterInput] = useState('');
-
-    const handleClick = () => {
-        console.log('I am clicked!')
-    };
 
     const handleChange = (event) => {
         setFilterInput(event.target.value)
@@ -66,7 +62,7 @@ const TypeIsRecipe = ({recipeList}) => {
 
     return(
         <>
-            <AddButtonText onClick = {handleClick}>Skapa nytt recept</AddButtonText>
+            <AddButtonText onClick = {() => setIsEdit(true)}>Skapa nytt recept</AddButtonText>
             <FilterInput styling = "basic" handleChange = {(event) => handleChange(event)} placeholder = 'Sök bland dina recept...'/>
             <List>
                 {recipeList.map((item, index) => (

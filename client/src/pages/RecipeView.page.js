@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import axios from '../axios';
 //import { styled } from 'styletron-react';
 //import THEME from '../config/theme';
 import Hero from '../components/Hero';
@@ -14,26 +15,27 @@ import AuthenticationContext from '../contexts/authentication/context';
 const RecipeViewPage = () => {
     // eslint-disable-next-line no-unused-vars
     const [isEdit, setIsEdit] = useState(false);
-    
-    const { getAllRecipes, recipesAll, getRecipesByAuthor, recipesUser, getRecipeById, recipe } = useContext(RecipeContext);
+    //const [isLodin, setRecipe] = useState(null)
+    const { getRecipesByAuthor,getRecipeById, recipe, recipesUser, isLoadingRecipe, setIsLoadingRecipe} = useContext(RecipeContext);
     const {user} = useContext(AuthenticationContext);
 
     let { slug } = useParams()
-    //const location = useLocation()
+    //const location = useLocation();
+    console.log('slug', slug)
 
     useEffect(() => {
-        //getAllRecipes();
         getRecipesByAuthor(user.username);
-        //setDisplayRecipe(recipesUser[0])
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+
+    console.log('recipesUser', recipesUser)
 
     useEffect(() => {
         if(slug) {
             getRecipeById(slug);
-        }
+            setIsLoadingRecipe(true)
+        } 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [slug])
+    }, [slug]) 
 
     return(
         <>
@@ -42,11 +44,11 @@ const RecipeViewPage = () => {
                 icon = {roundRestaurantMenu} 
             />
             <GridContentWrapper>
-                <SideMenu  recipeList = {recipesUser} />
+                <SideMenu  recipeList = {recipesUser}  /* setIsEdit = {setIsEdit} *//>
                 {isEdit? 
-                    <RecipeTemplate setIsEdit = {setIsEdit} recipe = {recipe}/> 
+                    <RecipeTemplate setIsEdit = {setIsEdit} /* recipe = {recipe} */ /> 
                     : 
-                    <RecipeView setIsEdit = {setIsEdit}   recipe = {recipe && recipesUser[0]}/>
+                    <RecipeView setIsEdit = {setIsEdit} slug = {slug} isLoading = {isLoadingRecipe} recipe = {recipe && recipesUser[0]}  /* recipeId = {slug} */ />
                 }
             </GridContentWrapper>
         </>

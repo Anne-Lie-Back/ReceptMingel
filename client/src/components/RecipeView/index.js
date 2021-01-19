@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import { styled } from 'styletron-react';
 import THEME from './../../config/theme';
 
@@ -14,8 +14,10 @@ import TopSection from './TopSection';
 import IngredientSection from './IngredientSection';
 import CookingStepsSection from './CookingStepsSection';
 import BottomSection from './BottomSection';
-//TODO remove
-import imageTest from '../../assets/images/imageTest.png';
+import AuthenticationContext from '../../contexts/authentication/context';
+import RecipeContext from '../../contexts/recipe/context';
+
+import imageTest from '../../assets/images/imageTest.png'
 
 const Wrapper = styled('div', {
     display: 'flex',
@@ -86,7 +88,7 @@ const SharedIcon = styled(Icon,({$isSharedRecipe})=> ({
     }
 }));
 
-const RecipeView = ({setIsEdit, recipe}) => {
+const RecipeView = ({setIsEdit, slug, isLoading, recipe}) => {
     //TODO assign startvalue from DB - recipe instead
     const [isSharedRecipe, setIsShared] = useState(false);
     const [isStarred, setIsStarred] = useState(false);
@@ -95,10 +97,11 @@ const RecipeView = ({setIsEdit, recipe}) => {
     // eslint-disable-next-line no-unused-vars
     const [isSessionUsersRecipe, setSessionUsersRecipe] = useState(false);
 
-    console.log('recipe', recipe)
+    const {user} = useContext(AuthenticationContext)
+
 
     //TODO remove
- /*      const recipe = {
+        const recipeTest = {
         title : "Exotiska Tacos",
         preambleHTML : "En fräsch taco med panerad tofu. Den sötstarka mangosalsan ger mycket fraschör. Var inte rädd för att dunka på en del med chilin, mangon och limedressingen tar ut en del styrka. Detta är en perfekt sommar-rätt! ",
         image : imageTest,
@@ -128,7 +131,9 @@ const RecipeView = ({setIsEdit, recipe}) => {
         ],
         author : "Hjortronbåt",
         isShared : false
-    }  */
+    }
+
+    //console.log('recipe', recipe)
 
     //Transform for easier follow on where the different items are showing and are styled.
     const {
@@ -148,6 +153,8 @@ const RecipeView = ({setIsEdit, recipe}) => {
 
     return(
         <Wrapper>
+            {slug && isLoading? <p>is Loading</p>
+            : 
             <RecipeWrapper>
                 <FlexRow>
                     {isSessionUsersRecipe?
@@ -169,11 +176,11 @@ const RecipeView = ({setIsEdit, recipe}) => {
                             />
                             <HeadlineSmall> {isSharedRecipe? 'DELAD MED DINA VÄNNER':'FÄRDIG? DELA MED DINA VÄNNER'}</HeadlineSmall>
                             </FlexRow>
-                            <EditIcon 
+                            {user.username === author && <EditIcon 
                                 icon = {bxEdit}
                                 onClick = {() => setIsEdit(true)}
-                            />
-                        </SpaceBetweenWrapper>                  
+                            />}
+                        </SpaceBetweenWrapper>           
                     }
                 </FlexRow>
                 <PartingStrip width = '100%'/>
@@ -191,6 +198,7 @@ const RecipeView = ({setIsEdit, recipe}) => {
                 <PartingStrip width = "100%" />
                 <BottomSection categories = {mdsaCategories} author = {author}/>
             </RecipeWrapper>
+}
         </Wrapper>
     );
 };

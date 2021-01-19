@@ -11,6 +11,8 @@ const RecipeContextProvider = (props) => {
     // eslint-disable-next-line no-unused-vars
     const [recipe, setRecipe] = useState(null);
 
+    const [isLoadingRecipe, setIsLoadingRecipe] = useState(true)
+
     //GETTERS
 
     const getAllRecipes = async() => {
@@ -22,12 +24,14 @@ const RecipeContextProvider = (props) => {
     };
 
     const getRecipesByAuthor = async(author) => {
-        await axios
-        .get(`recipes/author/${author}`, { withCredentials: true })
-        .then((res) => {
-            console.log('res Author', res)
-            setRecipesUser(res.data)
-        });
+        try{
+            let data = await axios.get(`recipes/author/${author}`, { withCredentials: true })
+            .then(({data}) => data);
+            console.log('data', data)
+            setRecipesUser(data)
+        }catch(error){
+            console.log(error)
+        }
     };
 
     const getRecipesByIsShared = async() => {
@@ -40,11 +44,14 @@ const RecipeContextProvider = (props) => {
     };
 
     const getRecipeById = async(id) => {
-        await axios.get(`recipes/${id}`, { withCredentials: true })
-        .then((res) => {
-            console.log('res Recipe', res)
-            setRecipe(res.data)
-        });
+        try{
+            let data = await axios.get(`recipes/${id}`, { withCredentials: true })
+            .then(({data}) => data);
+            setRecipe(data)
+            setIsLoadingRecipe(false)
+        }catch(error){
+            console.log(error)
+        }
     };
 
     //PUT
@@ -80,13 +87,15 @@ const RecipeContextProvider = (props) => {
                 recipesUser,
                 recipesPublic,
                 recipe,
+                isLoadingRecipe,
                 getAllRecipes,
                 getRecipesByAuthor,
                 getRecipesByIsShared,
                 getRecipeById,
                 updateRecipe,
                 patchRecipe,
-                deleteRecipe
+                deleteRecipe,
+                setIsLoadingRecipe
             }}
         />
     );
