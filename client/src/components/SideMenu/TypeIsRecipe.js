@@ -15,13 +15,24 @@ const List = styled('ul', {
 });
 
 const ListItem = styled('li', {
-    margin: '0.5rem 0',
+    margin: '0.75rem 0',
 
     ':hover' : {
         color: THEME.colors.contrast[0],
         cursor: 'pointer'
     }
 });
+
+const StyledLink = styled(Link, {
+    textDecoration: 'none',
+    color: THEME.colors.white[0],
+
+    ':hover' : {
+        color: THEME.colors.contrast[0],
+        cursor: 'pointer'
+    }
+
+})
 
 const AddButtonText = styled('div', {
     width: '100%',
@@ -62,11 +73,20 @@ const TypeIsRecipe = ({recipeList, setIsEdit }) => {
 
     return(
         <>
-            <AddButtonText onClick = {() => setIsEdit(true)}>Skapa nytt recept</AddButtonText>
+            <Link to = {'/recipe/'} style = {{textDecoration: 'none'}}>
+                <AddButtonText onClick = {() => setIsEdit(true)}> Skapa nytt recept </AddButtonText>
+            </Link>
             <FilterInput styling = "basic" handleChange = {(event) => handleChange(event)} placeholder = 'Sök bland dina recept...'/>
             <List>
                 {recipeList.map((item, index) => (
-                    <ListItem key = {index}> <Link to = {`/recipe/${item._id}`}>{item.title}</Link></ListItem>
+                    <StyledLink to = {`/recipe/${item._id}`}>
+                        <ListItem 
+                            key = {index} 
+                            onClick = {() => setIsEdit(false)}
+                        > 
+                            {item.title} 
+                        </ListItem>
+                    </StyledLink>
                 ))}
             </List>
         </>
