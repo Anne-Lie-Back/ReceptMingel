@@ -29,6 +29,7 @@ const RecipeContextProvider = (props) => {
             .then(({data}) => data);
             console.log('data', data)
             setRecipesUser(data)
+            setIsLoadingRecipe(false)
         }catch(error){
             console.log(error)
         }

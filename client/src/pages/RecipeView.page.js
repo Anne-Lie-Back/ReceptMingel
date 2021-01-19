@@ -15,8 +15,11 @@ import AuthenticationContext from '../contexts/authentication/context';
 const RecipeViewPage = () => {
     // eslint-disable-next-line no-unused-vars
     const [isEdit, setIsEdit] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
+    const [usersRecipes, setUsersRecipes] = useState([]);
+    const [recipe, setRecipe] = useState(null);
     //const [isLodin, setRecipe] = useState(null)
-    const { getRecipesByAuthor,getRecipeById, recipe, recipesUser, isLoadingRecipe, setIsLoadingRecipe} = useContext(RecipeContext);
+    //const { getRecipeById, recipe } = useContext(RecipeContext);
     const {user} = useContext(AuthenticationContext);
 
     let { slug } = useParams()
@@ -24,16 +27,37 @@ const RecipeViewPage = () => {
     console.log('slug', slug)
 
     useEffect(() => {
-        getRecipesByAuthor(user.username);
+        const getRecipesByAuthor = async(author) => {
+            try{
+                let data = await axios.get(`recipes/author/${author}`, { withCredentials: true })
+                .then(({data}) => data);
+                setUsersRecipes(data)
+                setIsLoading(false)
+            }catch(error){
+                console.log(error)
+            }
+        };
+        getRecipesByAuthor(user.username)
+        setIsLoading(true)
     }, [])
-
-    console.log('recipesUser', recipesUser)
 
     useEffect(() => {
         if(slug) {
+            const getRecipeById = async(slug) => {
+                try{
+                    let data = await axios.get(`recipes/${slug}`, { withCredentials: true })
+                    .then(({data}) => data);
+                    setRecipe(data)
+                    setIsLoading(false)
+                }catch(error){
+                    console.log(error)
+                }
+            };
             getRecipeById(slug);
-            setIsLoadingRecipe(true)
-        } 
+            setIsLoading(true);
+        } else if(!slug) {
+            setRecipe(usersRecipes[0]);
+        }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [slug]) 
 
@@ -44,12 +68,13 @@ const RecipeViewPage = () => {
                 icon = {roundRestaurantMenu} 
             />
             <GridContentWrapper>
-                <SideMenu  recipeList = {recipesUser}  /* setIsEdit = {setIsEdit} *//>
-                {isEdit? 
-                    <RecipeTemplate setIsEdit = {setIsEdit} /* recipe = {recipe} */ /> 
-                    : 
-                    <RecipeView setIsEdit = {setIsEdit} slug = {slug} isLoading = {isLoadingRecipe} recipe = {recipe && recipesUser[0]}  /* recipeId = {slug} */ />
-                }
+                
+                    <SideMenu  recipeList = {usersRecipes}   setIsEdit = {setIsEdit} />
+                    {isEdit? 
+                        <RecipeTemplate setIsEdit = {setIsEdit} /* recipe = {recipe} */ /> 
+                        : 
+                        <RecipeView setIsEdit = {setIsEdit} slug = {slug} isLoading = {isLoading} /* recipe = {recipe && recipesUser[0]} */  /* recipeId = {slug} */ />
+                    }
             </GridContentWrapper>
         </>
 
