@@ -17,7 +17,8 @@ const ListItem = styled('li', {
     margin: '0.5rem 0',
 
     ':hover' : {
-        color: THEME.colors.contrast[0]
+        color: THEME.colors.contrast[0],
+        cursor: 'pointer'
     }
 });
 
@@ -68,7 +69,7 @@ const TypeIsRecipe = ({recipeList}) => {
             <FilterInput styling = "basic" handleChange = {(event) => handleChange(event)} placeholder = 'Sök bland dina recept...'/>
             <List>
                 {recipeList.map((item, index) => (
-                    <ListItem key = {index}> {item} </ListItem>
+                    <ListItem key = {index}> {item.title} </ListItem>
                 ))}
             </List>
         </>

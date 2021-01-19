@@ -14,12 +14,13 @@ const Wrapper = styled('div', {
 
 
 
-const SideMenu = ({type}) => {
+const SideMenu = ({type, recipeList}) => {
     const RecipesTest = ['Fisktacos', 'choklabollar','Chana masala','Gröt','Fisktacos', 'choklabollar','Chana masala','Gröt',]
+    console.log('recipeList', recipeList)
 
     return(
         <Wrapper>
-            <TypeIsRecipe recipeList = {RecipesTest}/>
+            <TypeIsRecipe recipeList = {recipeList}/>
         </Wrapper>
     );
 };

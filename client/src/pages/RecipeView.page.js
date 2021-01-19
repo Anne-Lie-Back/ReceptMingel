@@ -13,7 +13,7 @@ import AuthenticationContext from '../contexts/authentication/context';
 const RecipeViewPage = () => {
     // eslint-disable-next-line no-unused-vars
     const [isEdit, setIsEdit] = useState(false);
-    const { getAllRecipes, recipesAll, getRecipesByAuthor } = useContext(RecipeContext);
+    const { getAllRecipes, recipesAll, getRecipesByAuthor, recipesUser } = useContext(RecipeContext);
     const {user} = useContext(AuthenticationContext);
 
     useEffect(() => {
@@ -21,6 +21,9 @@ const RecipeViewPage = () => {
         getRecipesByAuthor(user.username);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+
+    console.log('recipesUser', recipesUser)
+
     return(
         <>
             <Hero 
@@ -28,7 +31,7 @@ const RecipeViewPage = () => {
                 icon = {roundRestaurantMenu} 
             />
             <GridContentWrapper>
-                <SideMenu/>
+                <SideMenu  recipeList = {recipesUser} />
                 {isEdit? 
                     <RecipeTemplate setIsEdit = {setIsEdit}/> 
                     : 
