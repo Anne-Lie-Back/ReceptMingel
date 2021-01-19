@@ -34,7 +34,6 @@ const RecipeViewPage = () => {
                     : 
                     <RecipeView setIsEdit = {setIsEdit}
                 />}
-                <RecipeView/>
             </GridContentWrapper>
         </>
 
