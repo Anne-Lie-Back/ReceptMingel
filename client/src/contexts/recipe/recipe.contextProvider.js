@@ -8,6 +8,7 @@ const RecipeContextProvider = (props) => {
     const [recipesUser, setRecipesUser] = useState([]);
     // eslint-disable-next-line no-unused-vars
     const [recipesPublic, setRecipesPublic] = useState([]);
+    // eslint-disable-next-line no-unused-vars
     const [recipe, setRecipe] = useState(null);
 
     //GETTERS
@@ -44,12 +45,12 @@ const RecipeContextProvider = (props) => {
             console.log('res Recipe', res)
             setRecipe(res.data)
         });
-    }
+    };
 
     //PUT
     const updateRecipe = async(id, value) => {
         await axios
-        .put(`/recipes/${id}`, {value} ,{ withCredentials: true })
+        .put(`/recipes/${id}`, {value}, { withCredentials: true })
         .then((res) => {
             console.log('resUpdate', res);
         })
@@ -59,11 +60,16 @@ const RecipeContextProvider = (props) => {
     //Patch
     const patchRecipe = async(id, key , value) => {
         await axios
-        .patch(`/recipes/${id}`, { key: value})
+        .patch(`/recipes/${id}`, { key: value}, { withCredentials: true })
         .then((res) => {
             console.log('resPatch', res);
         })
         .catch(error => console.log(error))
+    };
+
+    const deleteRecipe = async(id) => {
+        await axios
+        .delete(`/recipes/${id}`, { withCredentials: true })
     };
 
     return(
@@ -72,14 +78,15 @@ const RecipeContextProvider = (props) => {
             value={{
                 recipesAll,
                 recipesUser,
+                recipesPublic,
+                recipe,
                 getAllRecipes,
                 getRecipesByAuthor,
                 getRecipesByIsShared,
                 getRecipeById,
                 updateRecipe,
-                patchRecipe
-                //register,
-                //updateUser,
+                patchRecipe,
+                deleteRecipe
             }}
         />
     );

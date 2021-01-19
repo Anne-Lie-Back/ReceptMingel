@@ -8,7 +8,8 @@ import { createContext } from 'react';
     getRecipeByIsShared: () => {},
     getRecipeById: () => {},
     updateRecipe: () => {},
-    patchRecipe: () => {}
+    patchRecipe: () => {},
+    deleteRecipe: () => {}
     
     //editRecipe: () => {},
     //deleteRecipe: () => {}

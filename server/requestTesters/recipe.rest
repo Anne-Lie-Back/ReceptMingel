@@ -3,7 +3,7 @@ GET http://localhost:8080/api/recipes/
 
 ###
 
-//GET ONE RECIPE
+//GET RECIPE BY ID
 GET http://localhost:8080/api/recipes/6005daeb83df2937ec206ee6
 
 ###
@@ -16,8 +16,6 @@ GET http://localhost:8080/api/recipes/author/Starstoft
 ###
 
 //GET RECIPE BY COOKINGTIME
-
-//GET RECIPE BY AUTHOR
 
 //POST RECIPE
 POST http://localhost:8080/api/recipes/

@@ -16,7 +16,7 @@ const getAllRecipes = (req, res, next) => {
             next(error);
         }
     });
-}
+};
 
 //GET RECIPE BY ID
 const getRecipeByID = (req, res, next) => {
@@ -30,7 +30,7 @@ const getRecipeByID = (req, res, next) => {
             next(error);
         }
     })
-}
+};
 
 //GET RECIPE BY IsShared
 const getRecipesByIsShared = (req, res, next) => {
@@ -101,7 +101,7 @@ const deleteRecipe = (req, res, next) => {
             next(error)
         }
     })
-}
+};
 
 module.exports = {
     getAllRecipes,
@@ -111,4 +111,4 @@ module.exports = {
     createRecipe,
     updateRecipe,
     deleteRecipe
-}
+};
