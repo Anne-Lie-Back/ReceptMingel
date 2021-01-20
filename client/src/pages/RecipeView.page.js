@@ -42,6 +42,7 @@ const RecipeViewPage = () => {
             let data = await axios.get(`recipes/author/${authorId}`, { withCredentials: true })
             .then(({data}) => data);
             setUsersRecipes(data)
+            if(!recipe) setRecipe(data[0])
             setIsLoading(false)
         }catch(error){
             console.log(error)
@@ -52,7 +53,7 @@ const RecipeViewPage = () => {
     //component has gotten their data
     useEffect(() => { 
         getRecipesByAuthor(user._id)
-        setRecipe(usersRecipes[0])
+        
         setIsLoading(true)
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
