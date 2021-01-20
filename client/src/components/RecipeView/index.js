@@ -1,4 +1,4 @@
-import {useContext, useEffect, useState} from 'react';
+import {useContext, useState} from 'react';
 import { styled } from 'styletron-react';
 import THEME from './../../config/theme';
 
@@ -15,8 +15,8 @@ import IngredientSection from './IngredientSection';
 import CookingStepsSection from './CookingStepsSection';
 import BottomSection from './BottomSection';
 import AuthenticationContext from '../../contexts/authentication/context';
-import RecipeContext from '../../contexts/recipe/context';
 
+//TODO remove
 import imageTest from '../../assets/images/imageTest.png'
 
 const Wrapper = styled('div', {
