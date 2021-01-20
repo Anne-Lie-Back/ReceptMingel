@@ -47,12 +47,12 @@ const getRecipesByIsShared = (req, res, next) => {
 };
 
 //GET RECIPES BY AUTHOR
-const getRecipesByAuthor = (req, res, next) => {
-    Recipe.find({author: req.params.author}, (error, recipesByAuthor) => {
+const getRecipesByAuthorId = (req, res, next) => {
+    Recipe.find({authorId: req.params.authorId}, (error, recipesByAuthorId) => {
         try{
             if(error) next(error);
-            if(!recipesByAuthor || recipesByAuthor.length === 0) throw new ErrorHandler(404, "Vi kunde inte hitta några recept");
-            res.recipesByAuthor = recipesByAuthor
+            if(!recipesByAuthorId || recipesByAuthorId.length === 0) throw new ErrorHandler(404, "Vi kunde inte hitta några recept");
+            res.recipesByAuthorId = recipesByAuthorId
             next()
         }catch(error){
             next(error);
@@ -107,7 +107,7 @@ module.exports = {
     getAllRecipes,
     getRecipeByID,
     getRecipesByIsShared,
-    getRecipesByAuthor,
+    getRecipesByAuthorId,
     createRecipe,
     updateRecipe,
     deleteRecipe

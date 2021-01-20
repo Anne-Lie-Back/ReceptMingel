@@ -14,14 +14,10 @@ const Wrapper = styled('div', {
 
 
 
-const SideMenu = ({type}) => {
-    const RecipesTest = ['Fisktacos', 'choklabollar','Chana masala','Gröt','Fisktacos', 'choklabollar','Chana masala','Gröt',]
-
-    return(
+const SideMenu = ({ recipeList, setIsEdit }) => (
         <Wrapper>
-            <TypeIsRecipe recipeList = {RecipesTest}/>
+            <TypeIsRecipe recipeList = {recipeList} setIsEdit = {setIsEdit}/>
         </Wrapper>
-    );
-};
+);
 
 export default SideMenu;

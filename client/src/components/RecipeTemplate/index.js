@@ -1,4 +1,6 @@
 import {useContext, useEffect, useState} from 'react';
+import { useHistory } from 'react-router-dom';
+import axios from '../../axios'
 import { styled } from 'styletron-react';
 import THEME from '../../config/theme';
 import Icons from '../../config/icons';
@@ -104,26 +106,13 @@ const Button = styled('button', {
     }
 })
 
-const RecipeTemplate = () => {
+const RecipeTemplate = ({setIsEdit, getRecipesByAuthor, inputValues, setInputValues, getRecipeById, recipe}) => {
     const {user} = useContext(AuthenticationContext);
-    
-    const [inputValues, setInputValues] = useState({
-        title: '',
-        preambleHTML: '',
-        image: null,
-        portions: 0,
-        cookingTime: '0-15min',
-        difficulty: 'lätt',
-        ingredients: [],
-        cookingSteps: [],
-        mdsaCategories: [],
-        author: user.username,
-        isShared: false
-    });
 
     //stores file-data that goes up to image-bucket at server
     const [file, setFile] = useState(null);
 
+    let history = useHistory()
     const { ImageIcon } = Icons;
 
     //handle input-changes
@@ -132,7 +121,7 @@ const RecipeTemplate = () => {
         setInputValues({
             ...inputValues,
             [name]: value,
-          });
+        });
     }
 
     //Listens after changes to file-state. If changed to not null, the image will be sent to the bucket and id 
@@ -153,33 +142,29 @@ const RecipeTemplate = () => {
             if (data && data.message === "success") {  
               setInputValues((prev) => ({ ...prev, image: data.id }));
             }
-          })
-      }, [file]);
+        })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [file]);
 
-    //sends inputvalues to db
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        fetch('http://localhost:8080/api/recipes/', {
-            method: 'POST',
-            credentials: "include",
-            headers: {
-                "Content-Type" : "application/json"
-            },
-            body: JSON.stringify(inputValues)
-        })
+    //sends inputvalues to db.
+    const handleSubmit = async(event) => {
+        await axios
+        .post('/recipes', inputValues, { withCredentials: true })
         .then((res) => {
-            console.log('Recipe uploaded successfully!')
-            res.json()
+            //if response is good the user will be redirected to their new recipepage
+            if(res.status === 200) history.push(`/recipe/${res.data._id}`);
         })
-        .catch((error) => {
-            console.log('error', error);
-        })
+        .catch(error => console.log(error))
+        
+        //Updates sidemenu with new recipe
+        getRecipesByAuthor(user._id)
+        //will close edit-view
+        setIsEdit(false)
     };
 
     return(
         <Wrapper>
             <FormWrapper>
-
                 <TopFormWrapper>
                     <InputField 
                         type = "text"  

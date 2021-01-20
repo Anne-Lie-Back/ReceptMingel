@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { styled } from 'styletron-react';
 import THEME from '../../config/theme';
 import InputField from '../inputField';
@@ -14,12 +15,24 @@ const List = styled('ul', {
 });
 
 const ListItem = styled('li', {
-    margin: '0.5rem 0',
+    margin: '0.75rem 0',
 
     ':hover' : {
-        color: THEME.colors.contrast[0]
+        color: THEME.colors.contrast[0],
+        cursor: 'pointer'
     }
 });
+
+const StyledLink = styled(Link, {
+    textDecoration: 'none',
+    color: THEME.colors.white[0],
+
+    ':hover' : {
+        color: THEME.colors.contrast[0],
+        cursor: 'pointer'
+    }
+
+})
 
 const AddButtonText = styled('div', {
     width: '100%',
@@ -50,12 +63,9 @@ const FilterInput = styled(InputField, {
     fontSize: THEME.fontSizes.small,
 });
 
-const TypeIsRecipe = ({recipeList}) => {
+const TypeIsRecipe = ({recipeList, setIsEdit }) => {
+    // eslint-disable-next-line no-unused-vars
     const[filterInput, setFilterInput] = useState('');
-
-    const handleClick = () => {
-        console.log('I am clicked!')
-    };
 
     const handleChange = (event) => {
         setFilterInput(event.target.value)
@@ -63,12 +73,20 @@ const TypeIsRecipe = ({recipeList}) => {
 
     return(
         <>
-        {console.log('filterInput', filterInput)}
-            <AddButtonText onClick = {handleClick}>Skapa nytt recept</AddButtonText>
+            <Link to = {'/recipe/'} style = {{textDecoration: 'none'}}>
+                <AddButtonText onClick = {() => setIsEdit(true)}> Skapa nytt recept </AddButtonText>
+            </Link>
             <FilterInput styling = "basic" handleChange = {(event) => handleChange(event)} placeholder = 'Sök bland dina recept...'/>
             <List>
                 {recipeList.map((item, index) => (
-                    <ListItem key = {index}> {item} </ListItem>
+                    <StyledLink to = {`/recipe/${item._id}`}>
+                        <ListItem 
+                            key = {index} 
+                            onClick = {() => setIsEdit(false)}
+                        > 
+                            {item.title} 
+                        </ListItem>
+                    </StyledLink>
                 ))}
             </List>
         </>

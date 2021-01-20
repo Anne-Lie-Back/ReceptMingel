@@ -7,7 +7,7 @@ const {
     getAllRecipes, 
     getRecipeByID,
     getRecipesByIsShared,
-    getRecipesByAuthor,
+    getRecipesByAuthorId,
     createRecipe,
     updateRecipe,
     deleteRecipe
@@ -35,8 +35,8 @@ router.get('/public', isAuthenticated, getRecipesByIsShared, (req, res) => {
 });
 
 //GET RECIPE BY AUTHOR
-router.get('/author/:author', isAuthenticated, getRecipesByAuthor, (req, res) => {
-    res.status(200).json(res.recipesByAuthor)
+router.get('/author/:authorId', isAuthenticated, getRecipesByAuthorId, (req, res) => {
+    res.status(200).json(res.recipesByAuthorId)
 });
 
 

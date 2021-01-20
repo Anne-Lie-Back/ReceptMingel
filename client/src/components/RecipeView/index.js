@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useContext, useState} from 'react';
 import { styled } from 'styletron-react';
 import THEME from './../../config/theme';
 
@@ -7,14 +7,17 @@ import roundStarOutline from '@iconify/icons-ic/round-star-outline';
 import roundStarRate from '@iconify/icons-ic/round-star-rate';
 import roundRadioButtonUnchecked from '@iconify/icons-ic/round-radio-button-unchecked';
 import roundRadioButtonChecked from '@iconify/icons-ic/round-radio-button-checked';
+import bxEdit from '@iconify/icons-bx/bx-edit';
 
 import PartingStrip from '../PartingStrip';
 import TopSection from './TopSection';
 import IngredientSection from './IngredientSection';
 import CookingStepsSection from './CookingStepsSection';
 import BottomSection from './BottomSection';
+import AuthenticationContext from '../../contexts/authentication/context';
+
 //TODO remove
-import imageTest from '../../assets/images/imageTest.png';
+import imageTest from '../../assets/images/imageTest.png'
 
 const Wrapper = styled('div', {
     display: 'flex',
@@ -30,6 +33,14 @@ const FlexRow = styled('div', {
     marginBottom: '1rem'
 });
 
+const SpaceBetweenWrapper = styled('div', {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '100%'
+});
+
 const HeadlineSmall = styled ('h4', {
     fontFamily: THEME.fonts.text,
     color: THEME.colors.black[0],
@@ -43,6 +54,16 @@ const RecipeWrapper = styled('div', {
     flexDirection: 'column',
     width: '812px',
     margin: '1rem 2rem'
+});
+
+const EditIcon = styled(Icon,{
+    fontSize: '35px',
+    color: THEME.colors.black[0],
+
+    ':hover' : {
+        cursor: 'pointer',
+        color: THEME.colors.contrast[0],
+    }
 });
 
 const StarIcon = styled(Icon,({$isStarred})=> ({
@@ -67,7 +88,7 @@ const SharedIcon = styled(Icon,({$isSharedRecipe})=> ({
     }
 }));
 
-const RecipeView = () => {
+const RecipeView = ({setIsEdit, slug, isLoading, recipe}) => {
     //TODO assign startvalue from DB - recipe instead
     const [isSharedRecipe, setIsShared] = useState(false);
     const [isStarred, setIsStarred] = useState(false);
@@ -76,8 +97,11 @@ const RecipeView = () => {
     // eslint-disable-next-line no-unused-vars
     const [isSessionUsersRecipe, setSessionUsersRecipe] = useState(false);
 
+    const {user} = useContext(AuthenticationContext)
+
+
     //TODO remove
-    const recipe = {
+        const recipeTest = {
         title : "Exotiska Tacos",
         preambleHTML : "En fräsch taco med panerad tofu. Den sötstarka mangosalsan ger mycket fraschör. Var inte rädd för att dunka på en del med chilin, mangon och limedressingen tar ut en del styrka. Detta är en perfekt sommar-rätt! ",
         image : imageTest,
@@ -113,7 +137,7 @@ const RecipeView = () => {
     const {
         title,
         preambleHTML,
-        image,
+        imageURL,
         portions,
         cookingTime,
         cookingSteps,
@@ -123,10 +147,12 @@ const RecipeView = () => {
         author,
         // eslint-disable-next-line no-unused-vars
         isShared
-    } = recipe;
+    } = recipe; 
 
     return(
         <Wrapper>
+            {isLoading? <p>is Loading</p>
+            : 
             <RecipeWrapper>
                 <FlexRow>
                     {isSessionUsersRecipe?
@@ -139,21 +165,27 @@ const RecipeView = () => {
                             <HeadlineSmall> {isStarred? 'SPARAD I DIN RECEPTBOK':'SPARA I DIN RECEPTBOK'}</HeadlineSmall>
                         </>
                         :
-                        <>
+                        <SpaceBetweenWrapper>  
+                            <FlexRow $style = {{margin: 0}}>
                             <SharedIcon 
                                 $isSharedRecipe = {isSharedRecipe} 
                                 icon={isSharedRecipe ? roundRadioButtonChecked : roundRadioButtonUnchecked} 
                                 onClick = {() => setIsShared(!isSharedRecipe)}
                             />
                             <HeadlineSmall> {isSharedRecipe? 'DELAD MED DINA VÄNNER':'FÄRDIG? DELA MED DINA VÄNNER'}</HeadlineSmall>
-                        </>                    
+                            </FlexRow>
+                            {user.username === author && <EditIcon 
+                                icon = {bxEdit}
+                                onClick = {() => setIsEdit(true)}
+                            />}
+                        </SpaceBetweenWrapper>           
                     }
                 </FlexRow>
                 <PartingStrip width = '100%'/>
                 <TopSection 
                     title = {title} 
                     description = {preambleHTML} 
-                    image = {image} 
+                    image = {imageURL} 
                     difficulty = {difficulty} 
                     cookingTime = {cookingTime}
                 />
@@ -164,6 +196,7 @@ const RecipeView = () => {
                 <PartingStrip width = "100%" />
                 <BottomSection categories = {mdsaCategories} author = {author}/>
             </RecipeWrapper>
+}
         </Wrapper>
     );
 };

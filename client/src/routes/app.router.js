@@ -7,7 +7,6 @@ import AuthenticationContext from "../contexts/authentication/context";
 
 import StartPage from '../pages/Start.page';
 import SearchPage from '../pages/Search.page';
-import RecipeEditPage from '../pages/RecipeEdit.page';
 import RecipeViewPage from '../pages/RecipeView.page';
 import RecipeBookPage from '../pages/RecipeBook.page';
 import UserPage from '../pages/User.page';
@@ -28,8 +27,8 @@ const AppRouter = () => {
         <ProtectedRoute exact path = '/search' component = {SearchPage} />
         <ProtectedRoute exact path = '/user/:id' component = {UserPage} />
         <ProtectedRoute exact path = '/recipebook' component = {RecipeBookPage} />
-        {/* <ProtectedRoute exact path = '/recipe-edit/' component = {RecipeEditPage} /> */}
         <ProtectedRoute exact path = '/recipe/' component = {RecipeViewPage} />
+        <ProtectedRoute exact path = '/recipe/:slug' component = {RecipeViewPage} />
     </Switch>
 )};
 

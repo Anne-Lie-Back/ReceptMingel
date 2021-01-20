@@ -30,6 +30,7 @@ const Headline = styled('h1', {
 const Header = () => {
     return(
         <Wrapper>
+            {/* TODO add redirect if user is logged in */}
             <Link to = {'/'} style = {{textDecoration: 'none'}}>
                 <Headline>ReceptMingel</Headline>
             </Link>
