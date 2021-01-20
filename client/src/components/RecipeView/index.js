@@ -1,4 +1,5 @@
 import {useContext, useEffect, useState} from 'react';
+import { useHistory } from 'react-router-dom';
 import { styled } from 'styletron-react';
 import THEME from './../../config/theme';
 
@@ -88,7 +89,7 @@ const SharedIcon = styled(Icon,({$isSharedRecipe})=> ({
     }
 }));
 
-const RecipeView = ({setIsEdit, isLoading, recipe, getRecipeById}) => {
+const RecipeView = ({setIsEdit, isLoading, slug, recipe, getRecipeById, getRecipesByAuthor}) => {
     //TODO assign startvalue from DB - recipe instead
     const [isSharedRecipe, setIsShared] = useState(recipe.isShared);
     const [isStarred, setIsStarred] = useState(false);
@@ -96,6 +97,8 @@ const RecipeView = ({setIsEdit, isLoading, recipe, getRecipeById}) => {
     //TODO remove and lift, decide by PROP from parent
     // eslint-disable-next-line no-unused-vars
     const [isSessionUsersRecipe, setSessionUsersRecipe] = useState(false);
+
+    let history = useHistory()
 
     const {user} = useContext(AuthenticationContext);
     const {patchRecipe, deleteRecipe} = useContext(RecipeContext)
@@ -107,8 +110,10 @@ const RecipeView = ({setIsEdit, isLoading, recipe, getRecipeById}) => {
         setIsShared(!isSharedRecipe);
     }
 
-    const handleDelete = () => {
-        console.log('DELETE!')
+    const handleDelete = (id) => {
+        deleteRecipe(id);
+        getRecipesByAuthor(recipe.authorId);
+        history.push('/recipe');
     };
 
     //Transform for easier follow on where the different items are showing and are styled.
@@ -133,41 +138,50 @@ const RecipeView = ({setIsEdit, isLoading, recipe, getRecipeById}) => {
             : 
             <RecipeWrapper>
                 <FlexRow>
-                    {isSessionUsersRecipe?
+                    {!slug? 
+                        <HeadlineSmall style = {{fontWeight: 700}}> VÄLKOMMEN TILL DINA RECEPT! </HeadlineSmall> 
+                    :
                         <>
-                            <StarIcon 
-                                $isStarred = {isStarred} 
-                                icon={isStarred? roundStarRate : roundStarOutline} 
-                                onClick = {() => setIsStarred(!isStarred)}
-                            />
-                            <HeadlineSmall> {isStarred? 'SPARAD I DIN RECEPTBOK':'SPARA I DIN RECEPTBOK'}</HeadlineSmall>
-                        </>
-                        :
-                        <SpaceBetweenWrapper>  
-                            <FlexRow $style = {{margin: 0}}>
-                            <SharedIcon 
-                                $isSharedRecipe = {isSharedRecipe} 
-                                icon={isSharedRecipe ? roundRadioButtonChecked : roundRadioButtonUnchecked} 
-                                onClick = {() => handlePatchRecipe(recipe.isShared? {"isShared" : false} : {"isShared" : true})}
-                            />
-                            <HeadlineSmall> {recipe.isShared? 'DELAD MED DINA VÄNNER':'FÄRDIG? DELA MED DINA VÄNNER'}</HeadlineSmall>
-                            </FlexRow>
-                            {user.username === author && 
-                            <FlexRow $style = {{margin: 0}}>
-                                <EditDeleteIcon
-                                    icon = {minusCircleOutline}
-                                    onClick = {handleDelete}
-                                />
-                                <EditDeleteIcon
-                                    icon = {bxEdit}
-                                    onClick = {() => setIsEdit(true)}
-                                />
-                            </FlexRow>
+                            {user._id !== recipe.authorId?
+                                <>
+                                    <StarIcon 
+                                        $isStarred = {isStarred} 
+                                        icon={isStarred? roundStarRate : roundStarOutline} 
+                                        onClick = {() => setIsStarred(!isStarred)}
+                                    />
+                                    <HeadlineSmall> {isStarred? 'SPARAD I DIN RECEPTBOK':'SPARA I DIN RECEPTBOK'}</HeadlineSmall>
+                                </>
+                                :
+                                <SpaceBetweenWrapper>  
+                                    <FlexRow $style = {{margin: 0}}>
+                                    <SharedIcon 
+                                        $isSharedRecipe = {isSharedRecipe} 
+                                        icon={isSharedRecipe ? roundRadioButtonChecked : roundRadioButtonUnchecked} 
+                                        onClick = {() => handlePatchRecipe(recipe.isShared? {"isShared" : false} : {"isShared" : true})}
+                                    />
+                                    <HeadlineSmall> {isSharedRecipe? 'DELAD MED DINA VÄNNER':'FÄRDIG? DELA MED DINA VÄNNER'}</HeadlineSmall>
+                                    </FlexRow>
+                                    {user.username === author && 
+                                    <FlexRow $style = {{margin: 0}}>
+                                        <EditDeleteIcon
+                                            icon = {minusCircleOutline}
+                                            onClick = {() => handleDelete(recipe._id)}
+                                        />
+                                        <EditDeleteIcon
+                                            icon = {bxEdit}
+                                            onClick = {() => setIsEdit(true)}
+                                        />
+                                    </FlexRow>
+                                    }
+                                </SpaceBetweenWrapper>           
                             }
-                        </SpaceBetweenWrapper>           
+                        </>
+                    
                     }
+                    
                 </FlexRow>
                 <PartingStrip width = '100%'/>
+                {!slug && <HeadlineSmall $style = {{marginTop: '0.5rem', fontSize: THEME.fontSizes.small}}> Ditt senast skapade recept: </HeadlineSmall>}
                 <TopSection 
                     title = {title} 
                     description = {preambleHTML} 

@@ -42,7 +42,8 @@ const RecipeViewPage = () => {
             let data = await axios.get(`recipes/author/${authorId}`, { withCredentials: true })
             .then(({data}) => data);
             setUsersRecipes(data)
-            if(!recipe) setRecipe(data[0])
+            console.log('SLUG', slug)
+            if(!recipe) setRecipe(data[data.length - 1])
             setIsLoading(false)
         }catch(error){
             console.log(error)
@@ -80,6 +81,7 @@ const RecipeViewPage = () => {
         } else if(!slug) {
             setRecipe(usersRecipes[0]);
         }
+        if(!slug) setRecipe(usersRecipes[usersRecipes.length - 1])
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [slug]) 
 
@@ -137,6 +139,7 @@ const RecipeViewPage = () => {
                                             setIsEdit = {setIsEdit}
                                             slug = {slug} 
                                             getRecipeById = {getRecipeById}
+                                            getRecipesByAuthor = {getRecipesByAuthor}
                                             isLoading = {isLoading} 
                                             recipe = {recipe} 
                                         />
