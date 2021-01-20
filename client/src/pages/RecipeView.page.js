@@ -38,7 +38,6 @@ const RecipeViewPage = () => {
 
     let { slug } = useParams()
     //const location = useLocation();
-    console.log('slug', slug)
 
     const getRecipesByAuthor = async(author) => {
         try{
@@ -57,18 +56,19 @@ const RecipeViewPage = () => {
         setIsLoading(true)
     }, [])
 
+    const getRecipeById = async(slug) => {
+        try{
+            let data = await axios.get(`recipes/${slug}`, { withCredentials: true })
+            .then(({data}) => data);
+            setRecipe(data)
+            setIsLoading(false)
+        }catch(error){
+            console.log(error)
+        }
+    };
+
     useEffect(() => {
         if(slug) {
-            const getRecipeById = async(slug) => {
-                try{
-                    let data = await axios.get(`recipes/${slug}`, { withCredentials: true })
-                    .then(({data}) => data);
-                    setRecipe(data)
-                    setIsLoading(false)
-                }catch(error){
-                    console.log(error)
-                }
-            };
             getRecipeById(slug);
             setIsLoading(true);
         } else if(!slug) {
@@ -86,26 +86,49 @@ const RecipeViewPage = () => {
             
                 <GridContentWrapper>
                     
-                        <SideMenu  recipeList = {usersRecipes}   setIsEdit = {setIsEdit} />
-                        {isLoading? <p>is Loading...</p> : 
+                        <SideMenu  recipeList = {usersRecipes} setIsEdit = {setIsEdit} />
+                        {usersRecipes.length === 0 && isLoading ?
                             <>
-                                {isEdit? 
+                                {!isEdit? 
+                                    <p>Skapa ditt första recept med knappen i sidomenyn</p> 
+                                    :
                                     <RecipeTemplate 
                                         setIsEdit = {setIsEdit} 
                                         getRecipesByAuthor = {getRecipesByAuthor} 
                                         inputValues = {inputValues} 
                                         setInputValues = {setInputValues}
+                                        getRecipeById = {getRecipeById}
+                                        recipe = {recipe}
                                     /> 
-                                    : 
-                                    <RecipeView 
-                                        setIsEdit = {setIsEdit} 
-                                        slug = {slug} 
-                                        isLoading = {isLoading} 
-                                        recipe = {recipe} 
-                                    />
-                                }
+                                    
+                                } 
                             </>
-                        }
+                             
+                            : 
+                            <>
+                                {isLoading? <p>is Loading...</p> :   
+                                    <>
+                                        {isEdit? 
+                                            <RecipeTemplate 
+                                                setIsEdit = {setIsEdit} 
+                                                getRecipesByAuthor = {getRecipesByAuthor} 
+                                                inputValues = {inputValues} 
+                                                setInputValues = {setInputValues}
+                                                getRecipeById = {getRecipeById}
+                                                recipe = {recipe}
+                                            /> 
+                                            : 
+                                            <RecipeView 
+                                                setIsEdit = {setIsEdit} 
+                                                slug = {slug} 
+                                                isLoading = {isLoading} 
+                                                recipe = {recipe} 
+                                            />
+                                        }
+                                    </>
+                                } 
+                            </>
+                        }  
                 </GridContentWrapper>
             
         </>

@@ -135,7 +135,7 @@ const RegisterNewUser = ({handleClick}) => {
         .post('/users', inputValues)
         .then((res) => {
             //if response is good the user will be redirected to their userpage
-            if(res.status === 200) history.push('/user');
+            if(res.status === 200) history.push(`/user/${res.user._id}`);
             console.log(res.data)
         })
         .catch(error => console.log(error))  

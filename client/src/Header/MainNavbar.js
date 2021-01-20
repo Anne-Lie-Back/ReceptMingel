@@ -30,8 +30,6 @@ const MainNavbar = () => {
     User
    } = Icons
 
-   console.log('user', isLoadingUser)
-
   return(
       <Wrapper>
         {!isAuthenticated || isLoadingUser?

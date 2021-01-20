@@ -1,4 +1,6 @@
 import {useContext, useEffect, useState} from 'react';
+import { useHistory } from 'react-router-dom';
+import axios from '../../axios'
 import { styled } from 'styletron-react';
 import THEME from '../../config/theme';
 import Icons from '../../config/icons';
@@ -104,8 +106,10 @@ const Button = styled('button', {
     }
 })
 
-const RecipeTemplate = ({setIsEdit, getRecipesByAuthor, inputValues, setInputValues}) => {
+const RecipeTemplate = ({setIsEdit, getRecipesByAuthor, inputValues, setInputValues, getRecipeById, recipe}) => {
     const {user} = useContext(AuthenticationContext);
+    //const [id, setId] = useState(null)
+    let history = useHistory()
 
 
     //stores file-data that goes up to image-bucket at server
@@ -140,13 +144,20 @@ const RecipeTemplate = ({setIsEdit, getRecipesByAuthor, inputValues, setInputVal
             if (data && data.message === "success") {  
               setInputValues((prev) => ({ ...prev, image: data.id }));
             }
-          })
-      }, [file]);
+        })
+    }, [file]);
 
     //sends inputvalues to db. TODO: make to an axios-function.
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        fetch('http://localhost:8080/api/recipes/', {
+    const handleSubmit = async(event) => {
+        await axios
+        .post('/recipes', inputValues, { withCredentials: true })
+        .then((res) => {
+            //if response is good the user will be redirected to their userpage
+            if(res.status === 200) history.push(`/recipe/${res.data._id}`);
+        })
+        .catch(error => console.log(error))  
+/*         event.preventDefault();
+        await fetch('http://localhost:8080/api/recipes/', {
             method: 'POST',
             credentials: "include",
             headers: {
@@ -155,13 +166,15 @@ const RecipeTemplate = ({setIsEdit, getRecipesByAuthor, inputValues, setInputVal
             body: JSON.stringify(inputValues)
         })
         .then((res) => {
-            console.log('Recipe uploaded successfully!')
             res.json()
+            console.log('res', res);
+            setId()
         })
         .catch((error) => {
             console.log('error', error);
-        })
-        getRecipesByAuthor(user.username)
+        }) */
+        //getRecipesByAuthor(user.username)
+        //getRecipesById(id)
         setIsEdit(false)
     };
 
