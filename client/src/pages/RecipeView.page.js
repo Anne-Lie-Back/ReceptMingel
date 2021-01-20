@@ -13,31 +13,46 @@ import RecipeContext from '../contexts/recipe/context';
 import AuthenticationContext from '../contexts/authentication/context';
 
 const RecipeViewPage = () => {
+    const {user} = useContext(AuthenticationContext);
     // eslint-disable-next-line no-unused-vars
     const [isEdit, setIsEdit] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [usersRecipes, setUsersRecipes] = useState([]);
     const [recipe, setRecipe] = useState(null);
+    const [inputValues, setInputValues] = useState({
+        title: '',
+        preambleHTML: '',
+        image: null,
+        portions: 0,
+        cookingTime: '0-15min',
+        difficulty: 'lätt',
+        ingredients: [],
+        cookingSteps: [],
+        mdsaCategories: [],
+        author: user.username,
+        isShared: false
+    });
     //const [isLodin, setRecipe] = useState(null)
     //const { getRecipeById, recipe } = useContext(RecipeContext);
-    const {user} = useContext(AuthenticationContext);
+    
 
     let { slug } = useParams()
     //const location = useLocation();
     console.log('slug', slug)
 
-    useEffect(() => {
-        const getRecipesByAuthor = async(author) => {
-            try{
-                let data = await axios.get(`recipes/author/${author}`, { withCredentials: true })
-                .then(({data}) => data);
-                setUsersRecipes(data)
-                setRecipe(data[0])
-                setIsLoading(false)
-            }catch(error){
-                console.log(error)
-            }
-        };
+    const getRecipesByAuthor = async(author) => {
+        try{
+            let data = await axios.get(`recipes/author/${author}`, { withCredentials: true })
+            .then(({data}) => data);
+            setUsersRecipes(data)
+            setRecipe(data[0])
+            setIsLoading(false)
+        }catch(error){
+            console.log(error)
+        }
+    };
+
+    useEffect(() => { 
         getRecipesByAuthor(user.username)
         setIsLoading(true)
     }, [])
@@ -75,9 +90,19 @@ const RecipeViewPage = () => {
                         {isLoading? <p>is Loading...</p> : 
                             <>
                                 {isEdit? 
-                                    <RecipeTemplate setIsEdit = {setIsEdit} /* recipe = {recipe} */ /> 
+                                    <RecipeTemplate 
+                                        setIsEdit = {setIsEdit} 
+                                        getRecipesByAuthor = {getRecipesByAuthor} 
+                                        inputValues = {inputValues} 
+                                        setInputValues = {setInputValues}
+                                    /> 
                                     : 
-                                    <RecipeView setIsEdit = {setIsEdit} slug = {slug} isLoading = {isLoading} recipe = {recipe}  /* recipeId = {slug} */ />
+                                    <RecipeView 
+                                        setIsEdit = {setIsEdit} 
+                                        slug = {slug} 
+                                        isLoading = {isLoading} 
+                                        recipe = {recipe} 
+                                    />
                                 }
                             </>
                         }

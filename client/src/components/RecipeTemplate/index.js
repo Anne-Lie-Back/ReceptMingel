@@ -104,22 +104,9 @@ const Button = styled('button', {
     }
 })
 
-const RecipeTemplate = () => {
+const RecipeTemplate = ({setIsEdit, getRecipesByAuthor, inputValues, setInputValues}) => {
     const {user} = useContext(AuthenticationContext);
-    
-    const [inputValues, setInputValues] = useState({
-        title: '',
-        preambleHTML: '',
-        image: null,
-        portions: 0,
-        cookingTime: '0-15min',
-        difficulty: 'lätt',
-        ingredients: [],
-        cookingSteps: [],
-        mdsaCategories: [],
-        author: user.username,
-        isShared: false
-    });
+
 
     //stores file-data that goes up to image-bucket at server
     const [file, setFile] = useState(null);
@@ -132,7 +119,7 @@ const RecipeTemplate = () => {
         setInputValues({
             ...inputValues,
             [name]: value,
-          });
+        });
     }
 
     //Listens after changes to file-state. If changed to not null, the image will be sent to the bucket and id 
@@ -156,7 +143,7 @@ const RecipeTemplate = () => {
           })
       }, [file]);
 
-    //sends inputvalues to db
+    //sends inputvalues to db. TODO: make to an axios-function.
     const handleSubmit = (event) => {
         event.preventDefault();
         fetch('http://localhost:8080/api/recipes/', {
@@ -174,6 +161,8 @@ const RecipeTemplate = () => {
         .catch((error) => {
             console.log('error', error);
         })
+        getRecipesByAuthor(user.username)
+        setIsEdit(false)
     };
 
     return(

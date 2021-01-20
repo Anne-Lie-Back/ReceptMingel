@@ -1,7 +1,9 @@
+import { useContext } from 'react'
 import { Link } from 'react-router-dom';
 import { styled } from 'styletron-react';
 import THEME from '../config/theme';
 import Icons from '../config/icons';
+import AuthenticationContext from '../contexts/authentication/context';
 
 const Wrapper = styled('div', {
     display: 'flex',
@@ -20,6 +22,7 @@ const NavLink = styled(Link, {
 })
 
 const MainNavbar = () => {
+  const { isAuthenticated, user, isLoadingUser} = useContext(AuthenticationContext);
   const { 
     Search,
     RecipeIcon,
@@ -27,20 +30,28 @@ const MainNavbar = () => {
     User
    } = Icons
 
+   console.log('user', isLoadingUser)
+
   return(
       <Wrapper>
-        <NavLink to = '/search'>
-          <Search color = {THEME.colors.white[0]} size = '40px'/>
-        </NavLink>
-        <NavLink to = '/recipe'>
-          <RecipeIcon color = {THEME.colors.white[0]} size = '45px'/>
-        </NavLink>
-        <NavLink to = '/recipebook'>
-          <RecipeBook color = {THEME.colors.white[0]} size = '45px'/>
-        </NavLink>
-        <NavLink to = '/user'>
-          <User color = {THEME.colors.white[0]} size = '40px'/>
-        </NavLink>
+        {!isAuthenticated || isLoadingUser?
+        null : 
+        <>
+          <NavLink to = '/search'>
+            <Search color = {THEME.colors.white[0]} size = '40px'/>
+          </NavLink>
+          <NavLink to = '/recipe'>
+            <RecipeIcon color = {THEME.colors.white[0]} size = '45px'/>
+          </NavLink>
+          <NavLink to = '/recipebook'>
+            <RecipeBook color = {THEME.colors.white[0]} size = '45px'/>
+          </NavLink>
+          <NavLink to={user._id && `/user/${user._id}`}>
+            <User color = {THEME.colors.white[0]} size = '40px'/>
+          </NavLink>
+        </>
+        }
+        
       </Wrapper>
   );
 };
