@@ -104,9 +104,9 @@ const Button = styled('button', {
         cursor:'pointer',
         backgroundColor: THEME.colors.black[0]
     }
-})
+});
 
-const RecipeTemplate = ({setIsEdit, isEdit, setIsAdd, isAdd, recipe, slug, getRecipeById, getRecipesByAuthor, inputValues, setInputValues }) => {
+const RecipeTemplate = ({ setIsEdit, isEdit, setIsAdd, isAdd, slug, getRecipeById, recipe, getRecipesByAuthor, inputValues, setInputValues }) => {
     const {user} = useContext(AuthenticationContext);
 
     //stores file-data that goes up to image-bucket at server
@@ -124,6 +124,8 @@ const RecipeTemplate = ({setIsEdit, isEdit, setIsAdd, isAdd, recipe, slug, getRe
         });
     }
 
+    //Sets the correct pre-set values depending on if user wants to add new recipe (empty fields)
+    // or want to edit existing field (pre-set fields with old values)
     useEffect(() => {
         if(isEdit && recipe && !isAdd){
             setInputValues({
@@ -181,11 +183,10 @@ const RecipeTemplate = ({setIsEdit, isEdit, setIsAdd, isAdd, recipe, slug, getRe
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [file]);
 
-    console.log('recipe', recipe.title)
-    console.log('recipe', recipe._id)
-
     //sends inputvalues to db.
     const handleSubmit = async() => {
+
+        //If user wants to add recipe we will post it
         if(isAdd && !isEdit){
             console.log('ADD')
             await axios
@@ -195,8 +196,9 @@ const RecipeTemplate = ({setIsEdit, isEdit, setIsAdd, isAdd, recipe, slug, getRe
                 if(res.status === 200) history.push(`/recipe/${res.data._id}`);
             })
             .catch(error => console.log(error))    
-        }
+        };
 
+        //If user wants to edit recipe we will patch existing recipe
         if(!isAdd && isEdit){
             console.log('EDIT')
             await axios
@@ -211,14 +213,14 @@ const RecipeTemplate = ({setIsEdit, isEdit, setIsAdd, isAdd, recipe, slug, getRe
                 }     
             })
             .catch(error => console.log(error))
-        }
+        };
         
         //Updates sidemenu with new recipe
-        getRecipesByAuthor(user._id)
+        getRecipesByAuthor(user._id);
         
-        //will close edit-view
-        setIsEdit(false)
-        setIsAdd(false)
+        //will ensure closed edit-view
+        setIsEdit(false);
+        setIsAdd(false);
     };
 
     return(

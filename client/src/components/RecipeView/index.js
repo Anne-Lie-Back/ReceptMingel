@@ -1,4 +1,4 @@
-import {useContext, useEffect, useState} from 'react';
+import {useContext, useState} from 'react';
 import { useHistory } from 'react-router-dom';
 import { styled } from 'styletron-react';
 import THEME from './../../config/theme';
@@ -89,27 +89,27 @@ const SharedIcon = styled(Icon,({$isSharedRecipe})=> ({
     }
 }));
 
-const RecipeView = ({setIsEdit, isLoading, slug, recipe, getRecipeById, getRecipesByAuthor}) => {
-    //TODO assign startvalue from DB - recipe instead
+const RecipeView = ({setIsEdit, isLoading, slug, getRecipeById, recipe, getRecipesByAuthor}) => {
+
+    //isSharedRecipe helps to display correct icon
     const [isSharedRecipe, setIsShared] = useState(recipe.isShared);
     const [isStarred, setIsStarred] = useState(false);
 
-    //TODO remove and lift, decide by PROP from parent
-    // eslint-disable-next-line no-unused-vars
-    const [isSessionUsersRecipe, setSessionUsersRecipe] = useState(false);
+    let history = useHistory();
 
-    let history = useHistory()
-
+    //Contexts
     const {user} = useContext(AuthenticationContext);
-    const {patchRecipe, deleteRecipe} = useContext(RecipeContext)
+    const {patchRecipe, deleteRecipe} = useContext(RecipeContext);
 
+
+    //Patches recipe, gets the new recipe and changes icon
     const handlePatchRecipe = (value) => {
-        console.log('PATCH')
         patchRecipe(recipe._id, value)
         getRecipeById(recipe._id)
         setIsShared(!isSharedRecipe);
-    }
+    };
 
+    //Deletes recipe, updates sidemenu-list and redirects user to start-recipe-page
     const handleDelete = (id) => {
         deleteRecipe(id);
         getRecipesByAuthor(recipe.authorId);
@@ -117,6 +117,7 @@ const RecipeView = ({setIsEdit, isLoading, slug, recipe, getRecipeById, getRecip
     };
 
     //Transform for easier follow on where the different items are showing and are styled.
+    //Keeps id as recipe._id to easier see type of id used
     const {
         title,
         preambleHTML,
@@ -128,60 +129,73 @@ const RecipeView = ({setIsEdit, isLoading, slug, recipe, getRecipeById, getRecip
         ingredients,
         mdsaCategories,
         author,
+        authorId,
         // eslint-disable-next-line no-unused-vars
         isShared
     } = recipe; 
 
     return(
         <Wrapper>
-            {isLoading? <p>is Loading</p>
+            {/* Waiting for data to load before rendering */}
+            {isLoading? <p> is Loading </p>
             : 
             <RecipeWrapper>
                 <FlexRow>
+                    {/* Renders different mini-headers depending on if there is a slug */}
                     {!slug? 
-                        <HeadlineSmall style = {{fontWeight: 700}}> VÄLKOMMEN TILL DINA RECEPT! </HeadlineSmall> 
-                    :
+                        <HeadlineSmall style = {{fontWeight: 700}}> 
+                            VÄLKOMMEN TILL DINA RECEPT! 
+                        </HeadlineSmall> 
+                        :
                         <>
-                            {user._id !== recipe.authorId?
+                            {/* Renders different mini-headers depending on is session-user is the same as recipe-owner */}
+                            {user._id !== authorId?
                                 <>
                                     <StarIcon 
                                         $isStarred = {isStarred} 
                                         icon={isStarred? roundStarRate : roundStarOutline} 
                                         onClick = {() => setIsStarred(!isStarred)}
                                     />
-                                    <HeadlineSmall> {isStarred? 'SPARAD I DIN RECEPTBOK':'SPARA I DIN RECEPTBOK'}</HeadlineSmall>
+                                    <HeadlineSmall> 
+                                        {isStarred? 'SPARAD I DIN RECEPTBOK':'SPARA I DIN RECEPTBOK'}
+                                    </HeadlineSmall>
                                 </>
                                 :
                                 <SpaceBetweenWrapper>  
                                     <FlexRow $style = {{margin: 0}}>
-                                    <SharedIcon 
-                                        $isSharedRecipe = {isSharedRecipe} 
-                                        icon={isSharedRecipe ? roundRadioButtonChecked : roundRadioButtonUnchecked} 
-                                        onClick = {() => handlePatchRecipe(recipe.isShared? {"isShared" : false} : {"isShared" : true})}
-                                    />
-                                    <HeadlineSmall> {isSharedRecipe? 'DELAD MED DINA VÄNNER':'FÄRDIG? DELA MED DINA VÄNNER'}</HeadlineSmall>
-                                    </FlexRow>
-                                    {user.username === author && 
-                                    <FlexRow $style = {{margin: 0}}>
-                                        <EditDeleteIcon
-                                            icon = {minusCircleOutline}
-                                            onClick = {() => handleDelete(recipe._id)}
+                                        <SharedIcon 
+                                            $isSharedRecipe = {isSharedRecipe} 
+                                            icon={isSharedRecipe ? roundRadioButtonChecked : roundRadioButtonUnchecked} 
+                                            onClick = {() => handlePatchRecipe(isShared? {"isShared" : false} : {"isShared" : true})}
                                         />
-                                        <EditDeleteIcon
-                                            icon = {bxEdit}
-                                            onClick = {() => setIsEdit(true)}
-                                        />
+                                        <HeadlineSmall> 
+                                            {isSharedRecipe? 'DELAD MED DINA VÄNNER' : 'FÄRDIG? DELA MED DINA VÄNNER'}
+                                        </HeadlineSmall>
                                     </FlexRow>
+                                    {/* Renders Edit and delete-icon if session-user is the same as recipe-owner*/}
+                                    {user._id === authorId && 
+                                        <FlexRow $style = {{margin: 0}}>
+                                            <EditDeleteIcon
+                                                icon = {minusCircleOutline}
+                                                onClick = {() => handleDelete(recipe._id)}
+                                            />
+                                            <EditDeleteIcon
+                                                icon = {bxEdit}
+                                                onClick = {() => setIsEdit(true)}
+                                            />
+                                        </FlexRow>
                                     }
                                 </SpaceBetweenWrapper>           
                             }
                         </>
-                    
-                    }
-                    
+                    }  
                 </FlexRow>
                 <PartingStrip width = '100%'/>
-                {!slug && <HeadlineSmall $style = {{marginTop: '0.5rem', fontSize: THEME.fontSizes.small}}> Ditt senast skapade recept: </HeadlineSmall>}
+                {!slug && 
+                    <HeadlineSmall $style = {{marginTop: '0.5rem', fontSize: THEME.fontSizes.small}}> 
+                        Ditt senast skapade recept: 
+                    </HeadlineSmall>
+                }
                 <TopSection 
                     title = {title} 
                     description = {preambleHTML} 
