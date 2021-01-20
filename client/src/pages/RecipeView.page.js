@@ -42,22 +42,20 @@ const RecipeViewPage = () => {
             let data = await axios.get(`recipes/author/${authorId}`, { withCredentials: true })
             .then(({data}) => data);
             setUsersRecipes(data)
-            console.log('SLUG', slug)
             if(!recipe) setRecipe(data[data.length - 1])
             setIsLoading(false)
         }catch(error){
             console.log(error)
-        }
+        };
     };
 
     //Gets all the recipes for user when component mounts, and when it is done it sets loading to true again when 
     //component has gotten their data
     useEffect(() => { 
         getRecipesByAuthor(user._id)
-        
         setIsLoading(true)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, []);
 
     //Gets correct recipe from db by using url-slug and sets loading to false when fetching is done
     // so we know data isn't null on rendering
@@ -69,7 +67,7 @@ const RecipeViewPage = () => {
             setIsLoading(false)
         }catch(error){
             console.log(error)
-        }
+        };
     };
 
     //Gets the recipe that matches slug when url changes or display users first recipe if slug undefined. 
@@ -83,7 +81,7 @@ const RecipeViewPage = () => {
         }
         if(!slug) setRecipe(usersRecipes[usersRecipes.length - 1])
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [slug]) 
+    }, [slug]);
 
     return(
         <> 
@@ -148,10 +146,8 @@ const RecipeViewPage = () => {
                             } 
                         </>
                     }  
-            </GridContentWrapper>
-            
+            </GridContentWrapper>  
         </>
-
     );
 };
 

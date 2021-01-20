@@ -11,8 +11,6 @@ import RecipeViewPage from '../pages/RecipeView.page';
 import RecipeBookPage from '../pages/RecipeBook.page';
 import UserPage from '../pages/User.page';
 
-//TODO import some sort of authentication for logged in user
-//Maybe need to fix some more dynamic routes when I start to fetch backend data
 const AppRouter = () => {
     const { isAuthenticated, isLoadingUser, user } = useContext(AuthenticationContext);
 

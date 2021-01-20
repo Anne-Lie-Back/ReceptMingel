@@ -188,7 +188,6 @@ const RecipeTemplate = ({ setIsEdit, isEdit, setIsAdd, isAdd, slug, getRecipeByI
 
         //If user wants to add recipe we will post it
         if(isAdd && !isEdit){
-            console.log('ADD')
             await axios
             .post('/recipes', inputValues, { withCredentials: true })
             .then((res) => {
@@ -200,14 +199,10 @@ const RecipeTemplate = ({ setIsEdit, isEdit, setIsAdd, isAdd, slug, getRecipeByI
 
         //If user wants to edit recipe we will patch existing recipe
         if(!isAdd && isEdit){
-            console.log('EDIT')
             await axios
             .patch(`/recipes/${recipe._id}`, inputValues, { withCredentials: true })
             .then((res) => {
-                console.log('resPatch', res);
                 if(res.status === 200){
-                    console.log('slug', slug)
-                    console.log('recipe._id', recipe._id)
                     getRecipeById(slug)
                     history.push(`/recipe/${recipe._id}`)   
                 }     
