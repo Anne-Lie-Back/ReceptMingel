@@ -108,13 +108,11 @@ const Button = styled('button', {
 
 const RecipeTemplate = ({setIsEdit, getRecipesByAuthor, inputValues, setInputValues, getRecipeById, recipe}) => {
     const {user} = useContext(AuthenticationContext);
-    //const [id, setId] = useState(null)
-    let history = useHistory()
-
 
     //stores file-data that goes up to image-bucket at server
     const [file, setFile] = useState(null);
 
+    let history = useHistory()
     const { ImageIcon } = Icons;
 
     //handle input-changes
@@ -145,43 +143,28 @@ const RecipeTemplate = ({setIsEdit, getRecipesByAuthor, inputValues, setInputVal
               setInputValues((prev) => ({ ...prev, image: data.id }));
             }
         })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [file]);
 
-    //sends inputvalues to db. TODO: make to an axios-function.
+    //sends inputvalues to db.
     const handleSubmit = async(event) => {
         await axios
         .post('/recipes', inputValues, { withCredentials: true })
         .then((res) => {
-            //if response is good the user will be redirected to their userpage
+            //if response is good the user will be redirected to their new recipepage
             if(res.status === 200) history.push(`/recipe/${res.data._id}`);
         })
-        .catch(error => console.log(error))  
-/*         event.preventDefault();
-        await fetch('http://localhost:8080/api/recipes/', {
-            method: 'POST',
-            credentials: "include",
-            headers: {
-                "Content-Type" : "application/json"
-            },
-            body: JSON.stringify(inputValues)
-        })
-        .then((res) => {
-            res.json()
-            console.log('res', res);
-            setId()
-        })
-        .catch((error) => {
-            console.log('error', error);
-        }) */
+        .catch(error => console.log(error))
+        
+        //Updates sidemenu with new recipe
         getRecipesByAuthor(user._id)
-        //getRecipesById(id)
+        //will close edit-view
         setIsEdit(false)
     };
 
     return(
         <Wrapper>
             <FormWrapper>
-
                 <TopFormWrapper>
                     <InputField 
                         type = "text"  

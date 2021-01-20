@@ -8,9 +8,7 @@ import AuthenticationContext from '../contexts/authentication/context';
 const Wrapper = styled('div', {
     display: 'flex',
     flexDirection: 'row',
-    //TODO remove background-color
-    backgroundColor: '#00000010'
-})
+  });
 
 const NavLink = styled(Link, {
   display: 'flex',
@@ -28,26 +26,27 @@ const MainNavbar = () => {
     RecipeIcon,
     RecipeBook,
     User
-   } = Icons
+  } = Icons
 
   return(
       <Wrapper>
+        {/* If user is not logged in, they will not reach the navbar*/}
         {!isAuthenticated || isLoadingUser?
-        null : 
-        <>
-          <NavLink to = '/search'>
-            <Search color = {THEME.colors.white[0]} size = '40px'/>
-          </NavLink>
-          <NavLink to = '/recipe'>
-            <RecipeIcon color = {THEME.colors.white[0]} size = '45px'/>
-          </NavLink>
-          <NavLink to = '/recipebook'>
-            <RecipeBook color = {THEME.colors.white[0]} size = '45px'/>
-          </NavLink>
-          <NavLink to={user._id && `/user/${user._id}`}>
-            <User color = {THEME.colors.white[0]} size = '40px'/>
-          </NavLink>
-        </>
+          null : 
+          <>
+            <NavLink to = '/search'>
+              <Search color = {THEME.colors.white[0]} size = '40px'/>
+            </NavLink>
+            <NavLink to = '/recipe'>
+              <RecipeIcon color = {THEME.colors.white[0]} size = '45px'/>
+            </NavLink>
+            <NavLink to = '/recipebook'>
+              <RecipeBook color = {THEME.colors.white[0]} size = '45px'/>
+            </NavLink>
+            <NavLink to={user._id && `/user/${user._id}`}>
+              <User color = {THEME.colors.white[0]} size = '40px'/>
+            </NavLink>
+          </>
         }
         
       </Wrapper>

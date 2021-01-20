@@ -7,7 +7,6 @@ import AuthenticationContext from "../contexts/authentication/context";
 
 import StartPage from '../pages/Start.page';
 import SearchPage from '../pages/Search.page';
-import RecipeEditPage from '../pages/RecipeEdit.page';
 import RecipeViewPage from '../pages/RecipeView.page';
 import RecipeBookPage from '../pages/RecipeBook.page';
 import UserPage from '../pages/User.page';
