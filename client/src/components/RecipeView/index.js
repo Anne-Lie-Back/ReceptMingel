@@ -1,4 +1,4 @@
-import {useContext, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import { styled } from 'styletron-react';
 import THEME from './../../config/theme';
 
@@ -8,6 +8,7 @@ import roundStarRate from '@iconify/icons-ic/round-star-rate';
 import roundRadioButtonUnchecked from '@iconify/icons-ic/round-radio-button-unchecked';
 import roundRadioButtonChecked from '@iconify/icons-ic/round-radio-button-checked';
 import bxEdit from '@iconify/icons-bx/bx-edit';
+import minusCircleOutline from '@iconify/icons-eva/minus-circle-outline';
 
 import PartingStrip from '../PartingStrip';
 import TopSection from './TopSection';
@@ -15,9 +16,7 @@ import IngredientSection from './IngredientSection';
 import CookingStepsSection from './CookingStepsSection';
 import BottomSection from './BottomSection';
 import AuthenticationContext from '../../contexts/authentication/context';
-
-//TODO remove
-import imageTest from '../../assets/images/imageTest.png'
+import RecipeContext from'../../contexts/recipe/context'
 
 const Wrapper = styled('div', {
     display: 'flex',
@@ -56,9 +55,10 @@ const RecipeWrapper = styled('div', {
     margin: '1rem 2rem'
 });
 
-const EditIcon = styled(Icon,{
+const EditDeleteIcon = styled(Icon,{
     fontSize: '35px',
     color: THEME.colors.black[0],
+    marginLeft: '1.5rem',
 
     ':hover' : {
         cursor: 'pointer',
@@ -88,51 +88,28 @@ const SharedIcon = styled(Icon,({$isSharedRecipe})=> ({
     }
 }));
 
-const RecipeView = ({setIsEdit, slug, isLoading, recipe}) => {
+const RecipeView = ({setIsEdit, isLoading, recipe, getRecipeById}) => {
     //TODO assign startvalue from DB - recipe instead
-    const [isSharedRecipe, setIsShared] = useState(false);
+    const [isSharedRecipe, setIsShared] = useState(recipe.isShared);
     const [isStarred, setIsStarred] = useState(false);
 
     //TODO remove and lift, decide by PROP from parent
     // eslint-disable-next-line no-unused-vars
     const [isSessionUsersRecipe, setSessionUsersRecipe] = useState(false);
-    console.log('FROM VIEW', recipe)
 
-    const {user} = useContext(AuthenticationContext)
+    const {user} = useContext(AuthenticationContext);
+    const {patchRecipe, deleteRecipe} = useContext(RecipeContext)
 
+    const handlePatchRecipe = (value) => {
+        console.log('PATCH')
+        patchRecipe(recipe._id, value)
+        getRecipeById(recipe._id)
+        setIsShared(!isSharedRecipe);
+    }
 
-    //TODO remove
-/*         const recipeTest = {
-        title : "Exotiska Tacos",
-        preambleHTML : "En fräsch taco med panerad tofu. Den sötstarka mangosalsan ger mycket fraschör. Var inte rädd för att dunka på en del med chilin, mangon och limedressingen tar ut en del styrka. Detta är en perfekt sommar-rätt! ",
-        image : imageTest,
-        portions : 4,
-        cookingTime : "10-20min",
-        difficulty : "LÄTT",
-        ingredients : [
-            "8st panerade torskfiléer",
-            "4st Torilllabröd",
-            "2st färsk chili",
-            "500gr Mango (fryst eller färsk)",
-            "3dl gräddfil eller mjölkfritt alternativ",
-            "1st Lime"
-        ],
-        cookingSteps : [
-            "Riv av skalet av limen och blanda ner det i gräddfilen. Ställ såsen i kylen. TIPS! Ju längre såsen får stå med limeskalen i, desto mer lime kommer såsen att smaka.",
-            "Tärna mangon i centimeterstora bitar. Skiva chilin tunnt. Blanda ihop och låt götta sig en stund. Även Salsan mår ra av att stå i någon timme innan servering, men smakar fint även om den serveras direkt.",
-            "Tillaga Torsken efter beskrivningen på paketet.",
-            "Skiva torsken på hälften på längden. Ta fram ett tortilla-bröd. Lägg en eller två torskbitar på brödet. Häll på mangosalsa och klicka sedan på några klickar limesås.",
-            "Vik din tortilla. Tadaaa~! Redo att avnjutas"
-        ],
-        mdsaCategories : [
-            "taco",
-            "fisk",
-            "fredagsmys",
-            "moffafredag"
-        ],
-        author : "Hjortronbåt",
-        isShared : false
-    } */
+    const handleDelete = () => {
+        console.log('DELETE!')
+    };
 
     //Transform for easier follow on where the different items are showing and are styled.
     const {
@@ -171,14 +148,22 @@ const RecipeView = ({setIsEdit, slug, isLoading, recipe}) => {
                             <SharedIcon 
                                 $isSharedRecipe = {isSharedRecipe} 
                                 icon={isSharedRecipe ? roundRadioButtonChecked : roundRadioButtonUnchecked} 
-                                onClick = {() => setIsShared(!isSharedRecipe)}
+                                onClick = {() => handlePatchRecipe(recipe.isShared? {"isShared" : false} : {"isShared" : true})}
                             />
-                            <HeadlineSmall> {isSharedRecipe? 'DELAD MED DINA VÄNNER':'FÄRDIG? DELA MED DINA VÄNNER'}</HeadlineSmall>
+                            <HeadlineSmall> {recipe.isShared? 'DELAD MED DINA VÄNNER':'FÄRDIG? DELA MED DINA VÄNNER'}</HeadlineSmall>
                             </FlexRow>
-                            {user.username === author && <EditIcon 
-                                icon = {bxEdit}
-                                onClick = {() => setIsEdit(true)}
-                            />}
+                            {user.username === author && 
+                            <FlexRow $style = {{margin: 0}}>
+                                <EditDeleteIcon
+                                    icon = {minusCircleOutline}
+                                    onClick = {handleDelete}
+                                />
+                                <EditDeleteIcon
+                                    icon = {bxEdit}
+                                    onClick = {() => setIsEdit(true)}
+                                />
+                            </FlexRow>
+                            }
                         </SpaceBetweenWrapper>           
                     }
                 </FlexRow>

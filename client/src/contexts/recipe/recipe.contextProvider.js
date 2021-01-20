@@ -65,9 +65,9 @@ const RecipeContextProvider = (props) => {
     };
 
     //Patch
-    const patchRecipe = async(id, key , value) => {
+    const patchRecipe = async(id, value) => {
         await axios
-        .patch(`/recipes/${id}`, { key: value}, { withCredentials: true })
+        .patch(`/recipes/${id}`, value, { withCredentials: true })
         .then((res) => {
             console.log('resPatch', res);
         })
