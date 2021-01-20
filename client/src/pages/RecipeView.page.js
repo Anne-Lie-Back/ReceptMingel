@@ -47,8 +47,6 @@ const RecipeViewPage = () => {
         }
     };
 
-    console.log('usersRecipes', usersRecipes)
-
     //Gets all the recipes for user when component mounts, and when it is done it sets loading to true again when 
     //component has gotten their data
     useEffect(() => { 

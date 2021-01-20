@@ -27,7 +27,6 @@ const RecipeContextProvider = (props) => {
         try{
             let data = await axios.get(`recipes/author/${author}`, { withCredentials: true })
             .then(({data}) => data);
-            console.log('data', data)
             setRecipesUser(data)
             setIsLoadingRecipe(false)
         }catch(error){

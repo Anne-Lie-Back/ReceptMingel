@@ -133,8 +133,6 @@ const RecipeView = ({setIsEdit, slug, isLoading, recipe}) => {
         isShared : false
     }
 
-    //console.log('recipe', recipe)
-
     //Transform for easier follow on where the different items are showing and are styled.
     const {
         title,
