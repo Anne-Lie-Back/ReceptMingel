@@ -12,11 +12,13 @@ import AuthenticationContext from '../contexts/authentication/context';
 const RecipeViewPage = () => {
     const {user} = useContext(AuthenticationContext);
     const [isEdit, setIsEdit] = useState(false);
+    const [isAdd, setIsAdd] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [usersRecipes, setUsersRecipes] = useState([]);
     const [recipe, setRecipe] = useState(null);
+
     const [inputValues, setInputValues] = useState({
-        title: '',
+        title: null,
         preambleHTML: '',
         image: null,
         portions: 0,
@@ -27,7 +29,7 @@ const RecipeViewPage = () => {
         mdsaCategories: [],
         authorId: user._id,
         author: user.username,
-        isShared: false
+        isShared: isEdit? recipe.isShared : false
     });
 
     //For getting ID to recipe so we can get it and display it
@@ -87,18 +89,22 @@ const RecipeViewPage = () => {
                 icon = {roundRestaurantMenu} 
             />
             <GridContentWrapper>
-                <SideMenu  recipeList = {usersRecipes} setIsEdit = {setIsEdit} />
+                <SideMenu  recipeList = {usersRecipes} setIsAdd = {setIsAdd} setIsEdit = {setIsEdit}/>
                     {/* If no recipes yet, yser gets a little textmessage */}
                     {usersRecipes.length === 0 && isLoading ?
                         <>
-                            {!isEdit? 
+                            {!isAdd? 
                                 <p>Skapa ditt första recept med knappen i sidomenyn</p> 
                                 :
                                 <RecipeTemplate 
-                                    setIsEdit = {setIsEdit} 
+                                    setIsEdit = {setIsEdit}
+                                    isEdit = {isEdit}
+                                    setIsAdd = {setIsAdd}
+                                    isAdd = {isAdd}
                                     getRecipesByAuthor = {getRecipesByAuthor} 
                                     inputValues = {inputValues} 
                                     setInputValues = {setInputValues}
+                                    slug = {slug}
                                     getRecipeById = {getRecipeById}
                                     recipe = {recipe}
                                 /> 
@@ -111,19 +117,24 @@ const RecipeViewPage = () => {
                             else we will check if user wants to edit/add a recipe or not and show correct view */}
                             {isLoading? <p>is Loading...</p> :   
                                 <>
-                                    {isEdit? 
+                                    {isEdit || isAdd? 
                                         <RecipeTemplate 
-                                            setIsEdit = {setIsEdit} 
+                                            setIsEdit = {setIsEdit}
+                                            isEdit = {isEdit}
+                                            setIsAdd = {setIsAdd}
+                                            isAdd = {isAdd}
                                             getRecipesByAuthor = {getRecipesByAuthor} 
                                             inputValues = {inputValues} 
                                             setInputValues = {setInputValues}
+                                            //slug = {slug}
                                             getRecipeById = {getRecipeById}
                                             recipe = {recipe}
                                         /> 
                                         : 
                                         <RecipeView 
-                                            setIsEdit = {setIsEdit} 
+                                            setIsEdit = {setIsEdit}
                                             slug = {slug} 
+                                            getRecipeById = {getRecipeById}
                                             isLoading = {isLoading} 
                                             recipe = {recipe} 
                                         />

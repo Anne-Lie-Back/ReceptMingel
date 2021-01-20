@@ -14,9 +14,9 @@ const Wrapper = styled('div', {
 
 
 
-const SideMenu = ({ recipeList, setIsEdit }) => (
+const SideMenu = ({ recipeList, setIsAdd, setIsEdit }) => (
         <Wrapper>
-            <TypeIsRecipe recipeList = {recipeList} setIsEdit = {setIsEdit}/>
+            <TypeIsRecipe recipeList = {recipeList} setIsAdd = {setIsAdd} setIsEdit = {setIsEdit}/>
         </Wrapper>
 );
 

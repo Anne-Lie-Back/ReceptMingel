@@ -106,7 +106,7 @@ const Button = styled('button', {
     }
 })
 
-const RecipeTemplate = ({setIsEdit, getRecipesByAuthor, inputValues, setInputValues, getRecipeById, recipe}) => {
+const RecipeTemplate = ({setIsEdit, isEdit, setIsAdd, isAdd, recipe, slug, getRecipeById, getRecipesByAuthor, inputValues, setInputValues }) => {
     const {user} = useContext(AuthenticationContext);
 
     //stores file-data that goes up to image-bucket at server
@@ -123,6 +123,42 @@ const RecipeTemplate = ({setIsEdit, getRecipesByAuthor, inputValues, setInputVal
             [name]: value,
         });
     }
+    console.log('recipe', recipe)
+
+    useEffect(() => {
+        if(isEdit && recipe && !isAdd){
+            setInputValues({
+                title: recipe.title,
+                preambleHTML: recipe.preambleHTML,
+                portions: recipe.portions,
+                cookingTime: recipe.cookingTime,
+                difficulty: recipe.difficulty,
+                ingredients: recipe.ingredients,
+                cookingSteps: recipe.cookingSteps,
+                mdsaCategories: recipe.mdsaCategories,
+                authorId: user._id,
+                author: user.username,
+                isShared: recipe.isShared
+            });
+        }else{
+            setInputValues({
+                title: null,
+                preambleHTML: '',
+                image: null,
+                portions: 0,
+                cookingTime: '0-15min',
+                difficulty: 'lätt',
+                ingredients: [],
+                cookingSteps: [],
+                mdsaCategories: [],
+                authorId: user._id,
+                author: user.username,
+                isShared: isEdit? recipe.isShared : false
+            })
+        } 
+    },[isEdit])
+
+    
 
     //Listens after changes to file-state. If changed to not null, the image will be sent to the bucket and id 
     // set to inputValues.image to link correct image in bucket to user in database.
@@ -160,6 +196,7 @@ const RecipeTemplate = ({setIsEdit, getRecipesByAuthor, inputValues, setInputVal
         getRecipesByAuthor(user._id)
         //will close edit-view
         setIsEdit(false)
+        setIsAdd(false)
     };
 
     return(
@@ -169,6 +206,7 @@ const RecipeTemplate = ({setIsEdit, getRecipesByAuthor, inputValues, setInputVal
                     <InputField 
                         type = "text"  
                         name = "title"
+                        value = {inputValues.title}
                         placeholder = "Titel"
                         styling = "underline"
                         $style = {{ 
@@ -185,7 +223,9 @@ const RecipeTemplate = ({setIsEdit, getRecipesByAuthor, inputValues, setInputVal
                         <label htmlFor="upload-image" style = {{height: '100%'}}>
                             <FileUpload
                                 $preview = {
-                                    file && URL.createObjectURL(file)
+                                    (file && URL.createObjectURL(file)) ||
+                                    ((recipe && isEdit) && recipe.imageURL) ||
+                                    null
                                 }
                             >
                                 {!file && <ImageIcon color = {THEME.colors.white[0]} size = "70px"/>}
@@ -206,6 +246,7 @@ const RecipeTemplate = ({setIsEdit, getRecipesByAuthor, inputValues, setInputVal
                         $as = "textarea" 
                         name = "preambleHTML" 
                         placeholder = "Beskrivning"
+                        value = {inputValues.preambleHTML}
                         rows="6" 
                         cols="80"  
                         styling = "box"
@@ -227,12 +268,12 @@ const RecipeTemplate = ({setIsEdit, getRecipesByAuthor, inputValues, setInputVal
 
                 <EffortWrapper>
                     <FlexRow>
-                        <Label for = "difficulty"> Svårighetsgrad: </Label>
-                        <DifficultyInput handleChange = {handleChange}/>
+                        <Label for = "difficulty" > Svårighetsgrad: </Label>
+                        <DifficultyInput handleChange = {handleChange} difficulty = {inputValues.difficulty}/>
                     </FlexRow>
                     <FlexRow>
                         <Label for = "CookingTime"> Tidsåtgång: </Label>
-                        <CookingTimeInput handleChange = {handleChange}/>
+                        <CookingTimeInput handleChange = {handleChange} cookingTime = {inputValues.cookingTime}/>
                     </FlexRow>
                 </EffortWrapper>
 
