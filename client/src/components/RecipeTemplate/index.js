@@ -173,7 +173,7 @@ const RecipeTemplate = ({setIsEdit, getRecipesByAuthor, inputValues, setInputVal
         .catch((error) => {
             console.log('error', error);
         }) */
-        //getRecipesByAuthor(user.username)
+        getRecipesByAuthor(user._id)
         //getRecipesById(id)
         setIsEdit(false)
     };

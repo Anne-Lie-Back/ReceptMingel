@@ -29,19 +29,19 @@ const RecipeViewPage = () => {
         ingredients: [],
         cookingSteps: [],
         mdsaCategories: [],
+        authorId: user._id,
         author: user.username,
         isShared: false
     });
     //const [isLodin, setRecipe] = useState(null)
     //const { getRecipeById, recipe } = useContext(RecipeContext);
-    
 
     let { slug } = useParams()
     //const location = useLocation();
 
-    const getRecipesByAuthor = async(author) => {
+    const getRecipesByAuthor = async(authorId) => {
         try{
-            let data = await axios.get(`recipes/author/${author}`, { withCredentials: true })
+            let data = await axios.get(`recipes/author/${authorId}`, { withCredentials: true })
             .then(({data}) => data);
             setUsersRecipes(data)
             setRecipe(data[0])
@@ -51,8 +51,10 @@ const RecipeViewPage = () => {
         }
     };
 
+    console.log('usersRecipes', usersRecipes)
+
     useEffect(() => { 
-        getRecipesByAuthor(user.username)
+        getRecipesByAuthor(user._id)
         setIsLoading(true)
     }, [])
 
