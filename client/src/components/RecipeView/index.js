@@ -96,12 +96,13 @@ const RecipeView = ({setIsEdit, slug, isLoading, recipe}) => {
     //TODO remove and lift, decide by PROP from parent
     // eslint-disable-next-line no-unused-vars
     const [isSessionUsersRecipe, setSessionUsersRecipe] = useState(false);
+    console.log('FROM VIEW', recipe)
 
     const {user} = useContext(AuthenticationContext)
 
 
     //TODO remove
-        const recipeTest = {
+/*         const recipeTest = {
         title : "Exotiska Tacos",
         preambleHTML : "En fräsch taco med panerad tofu. Den sötstarka mangosalsan ger mycket fraschör. Var inte rädd för att dunka på en del med chilin, mangon och limedressingen tar ut en del styrka. Detta är en perfekt sommar-rätt! ",
         image : imageTest,
@@ -131,7 +132,7 @@ const RecipeView = ({setIsEdit, slug, isLoading, recipe}) => {
         ],
         author : "Hjortronbåt",
         isShared : false
-    }
+    } */
 
     //Transform for easier follow on where the different items are showing and are styled.
     const {

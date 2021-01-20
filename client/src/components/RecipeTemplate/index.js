@@ -123,7 +123,6 @@ const RecipeTemplate = ({setIsEdit, isEdit, setIsAdd, isAdd, recipe, slug, getRe
             [name]: value,
         });
     }
-    console.log('recipe', recipe)
 
     useEffect(() => {
         if(isEdit && recipe && !isAdd){
@@ -142,7 +141,7 @@ const RecipeTemplate = ({setIsEdit, isEdit, setIsAdd, isAdd, recipe, slug, getRe
             });
         }else{
             setInputValues({
-                title: null,
+                title: '',
                 preambleHTML: '',
                 image: null,
                 portions: 0,
@@ -182,18 +181,41 @@ const RecipeTemplate = ({setIsEdit, isEdit, setIsAdd, isAdd, recipe, slug, getRe
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [file]);
 
+    console.log('recipe', recipe.title)
+    console.log('recipe', recipe._id)
+
     //sends inputvalues to db.
-    const handleSubmit = async(event) => {
-        await axios
-        .post('/recipes', inputValues, { withCredentials: true })
-        .then((res) => {
-            //if response is good the user will be redirected to their new recipepage
-            if(res.status === 200) history.push(`/recipe/${res.data._id}`);
-        })
-        .catch(error => console.log(error))
+    const handleSubmit = async() => {
+        if(isAdd && !isEdit){
+            console.log('ADD')
+            await axios
+            .post('/recipes', inputValues, { withCredentials: true })
+            .then((res) => {
+                //if response is good the user will be redirected to their new recipepage
+                if(res.status === 200) history.push(`/recipe/${res.data._id}`);
+            })
+            .catch(error => console.log(error))    
+        }
+
+        if(!isAdd && isEdit){
+            console.log('EDIT')
+            await axios
+            .patch(`/recipes/${recipe._id}`, inputValues, { withCredentials: true })
+            .then((res) => {
+                console.log('resPatch', res);
+                if(res.status === 200){
+                    console.log('slug', slug)
+                    console.log('recipe._id', recipe._id)
+                    getRecipeById(slug)
+                    history.push(`/recipe/${recipe._id}`)   
+                }     
+            })
+            .catch(error => console.log(error))
+        }
         
         //Updates sidemenu with new recipe
         getRecipesByAuthor(user._id)
+        
         //will close edit-view
         setIsEdit(false)
         setIsAdd(false)
