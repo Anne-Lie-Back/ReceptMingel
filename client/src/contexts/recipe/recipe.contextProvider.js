@@ -2,6 +2,10 @@ import {useState} from 'react';
 import axios from '../../axios';
 import RecipeContext from './context';
 
+// Some functional axios-functions, sometimes you can import the functions and use dem as they are,
+//but sometimes when you need more controll over your state or a more custom function it is better to copy paste
+//the function and use them where they need to be for full state-controll.
+
 const RecipeContextProvider = (props) => {
     const [recipesAll, setRecipesAll] = useState([]);
     //[recipeShared, setRecipeShares] = useState([]);
@@ -11,7 +15,7 @@ const RecipeContextProvider = (props) => {
     // eslint-disable-next-line no-unused-vars
     const [recipe, setRecipe] = useState(null);
 
-    const [isLoadingRecipe, setIsLoadingRecipe] = useState(true)
+    const [isLoadingRecipe, setIsLoadingRecipe] = useState(true);
 
     //GETTERS
 
@@ -23,9 +27,9 @@ const RecipeContextProvider = (props) => {
         });
     };
 
-    const getRecipesByAuthor = async(author) => {
+    const getRecipesByAuthorId = async(authorId) => {
         try{
-            let data = await axios.get(`recipes/author/${author}`, { withCredentials: true })
+            let data = await axios.get(`recipes/author/${authorId}`, { withCredentials: true })
             .then(({data}) => data);
             setRecipesUser(data)
             setIsLoadingRecipe(false)
@@ -38,7 +42,6 @@ const RecipeContextProvider = (props) => {
         await axios
         .get('recipes/public', { withCredentials: true })
         .then((res) => {
-            console.log('res Public', res)
             setRecipesPublic(res.data)
         });
     };
@@ -65,9 +68,9 @@ const RecipeContextProvider = (props) => {
     };
 
     //Patch
-    const patchRecipe = async(id, key , value) => {
+    const patchRecipe = async(id, value) => {
         await axios
-        .patch(`/recipes/${id}`, { key: value}, { withCredentials: true })
+        .patch(`/recipes/${id}`, value, { withCredentials: true })
         .then((res) => {
             console.log('resPatch', res);
         })
@@ -89,7 +92,7 @@ const RecipeContextProvider = (props) => {
                 recipe,
                 isLoadingRecipe,
                 getAllRecipes,
-                getRecipesByAuthor,
+                getRecipesByAuthorId,
                 getRecipesByIsShared,
                 getRecipeById,
                 updateRecipe,

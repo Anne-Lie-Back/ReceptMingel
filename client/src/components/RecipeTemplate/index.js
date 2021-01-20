@@ -104,9 +104,9 @@ const Button = styled('button', {
         cursor:'pointer',
         backgroundColor: THEME.colors.black[0]
     }
-})
+});
 
-const RecipeTemplate = ({setIsEdit, getRecipesByAuthor, inputValues, setInputValues, getRecipeById, recipe}) => {
+const RecipeTemplate = ({ setIsEdit, isEdit, setIsAdd, isAdd, slug, getRecipeById, recipe, getRecipesByAuthor, inputValues, setInputValues }) => {
     const {user} = useContext(AuthenticationContext);
 
     //stores file-data that goes up to image-bucket at server
@@ -123,6 +123,43 @@ const RecipeTemplate = ({setIsEdit, getRecipesByAuthor, inputValues, setInputVal
             [name]: value,
         });
     }
+
+    //Sets the correct pre-set values depending on if user wants to add new recipe (empty fields)
+    // or want to edit existing field (pre-set fields with old values)
+    useEffect(() => {
+        if(isEdit && recipe && !isAdd){
+            setInputValues({
+                title: recipe.title,
+                preambleHTML: recipe.preambleHTML,
+                portions: recipe.portions,
+                cookingTime: recipe.cookingTime,
+                difficulty: recipe.difficulty,
+                ingredients: recipe.ingredients,
+                cookingSteps: recipe.cookingSteps,
+                mdsaCategories: recipe.mdsaCategories,
+                authorId: user._id,
+                author: user.username,
+                isShared: recipe.isShared
+            });
+        }else{
+            setInputValues({
+                title: '',
+                preambleHTML: '',
+                image: null,
+                portions: 0,
+                cookingTime: '0-15min',
+                difficulty: 'lätt',
+                ingredients: [],
+                cookingSteps: [],
+                mdsaCategories: [],
+                authorId: user._id,
+                author: user.username,
+                isShared: isEdit? recipe.isShared : false
+            })
+        } 
+    },[isEdit])
+
+    
 
     //Listens after changes to file-state. If changed to not null, the image will be sent to the bucket and id 
     // set to inputValues.image to link correct image in bucket to user in database.
@@ -147,19 +184,38 @@ const RecipeTemplate = ({setIsEdit, getRecipesByAuthor, inputValues, setInputVal
     }, [file]);
 
     //sends inputvalues to db.
-    const handleSubmit = async(event) => {
-        await axios
-        .post('/recipes', inputValues, { withCredentials: true })
-        .then((res) => {
-            //if response is good the user will be redirected to their new recipepage
-            if(res.status === 200) history.push(`/recipe/${res.data._id}`);
-        })
-        .catch(error => console.log(error))
+    const handleSubmit = async() => {
+
+        //If user wants to add recipe we will post it
+        if(isAdd && !isEdit){
+            await axios
+            .post('/recipes', inputValues, { withCredentials: true })
+            .then((res) => {
+                //if response is good the user will be redirected to their new recipepage
+                if(res.status === 200) history.push(`/recipe/${res.data._id}`);
+            })
+            .catch(error => console.log(error))    
+        };
+
+        //If user wants to edit recipe we will patch existing recipe
+        if(!isAdd && isEdit){
+            await axios
+            .patch(`/recipes/${recipe._id}`, inputValues, { withCredentials: true })
+            .then((res) => {
+                if(res.status === 200){
+                    getRecipeById(slug)
+                    history.push(`/recipe/${recipe._id}`)   
+                }     
+            })
+            .catch(error => console.log(error))
+        };
         
         //Updates sidemenu with new recipe
-        getRecipesByAuthor(user._id)
-        //will close edit-view
-        setIsEdit(false)
+        getRecipesByAuthor(user._id);
+        
+        //will ensure closed edit-view
+        setIsEdit(false);
+        setIsAdd(false);
     };
 
     return(
@@ -169,6 +225,7 @@ const RecipeTemplate = ({setIsEdit, getRecipesByAuthor, inputValues, setInputVal
                     <InputField 
                         type = "text"  
                         name = "title"
+                        value = {inputValues.title}
                         placeholder = "Titel"
                         styling = "underline"
                         $style = {{ 
@@ -185,7 +242,9 @@ const RecipeTemplate = ({setIsEdit, getRecipesByAuthor, inputValues, setInputVal
                         <label htmlFor="upload-image" style = {{height: '100%'}}>
                             <FileUpload
                                 $preview = {
-                                    file && URL.createObjectURL(file)
+                                    (file && URL.createObjectURL(file)) ||
+                                    ((recipe && isEdit) && recipe.imageURL) ||
+                                    null
                                 }
                             >
                                 {!file && <ImageIcon color = {THEME.colors.white[0]} size = "70px"/>}
@@ -206,6 +265,7 @@ const RecipeTemplate = ({setIsEdit, getRecipesByAuthor, inputValues, setInputVal
                         $as = "textarea" 
                         name = "preambleHTML" 
                         placeholder = "Beskrivning"
+                        value = {inputValues.preambleHTML}
                         rows="6" 
                         cols="80"  
                         styling = "box"
@@ -227,12 +287,12 @@ const RecipeTemplate = ({setIsEdit, getRecipesByAuthor, inputValues, setInputVal
 
                 <EffortWrapper>
                     <FlexRow>
-                        <Label for = "difficulty"> Svårighetsgrad: </Label>
-                        <DifficultyInput handleChange = {handleChange}/>
+                        <Label for = "difficulty" > Svårighetsgrad: </Label>
+                        <DifficultyInput handleChange = {handleChange} difficulty = {inputValues.difficulty}/>
                     </FlexRow>
                     <FlexRow>
                         <Label for = "CookingTime"> Tidsåtgång: </Label>
-                        <CookingTimeInput handleChange = {handleChange}/>
+                        <CookingTimeInput handleChange = {handleChange} cookingTime = {inputValues.cookingTime}/>
                     </FlexRow>
                 </EffortWrapper>
 

@@ -11,7 +11,7 @@ GET http://localhost:8080/api/recipes/6005daeb83df2937ec206ee6
 //GET RECIPE BY FREETEXT
 
 //GET RECIPE BY AuthorId
-GET http://localhost:8080/api/recipes/author/600806e24c55ab2c8c310f77
+GET http://localhost:8080/api/recipes/author/600375ea73a3593db003383e
 
 ###
 
@@ -145,7 +145,32 @@ PATCH http://localhost:8080/api/recipes/6005daeb83df2937ec206ee6
 Content-Type: application/json
 
 {
-    "isShared" : true
+    "title" : "Supergröt",
+    "preambleHTML" : "Gröt är den sämsta starten på morgonen, said no one ever.  Men det kan bli om du adderar massa mer göttgött än bara havregryn.",
+    "image": "60075ed4273a0a2250dd6368",
+    "portions" : 2,
+    "cookingTime" : "16 - 30min",
+    "difficulty": "svårt",
+    "ingredients": [
+      "1,5 mskt chiafrön",
+      "1 dl cashewmjölk (eller annan mjölk)",
+      "3 krm vaniljsocker",
+      "1 hackad banan"
+    ],
+    "cookingSteps": [
+      "Blanda chiafrön och cashewmjölk, gärna i en återförslutningsbar behållare. Jag har testat många olika sorters mjölk och tycker cashewmjölken blir godast.",
+      "Låt stå i 10min",
+      "Tillsätt lite vaniljpulver och rör om igen.",
+      "Sätt på locket och ställ in i kylen över natten.",
+      "På morgonen tärnar du bara ner en banan i burken, rör om, sedan är den redo att ätas eller tas med!"
+    ],
+    "mdsaCategories": [
+      "frukost",
+      "nyttigt"
+    ],
+    "authorId": "600375ea73a3593db003383e",
+    "author": "starstoft",
+    "isShared": false
 }
 
 ###

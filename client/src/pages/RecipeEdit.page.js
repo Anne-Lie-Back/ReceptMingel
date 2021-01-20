@@ -6,6 +6,8 @@ import GridContentWrapper from '../components/GridContentWrapper';
 import RecipeTemplate from '../components/RecipeTemplate';
 import SideMenu from '../components/SideMenu';
 
+//TODO REMOVE FILE
+
 const RecipeEditPage = () => {
 
     return(

@@ -12,11 +12,13 @@ import AuthenticationContext from '../contexts/authentication/context';
 const RecipeViewPage = () => {
     const {user} = useContext(AuthenticationContext);
     const [isEdit, setIsEdit] = useState(false);
+    const [isAdd, setIsAdd] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [usersRecipes, setUsersRecipes] = useState([]);
     const [recipe, setRecipe] = useState(null);
+
     const [inputValues, setInputValues] = useState({
-        title: '',
+        title: null,
         preambleHTML: '',
         image: null,
         portions: 0,
@@ -27,7 +29,7 @@ const RecipeViewPage = () => {
         mdsaCategories: [],
         authorId: user._id,
         author: user.username,
-        isShared: false
+        isShared: isEdit? recipe.isShared : false
     });
 
     //For getting ID to recipe so we can get it and display it
@@ -40,11 +42,11 @@ const RecipeViewPage = () => {
             let data = await axios.get(`recipes/author/${authorId}`, { withCredentials: true })
             .then(({data}) => data);
             setUsersRecipes(data)
-            setRecipe(data[0])
+            if(!recipe) setRecipe(data[data.length - 1])
             setIsLoading(false)
         }catch(error){
             console.log(error)
-        }
+        };
     };
 
     //Gets all the recipes for user when component mounts, and when it is done it sets loading to true again when 
@@ -53,7 +55,7 @@ const RecipeViewPage = () => {
         getRecipesByAuthor(user._id)
         setIsLoading(true)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, []);
 
     //Gets correct recipe from db by using url-slug and sets loading to false when fetching is done
     // so we know data isn't null on rendering
@@ -65,7 +67,7 @@ const RecipeViewPage = () => {
             setIsLoading(false)
         }catch(error){
             console.log(error)
-        }
+        };
     };
 
     //Gets the recipe that matches slug when url changes or display users first recipe if slug undefined. 
@@ -77,8 +79,9 @@ const RecipeViewPage = () => {
         } else if(!slug) {
             setRecipe(usersRecipes[0]);
         }
+        if(!slug) setRecipe(usersRecipes[usersRecipes.length - 1])
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [slug]) 
+    }, [slug]);
 
     return(
         <> 
@@ -87,18 +90,22 @@ const RecipeViewPage = () => {
                 icon = {roundRestaurantMenu} 
             />
             <GridContentWrapper>
-                <SideMenu  recipeList = {usersRecipes} setIsEdit = {setIsEdit} />
+                <SideMenu  recipeList = {usersRecipes} setIsAdd = {setIsAdd} setIsEdit = {setIsEdit}/>
                     {/* If no recipes yet, yser gets a little textmessage */}
                     {usersRecipes.length === 0 && isLoading ?
                         <>
-                            {!isEdit? 
+                            {!isAdd? 
                                 <p>Skapa ditt första recept med knappen i sidomenyn</p> 
                                 :
                                 <RecipeTemplate 
-                                    setIsEdit = {setIsEdit} 
+                                    setIsEdit = {setIsEdit}
+                                    isEdit = {isEdit}
+                                    setIsAdd = {setIsAdd}
+                                    isAdd = {isAdd}
                                     getRecipesByAuthor = {getRecipesByAuthor} 
                                     inputValues = {inputValues} 
                                     setInputValues = {setInputValues}
+                                    slug = {slug}
                                     getRecipeById = {getRecipeById}
                                     recipe = {recipe}
                                 /> 
@@ -111,19 +118,26 @@ const RecipeViewPage = () => {
                             else we will check if user wants to edit/add a recipe or not and show correct view */}
                             {isLoading? <p>is Loading...</p> :   
                                 <>
-                                    {isEdit? 
+                                    {isEdit || isAdd? 
                                         <RecipeTemplate 
-                                            setIsEdit = {setIsEdit} 
+                                            setIsEdit = {setIsEdit}
+                                            isEdit = {isEdit}
+                                            setIsAdd = {setIsAdd}
+                                            isAdd = {isAdd}
                                             getRecipesByAuthor = {getRecipesByAuthor} 
                                             inputValues = {inputValues} 
                                             setInputValues = {setInputValues}
+                                            //slug = {slug}
                                             getRecipeById = {getRecipeById}
                                             recipe = {recipe}
+                                            slug = {slug}
                                         /> 
                                         : 
                                         <RecipeView 
-                                            setIsEdit = {setIsEdit} 
+                                            setIsEdit = {setIsEdit}
                                             slug = {slug} 
+                                            getRecipeById = {getRecipeById}
+                                            getRecipesByAuthor = {getRecipesByAuthor}
                                             isLoading = {isLoading} 
                                             recipe = {recipe} 
                                         />
@@ -132,10 +146,8 @@ const RecipeViewPage = () => {
                             } 
                         </>
                     }  
-            </GridContentWrapper>
-            
+            </GridContentWrapper>  
         </>
-
     );
 };
 

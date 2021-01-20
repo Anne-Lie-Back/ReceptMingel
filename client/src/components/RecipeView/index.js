@@ -1,4 +1,5 @@
 import {useContext, useState} from 'react';
+import { useHistory } from 'react-router-dom';
 import { styled } from 'styletron-react';
 import THEME from './../../config/theme';
 
@@ -8,6 +9,7 @@ import roundStarRate from '@iconify/icons-ic/round-star-rate';
 import roundRadioButtonUnchecked from '@iconify/icons-ic/round-radio-button-unchecked';
 import roundRadioButtonChecked from '@iconify/icons-ic/round-radio-button-checked';
 import bxEdit from '@iconify/icons-bx/bx-edit';
+import minusCircleOutline from '@iconify/icons-eva/minus-circle-outline';
 
 import PartingStrip from '../PartingStrip';
 import TopSection from './TopSection';
@@ -15,9 +17,7 @@ import IngredientSection from './IngredientSection';
 import CookingStepsSection from './CookingStepsSection';
 import BottomSection from './BottomSection';
 import AuthenticationContext from '../../contexts/authentication/context';
-
-//TODO remove
-import imageTest from '../../assets/images/imageTest.png'
+import RecipeContext from'../../contexts/recipe/context'
 
 const Wrapper = styled('div', {
     display: 'flex',
@@ -56,9 +56,10 @@ const RecipeWrapper = styled('div', {
     margin: '1rem 2rem'
 });
 
-const EditIcon = styled(Icon,{
+const EditDeleteIcon = styled(Icon,{
     fontSize: '35px',
     color: THEME.colors.black[0],
+    marginLeft: '1.5rem',
 
     ':hover' : {
         cursor: 'pointer',
@@ -88,52 +89,35 @@ const SharedIcon = styled(Icon,({$isSharedRecipe})=> ({
     }
 }));
 
-const RecipeView = ({setIsEdit, slug, isLoading, recipe}) => {
-    //TODO assign startvalue from DB - recipe instead
-    const [isSharedRecipe, setIsShared] = useState(false);
+const RecipeView = ({setIsEdit, isLoading, slug, getRecipeById, recipe, getRecipesByAuthor}) => {
+
+    //isSharedRecipe helps to display correct icon
+    const [isSharedRecipe, setIsShared] = useState(recipe.isShared);
     const [isStarred, setIsStarred] = useState(false);
 
-    //TODO remove and lift, decide by PROP from parent
-    // eslint-disable-next-line no-unused-vars
-    const [isSessionUsersRecipe, setSessionUsersRecipe] = useState(false);
+    let history = useHistory();
 
-    const {user} = useContext(AuthenticationContext)
+    //Contexts
+    const {user} = useContext(AuthenticationContext);
+    const {patchRecipe, deleteRecipe} = useContext(RecipeContext);
 
 
-    //TODO remove
-        const recipeTest = {
-        title : "Exotiska Tacos",
-        preambleHTML : "En fräsch taco med panerad tofu. Den sötstarka mangosalsan ger mycket fraschör. Var inte rädd för att dunka på en del med chilin, mangon och limedressingen tar ut en del styrka. Detta är en perfekt sommar-rätt! ",
-        image : imageTest,
-        portions : 4,
-        cookingTime : "10-20min",
-        difficulty : "LÄTT",
-        ingredients : [
-            "8st panerade torskfiléer",
-            "4st Torilllabröd",
-            "2st färsk chili",
-            "500gr Mango (fryst eller färsk)",
-            "3dl gräddfil eller mjölkfritt alternativ",
-            "1st Lime"
-        ],
-        cookingSteps : [
-            "Riv av skalet av limen och blanda ner det i gräddfilen. Ställ såsen i kylen. TIPS! Ju längre såsen får stå med limeskalen i, desto mer lime kommer såsen att smaka.",
-            "Tärna mangon i centimeterstora bitar. Skiva chilin tunnt. Blanda ihop och låt götta sig en stund. Även Salsan mår ra av att stå i någon timme innan servering, men smakar fint även om den serveras direkt.",
-            "Tillaga Torsken efter beskrivningen på paketet.",
-            "Skiva torsken på hälften på längden. Ta fram ett tortilla-bröd. Lägg en eller två torskbitar på brödet. Häll på mangosalsa och klicka sedan på några klickar limesås.",
-            "Vik din tortilla. Tadaaa~! Redo att avnjutas"
-        ],
-        mdsaCategories : [
-            "taco",
-            "fisk",
-            "fredagsmys",
-            "moffafredag"
-        ],
-        author : "Hjortronbåt",
-        isShared : false
-    }
+    //Patches recipe, gets the new recipe and changes icon
+    const handlePatchRecipe = (value) => {
+        patchRecipe(recipe._id, value)
+        getRecipeById(recipe._id)
+        setIsShared(!isSharedRecipe);
+    };
+
+    //Deletes recipe, updates sidemenu-list and redirects user to start-recipe-page
+    const handleDelete = (id) => {
+        deleteRecipe(id);
+        getRecipesByAuthor(recipe.authorId);
+        history.push('/recipe');
+    };
 
     //Transform for easier follow on where the different items are showing and are styled.
+    //Keeps id as recipe._id to easier see type of id used
     const {
         title,
         preambleHTML,
@@ -145,43 +129,73 @@ const RecipeView = ({setIsEdit, slug, isLoading, recipe}) => {
         ingredients,
         mdsaCategories,
         author,
+        authorId,
         // eslint-disable-next-line no-unused-vars
         isShared
     } = recipe; 
 
     return(
         <Wrapper>
-            {isLoading? <p>is Loading</p>
+            {/* Waiting for data to load before rendering */}
+            {isLoading? <p> is Loading </p>
             : 
             <RecipeWrapper>
                 <FlexRow>
-                    {isSessionUsersRecipe?
-                        <>
-                            <StarIcon 
-                                $isStarred = {isStarred} 
-                                icon={isStarred? roundStarRate : roundStarOutline} 
-                                onClick = {() => setIsStarred(!isStarred)}
-                            />
-                            <HeadlineSmall> {isStarred? 'SPARAD I DIN RECEPTBOK':'SPARA I DIN RECEPTBOK'}</HeadlineSmall>
-                        </>
+                    {/* Renders different mini-headers depending on if there is a slug */}
+                    {!slug? 
+                        <HeadlineSmall style = {{fontWeight: 700}}> 
+                            VÄLKOMMEN TILL DINA RECEPT! 
+                        </HeadlineSmall> 
                         :
-                        <SpaceBetweenWrapper>  
-                            <FlexRow $style = {{margin: 0}}>
-                            <SharedIcon 
-                                $isSharedRecipe = {isSharedRecipe} 
-                                icon={isSharedRecipe ? roundRadioButtonChecked : roundRadioButtonUnchecked} 
-                                onClick = {() => setIsShared(!isSharedRecipe)}
-                            />
-                            <HeadlineSmall> {isSharedRecipe? 'DELAD MED DINA VÄNNER':'FÄRDIG? DELA MED DINA VÄNNER'}</HeadlineSmall>
-                            </FlexRow>
-                            {user.username === author && <EditIcon 
-                                icon = {bxEdit}
-                                onClick = {() => setIsEdit(true)}
-                            />}
-                        </SpaceBetweenWrapper>           
-                    }
+                        <>
+                            {/* Renders different mini-headers depending on is session-user is the same as recipe-owner */}
+                            {user._id !== authorId?
+                                <>
+                                    <StarIcon 
+                                        $isStarred = {isStarred} 
+                                        icon={isStarred? roundStarRate : roundStarOutline} 
+                                        onClick = {() => setIsStarred(!isStarred)}
+                                    />
+                                    <HeadlineSmall> 
+                                        {isStarred? 'SPARAD I DIN RECEPTBOK':'SPARA I DIN RECEPTBOK'}
+                                    </HeadlineSmall>
+                                </>
+                                :
+                                <SpaceBetweenWrapper>  
+                                    <FlexRow $style = {{margin: 0}}>
+                                        <SharedIcon 
+                                            $isSharedRecipe = {isSharedRecipe} 
+                                            icon={isSharedRecipe ? roundRadioButtonChecked : roundRadioButtonUnchecked} 
+                                            onClick = {() => handlePatchRecipe(isShared? {"isShared" : false} : {"isShared" : true})}
+                                        />
+                                        <HeadlineSmall> 
+                                            {isSharedRecipe? 'DELAD MED DINA VÄNNER' : 'FÄRDIG? DELA MED DINA VÄNNER'}
+                                        </HeadlineSmall>
+                                    </FlexRow>
+                                    {/* Renders Edit and delete-icon if session-user is the same as recipe-owner*/}
+                                    {user._id === authorId && 
+                                        <FlexRow $style = {{margin: 0}}>
+                                            <EditDeleteIcon
+                                                icon = {minusCircleOutline}
+                                                onClick = {() => handleDelete(recipe._id)}
+                                            />
+                                            <EditDeleteIcon
+                                                icon = {bxEdit}
+                                                onClick = {() => setIsEdit(true)}
+                                            />
+                                        </FlexRow>
+                                    }
+                                </SpaceBetweenWrapper>           
+                            }
+                        </>
+                    }  
                 </FlexRow>
                 <PartingStrip width = '100%'/>
+                {!slug && 
+                    <HeadlineSmall $style = {{marginTop: '0.5rem', fontSize: THEME.fontSizes.small}}> 
+                        Ditt senast skapade recept: 
+                    </HeadlineSmall>
+                }
                 <TopSection 
                     title = {title} 
                     description = {preambleHTML} 

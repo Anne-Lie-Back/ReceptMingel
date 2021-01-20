@@ -5,7 +5,7 @@ const Wrapper = styled('div', {
     margin: '0.5rem 0'
 });
 
-const DifficultyInput = ({handleChange}) => (
+const DifficultyInput = ({handleChange, difficulty}) => (
     <Wrapper>
         <select 
             name="difficulty" 
@@ -17,10 +17,10 @@ const DifficultyInput = ({handleChange}) => (
                 color: THEME.colors.black[0]
             }} 
             onChange = {handleChange}>
-            <option value="lätt">LÄTT</option>
-            <option value="medel">MEDEL</option>
-            <option value="omständigt">OMSTÄNDIGT</option>
-            <option value="svårt">SVÅRT</option>
+            <option selected={difficulty === "lätt"} value="lätt">LÄTT</option>
+            <option selected={difficulty === "medel"} value="medel">MEDEL</option>
+            <option selected={difficulty === "omständigt"} value="omständigt">OMSTÄNDIGT</option>
+            <option selected={difficulty === "svårt"} value="svårt">SVÅRT</option>
         </select>
     </Wrapper>
 );
