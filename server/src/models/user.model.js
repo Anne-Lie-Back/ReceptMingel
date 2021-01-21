@@ -38,7 +38,8 @@ const UserSchema = new Schema({
     },
     //TODO update to [RecipeSchema] ? (see order-schema)
     recipeBook: [{
-        type: String,
+        type: mongoose.ObjectId,
+        ref: 'Recipe',
         required: false,
     }],
     externalRecipes: [{

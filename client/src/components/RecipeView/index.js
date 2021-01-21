@@ -2,6 +2,9 @@ import {useContext, useState} from 'react';
 import { useHistory } from 'react-router-dom';
 import { styled } from 'styletron-react';
 import THEME from './../../config/theme';
+import axios from '../../axios';
+import AuthenticationContext from '../../contexts/authentication/context';
+import RecipeContext from '../../contexts/recipe/context';
 
 import { Icon } from "@iconify/react";
 import roundStarOutline from '@iconify/icons-ic/round-star-outline';
@@ -16,8 +19,7 @@ import TopSection from './TopSection';
 import IngredientSection from './IngredientSection';
 import CookingStepsSection from './CookingStepsSection';
 import BottomSection from './BottomSection';
-import AuthenticationContext from '../../contexts/authentication/context';
-import RecipeContext from'../../contexts/recipe/context'
+
 
 const Wrapper = styled('div', {
     display: 'flex',
@@ -89,22 +91,26 @@ const SharedIcon = styled(Icon,({$isSharedRecipe})=> ({
     }
 }));
 
-const RecipeView = ({setIsEdit, isLoading, slug, getRecipeById, recipe, getRecipesByAuthor}) => {
-
+const RecipeView = ({setIsEdit, isLoading, slug, getRecipeById, recipe, getRecipesByAuthor, setRecipeBook, recipeBook, addRecipeBookItem, removeRecipeBookItem, patchRecipeBook}) => {
+    const {user} = useContext(AuthenticationContext);
+    const {patchRecipe, deleteRecipe} = useContext(RecipeContext);
     //isSharedRecipe helps to display correct icon
     const [isSharedRecipe, setIsShared] = useState(recipe.isShared);
     const [isStarred, setIsStarred] = useState(false);
+    
 
     let history = useHistory();
 
-    //Contexts
-    const {user} = useContext(AuthenticationContext);
-    const {patchRecipe, deleteRecipe} = useContext(RecipeContext);
+    
 
-
+    
+    
     //Patches recipe, gets the new recipe and changes icon
     const handlePatchRecipe = (value) => {
         patchRecipe(recipe._id, value)
+        isSharedRecipe? removeRecipeBookItem(recipeBook, recipe._id) : addRecipeBookItem(recipe._id);
+       // patchRecipeBook(user._id)
+
         getRecipeById(recipe._id)
         setIsShared(!isSharedRecipe);
     };

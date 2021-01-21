@@ -62,6 +62,32 @@ const getSessionUser = (req, res, next) => {
     });
 };
 
+//GET RECIPEBOOK FOR USER
+const getRecipeBook = (req, res, next) => {
+  User.find()
+  .select("recipe _id")
+  .populate('recipe')
+  .exec()
+  .then(data => {
+    res.status(200).json({
+      recipebook: data.map(data => {
+        return {
+          recipe: data.recipe,
+          request: {
+            type: "GET",
+            url: "http://localhost:8080/recipes/" + data._id
+          }
+        };
+      })
+    });
+  })
+  .catch(error => {
+    res.status(500).json({
+      error: error
+    });
+  });
+}
+
 //UPDATE USER (both patch and put)
 const updateUser = (req, res, next) => {
     User.findOneAndUpdate(
@@ -141,6 +167,7 @@ module.exports = {
     registerUser,
     getAllUsers,
     getSessionUser,
+    getRecipeBook,
     updateUser,
     loginUser,
     logoutUser,

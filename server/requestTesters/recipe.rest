@@ -15,8 +15,6 @@ GET http://localhost:8080/api/recipes/author/600375ea73a3593db003383e
 
 ###
 
-//GET RECIPE BY COOKINGTIME
-
 //POST RECIPE
 POST http://localhost:8080/api/recipes/
 Content-Type: application/json

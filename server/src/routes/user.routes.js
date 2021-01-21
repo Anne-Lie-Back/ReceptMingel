@@ -9,6 +9,7 @@ const {
     registerUser,
     getAllUsers,
     getSessionUser,
+    getRecipeBook,
     updateUser,
     loginUser,
     logoutUser,
@@ -38,15 +39,20 @@ router.post('/', registerUser,(req, res) => {
     res.status(200).json({ message: "Authenticated", user: res.user});
 })
 
-//UPDATE USER
-router.put('/:id', getSessionUser, isAuthenticated, updateUser, (req, res) => {
-    res.status(200).json(res.updateUser);
-})
-
-//PATCH recipeBook
+//UPDATE USER OR RECIPEBOOK
 router.patch('/:id', getSessionUser, isAuthenticated, updateUser, (req, res) => {
     res.status(200).json(res.updateUser);
 })
+
+//GET Recipebook
+router.get('/recipebook/:id', getSessionUser, isAuthenticated, getRecipeBook, (req, res) => {
+    res.status(200).json(res.recipeBook)
+})
+
+//PATCH recipeBook TODO rmove?
+/* router.patch('recipebook/:id', getSessionUser, isAuthenticated, updateUser, (req, res) => {
+    res.status(200).json(res.updateUser);
+}) */
 
 //DELETE USER
 router.delete('/:id', getSessionUser, isAuthenticated, deleteUser,(req, res) => {

@@ -31,16 +31,14 @@ const AuthenticationContextProvider = (props) => {
 
     const removeRecipeBookItem = (list, id) => {
         const newList = list.filter((item) => item !== id);
-        setRecipeBook({newList}) 
+        setRecipeBook(newList) 
     };
 
     const addRecipeBookItem = (listItem) => {
         const newItem = listItem;
         
         const newList = [...recipeBook, newItem];
-        setRecipeBook({                    
-            mdsaCategories: newList         
-        });
+        setRecipeBook(newList) 
     };
 
     const patchRecipeBook = async(id) => {

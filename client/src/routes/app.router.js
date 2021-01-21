@@ -25,6 +25,7 @@ const AppRouter = () => {
         <ProtectedRoute exact path = '/search' component = {SearchPage} />
         <ProtectedRoute exact path = '/user/:id' component = {UserPage} />
         <ProtectedRoute exact path = '/recipebook' component = {RecipeBookPage} />
+        <ProtectedRoute exact path = '/recipebook/:slug' component = {RecipeBookPage} />
         <ProtectedRoute exact path = '/recipe/' component = {RecipeViewPage} />
         <ProtectedRoute exact path = '/recipe/:slug' component = {RecipeViewPage} />
     </Switch>

@@ -16,6 +16,9 @@ const RecipeViewPage = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [usersRecipes, setUsersRecipes] = useState([]);
     const [recipe, setRecipe] = useState(null);
+    const [recipeBook, setRecipeBook] = useState(user.recipeBook);
+
+    console.log('recipeBook', recipeBook)
 
     const [inputValues, setInputValues] = useState({
         title: null,
@@ -33,7 +36,7 @@ const RecipeViewPage = () => {
     });
 
     //For getting ID to recipe so we can get it and display it
-    let { slug } = useParams()
+    let { slug } = useParams();
 
     //Gets all the users recipes and when it is done it sets loading to false
     //so we know for sure data isn't null before rerendering
@@ -68,6 +71,29 @@ const RecipeViewPage = () => {
         }catch(error){
             console.log(error)
         };
+    };
+
+    const removeRecipeBookItem = (list, id) => {
+        console.log('REMOVE')
+        const newList = list.filter((item) => item !== id);
+        setRecipeBook(newList) 
+    };
+
+    const addRecipeBookItem = (listItem) => {
+        console.log('ADD')
+        const newItem = listItem;
+        
+        const newList = [...recipeBook, newItem];
+        setRecipeBook(newList) 
+    };
+
+    const patchRecipeBook = async(id) => {
+        await axios
+        .patch(`/users/${id}`, {recipeBook: recipeBook})
+        .then((res) => {
+            console.log('bookPatch', res);
+        })
+        .catch(error => console.log(error))
     };
 
     //Gets the recipe that matches slug when url changes or display users first recipe if slug undefined. 
@@ -140,6 +166,11 @@ const RecipeViewPage = () => {
                                             getRecipesByAuthor = {getRecipesByAuthor}
                                             isLoading = {isLoading} 
                                             recipe = {recipe} 
+                                            recipeBook = {recipeBook}
+                                            setRecipeBook = {setRecipeBook}
+                                            addRecipeBookItem = {addRecipeBookItem}
+                                            removeRecipeBookItem = {removeRecipeBookItem}
+                                            patchRecipeBook = {patchRecipeBook}
                                         />
                                     }
                                 </>
