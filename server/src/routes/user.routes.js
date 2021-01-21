@@ -19,7 +19,7 @@ const {
 //ENDPOINTS
 
 //GET ALL USERS
-router.get('/all', getSessionUser, getAllUsers, (req, res) => {
+router.get('/all', isAuthenticated, getAllUsers, (req, res) => {
     res.status(200).json(res.allUsers);
 })
 
@@ -40,7 +40,7 @@ router.post('/', registerUser,(req, res) => {
 })
 
 //UPDATE USER OR RECIPEBOOK
-router.patch('/:id', getSessionUser, isAuthenticated, updateUser, (req, res) => {
+router.put('/:id', getSessionUser, isAuthenticated, updateUser, (req, res) => {
     res.status(200).json(res.updateUser);
 })
 

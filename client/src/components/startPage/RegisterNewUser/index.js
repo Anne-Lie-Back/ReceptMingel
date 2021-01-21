@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from '../../../axios';
 import { styled } from 'styletron-react';
+import AuthenticationContext from '../../../contexts/authentication/context'
 import Icons from '../../../config/icons';
 import THEME from '../../../config/theme';
 import InputField from '../../inputField';
@@ -93,8 +94,13 @@ const RegisterNewUser = ({handleClick}) => {
         userInfo: ''
     });
 
+    const {registerNewUser, user, isAuthenticated} = useContext(AuthenticationContext);
     //stores file-data that goes up to image-bucket at server
     const [file, setFile] = useState(null);
+    const [loginError, setLoginError] = useState({
+        isOk: true,
+        message: ''
+    });
     const history = useHistory();
 
     const { ImageIcon } = Icons;
@@ -129,15 +135,22 @@ const RegisterNewUser = ({handleClick}) => {
           })
       }, [file]);
 
+      console.log('file', file)
 
     const handleSubmit = async () => {
-        await axios
-        .post('/users', inputValues)
-        .then((res) => {
-            //if response is good the user will be redirected to their userpage
-            if(res.status === 200) history.push(`/user/${res.user._id}`);
-        })
-        .catch(error => console.log(error))  
+        await registerNewUser(inputValues);
+        if(!isAuthenticated){
+            setLoginError({
+                isOk: false,
+                message: "Kunde inte skapa en ny användare"
+            });
+        } else {
+            setLoginError({
+                isOk: true,
+                message: ""
+            });
+            history.push(`/user/${user._id}`); 
+        };
     };
 
     //TODO remove later when sure everything is still working

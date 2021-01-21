@@ -8,28 +8,28 @@ POST http://localhost:8080/api/users/
 Content-Type: application/json
 
 {
-    "username" : "Lee",
+    "username" : "Ninja",
     "password" : "secret",
     "firstName" : "Annely",
     "lastName" : "Back",
-    "avatar" : "https://img.koket.se/standard-mega/fisktacos-med-guacamole-och-mangosalsa.jpg.webp",
     "userInfo" : "Jag gillar mat ännu mer",
     "recipeBook" : [],
     "externalRecipes" : []
 }
 
 ###
-PUT http://localhost:8080/api/users/5fea279db50fe3329c55f910
+PUT http://localhost:8080/api/users/6009769f9665db27906615ab
 Content-Type: application/json
 
 {
-    "username" : "starstoft",
+    "username" : "Ninja",
     "password" : "secret",
-    "firstName" : "Lee",
-    "lastName" : "Back",
-    "avatar" : "https://img.koket.se/standard-mega/fisktacos-med-guacamole-och-mangosalsa.jpg.webp",
-    "userInfo" : "Jag gillar mat",
-    "recipeBook" : ["5fe9c4c8e576571ac025cf3f"]
+    "firstName" : "Ninja",
+    "lastName" : "Bäck",
+    "image" : "6009769d9665db27906615a9",
+    "userInfo" : "Jag är starstofts hund",
+    "recipeBook" : ["600820d47e4368413ca21fdf"],
+    "imageURL": "http://localhost:8080/api/images/6009769d9665db27906615a9"
 }
 
 ###
@@ -40,7 +40,7 @@ POST http://localhost:8080/api/users/session/login/
 Content-Type: application/json
 
 {
-    "username" : "starstoft",
+    "username" : "Ninja",
     "password" : "secret"
 }
 

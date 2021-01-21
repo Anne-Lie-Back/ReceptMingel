@@ -41,14 +41,32 @@ const AuthenticationContextProvider = (props) => {
         setRecipeBook(newList) 
     };
 
-    const patchRecipeBook = async(id) => {
+    //for updating both recipeBook and user
+    const updateUser = async(id, inputValues) => {
         await axios
-        .patch(`/users/${id}`, { recipeBook: recipeBook})
+        .put(`/users/${id}`, inputValues, {withCredentials: true})
         .then((res) => {
-            console.log('bookPatch', res);
+            console.log('Updated user', res);
         })
         .catch(error => console.log(error))
     };
+
+    //Register new user
+    const registerNewUser = async (inputValues) => {
+        await axios
+        .post('/users', inputValues)
+        .then((res) => {
+            if(res.data.message){
+                if (res.data.message === "Authenticated") {
+                    setIsAuthenticated(true);
+                    setUser(res.data.user);
+                    setIsLoadingUser(false)
+                } 
+                return res.data.message
+            }; 
+        })
+        .catch(error => console.log(error))  
+    }
 
     const login = async (username, password) => {
 
@@ -86,13 +104,12 @@ const AuthenticationContextProvider = (props) => {
                 isAuthenticated,
                 isLoadingUser,
                 isLoadingUnauthorized,
+                registerNewUser,
                 login,
                 logout,
                 removeRecipeBookItem,
                 addRecipeBookItem,
-                patchRecipeBook,
-                //register,
-                //updateUser,
+                updateUser,
             }}
         />
     );

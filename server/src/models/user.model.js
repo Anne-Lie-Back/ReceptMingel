@@ -70,17 +70,6 @@ UserSchema.pre("save", function (next) {
     return process.env.DOMAIN + this.image.toString();
   });
 
-  //TODO: Refactorize later
-/* UserSchema.pre('save', (next) => {
-    const user = this;
-    bcrypt.hash( user.password, 10, (err, hash) => {
-        if(err) return next(err);
-        user.password = hash;
-        next();
-    });
-}); */
-
-
 // rehashes password when user is updated, enables possibility for user to change their password
 UserSchema.pre(["updateOne", "findOneAndUpdate"], function (next) {
     const user = this;
@@ -112,23 +101,5 @@ UserSchema.statics.authenticate = function (username, password, callback) {
     });
   };
 
-  //TODO: Refactorize later
-/* UserSchema.statics.authenticate = (username, password, callback) => {
-    User.findOne({ username: username }).exec((err, user) => {
-        if(err) return callback(err);
-        else if(!user){
-            const err = new ErrorHandler( 401, "Användaren hittades inte");
-            return callback(err);
-        }
-        bcrypt.compare(password, user.password, (err, result) => {
-            if(result === true){
-                return callback(null, user);
-            } else {
-                return callback();
-            }
-        })
-    })
-}
- */
 const User = mongoose.model("User", UserSchema);
 module.exports = { User, UserSchema };

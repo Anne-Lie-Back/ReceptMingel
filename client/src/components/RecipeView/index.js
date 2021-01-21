@@ -1,4 +1,4 @@
-import {useContext, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import { useHistory } from 'react-router-dom';
 import { styled } from 'styletron-react';
 import THEME from './../../config/theme';
@@ -91,26 +91,50 @@ const SharedIcon = styled(Icon,({$isSharedRecipe})=> ({
     }
 }));
 
-const RecipeView = ({setIsEdit, isLoading, slug, getRecipeById, recipe, getRecipesByAuthor, setRecipeBook, recipeBook, addRecipeBookItem, removeRecipeBookItem, patchRecipeBook}) => {
-    const {user} = useContext(AuthenticationContext);
+const RecipeView = ({setIsEdit, isLoading, slug, getRecipeById, recipe, getRecipesByAuthor}) => {
+    const {user, updateUser} = useContext(AuthenticationContext);
     const {patchRecipe, deleteRecipe} = useContext(RecipeContext);
     //isSharedRecipe helps to display correct icon
     const [isSharedRecipe, setIsShared] = useState(recipe.isShared);
     const [isStarred, setIsStarred] = useState(false);
-    
+    const [userObject, setUserObject] = useState({
+        username : user.username,
+        password : user.password,
+        firstName : user.firstName,
+        lastName : user.lastName,
+        image : user.image,
+        userInfo : user.userInfo,
+        recipeBook : user.recipeBook,
+        imageURL: user.imageURL
+    })
 
     let history = useHistory();
-
     
+    const removeRecipeBookItem = async (list, id) => {
+        const newList = list.filter((item) => item !== id);
+        await setUserObject({
+            ...userObject,
+            recipeBook: newList,
+        })
+    };
 
-    
+    const addRecipeBookItem = (listItem) => {
+        const newItem = listItem;
+        const newList = [...userObject.recipeBook, newItem];
+        setUserObject({
+            ...userObject,
+            recipeBook: newList,
+        })
+    };
+
+    useEffect(() => {
+        updateUser(user._id, userObject)
+    }, [userObject])
     
     //Patches recipe, gets the new recipe and changes icon
     const handlePatchRecipe = (value) => {
+        isSharedRecipe? removeRecipeBookItem(userObject.recipeBook, recipe._id) : addRecipeBookItem(recipe._id);
         patchRecipe(recipe._id, value)
-        isSharedRecipe? removeRecipeBookItem(recipeBook, recipe._id) : addRecipeBookItem(recipe._id);
-       // patchRecipeBook(user._id)
-
         getRecipeById(recipe._id)
         setIsShared(!isSharedRecipe);
     };

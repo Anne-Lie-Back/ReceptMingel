@@ -5,6 +5,10 @@ import { createContext } from 'react';
     isLoadingUser: true,
     isLoadingUnauthorized: true,
     user: null,
+    registerNewUser: (user) =>
+    new Promise((resolve, reject) => {
+      resolve("")
+    }),
     login: (username, password) =>
       new Promise((resolve, reject) => {
         resolve("");
