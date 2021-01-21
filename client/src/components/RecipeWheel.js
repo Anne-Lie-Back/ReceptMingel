@@ -54,7 +54,7 @@ const StyledLink = styled(Link, {
     textDecoration: 'none',
 
     ':hover' : {
-        backgroundColor: '#00000090',
+        color: THEME.colors.contrast[0],
         cursor: 'pointer'
     }
 

@@ -23,6 +23,12 @@ const FilterInput = styled(InputField, {
     fontSize: THEME.fontSizes.small,
 });
 
+const DecorativeLine = styled('div', {
+    width: '100%',
+    height: '0.6rem',
+    backgroundColor: THEME.colors.grey[0]
+});
+
 const RecipeBookView = () => {
     const {recipeBook} = useContext(AuthenticationContext);
     const [filterInput, setFilterInput] = useState('');
@@ -72,7 +78,7 @@ const RecipeBookView = () => {
                 slug = {slug}
                 route = "/recipeBook/"
             />
-            <PartingStrip width = "100%"/>
+            <DecorativeLine/>
             {isLoading? 
                 <p>Bakar recept...</p>
                 :

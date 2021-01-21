@@ -8,6 +8,10 @@ const Wrapper = styled('div', {
     backgroundColor: THEME.colors.white[0],
     borderRadius: '5px',
     boxShadow: '0 0 5px black',
+    ':hover' : {
+        backgroundColor: THEME.colors.contrast[0],
+        cursor: 'pointer'
+    }
 });
 
 const ImageContainer = styled('div', ({$image}) => ({
