@@ -65,7 +65,6 @@ const RecipeBookPage = () => {
                 <RecipeBookView
                     sharedRecipes = {sharedRecipes}
                     recipe = {recipe}
-
                 />
             </GridContentWrapper>
         </>

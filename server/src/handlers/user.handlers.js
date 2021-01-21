@@ -64,19 +64,13 @@ const getSessionUser = (req, res, next) => {
 
 //GET RECIPEBOOK FOR USER
 const getRecipeBook = (req, res, next) => {
-  User.find()
-  .select("recipe _id")
-  .populate('recipe')
-  .exec()
-  .then(data => {
+  User.find({_id: req.params.id})
+  .populate("recipeBook")
+  .then(docs => {
     res.status(200).json({
-      recipebook: data.map(data => {
+      recipeBook: docs.map(doc => {
         return {
-          recipe: data.recipe,
-          request: {
-            type: "GET",
-            url: "http://localhost:8080/recipes/" + data._id
-          }
+          recipe: doc.recipeBook,
         };
       })
     });

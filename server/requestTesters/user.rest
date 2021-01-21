@@ -4,6 +4,9 @@ GET http://localhost:8080/api/users/all
 GET http://localhost:8080/api/users/
 
 ###
+GET http://localhost:8080/api/users/recipebook/600806e24c55ab2c8c310f77
+
+###
 POST http://localhost:8080/api/users/
 Content-Type: application/json
 
@@ -18,18 +21,17 @@ Content-Type: application/json
 }
 
 ###
-PUT http://localhost:8080/api/users/6009769f9665db27906615ab
+PUT http://localhost:8080/api/users/600806e24c55ab2c8c310f77
 Content-Type: application/json
 
 {
-    "username" : "Ninja",
-    "password" : "secret",
-    "firstName" : "Ninja",
-    "lastName" : "Bäck",
-    "image" : "6009769d9665db27906615a9",
-    "userInfo" : "Jag är starstofts hund",
-    "recipeBook" : ["600820d47e4368413ca21fdf"],
-    "imageURL": "http://localhost:8080/api/images/6009769d9665db27906615a9"
+    "username" : "BangBang",
+    "firstName" : "Bengan",
+    "lastName" : "Bengtsson",
+    "image" : "600806c64c55ab2c8c310f75",
+    "userInfo" : "Jag gillar körv. (Detta är ett testkonto)",
+    "recipeBook" : ["600820d47e4368413ca21fdf", "6005daeb83df2937ec206ee6"],
+    "imageURL": "http://localhost:8080/api/images/600806c64c55ab2c8c310f75"
 }
 
 ###
@@ -40,7 +42,7 @@ POST http://localhost:8080/api/users/session/login/
 Content-Type: application/json
 
 {
-    "username" : "Ninja",
+    "username" : "BangBang",
     "password" : "secret"
 }
 

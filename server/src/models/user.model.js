@@ -38,8 +38,8 @@ const UserSchema = new Schema({
     },
     //TODO update to [RecipeSchema] ? (see order-schema)
     recipeBook: [{
-        type: mongoose.ObjectId,
-        ref: 'Recipe',
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Recipe",
         required: false,
     }],
     externalRecipes: [{
@@ -65,6 +65,20 @@ UserSchema.pre("save", function (next) {
     });
   });
 
+/*   userSchema.pre('save', function(next) {
+    const user = this;
+    if (!user.isModified('password')) return next();
+
+    bcrypt.genSalt(10, function(err, salt) {
+        if (err) return next(err);
+        bcrypt.hash(user.password, salt, null, function(err, hash) {
+            if (err) return next(err);
+            user.password = hash;
+            next();
+        });
+    });
+});
+ */
   //handles getting avatar-image-file
   UserSchema.virtual("imageURL").get(function () {
     return process.env.DOMAIN + this.image.toString();
@@ -73,6 +87,10 @@ UserSchema.pre("save", function (next) {
 // rehashes password when user is updated, enables possibility for user to change their password
 UserSchema.pre(["updateOne", "findOneAndUpdate"], function (next) {
     const user = this;
+
+    if (!user._update.password) {
+      return next()
+    }
     bcrypt.hash(user._update.password, 10, function (err, hash) {
       if (err) {
         return next(err);

@@ -23,7 +23,7 @@ router.get('/all', isAuthenticated, getAllUsers, (req, res) => {
     res.status(200).json(res.allUsers);
 })
 
-//GET ONE USER
+//GET ONE USER (TODO)
 router.get('/:id',isAuthenticated, (req, res) => {
     res.status(200).json('Hello!');
 })

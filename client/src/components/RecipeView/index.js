@@ -99,7 +99,6 @@ const RecipeView = ({setIsEdit, isLoading, slug, getRecipeById, recipe, getRecip
     const [isStarred, setIsStarred] = useState(false);
     const [userObject, setUserObject] = useState({
         username : user.username,
-        password : user.password,
         firstName : user.firstName,
         lastName : user.lastName,
         image : user.image,
