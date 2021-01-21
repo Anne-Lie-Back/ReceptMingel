@@ -5,7 +5,9 @@ import AuthenticationContext from './context';
 const AuthenticationContextProvider = (props) => {
     const [user, setUser] = useState(null);
     const [recipeBook, setRecipeBook] = useState([]);
+    const [editRecipeBook, setEditRecipeBook] = useState([]);
     const [isLoadingUser, setIsLoadingUser] = useState(true);
+    const [isLoadingBook, setIsLoadingBook] = useState(true)
     const [isLoadingUnauthorized, setIsLoadingUnauthorized] = useState(false);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
@@ -29,16 +31,36 @@ const AuthenticationContextProvider = (props) => {
         fetchData();
     },[]); 
 
+    useEffect(() => {
+        user && getRecipeBook(user._id)
+    }, [user])
+
+    const getRecipeBook = async(id) => {
+        try{
+            let data = await axios.get(`/users/recipeBook/${id}`, { withCredentials: true })
+            .then(({data}) => data);
+            setRecipeBook(data)
+            setIsLoadingBook(false)
+        }catch(error){
+            console.log(error)
+        }
+    }
+
     const removeRecipeBookItem = (list, id) => {
         const newList = list.filter((item) => item !== id);
-        setRecipeBook(newList) 
+        setUser({
+            ...user,
+            recipeBook: newList,
+        })
     };
 
     const addRecipeBookItem = (listItem) => {
         const newItem = listItem;
-        
-        const newList = [...recipeBook, newItem];
-        setRecipeBook(newList) 
+        const newList = [...user.recipeBook, newItem];
+        setUser({
+            ...user,
+            recipeBook: newList,
+        })
     };
 
     //for updating both recipeBook and user
@@ -110,6 +132,8 @@ const AuthenticationContextProvider = (props) => {
                 removeRecipeBookItem,
                 addRecipeBookItem,
                 updateUser,
+                recipeBook,
+                getRecipeBook
             }}
         />
     );

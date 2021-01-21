@@ -5,6 +5,7 @@ import { createContext } from 'react';
     isLoadingUser: true,
     isLoadingUnauthorized: true,
     user: null,
+    recipeBook: null,
     registerNewUser: (user) =>
     new Promise((resolve, reject) => {
       resolve("")
@@ -17,6 +18,7 @@ import { createContext } from 'react';
     removeRecipeBookItem: () => {},
     addRecipeBookItem: () => {},
     patchRecipeBook: () => {},
+    getRecipeBook: () => {}
 /*    TODO, remove or insert?
       register: (user) =>
       new Promise((resolve, reject) => {

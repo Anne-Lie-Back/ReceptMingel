@@ -1,15 +1,15 @@
 import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from '../axios';
-import bxSearch from '@iconify/icons-bx/bx-search';
+import bxBookReader from '@iconify/icons-bx/bx-book-reader';
 import Hero from '../components/Hero';
-import GridContentWrapper from '../components/GridContentWrapper';
-import SideMenu from '../components/SideMenu';
+//import GridContentWrapper from '../components/GridContentWrapper';
+//import SideMenu from '../components/SideMenu';
 import RecipeBookView from '../components/RecipeBookView';
 import AuthenticationContext from '../contexts/authentication/context';
 
 const RecipeBookPage = () => {
-    const {user} = useContext(AuthenticationContext);
+    const {recipeBook, user} = useContext(AuthenticationContext);
 
     const [isLoading, setIsLoading] = useState(true);
     const [sharedRecipes, setSharedRecipes] = useState([]);
@@ -25,7 +25,7 @@ const RecipeBookPage = () => {
             setIsLoading(false);
         });
     };
-
+    console.log('recipeBook', recipeBook)
     useEffect(() => { 
         getRecipesByIsShared()
         setIsLoading(true)
@@ -58,15 +58,14 @@ const RecipeBookPage = () => {
         <>
             <Hero 
                 title = 'Min Receptbok' 
-                icon = {bxSearch} 
+                icon = {bxBookReader} 
             />
-            <GridContentWrapper>
-                <SideMenu/>
+{/*                 <SideMenu/> */}
                 <RecipeBookView
                     sharedRecipes = {sharedRecipes}
                     recipe = {recipe}
+                    $style = {{width: '100%'}}
                 />
-            </GridContentWrapper>
         </>
     );
 
