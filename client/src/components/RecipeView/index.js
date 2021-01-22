@@ -244,8 +244,7 @@ const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, ge
                                                         icon = {bxEdit}
                                                         onClick = {() => setIsEdit(true)}
                                                     />
-                                                </FlexRow>
-                                                
+                                                </FlexRow> 
                                             }
                                         </>
                                     }

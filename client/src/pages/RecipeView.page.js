@@ -16,7 +16,6 @@ const RecipeViewPage = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [usersRecipes, setUsersRecipes] = useState([]);
     const [recipe, setRecipe] = useState(null);
-
     const [inputValues, setInputValues] = useState({
         title: null,
         preambleHTML: '',
@@ -31,7 +30,8 @@ const RecipeViewPage = () => {
         author: user.username,
         isShared: isEdit? recipe.isShared : false
     });
-
+    
+    console.log('user.recipeBook', user.recipeBook)
     const [userObject, setUserObject] = useState({
         username : user.username,
         firstName : user.firstName,
@@ -59,13 +59,11 @@ const RecipeViewPage = () => {
         };
     };
 
-    //Gets all the recipes for user when component mounts, and when it is done it sets loading to true again when 
-    //component has gotten their data
-    useEffect(() => { 
+    useEffect(() => {
         getRecipesByAuthor(user._id)
-        setIsLoading(true)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [])
+
+    console.log('usersRecipe', usersRecipes)
 
     //Gets correct recipe from db by using url-slug and sets loading to false when fetching is done
     // so we know data isn't null on rendering

@@ -31,9 +31,12 @@ const AuthenticationContextProvider = (props) => {
         fetchData();
     },[]); 
 
-    useEffect(() => {
-        user && getRecipeBook(user._id)
-    }, [user])
+    //TODO BUG? if update recipeBook doesn't work it may be this thing that needs to be somewhere, or remove !isLoadingUser
+   useEffect(() => {
+        (!isLoadingUser && user) && getRecipeBook(user._id)
+    }, [user]) 
+
+    console.log('CONTEXT', user)
 
     const getRecipeBook = async(id) => {
         try{
