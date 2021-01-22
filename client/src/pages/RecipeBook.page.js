@@ -9,7 +9,7 @@ import RecipeBookView from '../components/RecipeBookView';
 import AuthenticationContext from '../contexts/authentication/context';
 
 const RecipeBookPage = () => {
-    const {recipeBook, user} = useContext(AuthenticationContext);
+    const {recipeBook, getRecipeBook, user} = useContext(AuthenticationContext);
 
     const [isLoading, setIsLoading] = useState(true);
     const [sharedRecipes, setSharedRecipes] = useState([]);
@@ -25,9 +25,9 @@ const RecipeBookPage = () => {
             setIsLoading(false);
         });
     };
-    console.log('recipeBook', recipeBook)
     useEffect(() => { 
         getRecipesByIsShared()
+        getRecipeBook(user._id)
         setIsLoading(true)
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -62,6 +62,7 @@ const RecipeBookPage = () => {
             />
 {/*                 <SideMenu/> */}
                 <RecipeBookView
+                    view = "RecipeBook"
                     sharedRecipes = {sharedRecipes}
                     recipe = {recipe}
                     $style = {{width: '100%'}}

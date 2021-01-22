@@ -144,6 +144,7 @@ const RecipeViewPage = () => {
                                         /> 
                                         : 
                                         <RecipeView 
+                                            view = "RecipeView"
                                             setIsEdit = {setIsEdit}
                                             slug = {slug} 
                                             getRecipeById = {getRecipeById}

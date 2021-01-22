@@ -90,7 +90,7 @@ const SharedIcon = styled(Icon,({$isSharedRecipe})=> ({
     }
 }));
 
-const RecipeView = ({setIsEdit, isLoading, slug, getRecipeById, recipe, getRecipesByAuthor, userObject, setUserObject}) => {
+const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, getRecipesByAuthor, userObject, setUserObject}) => {
     const {recipeBook, user, updateUser} = useContext(AuthenticationContext);
     const {patchRecipe, deleteRecipe} = useContext(RecipeContext);
     //isSharedRecipe helps to display correct icon
@@ -121,7 +121,7 @@ const RecipeView = ({setIsEdit, isLoading, slug, getRecipeById, recipe, getRecip
     };
 
     useEffect(() => {
-        getRecipeById(recipe._id)
+        if (view === "RecipeView") getRecipeById(recipe._id)
         updateUser(user._id, userObject)
     }, [userObject])
 
