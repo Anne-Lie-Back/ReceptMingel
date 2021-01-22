@@ -90,26 +90,19 @@ const SharedIcon = styled(Icon,({$isSharedRecipe})=> ({
     }
 }));
 
-const RecipeView = ({setIsEdit, isLoading, slug, getRecipeById, recipe, getRecipesByAuthor}) => {
+const RecipeView = ({setIsEdit, isLoading, slug, getRecipeById, recipe, getRecipesByAuthor, userObject, setUserObject}) => {
     const {recipeBook, user, updateUser} = useContext(AuthenticationContext);
     const {patchRecipe, deleteRecipe} = useContext(RecipeContext);
     //isSharedRecipe helps to display correct icon
     const [isSharedRecipe, setIsShared] = useState(recipe.isShared);
     //isStarred helps to display correct icon
     const [isStarred, setIsStarred] = useState(false);
-    const [userObject, setUserObject] = useState({
-        username : user.username,
-        firstName : user.firstName,
-        lastName : user.lastName,
-        image : user.image,
-        userInfo : user.userInfo,
-        recipeBook : user.recipeBook,
-        imageURL: user.imageURL
-    });
+    
 
     let history = useHistory();
     
     const removeRecipeBookItem = async (list, id) => {
+        console.log('REMOVE')
         const newList = list.filter((item) => item !== id);
         await setUserObject({
             ...userObject,
@@ -118,6 +111,7 @@ const RecipeView = ({setIsEdit, isLoading, slug, getRecipeById, recipe, getRecip
     };
 
     const addRecipeBookItem = (listItem) => {
+        console.log('ADD')
         const newItem = listItem;
         const newList = [...userObject.recipeBook, newItem];
         setUserObject({
@@ -127,6 +121,7 @@ const RecipeView = ({setIsEdit, isLoading, slug, getRecipeById, recipe, getRecip
     };
 
     useEffect(() => {
+        getRecipeById(recipe._id)
         updateUser(user._id, userObject)
     }, [userObject])
 
@@ -134,18 +129,24 @@ const RecipeView = ({setIsEdit, isLoading, slug, getRecipeById, recipe, getRecip
         const index = recipeBook.indexOf(x => x._id === recipe._id);
         index === -1? setIsStarred(true) : setIsStarred(false)
     }, [slug])
-
-    console.log('isStarred', isStarred)
     
     //Patches recipe, gets the new recipe and changes icon
-    const handlePatchRecipe = (value) => {
-        isSharedRecipe? removeRecipeBookItem(userObject.recipeBook, recipe._id) : addRecipeBookItem(recipe._id);
+    const handlePatchRecipe = () => {
+        let value = recipe.isShared? {"isShared" : false} : {"isShared" : true}
+        console.log('value', value)
         patchRecipe(recipe._id, value)
-        getRecipeById(recipe._id)
-        setIsShared(!isSharedRecipe);
+        isSharedRecipe? removeRecipeBookItem(userObject.recipeBook, recipe._id) : addRecipeBookItem(recipe._id);
     };
 
-    const handleStarRecipe = (value) => {
+
+    useEffect(() => {
+        console.log('wiiii', recipe.isShared)
+        setIsShared(recipe.isShared);
+    }, [recipe.isShared])
+
+    console.log('isShared', recipe.isShared)
+
+    const handleStarRecipe = () => {
         isStarred? removeRecipeBookItem(userObject.recipeBook, recipe._id) : addRecipeBookItem(recipe._id);
         getRecipeById(recipe._id)
         setIsStarred(!isStarred);
@@ -221,7 +222,7 @@ const RecipeView = ({setIsEdit, isLoading, slug, getRecipeById, recipe, getRecip
                                         <SharedIcon 
                                             $isSharedRecipe = {isSharedRecipe} 
                                             icon={isSharedRecipe ? roundRadioButtonChecked : roundRadioButtonUnchecked} 
-                                            onClick = {() => handlePatchRecipe(isShared? {"isShared" : false} : {"isShared" : true})}
+                                            onClick = {() => handlePatchRecipe()}
                                         />
                                         <HeadlineSmall> 
                                             {isSharedRecipe? 'DELAD MED DINA VÄNNER' : 'FÄRDIG? DELA MED DINA VÄNNER'}

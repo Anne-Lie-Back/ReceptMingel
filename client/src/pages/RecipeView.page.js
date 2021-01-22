@@ -32,6 +32,16 @@ const RecipeViewPage = () => {
         isShared: isEdit? recipe.isShared : false
     });
 
+    const [userObject, setUserObject] = useState({
+        username : user.username,
+        firstName : user.firstName,
+        lastName : user.lastName,
+        image : user.image,
+        userInfo : user.userInfo,
+        recipeBook : user.recipeBook,
+        imageURL: user.imageURL
+    });
+
     //For getting ID to recipe so we can get it and display it
     let { slug } = useParams();
 
@@ -139,7 +149,9 @@ const RecipeViewPage = () => {
                                             getRecipeById = {getRecipeById}
                                             getRecipesByAuthor = {getRecipesByAuthor}
                                             isLoading = {isLoading} 
-                                            recipe = {recipe} 
+                                            recipe = {recipe}
+                                            userObject = {userObject} 
+                                            setUserObject = {setUserObject}
                                         />
                                     }
                                 </>
