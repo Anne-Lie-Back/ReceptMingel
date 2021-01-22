@@ -21,6 +21,8 @@ const ImageContainer = styled('div', ({$image}) => ({
     backgroundPosition: 'center',
     backgroundRepeat:' no-repeat',
     backgroundSize: 'cover',
+    borderTopRightRadius: '5px',
+    borderTopLeftRadius: '5px'
 }));
 
 const TitleWrapper = styled('div', {

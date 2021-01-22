@@ -2,7 +2,6 @@ import {useContext, useEffect, useState} from 'react';
 import { useHistory } from 'react-router-dom';
 import { styled } from 'styletron-react';
 import THEME from './../../config/theme';
-import axios from '../../axios';
 import AuthenticationContext from '../../contexts/authentication/context';
 import RecipeContext from '../../contexts/recipe/context';
 
@@ -92,10 +91,11 @@ const SharedIcon = styled(Icon,({$isSharedRecipe})=> ({
 }));
 
 const RecipeView = ({setIsEdit, isLoading, slug, getRecipeById, recipe, getRecipesByAuthor}) => {
-    const {user, updateUser} = useContext(AuthenticationContext);
+    const {recipeBook, user, updateUser} = useContext(AuthenticationContext);
     const {patchRecipe, deleteRecipe} = useContext(RecipeContext);
     //isSharedRecipe helps to display correct icon
     const [isSharedRecipe, setIsShared] = useState(recipe.isShared);
+    //isStarred helps to display correct icon
     const [isStarred, setIsStarred] = useState(false);
     const [userObject, setUserObject] = useState({
         username : user.username,
@@ -105,7 +105,7 @@ const RecipeView = ({setIsEdit, isLoading, slug, getRecipeById, recipe, getRecip
         userInfo : user.userInfo,
         recipeBook : user.recipeBook,
         imageURL: user.imageURL
-    })
+    });
 
     let history = useHistory();
     
@@ -129,6 +129,13 @@ const RecipeView = ({setIsEdit, isLoading, slug, getRecipeById, recipe, getRecip
     useEffect(() => {
         updateUser(user._id, userObject)
     }, [userObject])
+
+    useEffect(() => {
+        const index = recipeBook.indexOf(x => x._id === recipe._id);
+        index === -1? setIsStarred(true) : setIsStarred(false)
+    }, [slug])
+
+    console.log('isStarred', isStarred)
     
     //Patches recipe, gets the new recipe and changes icon
     const handlePatchRecipe = (value) => {
@@ -138,12 +145,31 @@ const RecipeView = ({setIsEdit, isLoading, slug, getRecipeById, recipe, getRecip
         setIsShared(!isSharedRecipe);
     };
 
+    const handleStarRecipe = (value) => {
+        isStarred? removeRecipeBookItem(userObject.recipeBook, recipe._id) : addRecipeBookItem(recipe._id);
+        getRecipeById(recipe._id)
+        setIsStarred(!isStarred);
+    }
+
     //Deletes recipe, updates sidemenu-list and redirects user to start-recipe-page
     const handleDelete = (id) => {
         deleteRecipe(id);
         getRecipesByAuthor(recipe.authorId);
         history.push('/recipe');
     };
+
+    //Check if recipe already is saved in recipeBook
+   /*  const checkIfAlreadyStarred = () => {
+        const index =  recipeBook.findIndex(recipe._id)
+        if (index > -1){
+            return true
+        }
+        else if(index === -1) {
+            return false
+        }
+    }; */
+
+    console.log('recipe._id', recipe._id)
 
     //Transform for easier follow on where the different items are showing and are styled.
     //Keeps id as recipe._id to easier see type of id used
@@ -183,7 +209,7 @@ const RecipeView = ({setIsEdit, isLoading, slug, getRecipeById, recipe, getRecip
                                     <StarIcon 
                                         $isStarred = {isStarred} 
                                         icon={isStarred? roundStarRate : roundStarOutline} 
-                                        onClick = {() => setIsStarred(!isStarred)}
+                                        onClick = {() => handleStarRecipe(isStarred? {"isStarred" : false} : {"isStarred" : true})}
                                     />
                                     <HeadlineSmall> 
                                         {isStarred? 'SPARAD I DIN RECEPTBOK':'SPARA I DIN RECEPTBOK'}

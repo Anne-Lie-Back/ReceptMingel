@@ -37,8 +37,7 @@ const RecipeBookView = () => {
 
     let { slug } = useParams();
 
-    //transform recipebookdata for cleanliness
-    const transformedRecipeData = recipeBook.recipeBook[0].recipe
+    console.log('recipeBook', recipeBook)
     
     //Filterinput passed on to RecipeWheel as prop
     const handleChange = (event) => {
@@ -72,7 +71,7 @@ const RecipeBookView = () => {
                 placeholder = 'Sök i din receptbok här...'
             />
             <RecipeWheel 
-                recipeList = {transformedRecipeData} 
+                recipeList = {recipeBook} 
                 height = "255px" 
                 bannerTitle = "Filter-resultat"
                 slug = {slug}

@@ -39,7 +39,7 @@ const AuthenticationContextProvider = (props) => {
         try{
             let data = await axios.get(`/users/recipeBook/${id}`, { withCredentials: true })
             .then(({data}) => data);
-            setRecipeBook(data)
+            setRecipeBook(data.recipeBook[0].recipe)
             setIsLoadingBook(false)
         }catch(error){
             console.log(error)
