@@ -29,7 +29,7 @@ const DecorativeLine = styled('div', {
     backgroundColor: THEME.colors.grey[0]
 });
 
-const RecipeBookView = () => {
+const RecipeBookView = ({userObject, setUserObject}) => {
     const {recipeBook} = useContext(AuthenticationContext);
     const [filterInput, setFilterInput] = useState('');
     const [isLoading, setIsLoading] = useState(true);
@@ -56,10 +56,12 @@ const RecipeBookView = () => {
     };
 
     useEffect(() => {
+        console.log('slug', slug)
         if(slug) {
             getRecipeById(slug);
             setIsLoading(true);
-        } 
+            console.log("runs!")
+        }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [slug]);
 
@@ -78,15 +80,26 @@ const RecipeBookView = () => {
                 route = "/recipeBook/"
             />
             <DecorativeLine/>
-            {isLoading? 
-                <p>Bakar recept...</p>
+            {recipe === null && !slug ?
+                <p>Hoppas du hittar något smaskigt i din receptbok</p>
                 :
-                <RecipeView 
-                    $style = {{margin: '1rem 0 3rem 0'}}
-                    slug = {slug}
-                    isLoading = {isLoading}
-                    recipe = {recipe}
-                /> 
+                <>
+                    {isLoading? 
+                        <>
+                            <p>Bakar recept...</p>
+                        </>
+                        :
+                        <RecipeView 
+                            view = "RecipeBook"
+                            $style = {{margin: '1rem 0 3rem 0'}}
+                            slug = {slug}
+                            isLoading = {isLoading}
+                            recipe = {recipe}
+                            userObject = {userObject}
+                            setUserObject = {setUserObject}
+                        /> 
+                    }
+                </>
             }
              
         </Wrapper>

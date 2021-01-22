@@ -15,6 +15,16 @@ const RecipeBookPage = () => {
     const [sharedRecipes, setSharedRecipes] = useState([]);
     const [recipe, setRecipe] = useState(null);
 
+    const [userObject, setUserObject] = useState({
+        username : user.username,
+        firstName : user.firstName,
+        lastName : user.lastName,
+        image : user.image,
+        userInfo : user.userInfo,
+        recipeBook : user.recipeBook,
+        imageURL: user.imageURL
+    });
+
     let { slug } = useParams();
 
     const getRecipesByIsShared = async() => {
@@ -26,33 +36,10 @@ const RecipeBookPage = () => {
         });
     };
     useEffect(() => { 
-        getRecipesByIsShared()
         getRecipeBook(user._id)
         setIsLoading(true)
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
-    useEffect(() => {
-        if(slug) {
-            getRecipeById(slug);
-            setIsLoading(true);
-        } /* else if(!slug) {
-            setRecipe(usersRecipes[0]);
-        } */
-        /* if(!slug) setRecipe(usersRecipes[usersRecipes.length - 1]) */
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [slug]);
-
-    const getRecipeById = async(slug) => {
-        try{
-            let data = await axios.get(`recipes/${slug}`, { withCredentials: true })
-            .then(({data}) => data);
-            setRecipe(data)
-            setIsLoading(false)
-        }catch(error){
-            console.log(error)
-        };
-    };
 
     return(
         <>
@@ -62,10 +49,11 @@ const RecipeBookPage = () => {
             />
 {/*                 <SideMenu/> */}
                 <RecipeBookView
-                    view = "RecipeBook"
                     sharedRecipes = {sharedRecipes}
                     recipe = {recipe}
                     $style = {{width: '100%'}}
+                    userObject = {userObject}
+                    setUserObject = {setUserObject}
                 />
         </>
     );

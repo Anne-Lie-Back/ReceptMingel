@@ -48,6 +48,7 @@ const HeadlineSmall = styled ('h4', {
     fontSize: THEME.fontSizes.normal,
     fontWeight: 500,
     letterSpacing: '0.05rem',
+    textTransform: 'uppercase'
 });
 
 const RecipeWrapper = styled('div', {
@@ -91,14 +92,14 @@ const SharedIcon = styled(Icon,({$isSharedRecipe})=> ({
 }));
 
 const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, getRecipesByAuthor, userObject, setUserObject}) => {
-    const {recipeBook, user, updateUser} = useContext(AuthenticationContext);
+    const {recipeBook, getRecipeBook, user, updateUser} = useContext(AuthenticationContext);
     const {patchRecipe, deleteRecipe} = useContext(RecipeContext);
     //isSharedRecipe helps to display correct icon
     const [isSharedRecipe, setIsShared] = useState(recipe.isShared);
     //isStarred helps to display correct icon
     const [isStarred, setIsStarred] = useState(false);
     
-
+    console.log('recipeBook', userObject.recipeBook)
     let history = useHistory();
     
     const removeRecipeBookItem = async (list, id) => {
@@ -123,6 +124,7 @@ const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, ge
     useEffect(() => {
         if (view === "RecipeView") getRecipeById(recipe._id)
         updateUser(user._id, userObject)
+        if (view === "RecipeBook") getRecipeBook(user._id)
     }, [userObject])
 
     useEffect(() => {
@@ -135,6 +137,7 @@ const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, ge
         let value = recipe.isShared? {"isShared" : false} : {"isShared" : true}
         console.log('value', value)
         patchRecipe(recipe._id, value)
+        //TODO test to move this to useEffect that listens to recipe.isShared
         isSharedRecipe? removeRecipeBookItem(userObject.recipeBook, recipe._id) : addRecipeBookItem(recipe._id);
     };
 
@@ -217,30 +220,41 @@ const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, ge
                                     </HeadlineSmall>
                                 </>
                                 :
-                                <SpaceBetweenWrapper>  
-                                    <FlexRow $style = {{margin: 0}}>
-                                        <SharedIcon 
-                                            $isSharedRecipe = {isSharedRecipe} 
-                                            icon={isSharedRecipe ? roundRadioButtonChecked : roundRadioButtonUnchecked} 
-                                            onClick = {() => handlePatchRecipe()}
-                                        />
-                                        <HeadlineSmall> 
-                                            {isSharedRecipe? 'DELAD MED DINA VÄNNER' : 'FÄRDIG? DELA MED DINA VÄNNER'}
-                                        </HeadlineSmall>
-                                    </FlexRow>
-                                    {/* Renders Edit and delete-icon if session-user is the same as recipe-owner*/}
-                                    {user._id === authorId && 
-                                        <FlexRow $style = {{margin: 0}}>
-                                            <EditDeleteIcon
-                                                icon = {minusCircleOutline}
-                                                onClick = {() => handleDelete(recipe._id)}
-                                            />
-                                            <EditDeleteIcon
-                                                icon = {bxEdit}
-                                                onClick = {() => setIsEdit(true)}
-                                            />
-                                        </FlexRow>
+                                <SpaceBetweenWrapper>
+                                    {view === "RecipeView" &&
+                                        <>
+                                            <FlexRow $style = {{margin: 0}}>
+                                                <SharedIcon 
+                                                    $isSharedRecipe = {isSharedRecipe} 
+                                                    icon={isSharedRecipe ? roundRadioButtonChecked : roundRadioButtonUnchecked} 
+                                                    onClick = {() => handlePatchRecipe()}
+                                                />
+                                                <HeadlineSmall> 
+                                                    {isSharedRecipe? 'DELAD MED DINA VÄNNER' : 'FÄRDIG? DELA MED DINA VÄNNER'}
+                                                </HeadlineSmall>
+                                            </FlexRow>
+                                            {/* Renders Edit and delete-icon if session-user is the same as recipe-owner*/}
+                                            {user._id === authorId && 
+                                                <FlexRow $style = {{margin: 0}}>
+                                                    <EditDeleteIcon
+                                                        icon = {minusCircleOutline}
+                                                        onClick = {() => handleDelete(recipe._id)}
+                                                    />
+                                                    <EditDeleteIcon
+                                                        icon = {bxEdit}
+                                                        onClick = {() => setIsEdit(true)}
+                                                    />
+                                                </FlexRow>
+                                                
+                                            }
+                                        </>
                                     }
+                                    {view === "RecipeBook" && 
+                                        <HeadlineSmall> 
+                                            DETTA ÄR DITT RECEPT
+                                        </HeadlineSmall>
+                                    }
+                                    
                                 </SpaceBetweenWrapper>           
                             }
                         </>
