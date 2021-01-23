@@ -33,8 +33,22 @@ const getRecipeByID = (req, res, next) => {
 };
 
 //GET RECIPE BY IsShared
-const getRecipesByIsShared = (req, res, next) => {
+const getRecipesByIsPublic = (req, res, next) => {
     Recipe.find({isShared: true}, (error, recipesByIsShared) => {
+        try{
+            if(error) next(error);
+            if(!recipesByIsShared || recipesByIsShared.length === 0) throw new ErrorHandler(404, "Vi kunde inte hitta några recept");
+            res.recipesByIsShared = recipesByIsShared
+            next()
+        }catch(error){
+            next(error);
+        };
+    });
+};
+
+//GET RECIPE PRIVATE
+const getRecipesByIsPrivate = (req, res, next) => {
+    Recipe.find({isShared: false}, (error, recipesByIsShared) => {
         try{
             if(error) next(error);
             if(!recipesByIsShared || recipesByIsShared.length === 0) throw new ErrorHandler(404, "Vi kunde inte hitta några recept");
@@ -106,7 +120,8 @@ const deleteRecipe = (req, res, next) => {
 module.exports = {
     getAllRecipes,
     getRecipeByID,
-    getRecipesByIsShared,
+    getRecipesByIsPublic,
+    getRecipesByIsPrivate,
     getRecipesByAuthorId,
     createRecipe,
     updateRecipe,

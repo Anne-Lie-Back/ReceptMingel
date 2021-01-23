@@ -9,6 +9,7 @@ const {
     registerUser,
     getAllUsers,
     getSessionUser,
+    getRecipeBook,
     updateUser,
     loginUser,
     logoutUser,
@@ -18,15 +19,16 @@ const {
 //ENDPOINTS
 
 //GET ALL USERS
-router.get('/all', getSessionUser, getAllUsers, (req, res) => {
+router.get('/all', isAuthenticated, getAllUsers, (req, res) => {
     res.status(200).json(res.allUsers);
 })
 
-//GET ONE USER
+//GET ONE USER (TODO)
 router.get('/:id',isAuthenticated, (req, res) => {
     res.status(200).json('Hello!');
 })
 
+//TODO is this why I have small bug? wrong order of handlers?
 //GET SESSION USER
 router.get('/', isAuthenticated, getSessionUser, (req, res) => {
     res.status(200).json({ message: "Authenticated", user: res.user});
@@ -38,18 +40,23 @@ router.post('/', registerUser,(req, res) => {
     res.status(200).json({ message: "Authenticated", user: res.user});
 })
 
-//UPDATE USER
-router.put('/:id', getSessionUser, isAuthenticated, updateUser, (req, res) => {
+//UPDATE USER OR RECIPEBOOK
+router.put('/:id', isAuthenticated, getSessionUser, updateUser, (req, res) => {
     res.status(200).json(res.updateUser);
 })
 
-//PATCH recipeBook
-router.patch('/:id', getSessionUser, isAuthenticated, updateUser, (req, res) => {
-    res.status(200).json(res.updateUser);
+//GET Recipebook
+router.get('/recipebook/:id', isAuthenticated, getSessionUser, getRecipeBook, (req, res) => {
+    res.status(200).json(res.recipeBook)
 })
+
+//PATCH recipeBook TODO rmove?
+/* router.patch('recipebook/:id', getSessionUser, isAuthenticated, updateUser, (req, res) => {
+    res.status(200).json(res.updateUser);
+}) */
 
 //DELETE USER
-router.delete('/:id', getSessionUser, isAuthenticated, deleteUser,(req, res) => {
+router.delete('/:id', isAuthenticated, getSessionUser, deleteUser,(req, res) => {
     res.status(200).json(res.deletedUser)
 })
 

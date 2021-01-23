@@ -5,7 +5,9 @@ import AuthenticationContext from './context';
 const AuthenticationContextProvider = (props) => {
     const [user, setUser] = useState(null);
     const [recipeBook, setRecipeBook] = useState([]);
+    const [editRecipeBook, setEditRecipeBook] = useState([]);
     const [isLoadingUser, setIsLoadingUser] = useState(true);
+    const [isLoadingBook, setIsLoadingBook] = useState(true)
     const [isLoadingUnauthorized, setIsLoadingUnauthorized] = useState(false);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
@@ -29,28 +31,67 @@ const AuthenticationContextProvider = (props) => {
         fetchData();
     },[]); 
 
+    //TODO BUG? if update recipeBook doesn't work it may be this thing that needs to be somewhere, or remove !isLoadingUser
+   useEffect(() => {
+        (!isLoadingUser && user) && getRecipeBook(user._id)
+    }, [user]) 
+
+    console.log('CONTEXT', user)
+
+    const getRecipeBook = async(id) => {
+        try{
+            let data = await axios.get(`/users/recipeBook/${id}`, { withCredentials: true })
+            .then(({data}) => data);
+            setRecipeBook(data.recipeBook[0].recipe)
+            setIsLoadingBook(false)
+        }catch(error){
+            console.log(error)
+        }
+    }
+
     const removeRecipeBookItem = (list, id) => {
         const newList = list.filter((item) => item !== id);
-        setRecipeBook({newList}) 
+        setUser({
+            ...user,
+            recipeBook: newList,
+        })
     };
 
     const addRecipeBookItem = (listItem) => {
         const newItem = listItem;
-        
-        const newList = [...recipeBook, newItem];
-        setRecipeBook({                    
-            mdsaCategories: newList         
-        });
+        const newList = [...user.recipeBook, newItem];
+        setUser({
+            ...user,
+            recipeBook: newList,
+        })
     };
 
-    const patchRecipeBook = async(id) => {
+    //for updating both recipeBook and user
+    const updateUser = async(id, inputValues) => {
         await axios
-        .patch(`/users/${id}`, { recipeBook: recipeBook})
+        .put(`/users/${id}`, inputValues, {withCredentials: true})
         .then((res) => {
-            console.log('bookPatch', res);
+            console.log('Updated user', res);
         })
         .catch(error => console.log(error))
     };
+
+    //Register new user
+    const registerNewUser = async (inputValues) => {
+        await axios
+        .post('/users', inputValues)
+        .then((res) => {
+            if(res.data.message){
+                if (res.data.message === "Authenticated") {
+                    setIsAuthenticated(true);
+                    setUser(res.data.user);
+                    setIsLoadingUser(false)
+                } 
+                return res.data.message
+            }; 
+        })
+        .catch(error => console.log(error))  
+    }
 
     const login = async (username, password) => {
 
@@ -88,13 +129,14 @@ const AuthenticationContextProvider = (props) => {
                 isAuthenticated,
                 isLoadingUser,
                 isLoadingUnauthorized,
+                registerNewUser,
                 login,
                 logout,
                 removeRecipeBookItem,
                 addRecipeBookItem,
-                patchRecipeBook,
-                //register,
-                //updateUser,
+                updateUser,
+                recipeBook,
+                getRecipeBook
             }}
         />
     );

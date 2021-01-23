@@ -6,7 +6,8 @@ const router = express.Router();
 const {
     getAllRecipes, 
     getRecipeByID,
-    getRecipesByIsShared,
+    getRecipesByIsPublic,
+    getRecipesByIsPrivate,
     getRecipesByAuthorId,
     createRecipe,
     updateRecipe,
@@ -29,10 +30,16 @@ router.get('/:id', isAuthenticated, getRecipeByID, (req, res) => {
     res.status(200).json(res.recipe)
 });
 
-//GET RECIPE BY isShared
-router.get('/public', isAuthenticated, getRecipesByIsShared, (req, res) => {
-    res.status(200).json(res.recipesByIsShared)
+//GET RECIPE BY isShared:true
+router.get('/public', isAuthenticated, getRecipesByIsPublic, (req, res) => {
+    res.status(200).json(res.recipesByIsPublic)
 });
+
+//GET RECIPE BY isShared:false
+router.get('/private', isAuthenticated, getRecipesByIsPrivate, (req, res) => {
+    res.status(200).json(res.recipesByIsPrivate)
+});
+
 
 //GET RECIPE BY AUTHOR
 router.get('/author/:authorId', isAuthenticated, getRecipesByAuthorId, (req, res) => {

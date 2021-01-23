@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { styled } from 'styletron-react';
 import THEME from './../config/theme';
 import RecipeCardSmall from './RecipeCardSmall';
@@ -5,11 +6,11 @@ import RecipeCardSmall from './RecipeCardSmall';
 import owlTest from './../assets/images/owlTest.jpg'
 import imageTest from './../assets/images/imageTest.png';
 
-const Wrapper = styled('div', {
+const Wrapper = styled('div', ({$height}) => ({
     width: '100%',
-    height: '280px',
+    height: $height || '280px',
     backgroundColor: THEME.colors.white[0],
-});
+}));
 
 const Banner = styled('div', {
     width: '100%',
@@ -49,74 +50,92 @@ const ScrollWrapper = styled('div', {
     }
 });
 
+const StyledLink = styled(Link, {
+    textDecoration: 'none',
+
+    ':hover' : {
+        color: THEME.colors.contrast[0],
+        cursor: 'pointer'
+    }
+
+})
+
 // Flips the content of the rotated div once again so the content is not upside down.
 const Flip = styled('div', {
     transform: 'rotateX(180deg)',
 });
 
-const RecipeWheel = ({bannerTitle}) => {
+const RecipeWheel = ({bannerTitle, height, recipeList, route}) => {
+    
     //TODO Should be sent from parent (from db)
+    
     const textWheel = [
         {
             title: 'uggla',
-            image: owlTest
+            imageURK: owlTest
         },
         {
             title: 'gubbröra',
-            image: imageTest
+            imageURL: imageTest
         },
         {
             title: 'uggla',
-            image: owlTest
+            imageURL: owlTest
         },
         {
             title: 'gubbröra',
-            image: imageTest
+            imageURL: imageTest
         },
         {
             title: 'uggla',
-            image: owlTest
+            imageURL: owlTest
         },
         {
             title: 'gubbröra',
-            image: imageTest
+            imageURL: imageTest
         },
         {
             title: 'uggla',
-            image: owlTest
+            imageURL: owlTest
         },
         {
             title: 'gubbröra',
-            image: imageTest
+            imageURL: imageTest
         },
         {
             title: 'uggla',
-            image: owlTest
+            imageURL: owlTest
         },
         {
             title: 'gubbröra',
-            image: imageTest
+            imageURL: imageTest
         },
         {
             title: 'uggla',
-            image: owlTest
+            imageURL: owlTest
         },
         {
             title: 'gubbröra',
-            image: imageTest
+            imageURL: imageTest
         },
-        
     ]
+    //TODO remove
+    if (!recipeList){
+        recipeList = textWheel
+    }
+
     
     return(
-        <Wrapper>
+        <Wrapper $height = {height}>
             <Banner>
                 {bannerTitle}...
             </Banner>
             <ScrollWrapper>
-            {textWheel.map((item, index) => (
+            {recipeList.map((item) => (
                 <Flip>
-                    <RecipeCardSmall key = {index} title = {item.title} image = {item.image}/>
+                    <StyledLink to = {`${route + item._id}`}>
+                        <RecipeCardSmall key = {item._id} title = {item.title} image = {item.imageURL}/>
+                    </StyledLink>
                 </Flip>
             ))}   
             </ScrollWrapper>

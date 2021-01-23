@@ -4,32 +4,34 @@ GET http://localhost:8080/api/users/all
 GET http://localhost:8080/api/users/
 
 ###
+GET http://localhost:8080/api/users/recipebook/600806e24c55ab2c8c310f77
+
+###
 POST http://localhost:8080/api/users/
 Content-Type: application/json
 
 {
-    "username" : "Lee",
+    "username" : "Ninja",
     "password" : "secret",
     "firstName" : "Annely",
     "lastName" : "Back",
-    "avatar" : "https://img.koket.se/standard-mega/fisktacos-med-guacamole-och-mangosalsa.jpg.webp",
     "userInfo" : "Jag gillar mat ännu mer",
     "recipeBook" : [],
     "externalRecipes" : []
 }
 
 ###
-PUT http://localhost:8080/api/users/5fea279db50fe3329c55f910
+PUT http://localhost:8080/api/users/600806e24c55ab2c8c310f77
 Content-Type: application/json
 
 {
-    "username" : "starstoft",
-    "password" : "secret",
-    "firstName" : "Lee",
-    "lastName" : "Back",
-    "avatar" : "https://img.koket.se/standard-mega/fisktacos-med-guacamole-och-mangosalsa.jpg.webp",
-    "userInfo" : "Jag gillar mat",
-    "recipeBook" : ["5fe9c4c8e576571ac025cf3f"]
+    "username" : "BangBang",
+    "firstName" : "Bengan",
+    "lastName" : "Bengtsson",
+    "image" : "600806c64c55ab2c8c310f75",
+    "userInfo" : "Jag gillar körv. (Detta är ett testkonto)",
+    "recipeBook" : ["6005daeb83df2937ec206ee6", "60075edb273a0a2250dd636b", "6007ec1acd1b3e28146f806b", "6007fc7acd1b3e28146f8075", "600820d47e4368413ca21fdf", "600843ee1a7f0b38b4973e3b"],
+    "imageURL": "http://localhost:8080/api/images/600806c64c55ab2c8c310f75"
 }
 
 ###
@@ -40,7 +42,7 @@ POST http://localhost:8080/api/users/session/login/
 Content-Type: application/json
 
 {
-    "username" : "starstoft",
+    "username" : "BangBang",
     "password" : "secret"
 }
 

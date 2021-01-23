@@ -62,6 +62,26 @@ const getSessionUser = (req, res, next) => {
     });
 };
 
+//GET RECIPEBOOK FOR USER
+const getRecipeBook = (req, res, next) => {
+  User.find({_id: req.params.id})
+  .populate("recipeBook")
+  .then(docs => {
+    res.status(200).json({
+      recipeBook: docs.map(doc => {
+        return {
+          recipe: doc.recipeBook,
+        };
+      })
+    });
+  })
+  .catch(error => {
+    res.status(500).json({
+      error: error
+    });
+  });
+}
+
 //UPDATE USER (both patch and put)
 const updateUser = (req, res, next) => {
     User.findOneAndUpdate(
@@ -141,6 +161,7 @@ module.exports = {
     registerUser,
     getAllUsers,
     getSessionUser,
+    getRecipeBook,
     updateUser,
     loginUser,
     logoutUser,

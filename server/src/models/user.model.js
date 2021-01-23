@@ -38,7 +38,8 @@ const UserSchema = new Schema({
     },
     //TODO update to [RecipeSchema] ? (see order-schema)
     recipeBook: [{
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Recipe",
         required: false,
     }],
     externalRecipes: [{
@@ -64,25 +65,32 @@ UserSchema.pre("save", function (next) {
     });
   });
 
+/*   userSchema.pre('save', function(next) {
+    const user = this;
+    if (!user.isModified('password')) return next();
+
+    bcrypt.genSalt(10, function(err, salt) {
+        if (err) return next(err);
+        bcrypt.hash(user.password, salt, null, function(err, hash) {
+            if (err) return next(err);
+            user.password = hash;
+            next();
+        });
+    });
+});
+ */
   //handles getting avatar-image-file
   UserSchema.virtual("imageURL").get(function () {
     return process.env.DOMAIN + this.image.toString();
   });
 
-  //TODO: Refactorize later
-/* UserSchema.pre('save', (next) => {
-    const user = this;
-    bcrypt.hash( user.password, 10, (err, hash) => {
-        if(err) return next(err);
-        user.password = hash;
-        next();
-    });
-}); */
-
-
 // rehashes password when user is updated, enables possibility for user to change their password
 UserSchema.pre(["updateOne", "findOneAndUpdate"], function (next) {
     const user = this;
+
+    if (!user._update.password) {
+      return next()
+    }
     bcrypt.hash(user._update.password, 10, function (err, hash) {
       if (err) {
         return next(err);
@@ -111,23 +119,5 @@ UserSchema.statics.authenticate = function (username, password, callback) {
     });
   };
 
-  //TODO: Refactorize later
-/* UserSchema.statics.authenticate = (username, password, callback) => {
-    User.findOne({ username: username }).exec((err, user) => {
-        if(err) return callback(err);
-        else if(!user){
-            const err = new ErrorHandler( 401, "Användaren hittades inte");
-            return callback(err);
-        }
-        bcrypt.compare(password, user.password, (err, result) => {
-            if(result === true){
-                return callback(null, user);
-            } else {
-                return callback();
-            }
-        })
-    })
-}
- */
 const User = mongoose.model("User", UserSchema);
 module.exports = { User, UserSchema };
