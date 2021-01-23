@@ -14,11 +14,19 @@ const imageStorageRouter = require('./routes/imageStorage.routes');
 
 //Runs the database
 connectToDb();
+//TODO change this to get from env instead
+//PROD
+//https://wonderful-shaw-bf821f.netlify.app/
+//https://receptmingel.herokuapp.com/
+
+//DEV
+//http://localhost:3000/
+//https://localhost:8080/
 
 // Middlewares
 app.use(
     cors({
-        origin: ["http://localhost:3000", "http://localhost:8080"],
+        origin: ["https://wonderful-shaw-bf821f.netlify.app", "https://receptmingel.herokuapp.com"],
         credentials: true,
     })
 ); 

@@ -5,35 +5,35 @@ import AuthenticationContext from './context';
 const AuthenticationContextProvider = (props) => {
     const [user, setUser] = useState(null);
     const [recipeBook, setRecipeBook] = useState([]);
-    const [editRecipeBook, setEditRecipeBook] = useState([]);
+    //const [editRecipeBook, setEditRecipeBook] = useState([]);
     const [isLoadingUser, setIsLoadingUser] = useState(true);
     const [isLoadingBook, setIsLoadingBook] = useState(true)
     const [isLoadingUnauthorized, setIsLoadingUnauthorized] = useState(false);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-    useEffect(() => {
-        async function fetchData(){
-            await axios
-            .get('/users', { withCredentials: true })
-            .then((res) => {
-                if(res.data.message && res.data.message === "Authenticated"){
-                    setIsAuthenticated(true);
-                    setUser(res.data.user);
-                    setIsLoadingUser(false);
-                } else {
-                    setIsAuthenticated(false);
-                    setUser(null);
-                    setIsLoadingUnauthorized(true)
-                };
-            })
-            .catch(error => console.log(error))
-        };
-        fetchData();
-    },[]); 
+
+    async function fetchData(){
+        await axios
+        .get('/users', { withCredentials: true })
+        .then((res) => {
+            if(res.data.message && res.data.message === "Authenticated"){
+                setIsAuthenticated(true);
+                setUser(res.data.user);
+                setIsLoadingUser(false);
+            } else {
+                setIsAuthenticated(false);
+                setUser(null);
+                setIsLoadingUnauthorized(true)
+            };
+        })
+        .catch(error => console.log(error))
+    };
+        
 
     //TODO BUG? if update recipeBook doesn't work it may be this thing that needs to be somewhere, or remove !isLoadingUser
    useEffect(() => {
         (!isLoadingUser && user) && getRecipeBook(user._id)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [user]) 
 
     const getRecipeBook = async(id) => {
@@ -84,7 +84,11 @@ const AuthenticationContextProvider = (props) => {
                     setIsAuthenticated(true);
                     setUser(res.data.user);
                     setIsLoadingUser(false)
-                } 
+                } else {
+                    setIsAuthenticated(false);
+                    setUser(null);
+                    setIsLoadingUnauthorized(true)
+                };
                 return res.data.message
             }; 
         })
@@ -134,7 +138,8 @@ const AuthenticationContextProvider = (props) => {
                 addRecipeBookItem,
                 updateUser,
                 recipeBook,
-                getRecipeBook
+                getRecipeBook,
+                fetchData,
             }}
         />
     );
