@@ -46,7 +46,7 @@ router.put('/:id', isAuthenticated, getSessionUser, updateUser, (req, res) => {
 })
 
 //GET Recipebook
-router.get('/recipebook/:id', isAuthenticated, getSessionUser, getRecipeBook, (req, res) => {
+router.get('/recipebook/:id', getRecipeBook, (req, res) => {
     res.status(200).json(res.recipeBook)
 })
 
