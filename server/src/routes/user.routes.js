@@ -28,6 +28,7 @@ router.get('/:id',isAuthenticated, (req, res) => {
     res.status(200).json('Hello!');
 })
 
+//TODO is this why I have small bug? wrong order of handlers?
 //GET SESSION USER
 router.get('/', isAuthenticated, getSessionUser, (req, res) => {
     res.status(200).json({ message: "Authenticated", user: res.user});
@@ -40,12 +41,12 @@ router.post('/', registerUser,(req, res) => {
 })
 
 //UPDATE USER OR RECIPEBOOK
-router.put('/:id', getSessionUser, isAuthenticated, updateUser, (req, res) => {
+router.put('/:id', isAuthenticated, getSessionUser, updateUser, (req, res) => {
     res.status(200).json(res.updateUser);
 })
 
 //GET Recipebook
-router.get('/recipebook/:id', getSessionUser, isAuthenticated, getRecipeBook, (req, res) => {
+router.get('/recipebook/:id', isAuthenticated, getSessionUser, getRecipeBook, (req, res) => {
     res.status(200).json(res.recipeBook)
 })
 
@@ -55,7 +56,7 @@ router.get('/recipebook/:id', getSessionUser, isAuthenticated, getRecipeBook, (r
 }) */
 
 //DELETE USER
-router.delete('/:id', getSessionUser, isAuthenticated, deleteUser,(req, res) => {
+router.delete('/:id', isAuthenticated, getSessionUser, deleteUser,(req, res) => {
     res.status(200).json(res.deletedUser)
 })
 
