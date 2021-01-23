@@ -36,8 +36,6 @@ const AuthenticationContextProvider = (props) => {
         (!isLoadingUser && user) && getRecipeBook(user._id)
     }, [user]) 
 
-    console.log('CONTEXT', user)
-
     const getRecipeBook = async(id) => {
         try{
             let data = await axios.get(`/users/recipeBook/${id}`, { withCredentials: true })
