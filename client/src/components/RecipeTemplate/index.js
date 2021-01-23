@@ -169,17 +169,19 @@ const RecipeTemplate = ({ setIsEdit, isEdit, setIsAdd, isAdd, slug, getRecipeByI
         const formData = new FormData();
         formData.append("image", file);
     
-        fetch('http://localhost:8080/api/images', {
+        fetch('https://receptmingel.herokuapp.com/api/images', {
             method: "POST",
             credentials: "include",
             body: formData, 
         })
-          .then((res) => res.json())
-          .then((data) => {
+        .then((res) => res.json())
+        .then((data) => {
             if (data && data.message === "success") {  
-              setInputValues((prev) => ({ ...prev, image: data.id }));
+                setInputValues((prev) => ({ ...prev, image: data.id }));
             }
-        })
+        }
+
+        )
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [file]);
 

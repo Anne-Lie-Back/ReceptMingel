@@ -122,7 +122,7 @@ const RegisterNewUser = ({handleClick}) => {
         const formData = new FormData();
         formData.append("image", file);
     
-        fetch('http://localhost:8080/api/images', {
+        fetch('https://receptmingel.herokuapp.com/api/images', {
             method: "POST",
             credentials: "include",
             body: formData, 

@@ -26,7 +26,7 @@ connectToDb();
 // Middlewares
 app.use(
     cors({
-        origin: ["https://wonderful-shaw-bf821f.netlify.app", "https://receptmingel.herokuapp.com"],
+        origin: "https://receptmingel.herokuapp.com",
         credentials: true,
     })
 ); 

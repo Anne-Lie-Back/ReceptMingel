@@ -96,7 +96,6 @@ const AuthenticationContextProvider = (props) => {
     }
 
     const login = async (username, password) => {
-
         await axios
         .post('/users/session/login', {username, password}, {withCredentials: true})
         .then((res) => {
@@ -105,9 +104,16 @@ const AuthenticationContextProvider = (props) => {
                     setIsAuthenticated(true);
                     setUser(res.data.user);
                     setIsLoadingUser(false)
-                } 
+                } else {
+                    setIsAuthenticated(false);
+                    setUser(null);
+                    setIsLoadingUnauthorized(true)
+                };
                 return res.data.message
             };  
+        })
+        .catch(error => {
+            console.log(error)
         })
     };
     
