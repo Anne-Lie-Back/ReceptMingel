@@ -19,7 +19,7 @@ const {
 //ENDPOINTS
 
 //GET ALL USERS
-router.get('/all', getAllUsers, (req, res) => {
+router.get('/all', isAuthenticated, getAllUsers, (req, res) => {
     res.status(200).json(res.allUsers);
 })
 

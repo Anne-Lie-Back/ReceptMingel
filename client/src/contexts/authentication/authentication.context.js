@@ -11,7 +11,6 @@ const AuthenticationContextProvider = (props) => {
     const [isLoadingUnauthorized, setIsLoadingUnauthorized] = useState(false);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-
     async function fetchData(){
         await axios
         .get('/users', { withCredentials: true })
@@ -28,6 +27,10 @@ const AuthenticationContextProvider = (props) => {
         })
         .catch(error => console.log(error))
     };
+
+    useEffect(() => {
+        fetchData()
+    }, []);
         
 
     //TODO BUG? if update recipeBook doesn't work it may be this thing that needs to be somewhere, or remove !isLoadingUser

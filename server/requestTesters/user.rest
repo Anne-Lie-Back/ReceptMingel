@@ -42,7 +42,7 @@ POST https://receptmingel.herokuapp.com/api/users/session/login
 Content-Type: application/json
 
 {
-    "username" : "BangBang",
+    "username" : "starstoft",
     "password" : "secret"
 }
 
