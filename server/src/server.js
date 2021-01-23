@@ -26,7 +26,10 @@ connectToDb().catch(error => console.log(error));
 // Middlewares
 app.use(
     cors({
-        origin: ["https://wonderful-shaw-bf821f.netlify.app", "https://receptmingel.herokuapp.com"],
+        //PROD
+        //origin: ["https://wonderful-shaw-bf821f.netlify.app", "https://receptmingel.herokuapp.com"],
+        //DEV
+        origin: ["http://localhost:3000", "https://receptmingel.herokuapp.com"],
         credentials: true,
     })
 ); 
@@ -34,12 +37,16 @@ app.use(
 //TODO: Add sessions for login-tracking
 app.use(
     session({
-        name: "If you can be anything, be",
-        secret: "a unicorn",
+        name: "happy",
+        secret: "foodie",
         resave: false,
         saveUninitialized: false,
+        cookie: {
+            maxAge: 1000 * 60 * 60* 2,
+            sameSite: true
+        },
         store: new MongoStore({ mongooseConnection: mongoose.connection}),
-        expires: new Date(Date.now() + (30 * 86400 * 1000))
+        //expires: new Date(Date.now() + (30 * 86400 * 1000))
     })
 )
 
