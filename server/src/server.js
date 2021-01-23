@@ -13,7 +13,7 @@ const recipeRouter = require('./routes/recipe.routes');
 const imageStorageRouter = require('./routes/imageStorage.routes');
 
 //Runs the database
-connectToDb();
+connectToDb().catch(error => console.log(error));
 //TODO change this to get from env instead
 //PROD
 //https://wonderful-shaw-bf821f.netlify.app/
@@ -26,7 +26,7 @@ connectToDb();
 // Middlewares
 app.use(
     cors({
-        origin: "https://receptmingel.herokuapp.com",
+        origin: ["https://wonderful-shaw-bf821f.netlify.app", "https://receptmingel.herokuapp.com"],
         credentials: true,
     })
 ); 
@@ -57,7 +57,7 @@ app.use((err, req, res, next) => {
     handleError(err, res)
 })
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT ? process.env.PORT : 8080
 
 app.listen(PORT, () => {
     console.log(`server is upp an running on port : ${PORT}`);
