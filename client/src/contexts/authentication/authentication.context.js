@@ -18,6 +18,7 @@ const AuthenticationContextProvider = (props) => {
             if(res.data.message && res.data.message === "Authenticated"){
                 setIsAuthenticated(true);
                 setUser(res.data.user);
+                console.log('res.data.user', res.data.user)
                 setIsLoadingUser(false);
             } else {
                 setIsAuthenticated(false);
@@ -27,7 +28,7 @@ const AuthenticationContextProvider = (props) => {
         })
         .catch(error => console.log(error))
     };
-
+    console.log('user', user)
     useEffect(() => {
         fetchData()
     }, []);

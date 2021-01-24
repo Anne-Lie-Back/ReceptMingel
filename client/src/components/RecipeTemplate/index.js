@@ -108,6 +108,7 @@ const Button = styled('button', {
 
 const RecipeTemplate = ({ setIsEdit, isEdit, setIsAdd, isAdd, slug, getRecipeById, recipe, getRecipesByAuthor, inputValues, setInputValues }) => {
     const {user, updateUser} = useContext(AuthenticationContext);
+    console.log('user', user)
 
     //stores file-data that goes up to image-bucket at server
     const [file, setFile] = useState(null);
@@ -189,6 +190,7 @@ const RecipeTemplate = ({ setIsEdit, isEdit, setIsAdd, isAdd, slug, getRecipeByI
     const addTooRecipeBook = (listItem) => {
         console.log('user', user)
         const newList = [...user.recipeBook, listItem]
+        console.log('newList', newList)
         updateUser(user._id, {recipeBook: newList})
     }
 
@@ -203,6 +205,7 @@ const RecipeTemplate = ({ setIsEdit, isEdit, setIsAdd, isAdd, slug, getRecipeByI
                 //if response is good the user will be redirected to their new recipepage
                 if(res.status === 200) history.push(`/recipe/${res.data._id}`);
                 addTooRecipeBook(res.data._id)
+                console.log('res.data._id', res.data._id)
             })
             .catch(error => console.log(error))    
         };
