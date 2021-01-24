@@ -44,8 +44,6 @@ app.use(
         saveUninitialized: false, 
         maxAge: 1000 * 60 * 60* 2,
         cookie: {
-            secure: true,
-            sameSite: 'none',
             maxAge: 1000 * 60 * 60* 2,
         }, 
         store: new MongoStore({ mongooseConnection: mongoose.connection}),
