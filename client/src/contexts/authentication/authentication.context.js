@@ -70,7 +70,7 @@ const AuthenticationContextProvider = (props) => {
     //for updating both recipeBook and user
     const updateUser = async(id, inputValues) => {
         await axios
-        .put(`/users/${id}`, inputValues, {withCredentials: true})
+        .patch(`/users/${id}`, inputValues, {withCredentials: true})
         .then((res) => {
             console.log('Updated user', res);
         })

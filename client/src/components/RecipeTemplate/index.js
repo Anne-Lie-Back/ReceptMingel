@@ -107,7 +107,7 @@ const Button = styled('button', {
 });
 
 const RecipeTemplate = ({ setIsEdit, isEdit, setIsAdd, isAdd, slug, getRecipeById, recipe, getRecipesByAuthor, inputValues, setInputValues }) => {
-    const {user} = useContext(AuthenticationContext);
+    const {user, updateUser} = useContext(AuthenticationContext);
 
     //stores file-data that goes up to image-bucket at server
     const [file, setFile] = useState(null);
@@ -185,6 +185,13 @@ const RecipeTemplate = ({ setIsEdit, isEdit, setIsAdd, isAdd, slug, getRecipeByI
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [file]);
 
+
+    const addTooRecipeBook = (listItem) => {
+        console.log('user', user)
+        const newList = [...user.recipeBook, listItem]
+        updateUser(user._id, {recipeBook: newList})
+    }
+
     //sends inputvalues to db.
     const handleSubmit = async() => {
 
@@ -193,8 +200,11 @@ const RecipeTemplate = ({ setIsEdit, isEdit, setIsAdd, isAdd, slug, getRecipeByI
             await axios
             .post('/recipes', inputValues, { withCredentials: true })
             .then((res) => {
+                
                 //if response is good the user will be redirected to their new recipepage
                 if(res.status === 200) history.push(`/recipe/${res.data._id}`);
+                addTooRecipeBook(res.data._id)
+                
             })
             .catch(error => console.log(error))    
         };

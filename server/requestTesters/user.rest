@@ -24,17 +24,11 @@ Content-Type: application/json
 }
 
 ###
-PUT http://localhost:8080/api/users/600806e24c55ab2c8c310f77
+PATCH https://receptmingel.herokuapp.com/api/users/600806e24c55ab2c8c310f77
 Content-Type: application/json
 
 {
-    "username" : "BangBang",
-    "firstName" : "Bengan",
-    "lastName" : "Bengtsson",
-    "image" : "600806c64c55ab2c8c310f75",
-    "userInfo" : "Jag gillar körv. (Detta är ett testkonto)",
-    "recipeBook" : ["6005daeb83df2937ec206ee6", "60075edb273a0a2250dd636b", "6007ec1acd1b3e28146f806b", "6007fc7acd1b3e28146f8075", "600820d47e4368413ca21fdf", "600843ee1a7f0b38b4973e3b"],
-    "imageURL": "http://localhost:8080/api/images/600806c64c55ab2c8c310f75"
+    "recipeBook" : ["600843ee1a7f0b38b4973e3b", "600daa2e1097d20015451066", "600820d47e4368413ca21fdf"]
 }
 
 ###

@@ -41,7 +41,7 @@ router.post('/', registerUser,(req, res) => {
 })
 
 //UPDATE USER OR RECIPEBOOK
-router.put('/:id', isAuthenticated, updateUser, (req, res) => {
+router.patch('/:id', updateUser, (req, res) => {
     res.status(200).json(res.updateUser);
 })
 

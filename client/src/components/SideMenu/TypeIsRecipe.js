@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory, Link, useParams } from 'react-router-dom';
 import { styled } from 'styletron-react';
 import THEME from '../../config/theme';
 import InputField from '../inputField';
@@ -66,6 +66,8 @@ const FilterInput = styled(InputField, {
 const TypeIsRecipe = ({recipeList, setIsAdd, setIsEdit }) => {
     // eslint-disable-next-line no-unused-vars
     const[filterInput, setFilterInput] = useState('');
+    const history = useHistory()
+    let slug = useParams()
 
     const handleChange = (event) => {
         setFilterInput(event.target.value)
@@ -73,6 +75,7 @@ const TypeIsRecipe = ({recipeList, setIsAdd, setIsEdit }) => {
 
     const handleAddClick = () => {
         setIsAdd(true)
+        if(!slug) history.push(`/recipeBook/`)
         setIsEdit(false)
     };
 
