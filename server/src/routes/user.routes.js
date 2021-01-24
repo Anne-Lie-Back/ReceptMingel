@@ -9,6 +9,7 @@ const {
     registerUser,
     getAllUsers,
     getSessionUser,
+    getUserById,
     getRecipeBook,
     updateUser,
     loginUser,
@@ -19,13 +20,13 @@ const {
 //ENDPOINTS
 
 //GET ALL USERS
-router.get('/all', isAuthenticated, getAllUsers, (req, res) => {
+router.get('/all', getAllUsers, (req, res) => {
     res.status(200).json(res.allUsers);
 })
 
 //GET ONE USER (TODO)
-router.get('/:id',isAuthenticated, (req, res) => {
-    res.status(200).json('Hello!');
+router.get('/:id', getUserById, (req, res) => {
+    res.status(200).json(res.user);
 })
 
 //TODO is this why I have small bug? wrong order of handlers?
@@ -41,7 +42,7 @@ router.post('/', registerUser,(req, res) => {
 })
 
 //UPDATE USER OR RECIPEBOOK
-router.put('/:id', isAuthenticated, getSessionUser, updateUser, (req, res) => {
+router.put('/:id', updateUser, (req, res) => {
     res.status(200).json(res.updateUser);
 })
 
@@ -56,7 +57,7 @@ router.get('/recipebook/:id', getRecipeBook, (req, res) => {
 }) */
 
 //DELETE USER
-router.delete('/:id', isAuthenticated, getSessionUser, deleteUser,(req, res) => {
+router.delete('/:id', deleteUser,(req, res) => {
     res.status(200).json(res.deletedUser)
 })
 

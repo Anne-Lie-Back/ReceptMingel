@@ -47,6 +47,18 @@ const getAllUsers = (req, res, next) => {
 
 // TODO
 //GET USER BY ID
+const getUserByID = (req, res, next) => {
+  User.findById(req.params.id, (error, user) => {
+      try{
+          if(error) next(error);
+          if(!user) throw new ErrorHandler(404, "Vi kunde tyvärr inte hitta receptet");
+          res.user = user;
+          next();
+      }catch(error){
+          next(error);
+      }
+  })
+};
 
 //GET SESSION USER
 const getSessionUser = (req, res, next) => {
@@ -165,5 +177,6 @@ module.exports = {
     updateUser,
     loginUser,
     logoutUser,
-    deleteUser
+    deleteUser,
+    getUserByID
 }
