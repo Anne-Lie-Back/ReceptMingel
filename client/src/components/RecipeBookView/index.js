@@ -95,8 +95,6 @@ const RecipeBookView = ({userObject, setUserObject}) => {
                             slug = {slug}
                             isLoading = {isLoading}
                             recipe = {recipe}
-                            userObject = {userObject}
-                            setUserObject = {setUserObject}
                         /> 
                     }
                 </>

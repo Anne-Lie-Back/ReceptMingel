@@ -91,26 +91,36 @@ const SharedIcon = styled(Icon,({$isSharedRecipe})=> ({
     }
 }));
 
-const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, getRecipesByAuthor, userObject, setUserObject}) => {
+const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, getRecipesByAuthor}) => {
     const {recipeBook, getRecipeBook, user, updateUser} = useContext(AuthenticationContext);
     const {patchRecipe, deleteRecipe} = useContext(RecipeContext);
     //isSharedRecipe helps to display correct icon
     const [isSharedRecipe, setIsShared] = useState(recipe.isShared);
     //isStarred helps to display correct icon
     const [isStarred, setIsStarred] = useState(false);
+    console.log('recipeBook', recipeBook)
+    /* const [userObject, setUserObject] = useState({
+        username : user.username,
+        firstName : user.firstName,
+        lastName : user.lastName,
+        image : user.image,
+        userInfo : user.userInfo,
+        recipeBook : recipeBook,
+        imageURL: user.imageURL
+    }); */
     
-    console.log('recipeBook', userObject.recipeBook)
     let history = useHistory();
     
-    const removeRecipeBookItem = async (list, id) => {
+    /* const removeRecipeBookItem = async (id) => {
         console.log('REMOVE')
-        const newList = list.filter((item) => item !== id);
+        const newList = userObject.recipeBook.filter((item) => item !== id);
         await setUserObject({
             ...userObject,
             recipeBook: newList,
         })
-    };
-
+        setIsShared(false)
+    }; */
+/* 
     const addRecipeBookItem = (listItem) => {
         console.log('ADD')
         const newItem = listItem;
@@ -119,13 +129,13 @@ const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, ge
             ...userObject,
             recipeBook: newList,
         })
-    };
+        setIsShared(true)
+    }; */
 
     useEffect(() => {
         if (view === "RecipeView") getRecipeById(recipe._id)
-        updateUser(user._id, userObject)
-        if (view === "RecipeBook") getRecipeBook(user._id)
-    }, [userObject])
+        if(view === "RecipeBook")getRecipeBook(user._id)
+    }, [view])
 
     useEffect(() => {
         const index = recipeBook.indexOf(x => x._id === recipe._id);
@@ -137,8 +147,9 @@ const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, ge
         let value = recipe.isShared? {"isShared" : false} : {"isShared" : true}
         console.log('value', value)
         patchRecipe(recipe._id, value)
+        isSharedRecipe? setIsShared(false):setIsShared(true)
         //TODO test to move this to useEffect that listens to recipe.isShared
-        isSharedRecipe? removeRecipeBookItem(userObject.recipeBook, recipe._id) : addRecipeBookItem(recipe._id);
+        //isSharedRecipe? removeRecipeBookItem(recipe._id) : addRecipeBookItem(recipe._id);
     };
 
 
@@ -150,13 +161,15 @@ const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, ge
     console.log('isShared', recipe.isShared)
 
     const handleStarRecipe = () => {
-        isStarred? removeRecipeBookItem(userObject.recipeBook, recipe._id) : addRecipeBookItem(recipe._id);
+        //isStarred? removeRecipeBookItem(recipe._id) : addRecipeBookItem(recipe._id);
         getRecipeById(recipe._id)
         setIsStarred(!isStarred);
     }
 
     //Deletes recipe, updates sidemenu-list and redirects user to start-recipe-page
     const handleDelete = (id) => {
+        const newList = user.recipeBook.filter((item) => item !== id);
+        updateUser(user._id, {recipeBook : newList})
         deleteRecipe(id);
         getRecipesByAuthor(recipe.authorId);
         history.push('/recipe');
@@ -172,8 +185,6 @@ const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, ge
             return false
         }
     }; */
-
-    console.log('recipe._id', recipe._id)
 
     //Transform for easier follow on where the different items are showing and are styled.
     //Keeps id as recipe._id to easier see type of id used

@@ -41,12 +41,12 @@ router.post('/', registerUser,(req, res) => {
 })
 
 //UPDATE USER OR RECIPEBOOK
-router.put('/:id', isAuthenticated, getSessionUser, updateUser, (req, res) => {
+router.patch('/:id', updateUser, (req, res) => {
     res.status(200).json(res.updateUser);
 })
 
 //GET Recipebook
-router.get('/recipebook/:id', isAuthenticated, getSessionUser, getRecipeBook, (req, res) => {
+router.get('/recipebook/:id', getRecipeBook, (req, res) => {
     res.status(200).json(res.recipeBook)
 })
 

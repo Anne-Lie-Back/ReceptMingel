@@ -15,7 +15,7 @@ const RecipeBookPage = () => {
     const [sharedRecipes, setSharedRecipes] = useState([]);
     const [recipe, setRecipe] = useState(null);
 
-    const [userObject, setUserObject] = useState({
+    /* const [userObject, setUserObject] = useState({
         username : user.username,
         firstName : user.firstName,
         lastName : user.lastName,
@@ -23,7 +23,7 @@ const RecipeBookPage = () => {
         userInfo : user.userInfo,
         recipeBook : user.recipeBook,
         imageURL: user.imageURL
-    });
+    }); */
 
     let { slug } = useParams();
 
@@ -38,6 +38,7 @@ const RecipeBookPage = () => {
     useEffect(() => { 
         getRecipeBook(user._id)
         setIsLoading(true)
+        window.scrollTo(0, 0)
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -52,8 +53,6 @@ const RecipeBookPage = () => {
                     sharedRecipes = {sharedRecipes}
                     recipe = {recipe}
                     $style = {{width: '100%'}}
-                    userObject = {userObject}
-                    setUserObject = {setUserObject}
                 />
         </>
     );

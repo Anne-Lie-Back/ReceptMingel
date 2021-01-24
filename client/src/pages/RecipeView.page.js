@@ -10,7 +10,7 @@ import SideMenu from '../components/SideMenu';
 import AuthenticationContext from '../contexts/authentication/context';
 
 const RecipeViewPage = () => {
-    const {user} = useContext(AuthenticationContext);
+    const {user, recipeBook} = useContext(AuthenticationContext);
     const [isEdit, setIsEdit] = useState(false);
     const [isAdd, setIsAdd] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
@@ -31,16 +31,9 @@ const RecipeViewPage = () => {
         isShared: isEdit? recipe.isShared : false
     });
     
+    
+
     console.log('user.recipeBook', user.recipeBook)
-    const [userObject, setUserObject] = useState({
-        username : user.username,
-        firstName : user.firstName,
-        lastName : user.lastName,
-        image : user.image,
-        userInfo : user.userInfo,
-        recipeBook : user.recipeBook,
-        imageURL: user.imageURL
-    });
 
     //For getting ID to recipe so we can get it and display it
     let { slug } = useParams();
@@ -61,6 +54,7 @@ const RecipeViewPage = () => {
 
     useEffect(() => {
         getRecipesByAuthor(user._id)
+        window.scrollTo(0, 0)
     }, [])
 
     console.log('usersRecipe', usersRecipes)
@@ -149,8 +143,6 @@ const RecipeViewPage = () => {
                                             getRecipesByAuthor = {getRecipesByAuthor}
                                             isLoading = {isLoading} 
                                             recipe = {recipe}
-                                            userObject = {userObject} 
-                                            setUserObject = {setUserObject}
                                         />
                                     }
                                 </>
