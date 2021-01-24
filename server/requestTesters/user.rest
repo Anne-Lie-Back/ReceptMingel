@@ -4,6 +4,9 @@ GET http://localhost:3333/api/users/all
 GET http://localhost:8080/api/users/
 
 ###
+GET http://localhost:8080/api/users/
+
+###
 GET https://receptmingel.herokuapp.com/api/users/recipebook/600806e24c55ab2c8c310f77
 
 ###

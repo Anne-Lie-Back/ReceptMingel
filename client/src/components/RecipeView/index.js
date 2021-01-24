@@ -92,14 +92,11 @@ const SharedIcon = styled(Icon,({$isSharedRecipe})=> ({
 }));
 
 const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, getRecipesByAuthor}) => {
-    const {recipeBook, getRecipeBook, user, updateUser, getUserById} = useContext(AuthenticationContext);
+    const {recipeBook, getRecipeBook, user, updateUser} = useContext(AuthenticationContext);
     const {patchRecipe, deleteRecipe} = useContext(RecipeContext);
     //isSharedRecipe helps to display correct icon
     const [isSharedRecipe, setIsShared] = useState(recipe.isShared);
     //isStarred helps to display correct icon
-    useEffect(() => {
-        getUserById(user._id)
-    })
     const [isStarred, setIsStarred] = useState(false);
     console.log('recipeBook', recipeBook)
     const [userObject, setUserObject] = useState({
@@ -108,7 +105,7 @@ const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, ge
         lastName : user.lastName,
         image : user.image,
         userInfo : user.userInfo,
-        recipeBook : user.recipeBook,
+        recipeBook : recipeBook,
         imageURL: user.imageURL
     });
     

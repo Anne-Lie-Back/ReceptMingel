@@ -28,16 +28,6 @@ const AuthenticationContextProvider = (props) => {
         .catch(error => console.log(error))
     };
 
-    const getUserById = async(id) => {
-        await axios
-        .get(`/users/${id}`, { withCredentials: true })
-        .then((res) => {
-            setUser(res.data.user);
-            setIsLoadingUser(false);
-        })
-        .catch(error => console.log(error))
-    }
-
     useEffect(() => {
         fetchData()
     }, []);
@@ -159,7 +149,6 @@ const AuthenticationContextProvider = (props) => {
                 recipeBook,
                 getRecipeBook,
                 fetchData,
-                getUserById,
             }}
         />
     );

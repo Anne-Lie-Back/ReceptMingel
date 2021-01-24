@@ -18,8 +18,7 @@ import { createContext } from 'react';
     removeRecipeBookItem: () => {},
     addRecipeBookItem: () => {},
     patchRecipeBook: () => {},
-    getRecipeBook: () => {},
-    getUserById: () => {}
+    getRecipeBook: () => {}
 /*    TODO, remove or insert?
       register: (user) =>
       new Promise((resolve, reject) => {

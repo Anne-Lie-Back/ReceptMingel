@@ -24,8 +24,8 @@ router.get('/all', isAuthenticated, getAllUsers, (req, res) => {
 })
 
 //GET ONE USER (TODO)
-router.get('/:id', isAuthenticated, getSessionUser, getUserById, (req, res) => {
-    res.status(200).json(res.user);
+router.get('/:id',isAuthenticated, (req, res) => {
+    res.status(200).json('Hello!');
 })
 
 //TODO is this why I have small bug? wrong order of handlers?
@@ -41,7 +41,7 @@ router.post('/', registerUser,(req, res) => {
 })
 
 //UPDATE USER OR RECIPEBOOK
-router.put('/:id', isAuthenticated, getSessionUser, updateUser, (req, res) => {
+router.put('/:id', updateUser, (req, res) => {
     res.status(200).json(res.updateUser);
 })
 
