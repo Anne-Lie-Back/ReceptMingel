@@ -199,12 +199,10 @@ const RecipeTemplate = ({ setIsEdit, isEdit, setIsAdd, isAdd, slug, getRecipeByI
         if(isAdd && !isEdit){
             await axios
             .post('/recipes', inputValues, { withCredentials: true })
-            .then((res) => {
-                
+            .then((res) => {          
                 //if response is good the user will be redirected to their new recipepage
                 if(res.status === 200) history.push(`/recipe/${res.data._id}`);
                 addTooRecipeBook(res.data._id)
-                
             })
             .catch(error => console.log(error))    
         };

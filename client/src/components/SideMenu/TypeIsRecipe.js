@@ -66,7 +66,7 @@ const FilterInput = styled(InputField, {
 const TypeIsRecipe = ({recipeList, setIsAdd, setIsEdit }) => {
     // eslint-disable-next-line no-unused-vars
     const[filterInput, setFilterInput] = useState('');
-    const history = useHistory()
+    let history = useHistory()
     let slug = useParams()
 
     const handleChange = (event) => {

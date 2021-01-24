@@ -138,7 +138,6 @@ const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, ge
     }, [view])
 
     useEffect(() => {
-        
         const index = recipeBook.indexOf(x => x._id === recipe._id);
         index === -1? setIsStarred(true) : setIsStarred(false)
     }, [slug])
@@ -169,6 +168,8 @@ const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, ge
 
     //Deletes recipe, updates sidemenu-list and redirects user to start-recipe-page
     const handleDelete = (id) => {
+        const newList = user.recipeBook.filter((item) => item !== id);
+        updateUser(user._id, {recipeBook : newList})
         deleteRecipe(id);
         getRecipesByAuthor(recipe.authorId);
         history.push('/recipe');
@@ -184,7 +185,7 @@ const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, ge
             return false
         }
     }; */
-    
+
     //Transform for easier follow on where the different items are showing and are styled.
     //Keeps id as recipe._id to easier see type of id used
     const {
