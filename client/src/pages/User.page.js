@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { styled } from 'styletron-react';
 import THEME from './../config/theme';
 import AuthenticationContext from '../contexts/authentication/context';
@@ -72,6 +72,10 @@ const ContentWrapper = styled('div', {
 
 const UserPage = () => {
     const { logout, user } = useContext(AuthenticationContext);
+
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    },[])
     
     const handleEdit = () => {
         console.log('EDIT ME!');

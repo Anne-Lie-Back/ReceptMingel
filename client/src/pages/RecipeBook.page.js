@@ -38,6 +38,7 @@ const RecipeBookPage = () => {
     useEffect(() => { 
         getRecipeBook(user._id)
         setIsLoading(true)
+        window.scrollTo(0, 0)
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 

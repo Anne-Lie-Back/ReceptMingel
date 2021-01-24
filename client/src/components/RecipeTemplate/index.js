@@ -225,7 +225,7 @@ const RecipeTemplate = ({ setIsEdit, isEdit, setIsAdd, isAdd, slug, getRecipeByI
         
         //Updates sidemenu with new recipe
         getRecipesByAuthor(user._id);
-        
+        window.scrollTo(0, 600)
         //will ensure closed edit-view
         setIsEdit(false);
         setIsAdd(false);
