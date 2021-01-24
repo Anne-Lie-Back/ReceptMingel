@@ -20,7 +20,7 @@ const isAuthenticated = require("../middlewares/isAuthenticated");
 //ENDPOINTS
 
 //GET ALL RECIPES
-router.get('/', isAuthenticated, getAllRecipes, (req, res) => {
+router.get('/', getAllRecipes, (req, res) => {
     res.status(200).json(res.allRecipes)
 });
 
@@ -31,7 +31,7 @@ router.get('/:id', getRecipeByID, (req, res) => {
 });
 
 //GET RECIPE BY isShared:true
-router.get('/public', isAuthenticated, getRecipesByIsPublic, (req, res) => {
+router.get('/public', getRecipesByIsPublic, (req, res) => {
     res.status(200).json(res.recipesByIsPublic)
 });
 
@@ -48,22 +48,22 @@ router.get('/author/:authorId', getRecipesByAuthorId, (req, res) => {
 
 
 //CREATE RECIPE
-router.post('/', isAuthenticated, createRecipe, (req, res) => {
+router.post('/', createRecipe, (req, res) => {
     res.status(200).json(res.createdRecipe);
 });
 
 //UPDATE RECIPE
-router.put('/:id', isAuthenticated, updateRecipe, (req, res) => {
+router.put('/:id', updateRecipe, (req, res) => {
     res.status(200).json(res.updatedRecipe);
 });
 
 //PATCH RECIPE
-router.patch('/:id', isAuthenticated, updateRecipe, (req, res) => {
+router.patch('/:id', updateRecipe, (req, res) => {
     res.status(200).json(res.patchedRecipe);
 });
 
 //DELETE RECIPE
-router.delete('/:id', isAuthenticated, deleteRecipe, (req, res) => {
+router.delete('/:id', deleteRecipe, (req, res) => {
     res.status(200).json(res.deletedRecipe);
 });
 
