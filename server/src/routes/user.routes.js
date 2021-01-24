@@ -9,7 +9,6 @@ const {
     registerUser,
     getAllUsers,
     getSessionUser,
-    getUserById,
     getRecipeBook,
     updateUser,
     loginUser,
@@ -20,12 +19,12 @@ const {
 //ENDPOINTS
 
 //GET ALL USERS
-router.get('/all', getAllUsers, (req, res) => {
+router.get('/all', isAuthenticated, getAllUsers, (req, res) => {
     res.status(200).json(res.allUsers);
 })
 
 //GET ONE USER (TODO)
-router.get('/:id', getUserById, (req, res) => {
+router.get('/:id', isAuthenticated, getSessionUser, getUserById, (req, res) => {
     res.status(200).json(res.user);
 })
 
@@ -42,7 +41,7 @@ router.post('/', registerUser,(req, res) => {
 })
 
 //UPDATE USER OR RECIPEBOOK
-router.put('/:id', updateUser, (req, res) => {
+router.put('/:id', isAuthenticated, getSessionUser, updateUser, (req, res) => {
     res.status(200).json(res.updateUser);
 })
 
@@ -57,7 +56,7 @@ router.get('/recipebook/:id', getRecipeBook, (req, res) => {
 }) */
 
 //DELETE USER
-router.delete('/:id', deleteUser,(req, res) => {
+router.delete('/:id', isAuthenticated, getSessionUser, deleteUser,(req, res) => {
     res.status(200).json(res.deletedUser)
 })
 
