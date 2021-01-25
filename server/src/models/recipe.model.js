@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+//mongoose_fuzzy_searching is a npm package from: https://github.com/VassilisPallas/mongoose-fuzzy-searching#work-with-pre-existing-data
+const mongoose_fuzzy_searching = require('mongoose-fuzzy-searching');
 
 const Schema = mongoose.Schema;
 
@@ -74,6 +76,40 @@ const RecipeSchema = new Schema(
     },
     { autoIndex: false }
 );
+
+RecipeSchema.plugin(mongoose_fuzzy_searching, { 
+    fields: [
+        {
+            name: 'title',
+            weight: 3,
+            minSize: 4
+        },
+        {
+            name: 'preambleHTML',
+            weight: 1,
+            minSize: 4
+        },
+        {
+            name: 'difficulty',
+            weight: 4,
+            minSize: 3
+        },
+        {
+            name: 'author',
+            weight: 1
+        },
+        {
+            name: 'ingredients',
+            weight: 5,
+            minSize: 4
+        },
+        {
+            name: 'mdsaCategories',
+            weight: 5,
+            minSize: 3
+        },
+    ]
+});
 
 //Create Index for search-functionality
 RecipeSchema.index({'$**': 'text'});

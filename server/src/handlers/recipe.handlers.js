@@ -74,8 +74,17 @@ const getRecipesByAuthorId = (req, res, next) => {
     });
 }; 
 
-const searchRecipe = (req, res, next) => {
-    Recipe.find({$text: {$search: req.params.term}}, (error, result) => {
+const searchRecipe = async(req, res, next) => {
+    try{
+        const result = await Recipe.fuzzySearch(req.params.term)
+/*         if(error) next(error);
+        if(!result || result.length === 0) throw new ErrorHandler(404, "Vi kunde inte hitta någragit  recept"); */
+        res.result = result
+        next()
+    }catch(error){
+        console.error(error)
+    }
+    /* Recipe.find({$text: {$search: req.params.term}}, (error, result) => {
         try{
             if(error) next(error);
             if(!result || result.length === 0) throw new ErrorHandler(404, "Vi kunde inte hitta några recept");
@@ -84,7 +93,7 @@ const searchRecipe = (req, res, next) => {
         }catch(error){
             next(error);
         };
-    });
+    }); */
 }
 
 

@@ -9,7 +9,7 @@ GET https://receptmingel.herokuapp.com/api/recipes/6005daeb83df2937ec206ee6
 ###
 
 //GET RECIPE BY FREETEXT SEARCH
-GET  https://receptmingel.herokuapp.com/api/recipes/search/patties
+GET  https://receptmingel.herokuapp.com/api/recipes/search/banan
 //Content-Type: application/json
 
 ###

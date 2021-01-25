@@ -1,5 +1,8 @@
+import {useEffect, useState} from 'react';
+//import {useHistory, useParams} from 'react-router-dom';
 import { styled } from 'styletron-react';
 import THEME from '../../config/theme';
+import axios from '../../axios';
 import SearchInputArea from './SearchInputArea';
 import ResultCard from './ResultCard';
 
@@ -32,7 +35,24 @@ const ResultArea = styled('div', {
     }
 });
 
-const SearchView = () => (
+const SearchView = () => {
+    const [searchResult, setSearchResult] = useState([]);
+
+    const getSearchResult = async(query) => {
+        await axios
+        .get(`/recipes/search/${query}`, { withCredentials: true })
+        .then((res) => {
+            setSearchResult(res.data)
+        });
+    };
+
+    useEffect(() => {
+        getSearchResult("banan")
+    },[])
+
+    console.log('searchResult', searchResult)
+
+    return(
     <Wrapper>
         <SearchInputArea/>
         <ResultArea>
@@ -40,5 +60,7 @@ const SearchView = () => (
         </ResultArea>
     </Wrapper>
 );
+}
+    
 
 export default SearchView;
