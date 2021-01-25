@@ -74,6 +74,19 @@ const getRecipesByAuthorId = (req, res, next) => {
     });
 }; 
 
+const searchRecipe = (req, res, next) => {
+    Recipe.find({$text: {$search: req.params.term}}, (error, result) => {
+        try{
+            if(error) next(error);
+            if(!result || result.length === 0) throw new ErrorHandler(404, "Vi kunde inte hitta några recept");
+            res.result = result
+            next()
+        }catch(error){
+            next(error);
+        };
+    });
+}
+
 
 //CREATE NEW RECIPE
 const createRecipe = (req, res, next) => {
@@ -118,6 +131,7 @@ const deleteRecipe = (req, res, next) => {
 };
 
 module.exports = {
+    searchRecipe,
     getAllRecipes,
     getRecipeByID,
     getRecipesByIsPublic,

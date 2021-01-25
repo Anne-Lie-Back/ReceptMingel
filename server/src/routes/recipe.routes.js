@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { Recipe } = require('../models/recipe.model');
 
 
 //HANDLERS
@@ -11,7 +12,8 @@ const {
     getRecipesByAuthorId,
     createRecipe,
     updateRecipe,
-    deleteRecipe
+    deleteRecipe,
+    searchRecipe
 } = require('../handlers/recipe.handlers');
 
 // MIDDLEWARES
@@ -28,6 +30,11 @@ router.get('/', getAllRecipes, (req, res) => {
 //TODO maybe remove so you can chare recipe to others
 router.get('/:id', getRecipeByID, (req, res) => {
     res.status(200).json(res.recipe)
+});
+
+//GET RECIPE BY SEARCH
+router.get('/search/:term', searchRecipe, (req, res) => {
+    res.status(200).json(res.result)
 });
 
 //GET RECIPE BY isShared:true

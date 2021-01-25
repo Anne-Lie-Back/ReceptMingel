@@ -7,10 +7,12 @@ const RecipeSchema = new Schema(
         title: {
             type: String,
             required: true,
+            text: true,
         },
         preambleHTML: {
             type: String,
-            required: true
+            required: true,
+            text: true,
         },
         //TODO Change to handle "real" images
         image: {
@@ -28,10 +30,12 @@ const RecipeSchema = new Schema(
         difficulty: {
             type: String,
             required: true,
+            text: true,
         },
         ingredients: [{
             type: String,
-            required: true
+            required: true,
+            text: true,
         }],
         cookingSteps: [{
             type: String,
@@ -39,7 +43,8 @@ const RecipeSchema = new Schema(
         }],
         mdsaCategories: [{
             type: String,
-            required: true
+            required: true,
+            text: true,
         }],
         authorId: {
             type: String,
@@ -47,7 +52,8 @@ const RecipeSchema = new Schema(
         },
         author: {
             type: String,
-            required: true
+            required: true,
+            text: true,
         },
         isShared:{
             type: Boolean,
@@ -65,8 +71,12 @@ const RecipeSchema = new Schema(
         toJSON: {
           virtuals: true,
         },
-    }
+    },
+    { autoIndex: false }
 );
+
+//Create Index for search-functionality
+RecipeSchema.index({'$**': 'text'});
 
 //handles getting avatar-image-file
 RecipeSchema.virtual("imageURL").get(function () {

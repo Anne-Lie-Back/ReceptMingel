@@ -4,11 +4,15 @@ GET https://receptmingel.herokuapp.com/api/recipes/
 ###
 
 //GET RECIPE BY ID
-GET http://localhost:8080/api/recipes/6005daeb83df2937ec206ee6
+GET https://receptmingel.herokuapp.com/api/recipes/6005daeb83df2937ec206ee6
 
 ###
 
-//GET RECIPE BY FREETEXT
+//GET RECIPE BY FREETEXT SEARCH
+GET  https://receptmingel.herokuapp.com/api/recipes/search/patties
+//Content-Type: application/json
+
+###
 
 //GET RECIPE BY AuthorId
 GET https://receptmingel.herokuapp.com/api/recipes/author/600806e24c55ab2c8c310f77
