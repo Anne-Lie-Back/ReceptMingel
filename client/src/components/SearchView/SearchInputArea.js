@@ -1,15 +1,24 @@
 import { styled } from 'styletron-react';
 import InputField from '../inputField';
 import THEME from '../../config/theme';
+import media from '../../config/media';
 
 const Wrapper = styled('div', {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    padding: '3rem 4rem 3rem 4rem',
+    alignItems: 'center',
+    width: '100%',
+    padding: '2rem 3rem 2rem 3rem',
     backgroundColor: THEME.colors.primary[0],
-    borderRadius: '5px',
-    boxShadow: '0 0 2px black'  
+    borderRadius: 0,
+    boxShadow: '0 0 2px black',
+
+    [media.above.tablet] : {
+        padding: '3rem 4rem 3rem 4rem',
+       width: 'auto',
+       borderRadius: '5px',
+    }
 });
 
 const FlexRow = styled('div', {
@@ -26,7 +35,14 @@ const Label = styled('label', {
 });
 
 const SearchInputField = styled(InputField, {
-    width: '300px',
+    width: '200px',
+
+    [media.above.mobile] : {
+        width: '250px',
+    },
+    [media.above.mobile] : {
+        width: '300px',
+    }
 });
 
 const Button = styled('button', {

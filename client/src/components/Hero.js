@@ -38,21 +38,57 @@ const TitleWrapper = styled('div', {
 
 const Title = styled('h2', {
     fontFamily: THEME.fonts.text,
-    fontSize: THEME.fontSizes.hero,
+    fontSize: '35px',
     color: THEME.colors.white[0],
-    textShadow: '0 0 1px black'
+    textShadow: '0 0 1px black',
+
+    [media.above.XSmobile] : {
+        fontSize: '45px',
+    },
+    [media.above.mobile] : {
+        fontSize: '58px',
+    },
+    [media.above.tablet] : {
+        fontSize: '65px',
+    },
+    [media.above.laptop] : {
+        fontSize: THEME.fontSizes.hero,
+    }
+});
+
+const FlexRow = styled('div', {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center'
 });
 
 const StyledIcon = styled(Icon, {
-    fontSize: '240px',
+    fontSize: '65px',
+    margin: '0 0 0 0.5rem',
     color: THEME.colors.white[0],
+
+    [media.above.XSmobile] : {
+        fontSize: '90px',
+    },
+    [media.above.mobile] : {
+        fontSize: '120px',
+        margin: '0 0 0 1rem',
+    },
+    [media.above.tablet] : {
+        fontSize: '175px',
+    },
+    [media.above.laptop] : {
+        fontSize: '240px',
+    }
 });
 
 const Hero = ({children, image, title, icon}) => (
     <Wrapper $image = {image}>
         <TitleWrapper>
-            {title && <Title>{title}</Title>}
-            {icon && <StyledIcon icon={icon}/>}
+            <FlexRow>
+                {title && <Title>{title}</Title>}
+                {icon && <StyledIcon icon={icon}/>}
+            </FlexRow>
             {children}
         </TitleWrapper>
     </Wrapper>

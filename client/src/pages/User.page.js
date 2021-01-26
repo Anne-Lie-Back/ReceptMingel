@@ -100,7 +100,6 @@ const ContentWrapper = styled('div', {
     backgroundColor: THEME.colors.white[0]
 });
 
-
 const UserPage = () => {
     const { logout, user, recipeBook } = useContext(AuthenticationContext);
     const [isLoading, setIsLoading] = useState(true)

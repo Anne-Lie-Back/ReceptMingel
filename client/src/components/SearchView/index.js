@@ -3,6 +3,7 @@ import {useHistory, useParams} from 'react-router-dom';
 import { styled } from 'styletron-react';
 import THEME from '../../config/theme';
 import axios from '../../axios';
+import media from '../../config/media';
 import AuthenticationContext from '../../contexts/authentication/context';
 import SearchInputArea from './SearchInputArea';
 import ResultCard from './ResultCard';
@@ -14,7 +15,11 @@ const Wrapper = styled('div', {
     flexDirection: 'column',
     alignItems: 'center',
     width: '100%',
-    padding: '3rem 1rem'
+    padding: '3rem 0',
+
+    [media.above.tablet] : {
+        padding: '3rem 1rem',
+    }
 });
 
 const ResultArea = styled('div', {

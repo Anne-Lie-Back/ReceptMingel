@@ -2,7 +2,6 @@
 import { Link } from 'react-router-dom';
 import { styled } from 'styletron-react';
 import THEME from '../config/theme';
-import media from '../config/media';
 import MainNavbar from './MainNavbar';
 
 const Wrapper = styled('div', {
@@ -49,6 +48,5 @@ const Header = () => {
         </Wrapper>
     );
 };
-
 
 export default Header;

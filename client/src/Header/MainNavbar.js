@@ -9,8 +9,6 @@ import bxSearch from '@iconify/icons-bx/bx-search';
 import roundRestaurantMenu from '@iconify/icons-ic/round-restaurant-menu';
 import bxBookReader from '@iconify/icons-bx/bx-book-reader';
 import userAvatarFilledAlt from '@iconify/icons-carbon/user-avatar-filled-alt';
-
-
 import AuthenticationContext from '../contexts/authentication/context';
 
 const Wrapper = styled('div', {

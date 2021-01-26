@@ -1,8 +1,9 @@
 import { styled } from 'styletron-react';
-//import THEME from '../../config/theme';
 import PartingStrip from '../PartingStrip';
-import owlTest from '../../assets/images/owlTest.jpg';
 import THEME from '../../config/theme';
+import media from '../../config/media';
+//TODO change to a real default image
+import owlTest from '../../assets/images/owlTest.jpg';
 
 const Wrapper = styled('div', {
     width: '100%',
@@ -33,12 +34,17 @@ const FlexRow = styled('div', {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    //width: '100%'
 });
 
 const FlexRowSpecial = styled(FlexRow, {
-    justifyContent: 'space-between',
-    width: '100%'
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    width: '100%',
+
+    [media.above.tablet] : {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    }
 });
 
 const Title = styled('h3', {
@@ -56,13 +62,17 @@ const EffortBox = styled('div', {
     alignItems: 'center',
     justifyContent: 'center',
     height: '25px',
-    width: '60px',
-    marginLeft: '1rem',
+    width: '70px',
+    margin: '0.75rem 1rem 0 0',
     backgroundColor: THEME.colors.secondary[0],
     border: `1px solid ${THEME.colors.black[0]}`,
     fontFamily: THEME.fonts.text,
     fontSize: '10px',
-    fontWeight: 400
+    fontWeight: 400,
+
+    [media.above.tablet] : {
+        margin: '0 0 0 1rem',
+    }
 });
 
 const Image = styled('div',({$imageURL}) => ({
@@ -86,7 +96,7 @@ const ResultCard = ({title, imageURL, desc, difficulty, cookingTime, handleClick
                             {title}
                         </Title>
                         <FlexRow>
-                            <EffortBox>
+                            <EffortBox $style = {{textTransform: 'uppercase'}}>
                                 {difficulty}
                             </EffortBox>
                             <EffortBox>
