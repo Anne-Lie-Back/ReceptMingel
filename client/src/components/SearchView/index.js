@@ -43,6 +43,7 @@ const ResultArea = styled('div', {
 
 const SearchView = () => {
     const [popUpOpen, setPopUpOpen] = useState(false)
+    const [searchInput, setSearchInput] = useState('');
     const [searchResult, setSearchResult] = useState([]);
     const [recipe, setRecipe] = useState(null);
     const {getSessionUser, user} = useContext(AuthenticationContext);
@@ -51,6 +52,7 @@ const SearchView = () => {
     let slug = useParams();
     console.log('user', user)
 
+    //Search through database and get a list of results ordered by hitscore in return.
     const getSearchResult = async(query) => {
         await axios
         .get(`/recipes/search/${query}`, { withCredentials: true })
@@ -59,8 +61,9 @@ const SearchView = () => {
         });
     };
 
+    //When component mounts or Recipe is updated it gets an updated version of the search result 
+    //(Needed if a user favourites or unfavourites an recipe)
     useEffect(() => {
-        getSearchResult("banan")
         console.log('user._id', user._id)
         getSessionUser(user._id)
         if(slug) {
@@ -88,13 +91,17 @@ const SearchView = () => {
     const handleClosePopUp = () => {
         history.push(`/search/`)
         setPopUpOpen(false)
+        if(searchResult) getSearchResult(searchInput)
     }
     
     console.log(recipe)
 
     return(
     <Wrapper>
-        <SearchInputArea/>
+        <SearchInputArea
+            setSearchInput = {setSearchInput}   
+            handleClick = {() => getSearchResult(searchInput)} 
+        />
         {popUpOpen && 
             <PopUpRecipe recipe = {recipe} getRecipeById = {getRecipeById} handleClick = {handleClosePopUp}/>
         }

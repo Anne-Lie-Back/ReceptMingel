@@ -51,12 +51,7 @@ const Button = styled('button', {
     }
 });
 
-const SearchInputArea = () => {
-    const [searchInput, setSearchInput] = useState('');
-
-    const handleClick = () => {
-        console.log(`Can you please find recipes with ${searchInput} in db?`)
-    };
+const SearchInputArea = ({setSearchInput, handleClick}) => {
 
     return(
         <Wrapper>
@@ -68,7 +63,7 @@ const SearchInputArea = () => {
                     styling = "basic"
                     handleChange = {(event) => {setSearchInput(event.target.value)}}
                 />
-                <Button onClick = {handleClick}>Sök</Button>
+                <Button onClick = {handleClick}> Sök </Button> 
             </FlexRow>
         </Wrapper>
     )  
