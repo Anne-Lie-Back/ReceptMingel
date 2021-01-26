@@ -28,7 +28,7 @@ const ScrollWrapper = styled('div', {
     display: 'flex',
     flexDirection: 'row',
     width: '100%',
-    height: '220px',
+    height: '230px',
     overflowX: 'scroll',
     overflowY: 'hidden',
     //Puts the scrollbar on top of div
@@ -39,14 +39,17 @@ const ScrollWrapper = styled('div', {
 
     '::-webkit-scrollbar' : { 
         //'-webkit-appearance': 'none',
-        height: '0.6rem',
+        height: '0.7rem',
         backgroundColor: THEME.colors.grey[0]
     },
 
     '::-webkit-scrollbar-thumb' : {
         borderRadius: '2px',
         border: `1px solid grey`,
-        backgroundColor: THEME.colors.secondary[0]
+        backgroundColor: THEME.colors.secondary[0]  
+    },
+    ':hover::-webkit-scrollbar-thumb' : {
+        backgroundColor: THEME.colors.secondary[2],
     }
 });
 

@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { Recipe } = require('../models/recipe.model');
 
 
 //HANDLERS
@@ -11,7 +12,8 @@ const {
     getRecipesByAuthorId,
     createRecipe,
     updateRecipe,
-    deleteRecipe
+    deleteRecipe,
+    searchRecipe
 } = require('../handlers/recipe.handlers');
 
 // MIDDLEWARES
@@ -30,13 +32,18 @@ router.get('/:id', getRecipeByID, (req, res) => {
     res.status(200).json(res.recipe)
 });
 
+//GET RECIPE BY SEARCH
+router.get('/search/:term', searchRecipe, (req, res) => {
+    res.status(200).json(res.result)
+});
+
 //GET RECIPE BY isShared:true
 router.get('/public', getRecipesByIsPublic, (req, res) => {
     res.status(200).json(res.recipesByIsPublic)
 });
 
 //GET RECIPE BY isShared:false
-router.get('/private', isAuthenticated, getRecipesByIsPrivate, (req, res) => {
+router.get('/private/:authorId', getRecipesByIsPrivate, (req, res) => {
     res.status(200).json(res.recipesByIsPrivate)
 });
 

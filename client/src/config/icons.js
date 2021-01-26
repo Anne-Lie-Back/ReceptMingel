@@ -8,6 +8,10 @@ import { styled } from 'styletron-react';
 import addOutline from '@iconify/icons-gridicons/add-outline';
 //REMOVE
 import minusCircleOutline from '@iconify/icons-eva/minus-circle-outline';
+
+//CLOSE
+import bxWindowClose from '@iconify/icons-bx/bx-window-close';
+
 //IMAGE
 import bxsCameraPlus from '@iconify/icons-bx/bxs-camera-plus';
 //EDIT SIMPLE
@@ -22,8 +26,6 @@ import bxSearch from '@iconify/icons-bx/bx-search';
 import userAvatarFilledAlt from '@iconify/icons-carbon/user-avatar-filled-alt';
 //RECIPEBOOK IMAGE
 import bxBookReader from '@iconify/icons-bx/bx-book-reader';
-//import outlineFoodBank from '@iconify/icons-ic/outline-food-bank';
-//import roundFoodBank from '@iconify/icons-ic/round-food-bank';
 //RECIPE ICON
 import roundRestaurantMenu from '@iconify/icons-ic/round-restaurant-menu';
 //COPYRIGHT ICON
@@ -72,6 +74,10 @@ const EditBox = ({size, color, handleClick}) => (
 const Done = ({size, color, handleClick}) => (
     <StyledIcon icon={bxCheckCircle} $size = {size} $color = {color} onClick = {handleClick}/>
 );
+
+const CloseIcon = ({size, color, handleClick}) => {
+    <StyledIcon icon={bxWindowClose} $size = {size} $color = {color} onClick = {handleClick}/>
+}
 
 // For file-upload
 const ImageIcon = ({size, color, handleClick}) => (
@@ -136,6 +142,7 @@ const Icons = {
     EditSimple,
     EditBox,
     Done,
+    CloseIcon,
     ImageIcon,
     Minus,
     User,

@@ -1,13 +1,15 @@
 import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from '../../axios';
+
 import { styled } from 'styletron-react';
 import THEME from '../../config/theme';
+
+import axios from '../../axios';
 import AuthenticationContext from '../../contexts/authentication/context';
+
 import RecipeWheel from '../RecipeWheel';
 import RecipeView from '../RecipeView';
 import InputField from '../inputField';
-import PartingStrip from '../../components/PartingStrip';
 
 const Wrapper = styled('div', {
     width: '100%',
@@ -31,18 +33,29 @@ const DecorativeLine = styled('div', {
 
 const RecipeBookView = ({userObject, setUserObject}) => {
     const {recipeBook} = useContext(AuthenticationContext);
-    const [filterInput, setFilterInput] = useState('');
     const [isLoading, setIsLoading] = useState(true);
     const [recipe, setRecipe] = useState(null)
+    const [searchTerm, setSearchTerm] = useState("");
+    const [searchResults, setSearchResults] = useState([]);
 
     let { slug } = useParams();
-
-    console.log('recipeBook', recipeBook)
     
-    //Filterinput passed on to RecipeWheel as prop
-    const handleChange = (event) => {
-        setFilterInput(event.target.value)
+    //FilterResult to set which list should be sent to recipeWheel
+    const handleChange = event => {
+        setSearchTerm(event.target.value);
     };
+    
+    //When User writes in filter input field. it makes both input and recipetitles to lowercase to make the search non case sensitive.
+    //As for now the user can only search by title.
+    useEffect(() => {
+        const lowerCased = searchTerm.toLowerCase();
+        const results = recipeBook.filter(recipe =>
+            recipe.title.toLowerCase().includes(lowerCased)
+        );
+
+        setSearchResults(results);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [searchTerm]);
 
     const getRecipeById = async(slug) => {
         try{
@@ -56,11 +69,9 @@ const RecipeBookView = ({userObject, setUserObject}) => {
     };
 
     useEffect(() => {
-        console.log('slug', slug)
         if(slug) {
             getRecipeById(slug);
             setIsLoading(true);
-            console.log("runs!")
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [slug]);
@@ -73,7 +84,7 @@ const RecipeBookView = ({userObject, setUserObject}) => {
                 placeholder = 'Sök i din receptbok här...'
             />
             <RecipeWheel 
-                recipeList = {recipeBook} 
+                recipeList = {!searchResults || searchResults.length === 0? recipeBook : searchResults} 
                 height = "255px" 
                 bannerTitle = "Filter-resultat"
                 slug = {slug}

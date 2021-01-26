@@ -27,9 +27,9 @@ connectToDb().catch(error => console.log(error));
 app.use(
     cors({
         //PROD
-        origin: ["https://wonderful-shaw-bf821f.netlify.app", "https://receptmingel.herokuapp.com"],
+        //origin: ["https://wonderful-shaw-bf821f.netlify.app", "https://receptmingel.herokuapp.com"],
         //DEV
-        //origin: "http://localhost:3000",
+        origin: "http://localhost:3000",
         credentials: true,
     })
 ); 
@@ -40,14 +40,12 @@ app.use(
     session({
         name: "happy",
         secret: "foodie",
-        //resave: false,
         saveUninitialized: false, 
         maxAge: 1000 * 60 * 60* 2,
         cookie: {
             maxAge: 1000 * 60 * 60* 2,
         }, 
         store: new MongoStore({ mongooseConnection: mongoose.connection}),
-        //expires: new Date(Date.now() + (30 * 86400 * 1000))
     })
 )
 

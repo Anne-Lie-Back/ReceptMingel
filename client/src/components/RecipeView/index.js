@@ -19,7 +19,6 @@ import IngredientSection from './IngredientSection';
 import CookingStepsSection from './CookingStepsSection';
 import BottomSection from './BottomSection';
 
-
 const Wrapper = styled('div', {
     display: 'flex',
     justifyContent: 'center',
@@ -92,78 +91,68 @@ const SharedIcon = styled(Icon,({$isSharedRecipe})=> ({
 }));
 
 const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, getRecipesByAuthor}) => {
-    const {recipeBook, getRecipeBook, user, updateUser} = useContext(AuthenticationContext);
+    const {getSessionUser, user, updateUser} = useContext(AuthenticationContext);
     const {patchRecipe, deleteRecipe} = useContext(RecipeContext);
     //isSharedRecipe helps to display correct icon
     const [isSharedRecipe, setIsShared] = useState(recipe.isShared);
     //isStarred helps to display correct icon
     const [isStarred, setIsStarred] = useState(false);
-    console.log('recipeBook', recipeBook)
-    /* const [userObject, setUserObject] = useState({
+    const [recipeBookPage, setRecipeBookPage] = useState(user.recipeBook);
+/*     const [userObject, setUserObject] = useState({
         username : user.username,
         firstName : user.firstName,
         lastName : user.lastName,
         image : user.image,
         userInfo : user.userInfo,
-        recipeBook : recipeBook,
+        recipeBook : user.recipeBook,
         imageURL: user.imageURL
-    }); */
+    });  */
     
     let history = useHistory();
     
-    /* const removeRecipeBookItem = async (id) => {
-        console.log('REMOVE')
-        const newList = userObject.recipeBook.filter((item) => item !== id);
-        await setUserObject({
-            ...userObject,
-            recipeBook: newList,
-        })
-        setIsShared(false)
-    }; */
-/* 
+    const removeRecipeBookItem = async (id) => {
+        const newList = recipeBookPage.filter((item) => item !== id);
+        updateUser(user._id, {recipeBook : newList})
+        setRecipeBookPage(newList)
+        setIsStarred(false)
+    }; 
+
     const addRecipeBookItem = (listItem) => {
-        console.log('ADD')
         const newItem = listItem;
-        const newList = [...userObject.recipeBook, newItem];
-        setUserObject({
-            ...userObject,
-            recipeBook: newList,
-        })
-        setIsShared(true)
-    }; */
+        const newList = [...recipeBookPage, newItem];
+        setRecipeBookPage(newList)
+        updateUser(user._id, {recipeBook : newList})
+        setIsStarred(true) 
+    }; 
 
     useEffect(() => {
         if (view === "RecipeView") getRecipeById(recipe._id)
-        if(view === "RecipeBook")getRecipeBook(user._id)
-    }, [view])
-
-    useEffect(() => {
-        const index = recipeBook.indexOf(x => x._id === recipe._id);
-        index === -1? setIsStarred(true) : setIsStarred(false)
-    }, [slug])
+        if(view === "RecipeBook" || view === "SearchView"){
+            const index = user.recipeBook.indexOf(recipe._id);
+            index === -1? setIsStarred(false) : setIsStarred(true)
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
     
     //Patches recipe, gets the new recipe and changes icon
     const handlePatchRecipe = () => {
         let value = recipe.isShared? {"isShared" : false} : {"isShared" : true}
-        console.log('value', value)
         patchRecipe(recipe._id, value)
         isSharedRecipe? setIsShared(false):setIsShared(true)
+        
         //TODO test to move this to useEffect that listens to recipe.isShared
         //isSharedRecipe? removeRecipeBookItem(recipe._id) : addRecipeBookItem(recipe._id);
     };
 
-
     useEffect(() => {
-        console.log('wiiii', recipe.isShared)
         setIsShared(recipe.isShared);
     }, [recipe.isShared])
 
-    console.log('isShared', recipe.isShared)
-
     const handleStarRecipe = () => {
-        //isStarred? removeRecipeBookItem(recipe._id) : addRecipeBookItem(recipe._id);
+        isStarred? removeRecipeBookItem(recipe._id) : addRecipeBookItem(recipe._id);
         getRecipeById(recipe._id)
         setIsStarred(!isStarred);
+        getSessionUser(user._id)
     }
 
     //Deletes recipe, updates sidemenu-list and redirects user to start-recipe-page
@@ -212,7 +201,7 @@ const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, ge
             <RecipeWrapper>
                 <FlexRow>
                     {/* Renders different mini-headers depending on if there is a slug */}
-                    {!slug? 
+                    {!slug && view !== "SearchView"? 
                         <HeadlineSmall style = {{fontWeight: 700}}> 
                             VÄLKOMMEN TILL DINA RECEPT! 
                         </HeadlineSmall> 
@@ -224,7 +213,7 @@ const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, ge
                                     <StarIcon 
                                         $isStarred = {isStarred} 
                                         icon={isStarred? roundStarRate : roundStarOutline} 
-                                        onClick = {() => handleStarRecipe(isStarred? {"isStarred" : false} : {"isStarred" : true})}
+                                        onClick = {handleStarRecipe}
                                     />
                                     <HeadlineSmall> 
                                         {isStarred? 'SPARAD I DIN RECEPTBOK':'SPARA I DIN RECEPTBOK'}
@@ -259,7 +248,7 @@ const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, ge
                                             }
                                         </>
                                     }
-                                    {view === "RecipeBook" && 
+                                    {(view === "RecipeBook" || view === "SearchView") && 
                                         <HeadlineSmall> 
                                             DETTA ÄR DITT RECEPT
                                         </HeadlineSmall>
@@ -271,7 +260,7 @@ const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, ge
                     }  
                 </FlexRow>
                 <PartingStrip width = '100%'/>
-                {!slug && 
+                {(!slug && view === "RecipeView") &&
                     <HeadlineSmall $style = {{marginTop: '0.5rem', fontSize: THEME.fontSizes.small}}> 
                         Ditt senast skapade recept: 
                     </HeadlineSmall>

@@ -10,7 +10,7 @@ const Wrapper = styled('div', ({$margin}) => ({
 //Styling in here
 const StyledInputField = styled('input', {
     width: '100%',
-    
+    outline:'none',
     fontFamily: THEME.fonts.text,
     fontSize: THEME.fontSizes.small,
     letterSpacing: '0.05rem',

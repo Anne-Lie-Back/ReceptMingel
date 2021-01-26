@@ -1,11 +1,14 @@
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useState } from 'react'
+
 import { styled } from 'styletron-react';
 import THEME from './../config/theme';
+
+import axios from '../axios';
 import AuthenticationContext from '../contexts/authentication/context';
+
 import Hero from './../components/Hero';
 import RecipeWheel from './../components/RecipeWheel';
 import imageTest from '../assets/images/imageTest.png';
-
 
 const Avatar = styled('div', ({$avatar}) => ({
     width: '290px',
@@ -71,20 +74,30 @@ const ContentWrapper = styled('div', {
 
 
 const UserPage = () => {
-    const { logout, user } = useContext(AuthenticationContext);
+    const { logout, user, recipeBook } = useContext(AuthenticationContext);
+    const [isLoading, setIsLoading] = useState(true)
+    const [privateRecipes, setPrivateRecipes] = useState([]);
+
+    const getRecipesByIsPrivate = async(authorId) => {
+        await axios
+        .get(`recipes/private/${authorId}`, { withCredentials: true })
+        .then((res) => {
+            setPrivateRecipes(res.data)
+            setIsLoading(false);
+        })
+        .catch(error => console.log(error))
+    };
 
     useEffect(() => {
         window.scrollTo(0, 0)
+        getRecipesByIsPrivate(user._id)
     },[])
     
-    const handleEdit = () => {
+    //This is for when the edit-user feature will come
+/*     const handleEdit = () => {
         console.log('EDIT ME!');
-    };
+    }; */
 
-/*     const handleLogout = () =>{
-        logout();
-    }
- */
     return(
         <>
             <Hero>
@@ -92,15 +105,25 @@ const UserPage = () => {
                 <DescWrapper>
                     {user.userInfo}
                     <FlexRow>
-                        <Button onClick = {handleEdit}>Uppdatera Profil?</Button>
+                        {/* TODO/IN PROGRESS <Button onClick = {handleEdit}>Uppdatera Profil?</Button> */}
                         <Button onClick = {() => logout()}>Logga ut?</Button>
                     </FlexRow>
                 </DescWrapper>
                     
             </Hero>
             <ContentWrapper>
-                <RecipeWheel bannerTitle = "In Progress"/>
-                <RecipeWheel bannerTitle = "Senast publicerade"/>
+                <RecipeWheel 
+                    isLoading = {isLoading} 
+                    bannerTitle = "Recept under utveckling..."
+                    recipeList = {privateRecipes}
+                    route = "/recipe/"
+                />
+                <RecipeWheel 
+                    isLoading = {isLoading} 
+                    bannerTitle = "Recept ur din receptbok..."
+                    recipeList = {recipeBook}
+                    route = "/recipeBook/"
+                />
             </ContentWrapper>
         </>
     );

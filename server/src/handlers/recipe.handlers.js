@@ -48,11 +48,11 @@ const getRecipesByIsPublic = (req, res, next) => {
 
 //GET RECIPE PRIVATE
 const getRecipesByIsPrivate = (req, res, next) => {
-    Recipe.find({isShared: false}, (error, recipesByIsShared) => {
+    Recipe.find({isShared: false, authorId: req.params.authorId}, (error, recipesByIsPrivate) => {
         try{
             if(error) next(error);
-            if(!recipesByIsShared || recipesByIsShared.length === 0) throw new ErrorHandler(404, "Vi kunde inte hitta några recept");
-            res.recipesByIsShared = recipesByIsShared
+            if(!recipesByIsPrivate || recipesByIsPrivate.length === 0) throw new ErrorHandler(404, "Vi kunde inte hitta några recept");
+            res.recipesByIsPrivate = recipesByIsPrivate
             next()
         }catch(error){
             next(error);
@@ -73,6 +73,29 @@ const getRecipesByAuthorId = (req, res, next) => {
         };
     });
 }; 
+
+const searchRecipe = async(req, res, next) => {
+    try{
+        const result = await Recipe.fuzzySearch(req.params.term)
+        
+/*         if(error) next(error);
+        if(!result || result.length === 0) throw new ErrorHandler(404, "Vi kunde inte hitta någragit  recept"); */
+        res.result = result.filter(i => i.isShared === true);
+        next()
+    }catch(error){
+        console.error(error)
+    }
+    /* Recipe.find({$text: {$search: req.params.term}}, (error, result) => {
+        try{
+            if(error) next(error);
+            if(!result || result.length === 0) throw new ErrorHandler(404, "Vi kunde inte hitta några recept");
+            res.result = result
+            next()
+        }catch(error){
+            next(error);
+        };
+    }); */
+}
 
 
 //CREATE NEW RECIPE
@@ -118,6 +141,7 @@ const deleteRecipe = (req, res, next) => {
 };
 
 module.exports = {
+    searchRecipe,
     getAllRecipes,
     getRecipeByID,
     getRecipesByIsPublic,

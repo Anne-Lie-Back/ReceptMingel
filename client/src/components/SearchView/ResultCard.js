@@ -1,13 +1,12 @@
 import { styled } from 'styletron-react';
 //import THEME from '../../config/theme';
 import PartingStrip from '../PartingStrip';
-import owlTest from '../../assets/images/owlTest.jpg'
+import owlTest from '../../assets/images/owlTest.jpg';
 import THEME from '../../config/theme';
 
 const Wrapper = styled('div', {
     width: '100%',
     maxWidth: '800px',
-    margin: '1rem 0',
 });
 
 const ContentWrapper = styled('div', {
@@ -23,6 +22,7 @@ const ContentWrapper = styled('div', {
 
 const TextWrapper = styled('div', {
     display: 'flex',
+    width: '100%',
     flexDirection: 'column',
     padding: '0 0 0 1rem',
     fontFamily: THEME.fonts.text,
@@ -65,63 +65,21 @@ const EffortBox = styled('div', {
     fontWeight: 400
 });
 
-const Image = styled('div',({$image}) => ({
-    width: '165px',
+const Image = styled('div',({$imageURL}) => ({
+    width: '120px',
     height: '90px',
-    backgroundImage: $image? `url(${$image})` : `url(${owlTest})`,
+    backgroundImage: $imageURL? `url(${$imageURL})` : `url(${owlTest})`,
     backgroundPosition: 'center',
     backgroundRepeat:' no-repeat',
     backgroundSize: 'cover',
     borderRadius: '5px'
 }));
 
-const ResultCard = () => {
-    //TODO remove all this and make it only return JSX
-    const recipe = {
-        title : "Exotiska Tacos",
-        preambleHTML : "En fräsch taco med panerad torsk. Den sötstarka mangosalsan ger mycket fraschör. Var inte rädd för att dunka på en del med chilin, mangon och limedressingen tar ut en del styrka. Detta är en perfekt sommar-rätt! ",
-        image : owlTest,
-        portions : 4,
-        cookingTime : "10-20min",
-        difficulty : "LÄTT",
-        ingredients : [
-            "8st panerade torskfiléer",
-            "4st Torilllabröd",
-            "2st färsk chili",
-            "500gr Mango (fryst eller färsk)",
-            "3dl gräddfil eller mjölkfritt alternativ",
-            "1st Lime"
-        ],
-        cookingSteps : [
-            "Riv av skalet av limen och blanda ner det i gräddfilen. Ställ såsen i kylen. TIPS! Ju längre såsen får stå med limeskalen i, desto mer lime kommer såsen att smaka.",
-            "Tärna mangon i centimeterstora bitar. Skiva chilin tunnt. Blanda ihop och låt götta sig en stund. Även Salsan mår ra av att stå i någon timme innan servering, men smakar fint även om den serveras direkt.",
-            "Tillaga Torsken efter beskrivningen på paketet.",
-            "Skiva torsken på hälften på längden. Ta fram ett tortilla-bröd. Lägg en eller två torskbitar på brödet. Häll på mangosalsa och klicka sedan på några klickar limesås.",
-            "Vik din tortilla. Tadaaa~! Redo att avnjutas"
-        ],
-        mdsaCategories : [
-            "taco",
-            "fisk",
-            "fredagsmys",
-            "moffafredag"
-        ],
-        author : "Hjortronbåt",
-        isShared : false
-    }
-
-    const {
-        title,
-        preambleHTML,
-        cookingTime,
-        difficulty,
-    } = recipe;
-
+const ResultCard = ({title, imageURL, desc, difficulty, cookingTime, handleClick}) => {
     return(
         <Wrapper>
-            {/* TODO: remove this partingStrip */}
-            <PartingStrip width = "100%"/>
-            <ContentWrapper>
-                <Image/>
+            <ContentWrapper onClick = {handleClick}>
+                <Image $imageURL = {imageURL}/>
                 <TextWrapper>
                     <FlexRowSpecial>
                         <Title>
@@ -137,7 +95,7 @@ const ResultCard = () => {
                         </FlexRow>
                     </FlexRowSpecial>
                     <Text>
-                        {preambleHTML}
+                        {desc}
                     </Text>
                 </TextWrapper>
             </ContentWrapper>

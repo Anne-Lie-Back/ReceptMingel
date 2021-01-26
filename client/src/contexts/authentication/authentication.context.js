@@ -29,9 +29,21 @@ const AuthenticationContextProvider = (props) => {
         .catch(error => console.log(error))
     };
     console.log('user', user)
+
     useEffect(() => {
         fetchData()
     }, []);
+
+    //This should be refactorized when authentication works
+    const getSessionUser = async(id) => {
+        try{
+            let data = await axios.get(`/users/${id}`, { withCredentials: true })
+            .then(({data}) => data);
+            setUser(data)
+        }catch(error){
+            console.log(error)
+        }
+    };
         
 
     //TODO BUG? if update recipeBook doesn't work it may be this thing that needs to be somewhere, or remove !isLoadingUser
@@ -149,6 +161,7 @@ const AuthenticationContextProvider = (props) => {
                 updateUser,
                 recipeBook,
                 getRecipeBook,
+                getSessionUser,
                 fetchData,
             }}
         />

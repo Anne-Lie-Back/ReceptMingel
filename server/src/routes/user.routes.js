@@ -10,6 +10,7 @@ const {
     getAllUsers,
     getSessionUser,
     getRecipeBook,
+    getUserById,
     updateUser,
     loginUser,
     logoutUser,
@@ -24,8 +25,8 @@ router.get('/all', isAuthenticated, getAllUsers, (req, res) => {
 })
 
 //GET ONE USER (TODO)
-router.get('/:id',isAuthenticated, (req, res) => {
-    res.status(200).json('Hello!');
+router.get('/:id', getUserById, (req, res) => {
+    res.status(200).json(res.user);
 })
 
 //TODO is this why I have small bug? wrong order of handlers?
