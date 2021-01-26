@@ -40,14 +40,12 @@ app.use(
     session({
         name: "happy",
         secret: "foodie",
-        //resave: false,
         saveUninitialized: false, 
         maxAge: 1000 * 60 * 60* 2,
         cookie: {
             maxAge: 1000 * 60 * 60* 2,
         }, 
         store: new MongoStore({ mongooseConnection: mongoose.connection}),
-        //expires: new Date(Date.now() + (30 * 86400 * 1000))
     })
 )
 

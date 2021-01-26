@@ -91,13 +91,12 @@ const SharedIcon = styled(Icon,({$isSharedRecipe})=> ({
 }));
 
 const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, getRecipesByAuthor}) => {
-    const {recipeBook, getRecipeBook, getSessionUser, user, updateUser} = useContext(AuthenticationContext);
+    const {getSessionUser, user, updateUser} = useContext(AuthenticationContext);
     const {patchRecipe, deleteRecipe} = useContext(RecipeContext);
     //isSharedRecipe helps to display correct icon
     const [isSharedRecipe, setIsShared] = useState(recipe.isShared);
     //isStarred helps to display correct icon
     const [isStarred, setIsStarred] = useState(false);
-    console.log('recipeBook', recipeBook)
     const [recipeBookPage, setRecipeBookPage] = useState(user.recipeBook);
 /*     const [userObject, setUserObject] = useState({
         username : user.username,
@@ -112,7 +111,6 @@ const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, ge
     let history = useHistory();
     
     const removeRecipeBookItem = async (id) => {
-        console.log('REMOVE')
         const newList = recipeBookPage.filter((item) => item !== id);
         updateUser(user._id, {recipeBook : newList})
         setRecipeBookPage(newList)
@@ -120,7 +118,6 @@ const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, ge
     }; 
 
     const addRecipeBookItem = (listItem) => {
-        console.log('ADD')
         const newItem = listItem;
         const newList = [...recipeBookPage, newItem];
         setRecipeBookPage(newList)
@@ -131,17 +128,15 @@ const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, ge
     useEffect(() => {
         if (view === "RecipeView") getRecipeById(recipe._id)
         if(view === "RecipeBook" || view === "SearchView"){
-            
             const index = user.recipeBook.indexOf(recipe._id);
             index === -1? setIsStarred(false) : setIsStarred(true)
-            console.log('index', index)
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     
     //Patches recipe, gets the new recipe and changes icon
     const handlePatchRecipe = () => {
         let value = recipe.isShared? {"isShared" : false} : {"isShared" : true}
-        console.log('value', value)
         patchRecipe(recipe._id, value)
         isSharedRecipe? setIsShared(false):setIsShared(true)
         
@@ -149,13 +144,9 @@ const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, ge
         //isSharedRecipe? removeRecipeBookItem(recipe._id) : addRecipeBookItem(recipe._id);
     };
 
-
     useEffect(() => {
-        console.log('wiiii', recipe.isShared)
         setIsShared(recipe.isShared);
     }, [recipe.isShared])
-
-    console.log('isShared', recipe.isShared)
 
     const handleStarRecipe = () => {
         isStarred? removeRecipeBookItem(recipe._id) : addRecipeBookItem(recipe._id);
@@ -201,9 +192,6 @@ const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, ge
         // eslint-disable-next-line no-unused-vars
         isShared
     } = recipe; 
-
-    console.log('imageURL', imageURL)
-    console.log('recipe', recipe)
 
     return(
         <Wrapper>

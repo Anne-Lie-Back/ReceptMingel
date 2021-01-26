@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { styled } from 'styletron-react';
 import InputField from '../inputField';
 import THEME from '../../config/theme';
@@ -52,22 +51,19 @@ const Button = styled('button', {
     }
 });
 
-const SearchInputArea = ({setSearchInput, handleClick}) => {
-
-    return(
-        <Wrapper>
-            <Label for = "search">Vad vill du äta idag?</Label>
-            <FlexRow>
-                <SearchInputField 
-                    type = "text"
-                    name = "search"
-                    styling = "basic"
-                    handleChange = {(event) => {setSearchInput(event.target.value)}}
-                />
-                <Button onClick = {handleClick}> Sök </Button> 
-            </FlexRow>
-        </Wrapper>
-    )  
-};
+const SearchInputArea = ({setSearchInput, handleClick}) => (
+    <Wrapper>
+        <Label for = "search">Vad vill du äta idag?</Label>
+        <FlexRow>
+            <SearchInputField 
+                type = "text"
+                name = "search"
+                styling = "basic"
+                handleChange = {(event) => {setSearchInput(event.target.value)}}
+            />
+            <Button onClick = {handleClick}> Sök </Button> 
+        </FlexRow>
+    </Wrapper>
+);
 
 export default SearchInputArea;

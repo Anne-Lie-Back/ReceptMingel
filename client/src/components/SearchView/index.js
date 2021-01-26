@@ -8,7 +8,6 @@ import SearchInputArea from './SearchInputArea';
 import ResultCard from './ResultCard';
 import PartingStrip from '../PartingStrip';
 import PopUpRecipe from './PopUpRecipe';
-//import RecipeView from '../RecipeView';
 
 const Wrapper = styled('div', {
     display: 'flex',
@@ -47,10 +46,8 @@ const SearchView = () => {
     const [searchResult, setSearchResult] = useState([]);
     const [recipe, setRecipe] = useState(null);
     const {getSessionUser, user} = useContext(AuthenticationContext);
-    //const [isLoadingRecipe, setIsLoadingRecipe] = useState(true);
     let history = useHistory();
     let slug = useParams();
-    console.log('user', user)
 
     //Search through database and get a list of results ordered by hitscore in return.
     const getSearchResult = async(query) => {
@@ -64,11 +61,11 @@ const SearchView = () => {
     //When component mounts or Recipe is updated it gets an updated version of the search result 
     //(Needed if a user favourites or unfavourites an recipe)
     useEffect(() => {
-        console.log('user._id', user._id)
         getSessionUser(user._id)
         if(slug) {
             getRecipeById(slug)
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[recipe]);
 
     const getRecipeById = async(id) => {
@@ -82,46 +79,45 @@ const SearchView = () => {
         }
     };
 
+    //Redirects to new slug and gets the recipe for that slug
     const handleResultClick = (id) =>{
-        getRecipeById(id)
-        console.log('clicked!')
-        history.push(`/search/${id}`)
+        getRecipeById(id);
+        history.push(`/search/${id}`);
     };
 
+     //When user closes popup the slug will be removed
     const handleClosePopUp = () => {
         history.push(`/search/`)
         getSearchResult(searchInput)
         setPopUpOpen(false) 
-    }
-    
-    console.log(recipe)
+    };
 
     return(
-    <Wrapper>
-        <SearchInputArea
-            setSearchInput = {setSearchInput}   
-            handleClick = {() => getSearchResult(searchInput)} 
-        />
-        {popUpOpen && 
-            <PopUpRecipe recipe = {recipe} getRecipeById = {getRecipeById} handleClick = {handleClosePopUp}/>
-        }
-        <ResultArea>
-            {(searchResult && searchResult.length > 0) && <PartingStrip width = "100%"/>}
-            {searchResult.map((item) => (
-                <ResultCard
-                key = {item._id}
-                title = {item.title}
-                imageURL = {item.imageURL}
-                desc = {item.preambleHTML}
-                difficulty = {item.difficulty}
-                cookingTime = {item.cookingTime}
-                handleClick = {() => handleResultClick(item._id)}
-                />
-            ))}
-        </ResultArea>
-    </Wrapper>
-);
-}
+        <Wrapper>
+            <SearchInputArea
+                setSearchInput = {setSearchInput}   
+                handleClick = {() => getSearchResult(searchInput)} 
+            />
+            {popUpOpen && 
+                <PopUpRecipe recipe = {recipe} getRecipeById = {getRecipeById} handleClick = {handleClosePopUp}/>
+            }
+            <ResultArea>
+                {(searchResult && searchResult.length > 0) && <PartingStrip width = "100%"/>}
+                {searchResult.map((item) => (
+                    <ResultCard
+                    key = {item._id}
+                    title = {item.title}
+                    imageURL = {item.imageURL}
+                    desc = {item.preambleHTML}
+                    difficulty = {item.difficulty}
+                    cookingTime = {item.cookingTime}
+                    handleClick = {() => handleResultClick(item._id)}
+                    />
+                ))}
+            </ResultArea>
+        </Wrapper>
+    );
+};
     
 
 export default SearchView;

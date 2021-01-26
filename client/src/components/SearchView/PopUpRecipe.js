@@ -1,6 +1,4 @@
-import { useParams } from 'react-router-dom';
 import { styled } from 'styletron-react';
-import axios from '../../axios';
 import { Icon } from "@iconify/react";
 import bxWindowClose from '@iconify/icons-bx/bx-window-close';
 import THEME from '../../config/theme';
@@ -17,7 +15,8 @@ const Wrapper = styled('div', {
     height: '890px',
     backgroundColor: THEME.colors.white[0],  
 });
-const SecondWrapper = styled('div', ({$height}) => ({
+
+const ScrollWrapper = styled('div', ({$height}) => ({
     Position: 'absolute',
     top: 0,
     left: 0,
@@ -36,7 +35,7 @@ const SecondWrapper = styled('div', ({$height}) => ({
         border: `1px solid grey`,
         backgroundColor: THEME.colors.secondary[0]  
     },
-}))
+}));
 
 const StyledIcon = styled(Icon, {
     position: 'fixed',
@@ -53,21 +52,18 @@ const StyledIcon = styled(Icon, {
 });
 
 const PopUpRecipe = ({recipe, getRecipeById, handleClick}) => {
-    
-    console.log('recipe', recipe)
+    //Sets hight for wrapper so content can have scroll auto.
     const height = `${window.innerHeight}px`
-    console.log('height', height)
-
 
     return(
         <Wrapper>
             <StyledIcon icon={bxWindowClose} onClick = {handleClick}/>
-                <SecondWrapper $height = {height}>
+                <ScrollWrapper $height = {height}>
                     <RecipeView 
                         getRecipeById = {getRecipeById} 
                         view = "SearchView" 
                         recipe = {recipe}></RecipeView>
-                </SecondWrapper>
+                </ScrollWrapper>
         </Wrapper>
     );
 };

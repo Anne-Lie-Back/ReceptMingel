@@ -1,7 +1,7 @@
 import { styled } from 'styletron-react';
 //import THEME from '../../config/theme';
 import PartingStrip from '../PartingStrip';
-import owlTest from '../../assets/images/owlTest.jpg'
+import owlTest from '../../assets/images/owlTest.jpg';
 import THEME from '../../config/theme';
 
 const Wrapper = styled('div', {

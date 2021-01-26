@@ -1,12 +1,14 @@
 import { useContext, useEffect, useState } from 'react'
-import axios from '../axios';
+
 import { styled } from 'styletron-react';
 import THEME from './../config/theme';
+
+import axios from '../axios';
 import AuthenticationContext from '../contexts/authentication/context';
+
 import Hero from './../components/Hero';
 import RecipeWheel from './../components/RecipeWheel';
 import imageTest from '../assets/images/imageTest.png';
-
 
 const Avatar = styled('div', ({$avatar}) => ({
     width: '290px',
@@ -91,14 +93,11 @@ const UserPage = () => {
         getRecipesByIsPrivate(user._id)
     },[])
     
+    //This is for when the edit-user feature will come
 /*     const handleEdit = () => {
         console.log('EDIT ME!');
     }; */
 
-/*     const handleLogout = () =>{
-        logout();
-    }
- */
     return(
         <>
             <Hero>
