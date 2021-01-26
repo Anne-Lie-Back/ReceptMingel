@@ -233,7 +233,7 @@ const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, ge
                                 </>
                                 :
                                 <SpaceBetweenWrapper>
-                                    {(view === "RecipeView" || view === "SearchView") &&
+                                    {view === "RecipeView" &&
                                         <>
                                             <FlexRow $style = {{margin: 0}}>
                                                 <SharedIcon 
@@ -272,7 +272,7 @@ const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, ge
                     }  
                 </FlexRow>
                 <PartingStrip width = '100%'/>
-                {!slug && 
+                {(!slug && view === "RecipeView") &&
                     <HeadlineSmall $style = {{marginTop: '0.5rem', fontSize: THEME.fontSizes.small}}> 
                         Ditt senast skapade recept: 
                     </HeadlineSmall>
