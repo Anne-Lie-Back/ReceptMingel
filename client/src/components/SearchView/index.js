@@ -90,8 +90,8 @@ const SearchView = () => {
 
     const handleClosePopUp = () => {
         history.push(`/search/`)
-        setPopUpOpen(false)
-        if(searchResult) getSearchResult(searchInput)
+        getSearchResult(searchInput)
+        setPopUpOpen(false) 
     }
     
     console.log(recipe)
