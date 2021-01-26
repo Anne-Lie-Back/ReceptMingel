@@ -77,9 +77,10 @@ const getRecipesByAuthorId = (req, res, next) => {
 const searchRecipe = async(req, res, next) => {
     try{
         const result = await Recipe.fuzzySearch(req.params.term)
+        
 /*         if(error) next(error);
         if(!result || result.length === 0) throw new ErrorHandler(404, "Vi kunde inte hitta någragit  recept"); */
-        res.result = result
+        res.result = result.filter(i => i.isShared === true);
         next()
     }catch(error){
         console.error(error)
