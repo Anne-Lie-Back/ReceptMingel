@@ -23,7 +23,7 @@ const Headline = styled('h2', {
     fontFamily: THEME.fonts.text,
     fontSize: '40px',
     textAlign: 'center',
-    fontStyle: 'italic',
+    //fontStyle: 'italic',
     textShadow: '0 0 1px #ffffff'
 });
 
@@ -36,7 +36,7 @@ const StartPage = () => {
         <HeroWrapper $height = {height}>
             {isLoggIn?
                 <>
-                    <Headline>En samlingsplats Amatörkockar</Headline>
+                    <Headline>En samlingsplats för Amatörkockar</Headline>
                     <LogInUser handleClick = {() => setIsLoggedIn(false)}/>
                 </>
                 :
