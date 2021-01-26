@@ -133,13 +133,19 @@ const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, ge
 
     useEffect(() => {
         if (view === "RecipeView") getRecipeById(recipe._id)
-        if(view === "RecipeBook")getRecipeBook(user._id)
+        if(view === "RecipeBook" || view === "SearchView"){
+            getRecipeBook(user._id)
+            const index = user.recipeBook.indexOf(recipe._id);
+            index === -1? setIsStarred(false) : setIsStarred(true)
+            console.log('index', index)
+        }
     }, [view])
 
-    useEffect(() => {
-        const index = recipeBook.indexOf(x => x._id === recipe._id);
-        index === -1? setIsStarred(true) : setIsStarred(false)
-    }, [slug])
+    console.log('recipeBook IN view', user.recipeBook)
+
+    const searchRecipeBookAfterStarred = () => {
+        
+    }
     
     //Patches recipe, gets the new recipe and changes icon
     const handlePatchRecipe = () => {
@@ -214,7 +220,7 @@ const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, ge
             <RecipeWrapper>
                 <FlexRow>
                     {/* Renders different mini-headers depending on if there is a slug */}
-                    {!slug? 
+                    {!slug && view !== "SearchView"? 
                         <HeadlineSmall style = {{fontWeight: 700}}> 
                             VÄLKOMMEN TILL DINA RECEPT! 
                         </HeadlineSmall> 

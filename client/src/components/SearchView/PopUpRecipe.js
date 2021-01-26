@@ -8,14 +8,12 @@ const Wrapper = styled('div', {
     position: 'fixed',
     top: 0,
     left: 0,
-    margin: '1px 0 0 0',
     zIndex: 2,
     display: 'flex',
     justifyContent: 'center',
     width: '100%',
     height: '890px',
-    backgroundColor: THEME.colors.white[0],
-    
+    backgroundColor: THEME.colors.white[0],  
 });
 const SecondWrapper = styled('div', ({$height}) => ({
     Position: 'absolute',
@@ -24,14 +22,25 @@ const SecondWrapper = styled('div', ({$height}) => ({
     width: '100%',
     height: $height,
     overflowY: 'auto',
-    zIndex: 4
+    zIndex: 4,
+
+    '::-webkit-scrollbar' : { 
+        width: '0.7rem',
+        backgroundColor: THEME.colors.grey[0]
+    },
+
+    '::-webkit-scrollbar-thumb' : {
+        borderRadius: '2px',
+        border: `1px solid grey`,
+        backgroundColor: THEME.colors.secondary[0]  
+    },
 }))
 
-const StyledIcon = styled(Icon, ({$size, $color}) => ({
+const StyledIcon = styled(Icon, {
     position: 'fixed',
     top: '20px',
-    right:'20px',
-    fontSize: '30px',
+    right:'30px',
+    fontSize: '35px',
     color: THEME.colors.black[0],
     zIndex: 6,
 
@@ -39,7 +48,7 @@ const StyledIcon = styled(Icon, ({$size, $color}) => ({
         color: THEME.colors.contrast[0],
         cursor: 'pointer'
     }
-}));
+});
 
 const PopUpRecipe = ({recipe, handleClick}) => {
     console.log('recipe', recipe)

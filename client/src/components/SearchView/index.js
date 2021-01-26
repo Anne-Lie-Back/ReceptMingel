@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import {useHistory} from 'react-router-dom';
+import {useHistory, useParams} from 'react-router-dom';
 import { styled } from 'styletron-react';
 import THEME from '../../config/theme';
 import axios from '../../axios';
@@ -46,6 +46,7 @@ const SearchView = () => {
     const [recipe, setRecipe] = useState(null);
     //const [isLoadingRecipe, setIsLoadingRecipe] = useState(true);
     let history = useHistory();
+    let slug = useParams();
 
     const getSearchResult = async(query) => {
         await axios
@@ -57,6 +58,9 @@ const SearchView = () => {
 
     useEffect(() => {
         getSearchResult("banan")
+        if(slug) {
+            getRecipeById(slug)
+        }
     },[]);
 
     const getRecipeById = async(id) => {
@@ -81,7 +85,7 @@ const SearchView = () => {
         setPopUpOpen(false)
     }
     
-    console.log(popUpOpen)
+    console.log(recipe)
 
     return(
     <Wrapper>
