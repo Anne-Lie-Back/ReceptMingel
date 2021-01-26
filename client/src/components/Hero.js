@@ -2,25 +2,38 @@ import { styled } from 'styletron-react';
 import THEME from './../config/theme';
 import heroImage from '../assets/images/heroImage.jpg';
 import { Icon } from "@iconify/react";
+import media from './../config/media';
 
 const Wrapper = styled('div', ({$image}) => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
-    height: '600px',
-    //if no image is recieved, i will use a default for hero
+    minHeight: '600px',
+    height: '100%',
+    //if no image is recieved, It will set a default for hero
     backgroundImage: $image? `url(${$image})` : `url(${heroImage})`,
     backgroundPosition: 'center',
     backgroundRepeat:' no-repeat',
     backgroundSize: 'cover',
+
+    [media.above.tablet] : {
+        height: '600px',
+    }
 }));
 
 const TitleWrapper = styled('div', {
     display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center'
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+
+    [media.above.tablet] : {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        
+    }
 });
 
 const Title = styled('h2', {

@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from 'react'
 
 import { styled } from 'styletron-react';
 import THEME from './../config/theme';
+import media from './../config/media';
 
 import axios from '../axios';
 import AuthenticationContext from '../contexts/authentication/context';
@@ -11,32 +12,59 @@ import RecipeWheel from './../components/RecipeWheel';
 import imageTest from '../assets/images/imageTest.png';
 
 const Avatar = styled('div', ({$avatar}) => ({
-    width: '290px',
-    height: '290px',
-    margin: '1.5rem',
+    width: '200px',
+    height: '200px',
+    margin: '8rem 0 0 0',
     borderRadius: '50%',
     backgroundImage: $avatar ? `url(${$avatar})`:`url(${imageTest})`,
     backgroundPosition: 'center',
     backgroundRepeat:' no-repeat',
     backgroundSize: 'cover',
-    boxShadow: '0 0 5px black'
+    boxShadow: '0 0 5px black',
+
+    [media.above.tablet] : {
+        width: '250px',
+        height: '250px',
+        margin: '0', 
+    },
+
+    [media.above.laptop] : {
+        width: '290px',
+        height: '290px',
+    }
 }));
 
 const DescWrapper = styled('div', {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-Between',
-    width: '500px',
-    height: '320px',
-    margin: '1.5rem 1.5rem 0 1.5rem',
+    width: '290px',
+    height: '320px',  
+    margin: '1.5rem 1.5rem 3rem 1.5rem',
     padding: '1rem 2rem',
     backgroundColor: THEME.colors.white[0],
     borderRadius: '5px',
     boxShadow: '0 0 5px black',
     fontFamily: THEME.fonts.text,
-    fontSize: THEME.fontSizes.normal,
+    fontSize: THEME.fontSizes.Xsmall,
     color: THEME.colors.black[0],
-    lineHeight: '30px'
+    lineHeight: '30px',
+
+    [media.above.mobile] : {
+        width: '400px',
+        height: '300px',
+        fontSize: THEME.fontSizes.small,
+    },
+
+    [media.above.tablet] : {
+        margin: '1.5rem 1.5rem 0 1.5rem',
+    },
+
+    [media.above.laptop] : {
+        width: '500px',
+        height: '320px',
+        fontSize: THEME.fontSizes.normal,
+    }
 });
 
 const FlexRow = styled('div', {
@@ -108,8 +136,7 @@ const UserPage = () => {
                         {/* TODO/IN PROGRESS <Button onClick = {handleEdit}>Uppdatera Profil?</Button> */}
                         <Button onClick = {() => logout()}>Logga ut?</Button>
                     </FlexRow>
-                </DescWrapper>
-                    
+                </DescWrapper>       
             </Hero>
             <ContentWrapper>
                 <RecipeWheel 

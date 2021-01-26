@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { styled } from 'styletron-react';
 import THEME from '../config/theme'
 import media from '../config/media';
@@ -36,7 +36,7 @@ const Headline = styled('h2', {
     [media.above.tablet] : {
         margin: '15% 2rem 1rem 2rem',
         fontSize: '40px',
-    }
+    },
 });
 
 const StartPage = () => {
