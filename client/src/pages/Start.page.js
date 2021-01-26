@@ -1,21 +1,21 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { styled } from 'styletron-react';
 import THEME from '../config/theme'
 import RegisterNewUser from '../components/startPage/RegisterNewUser';
 import LogInUser from '../components/startPage/LogInUser';
 import heroImage from '../assets/images/heroImage.jpg';
 
-const HeroWrapper = styled('div', {
+const HeroWrapper = styled('div', ({$height}) =>  ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     width: '100%',
-    height: '900px',
+    height: $height,
     backgroundImage: `url(${heroImage})`,
     backgroundPosition: 'center',
     backgroundRepeat:' no-repeat',
     backgroundSize: 'cover',
-});
+}));
 
 const Headline = styled('h2', {
     width: '100%',
@@ -29,12 +29,14 @@ const Headline = styled('h2', {
 
 const StartPage = () => {
     const [isLoggIn, setIsLoggedIn] = useState(true)
+    const height = `${window.innerHeight}px`
+    console.log('window.innerHeight', window.innerHeight)
 
     return(
-        <HeroWrapper>
+        <HeroWrapper $height = {height}>
             {isLoggIn?
                 <>
-                    <Headline>Här skall det stå något fint</Headline>
+                    <Headline>En samlingsplats Amatörkockar</Headline>
                     <LogInUser handleClick = {() => setIsLoggedIn(false)}/>
                 </>
                 :

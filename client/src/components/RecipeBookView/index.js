@@ -41,12 +41,13 @@ const RecipeBookView = ({userObject, setUserObject}) => {
 
     console.log('recipeBook', recipeBook)
     
-    //Filterinput passed on to RecipeWheel as prop
-
+    //FilterResult to set which list should be sent to recipeWheel
     const handleChange = event => {
         setSearchTerm(event.target.value);
       };
     
+    //When User writes in filter input field. it makes both input and recipetitles to lowercase to make the search non case sensitive.
+    //As for now the user can only search by title.
     useEffect(() => {
         const lowerCased = searchTerm.toLowerCase();
         const results = recipeBook.filter(recipe =>
@@ -54,6 +55,7 @@ const RecipeBookView = ({userObject, setUserObject}) => {
         );
 
         setSearchResults(results);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchTerm]);
 
     const getRecipeById = async(slug) => {
