@@ -91,61 +91,52 @@ const SharedIcon = styled(Icon,({$isSharedRecipe})=> ({
 }));
 
 const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, getRecipesByAuthor}) => {
-    const {recipeBook, getRecipeBook, user, updateUser} = useContext(AuthenticationContext);
+    const {recipeBook, getRecipeBook, getSessionUser, user, updateUser} = useContext(AuthenticationContext);
     const {patchRecipe, deleteRecipe} = useContext(RecipeContext);
     //isSharedRecipe helps to display correct icon
     const [isSharedRecipe, setIsShared] = useState(recipe.isShared);
     //isStarred helps to display correct icon
     const [isStarred, setIsStarred] = useState(false);
     console.log('recipeBook', recipeBook)
-    /* const [userObject, setUserObject] = useState({
+    const [recipeBookPage, setRecipeBookPage] = useState(user.recipeBook);
+/*     const [userObject, setUserObject] = useState({
         username : user.username,
         firstName : user.firstName,
         lastName : user.lastName,
         image : user.image,
         userInfo : user.userInfo,
-        recipeBook : recipeBook,
+        recipeBook : user.recipeBook,
         imageURL: user.imageURL
-    }); */
+    });  */
     
     let history = useHistory();
     
-    /* const removeRecipeBookItem = async (id) => {
+    const removeRecipeBookItem = async (id) => {
         console.log('REMOVE')
-        const newList = userObject.recipeBook.filter((item) => item !== id);
-        await setUserObject({
-            ...userObject,
-            recipeBook: newList,
-        })
-        setIsShared(false)
-    }; */
-/* 
+        const newList = recipeBookPage.filter((item) => item !== id);
+        updateUser(user._id, {recipeBook : newList})
+        setRecipeBookPage(newList)
+        setIsStarred(false)
+    }; 
+
     const addRecipeBookItem = (listItem) => {
         console.log('ADD')
         const newItem = listItem;
-        const newList = [...userObject.recipeBook, newItem];
-        setUserObject({
-            ...userObject,
-            recipeBook: newList,
-        })
-        setIsShared(true)
-    }; */
+        const newList = [...recipeBookPage, newItem];
+        setRecipeBookPage(newList)
+        updateUser(user._id, {recipeBook : newList})
+        setIsStarred(true) 
+    }; 
 
     useEffect(() => {
         if (view === "RecipeView") getRecipeById(recipe._id)
         if(view === "RecipeBook" || view === "SearchView"){
-            getRecipeBook(user._id)
+            
             const index = user.recipeBook.indexOf(recipe._id);
             index === -1? setIsStarred(false) : setIsStarred(true)
             console.log('index', index)
         }
-    }, [view])
-
-    console.log('recipeBook IN view', user.recipeBook)
-
-    const searchRecipeBookAfterStarred = () => {
-        
-    }
+    }, [])
     
     //Patches recipe, gets the new recipe and changes icon
     const handlePatchRecipe = () => {
@@ -153,6 +144,7 @@ const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, ge
         console.log('value', value)
         patchRecipe(recipe._id, value)
         isSharedRecipe? setIsShared(false):setIsShared(true)
+        
         //TODO test to move this to useEffect that listens to recipe.isShared
         //isSharedRecipe? removeRecipeBookItem(recipe._id) : addRecipeBookItem(recipe._id);
     };
@@ -166,9 +158,10 @@ const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, ge
     console.log('isShared', recipe.isShared)
 
     const handleStarRecipe = () => {
-        //isStarred? removeRecipeBookItem(recipe._id) : addRecipeBookItem(recipe._id);
+        isStarred? removeRecipeBookItem(recipe._id) : addRecipeBookItem(recipe._id);
         getRecipeById(recipe._id)
         setIsStarred(!isStarred);
+        getSessionUser(user._id)
     }
 
     //Deletes recipe, updates sidemenu-list and redirects user to start-recipe-page
@@ -232,7 +225,7 @@ const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, ge
                                     <StarIcon 
                                         $isStarred = {isStarred} 
                                         icon={isStarred? roundStarRate : roundStarOutline} 
-                                        onClick = {() => handleStarRecipe(isStarred? {"isStarred" : false} : {"isStarred" : true})}
+                                        onClick = {handleStarRecipe}
                                     />
                                     <HeadlineSmall> 
                                         {isStarred? 'SPARAD I DIN RECEPTBOK':'SPARA I DIN RECEPTBOK'}

@@ -1,4 +1,6 @@
+import { useParams } from 'react-router-dom';
 import { styled } from 'styletron-react';
+import axios from '../../axios';
 import { Icon } from "@iconify/react";
 import bxWindowClose from '@iconify/icons-bx/bx-window-close';
 import THEME from '../../config/theme';
@@ -50,7 +52,8 @@ const StyledIcon = styled(Icon, {
     }
 });
 
-const PopUpRecipe = ({recipe, handleClick}) => {
+const PopUpRecipe = ({recipe, getRecipeById, handleClick}) => {
+    
     console.log('recipe', recipe)
     const height = `${window.innerHeight}px`
     console.log('height', height)
@@ -60,7 +63,10 @@ const PopUpRecipe = ({recipe, handleClick}) => {
         <Wrapper>
             <StyledIcon icon={bxWindowClose} onClick = {handleClick}/>
                 <SecondWrapper $height = {height}>
-                    <RecipeView view = "SearchView" recipe = {recipe}></RecipeView>
+                    <RecipeView 
+                        getRecipeById = {getRecipeById} 
+                        view = "SearchView" 
+                        recipe = {recipe}></RecipeView>
                 </SecondWrapper>
         </Wrapper>
     );
