@@ -1,17 +1,18 @@
 import { createContext } from 'react';
  
  const RecipeContext = createContext({
+    isLoadingRecipe: true,
     recipesAll: [],
     recipesUser: [],
-    isLoadingRecipe: true,
-    getAllRecipes: () => {},
-    getRecipesByAuthorId: () => {},
-    getRecipeByIsShared: () => {},
-    getRecipeById: () => {},
-    updateRecipe: () => {},
-    patchRecipe: () => {},
     deleteRecipe: () => {},
-    setIsLoadingRecipe: () => {}
+    getAllRecipes: () => {},
+    getRecipeById: () => {},
+    getRecipeByIsShared: () => {},
+    getRecipesByAuthorId: () => {},
+    getRecipesByIsPrivate: () => {},
+    patchRecipe: () => {},
+    setIsLoadingRecipe: () => {},
+    updateRecipe: () => {},
   });
 
   export default RecipeContext;

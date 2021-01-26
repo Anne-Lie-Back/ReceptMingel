@@ -4,7 +4,7 @@ const THEME = {
         black: ['#000000'],
         grey: ['#E5E5E5'],
         primary: ['#416788', '#DEEFFF'],
-        secondary: ['#AEE2A2'], 
+        secondary: ['#AEE2A2', '#8EBA84', '#769C6D'], 
         contrast: ['#FA824C'],
         error: 'red'
     },

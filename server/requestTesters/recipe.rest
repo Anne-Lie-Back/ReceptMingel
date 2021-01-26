@@ -19,6 +19,11 @@ GET https://receptmingel.herokuapp.com/api/recipes/author/600806e24c55ab2c8c310f
 
 ###
 
+//GET RECIPE BY private and authorID
+GET https://receptmingel.herokuapp.com/api/recipes/private/600375ea73a3593db003383e
+
+###
+
 //POST RECIPE
 POST http://localhost:8080/api/recipes/
 Content-Type: application/json

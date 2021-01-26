@@ -43,7 +43,7 @@ router.get('/public', getRecipesByIsPublic, (req, res) => {
 });
 
 //GET RECIPE BY isShared:false
-router.get('/private', isAuthenticated, getRecipesByIsPrivate, (req, res) => {
+router.get('/private/:authorId', getRecipesByIsPrivate, (req, res) => {
     res.status(200).json(res.recipesByIsPrivate)
 });
 

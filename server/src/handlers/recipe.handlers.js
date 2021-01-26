@@ -48,11 +48,11 @@ const getRecipesByIsPublic = (req, res, next) => {
 
 //GET RECIPE PRIVATE
 const getRecipesByIsPrivate = (req, res, next) => {
-    Recipe.find({isShared: false}, (error, recipesByIsShared) => {
+    Recipe.find({isShared: false, authorId: req.params.authorId}, (error, recipesByIsPrivate) => {
         try{
             if(error) next(error);
-            if(!recipesByIsShared || recipesByIsShared.length === 0) throw new ErrorHandler(404, "Vi kunde inte hitta några recept");
-            res.recipesByIsShared = recipesByIsShared
+            if(!recipesByIsPrivate || recipesByIsPrivate.length === 0) throw new ErrorHandler(404, "Vi kunde inte hitta några recept");
+            res.recipesByIsPrivate = recipesByIsPrivate
             next()
         }catch(error){
             next(error);

@@ -46,6 +46,14 @@ const RecipeContextProvider = (props) => {
         });
     };
 
+    const getRecipesByIsPrivate = async(authorId) => {
+        await axios
+        .get(`recipes/private/${authorId}`, { withCredentials: true })
+        .then((res) => {
+            setRecipesPublic(res.data)
+        });
+    };
+
     const getRecipeById = async(id) => {
         try{
             let data = await axios.get(`recipes/${id}`, { withCredentials: true })
@@ -86,19 +94,20 @@ const RecipeContextProvider = (props) => {
         <RecipeContext.Provider
             {...props}
             value={{
-                recipesAll,
-                recipesUser,
-                recipesPublic,
-                recipe,
-                isLoadingRecipe,
-                getAllRecipes,
-                getRecipesByAuthorId,
-                getRecipesByIsShared,
-                getRecipeById,
-                updateRecipe,
-                patchRecipe,
                 deleteRecipe,
-                setIsLoadingRecipe
+                getAllRecipes,
+                getRecipeById,
+                getRecipesByAuthorId,
+                getRecipesByIsPrivate,
+                getRecipesByIsShared,
+                isLoadingRecipe,
+                patchRecipe,
+                recipe,
+                recipesAll,
+                recipesPublic,
+                recipesUser,
+                setIsLoadingRecipe,
+                updateRecipe,
             }}
         />
     );

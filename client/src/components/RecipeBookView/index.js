@@ -31,18 +31,30 @@ const DecorativeLine = styled('div', {
 
 const RecipeBookView = ({userObject, setUserObject}) => {
     const {recipeBook} = useContext(AuthenticationContext);
-    const [filterInput, setFilterInput] = useState('');
+    //const [filterInput, setFilterInput] = useState('');
     const [isLoading, setIsLoading] = useState(true);
     const [recipe, setRecipe] = useState(null)
+    const [searchTerm, setSearchTerm] = useState("");
+    const [searchResults, setSearchResults] = useState([]);
 
     let { slug } = useParams();
 
     console.log('recipeBook', recipeBook)
     
     //Filterinput passed on to RecipeWheel as prop
-    const handleChange = (event) => {
-        setFilterInput(event.target.value)
-    };
+
+    const handleChange = event => {
+        setSearchTerm(event.target.value);
+      };
+    
+    useEffect(() => {
+        const lowerCased = searchTerm.toLowerCase();
+        const results = recipeBook.filter(recipe =>
+            recipe.title.toLowerCase().includes(lowerCased)
+        );
+
+        setSearchResults(results);
+    }, [searchTerm]);
 
     const getRecipeById = async(slug) => {
         try{
@@ -73,7 +85,7 @@ const RecipeBookView = ({userObject, setUserObject}) => {
                 placeholder = 'Sök i din receptbok här...'
             />
             <RecipeWheel 
-                recipeList = {recipeBook} 
+                recipeList = {!searchResults || searchResults.length === 0? recipeBook : searchResults} 
                 height = "255px" 
                 bannerTitle = "Filter-resultat"
                 slug = {slug}
