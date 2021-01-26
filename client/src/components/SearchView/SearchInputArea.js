@@ -44,6 +44,7 @@ const Button = styled('button', {
     textAlign: 'center',
     color: THEME.colors.white[0],
     letterSpacing: '0.05rem',
+    outline:'none',
 
     ':hover': {
         cursor:'pointer',
