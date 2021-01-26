@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { styled } from 'styletron-react';
 import THEME from '../config/theme'
+import media from '../config/media';
 import RegisterNewUser from '../components/startPage/RegisterNewUser';
 import LogInUser from '../components/startPage/LogInUser';
 import heroImage from '../assets/images/heroImage.jpg';
@@ -19,12 +20,22 @@ const HeroWrapper = styled('div', ({$height}) =>  ({
 
 const Headline = styled('h2', {
     width: '100%',
-    margin: '15% 2rem 1rem 2rem',
+    margin: '30% 2rem 1rem 2rem',
+    padding: '0 2rem',
     fontFamily: THEME.fonts.text,
-    fontSize: '40px',
+    fontSize: '25px',
     textAlign: 'center',
-    //fontStyle: 'italic',
-    textShadow: '0 0 1px #ffffff'
+    textShadow: '0 0 1px #ffffff',
+
+    [media.above.XSmobile] : {
+        margin: '25% 2rem 1rem 2rem',
+        fontSize: '30px',
+    },
+
+    [media.above.tablet] : {
+        margin: '15% 2rem 1rem 2rem',
+        fontSize: '40px',
+    }
 });
 
 const StartPage = () => {
