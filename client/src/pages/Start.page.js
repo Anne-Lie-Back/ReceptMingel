@@ -11,7 +11,8 @@ const HeroWrapper = styled('div', ({$height}) =>  ({
     flexDirection: 'column',
     alignItems: 'center',
     width: '100%',
-    height: $height,
+    height: '100%',
+    minHeight: $height,
     backgroundImage: `url(${heroImage})`,
     backgroundPosition: 'center',
     backgroundRepeat:' no-repeat',
@@ -41,7 +42,6 @@ const Headline = styled('h2', {
 const StartPage = () => {
     const [isLoggIn, setIsLoggedIn] = useState(true)
     const height = `${window.innerHeight}px`
-    console.log('window.innerHeight', window.innerHeight)
 
     return(
         <HeroWrapper $height = {height}>
