@@ -66,7 +66,7 @@ const SearchView = () => {
         if(slug) {
             getRecipeById(slug)
         }
-    },[]);
+    },[recipe]);
 
     const getRecipeById = async(id) => {
         try{
