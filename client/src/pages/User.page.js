@@ -14,7 +14,7 @@ import imageTest from '../assets/images/imageTest.png';
 const Avatar = styled('div', ({$avatar}) => ({
     width: '200px',
     height: '200px',
-    margin: '8rem 0 0 0',
+    margin: '10rem 0 0 0',
     borderRadius: '50%',
     backgroundImage: $avatar ? `url(${$avatar})`:`url(${imageTest})`,
     backgroundPosition: 'center',
