@@ -19,7 +19,6 @@ import IngredientSection from './IngredientSection';
 import CookingStepsSection from './CookingStepsSection';
 import BottomSection from './BottomSection';
 
-
 const Wrapper = styled('div', {
     display: 'flex',
     justifyContent: 'center',
@@ -204,6 +203,9 @@ const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, ge
         isShared
     } = recipe; 
 
+    console.log('imageURL', imageURL)
+    console.log('recipe', recipe)
+
     return(
         <Wrapper>
             {/* Waiting for data to load before rendering */}
@@ -232,7 +234,7 @@ const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, ge
                                 </>
                                 :
                                 <SpaceBetweenWrapper>
-                                    {view === "RecipeView" &&
+                                    {(view === "RecipeView" || view === "SearchView") &&
                                         <>
                                             <FlexRow $style = {{margin: 0}}>
                                                 <SharedIcon 
@@ -259,7 +261,7 @@ const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, ge
                                             }
                                         </>
                                     }
-                                    {view === "RecipeBook" && 
+                                    {(view === "RecipeBook" || view === "SearchView") && 
                                         <HeadlineSmall> 
                                             DETTA ÄR DITT RECEPT
                                         </HeadlineSmall>

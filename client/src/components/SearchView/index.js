@@ -1,12 +1,13 @@
 import {useEffect, useState} from 'react';
-//import {useHistory, useParams} from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 import { styled } from 'styletron-react';
 import THEME from '../../config/theme';
 import axios from '../../axios';
 import SearchInputArea from './SearchInputArea';
 import ResultCard from './ResultCard';
-import RecipeView from '../RecipeView';
 import PartingStrip from '../PartingStrip';
+import PopUpRecipe from './PopUpRecipe';
+import RecipeView from '../RecipeView';
 
 const Wrapper = styled('div', {
     display: 'flex',
@@ -40,7 +41,11 @@ const ResultArea = styled('div', {
 });
 
 const SearchView = () => {
+    const [popUpOpen, setPopUpOpen] = useState(false)
     const [searchResult, setSearchResult] = useState([]);
+    const [recipe, setRecipe] = useState(null);
+    //const [isLoadingRecipe, setIsLoadingRecipe] = useState(true);
+    let history = useHistory();
 
     const getSearchResult = async(query) => {
         await axios
@@ -52,13 +57,38 @@ const SearchView = () => {
 
     useEffect(() => {
         getSearchResult("banan")
-    },[])
+    },[]);
 
-    console.log('searchResult', searchResult)
+    const getRecipeById = async(id) => {
+        try{
+            let data = await axios.get(`recipes/${id}`, { withCredentials: true })
+            .then(({data}) => data);
+            setRecipe(data)
+            setPopUpOpen(true)
+        }catch(error){
+            console.log(error)
+        }
+    };
+
+    const handleResultClick = (id) =>{
+        getRecipeById(id)
+        console.log('clicked!')
+        history.push(`/search/${id}`)
+    };
+
+    const handleClosePopUp = () => {
+        history.push(`/search/`)
+        setPopUpOpen(false)
+    }
+    
+    console.log(popUpOpen)
 
     return(
     <Wrapper>
         <SearchInputArea/>
+        {popUpOpen && 
+            <PopUpRecipe recipe = {recipe} handleClick = {handleClosePopUp}/>
+        }
         <ResultArea>
             {(searchResult && searchResult.length > 0) && <PartingStrip width = "100%"/>}
             {searchResult.map((item) => (
@@ -69,6 +99,7 @@ const SearchView = () => {
                 desc = {item.preambleHTML}
                 difficulty = {item.difficulty}
                 cookingTime = {item.cookingTime}
+                handleClick = {() => handleResultClick(item._id)}
                 />
             ))}
         </ResultArea>

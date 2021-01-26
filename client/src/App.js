@@ -5,7 +5,7 @@ import Footer from './Footer';
 
 function App() {
   return (
-    <div className="App">
+    <div className="App" /* style = {{position: 'relative'}} */>
       <Header/>
       <AppRouter/>
       <Footer/>
