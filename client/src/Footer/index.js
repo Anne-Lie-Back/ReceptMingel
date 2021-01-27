@@ -1,5 +1,6 @@
 import { styled } from 'styletron-react';
 import THEME from '../config/theme';
+import media from '../config/media';
 import Icons from '../config/icons';
 
 const Wrapper = styled('div', {
@@ -26,11 +27,17 @@ const TextWrapper = styled('div', {
 
 const BottomWrapper = styled('div', {
     display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: 'column',
+    justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
-    marginBottom: '0.5rem'
+    margin: '0 0 0.5rem 0',
+
+    [media.above.mobile] : {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        
+    }
 });
 
 const FooterLogo = styled('div', {
@@ -39,13 +46,12 @@ const FooterLogo = styled('div', {
     color: THEME.colors.white[0],
     letterSpacing: '0.05rem',
     textShadow: '0 0 2px black',
-    fontWeight: 400
-});
+    fontWeight: 400,
+    margin: '0 0 0.5rem 0',
 
-const CopyrightWrapper = styled('div', {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center'
+    [media.above.mobile] : {
+        margin: 0,
+    }
 });
 
 const LinkedinLink = styled('a', {
@@ -55,7 +61,23 @@ const LinkedinLink = styled('a', {
     justifyContent: 'space-between',
     alignItems: 'center',
     color: THEME.colors.white[0],
-    textDecoration: 'none'
+    textDecoration: 'none',
+    margin: '0 0 0.5rem 0',
+
+    [media.above.mobile] : {
+        margin: 0,
+    }
+});
+
+const CopyrightWrapper = styled('div', {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    margin: '0 0 0.5rem 0',
+
+    [media.above.mobile] : {
+        margin: 0
+    }
 });
 
 const Footer = () => {

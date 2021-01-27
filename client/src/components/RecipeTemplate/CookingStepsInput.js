@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { styled } from 'styletron-react';
 import THEME from '../../config/theme';
-import InputField from '../inputField';
+import media from '../../config/media';
 import { Icon } from "@iconify/react";
 import addOutline from '@iconify/icons-gridicons/add-outline';
 import TextListItem from './text.listItem';
@@ -28,11 +28,18 @@ const Label = styled('label', {
 const StyledAddIcon = styled(Icon, {
     marginLeft: '1rem',
     colors: THEME.colors.black[0],
-    fontSize: '25px',
+    fontSize: '75px',
 
     ':hover' : {
         color: THEME.colors.contrast[0],
         cursor: 'pointer'
+    },
+
+    [media.above.mobile] : {
+        height: '30px'
+    },
+    [media.above.tablet] : {
+        fontSize: '25px',
     }
 });
 
@@ -41,6 +48,28 @@ const List = styled('ul', {
     margin: '1rem 0 2rem 0'
 });
 
+const StyledInput = styled('input', {
+    width: '570px',
+    height: '120px',
+    outline: 0,
+    fontFamily: THEME.fonts.text,
+    fontSize: THEME.fontSizes.small,
+    fontWeight: 400, 
+    letterSpacing: '0.05rem',
+    padding: '0.75rem 1rem',
+    margin: '0 0 1rem 0',
+    border: 1,
+    background: 'transparent',
+
+    '::-webkit-input-placeholder': {
+        fontFamily: THEME.fonts.text,
+        fontWeight: 400, 
+        fontSize: THEME.fontSizes.small
+    },
+    [media.above.mobile] : {
+        height: '80px'
+    }
+});
 
 const CookingStepsInput = ({inputValues, updateInputValues}) => {
     const [newStep, setNewStep] = useState('');
@@ -120,26 +149,14 @@ const CookingStepsInput = ({inputValues, updateInputValues}) => {
                 ))}  
             </List> 
             <FlexRow>
-                <InputField 
+                <StyledInput 
                     $as = "textarea"  
                     name = "cookingSteps" 
                     placeholder = "Förklara ett steg här. Tryck sedan ENTER eller på plus-knappen."
                     rows = "2" 
-                    //cols = "80"
+                    cols = "80"
                     value = {newStep}
-                    styling = "box"
-                    $style = {{
-                        width: '570px',
-                        fontFamily: THEME.fonts.text,
-                        fontWeight: 400, 
-                        fontSize: THEME.fontSizes.small,
-                        '::-webkit-input-placeholder': {
-                            fontFamily: THEME.fonts.text,
-                            fontWeight: 400, 
-                            fontSize: THEME.fontSizes.small
-                    }}}
-                    margin = '0 0 1rem 0'
-                    handleChange = {(event) => setNewStep(event.target.value)}
+                    onChange = {(event) => setNewStep(event.target.value)}
                     onKeyDown={(event) => handleEnter(event)}
                 />
                 <StyledAddIcon icon = {addOutline} onClick = {handleAddingListItems}/>  

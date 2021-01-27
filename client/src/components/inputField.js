@@ -7,7 +7,6 @@ const Wrapper = styled('div', ({$margin}) => ({
     flexDirection: 'column'
 }));
 
-//Styling in here
 const StyledInputField = styled('input', {
     width: '100%',
     outline:'none',

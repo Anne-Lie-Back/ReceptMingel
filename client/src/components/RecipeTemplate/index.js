@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import axios from '../../axios'
 import { styled } from 'styletron-react';
 import THEME from '../../config/theme';
+import media from './../../config/media';
 import Icons from '../../config/icons';
 import InputField from '../inputField';
 import CategoriesInput from './CategoriesInput';
@@ -23,34 +24,61 @@ const Wrapper = styled('div', {
 const FormWrapper = styled('div', {
     display: 'flex',
     flexDirection: 'column',
-    width: '680px',
-    padding: '1rem 2rem'
+    width: '100%',
+    padding: '1rem 0.5rem',
+    //Edgecase
+    "@media screen and (min-width: 560px)": {
+        maxWidth: '680px',
+        padding: '1rem 2rem',
+    }
 });
 
 const TopFormWrapper = styled('div', {
     display: 'grid',
-    gridTemplateColumns: '380px 220px',
-    gridTemplateRows: 'auto auto',
+    gridTemplateColumns: '100%',
+    gridTemplateRows: 'auto auto auto',
     columnGap: '1rem',
-    width: '700px'
+    width: '100%',
+
+    [media.above.mobile] : {
+        
+        gridTemplateColumns: '264px 200px',
+        gridTemplateRows: 'auto auto',
+        width: '480px',
+    },
+
+    [media.above.tablet] : {
+        gridTemplateColumns: '380px 220px',
+        width: '616px',
+    },
 });
 
 const Label = styled('label', {
     margin: '0 1rem 0 0',
     fontFamily: THEME.fonts.text,
-    fontSize: THEME.fontSizes.normal,
-    fontWeight: 700
+    fontSize: THEME.fontSizes.small,
+    fontWeight: 700,
+    [media.above.mobile] : {
+        fontSize: THEME.fontSizes.normal,
+    }
 });
 
 const FileUploadWrapper = styled('div', {
-    gridColumn: '2/3',
-    gridRow: '1/3',
+    gridColumn: '1/2',
+    gridRow: '2/3',
     display: 'flex',
     flexDirection: 'column',
-    height: '100%',
+    height: '280px',
+    margin: '2rem 0 0 0',
     fontFamily: THEME.fonts.text,
     fontSize: THEME.fontSizes.small,
-    fontWeight: 400
+    fontWeight: 400,
+    [media.above.mobile] : {
+        gridColumn: '2/3',
+        gridRow: '1/3',
+        height: '100%',
+        margin: 0,
+    },
 });
 
 const FileUpload = styled('div', ({$preview}) => ({
@@ -73,16 +101,25 @@ const FileUpload = styled('div', ({$preview}) => ({
 
 const EffortWrapper = styled('div', {
     display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    margin: '1rem 0'
+    flexDirection: 'column',
+    width: '300px',
+    margin: '1rem 0',
+
+    [media.above.tablet] : {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '100%'
+    }
 });
 
 const FlexRow = styled('div', {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center'
+});
+
+const FlexRowEffort = styled(FlexRow, {
+    justifyContent: 'space-between',
 });
 
 const Button = styled('button', {
@@ -299,14 +336,14 @@ const RecipeTemplate = ({ setIsEdit, isEdit, setIsAdd, isAdd, slug, getRecipeByI
                 </TopFormWrapper>
 
                 <EffortWrapper>
-                    <FlexRow>
+                    <FlexRowEffort>
                         <Label for = "difficulty" > Svårighetsgrad: </Label>
                         <DifficultyInput handleChange = {handleChange} difficulty = {inputValues.difficulty}/>
-                    </FlexRow>
-                    <FlexRow>
+                    </FlexRowEffort>
+                    <FlexRowEffort>
                         <Label for = "CookingTime"> Tidsåtgång: </Label>
                         <CookingTimeInput handleChange = {handleChange} cookingTime = {inputValues.cookingTime}/>
-                    </FlexRow>
+                    </FlexRowEffort>
                 </EffortWrapper>
 
                 <CategoriesInput inputValues = {inputValues} updateInputValues = {setInputValues}/>

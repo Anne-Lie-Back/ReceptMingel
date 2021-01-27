@@ -2,7 +2,13 @@ import { useContext } from 'react'
 import { Link } from 'react-router-dom';
 import { styled } from 'styletron-react';
 import THEME from '../config/theme';
-import Icons from '../config/icons';
+import media from '../config/media';
+
+import { Icon } from "@iconify/react";
+import bxSearch from '@iconify/icons-bx/bx-search';
+import roundRestaurantMenu from '@iconify/icons-ic/round-restaurant-menu';
+import bxBookReader from '@iconify/icons-bx/bx-book-reader';
+import userAvatarFilledAlt from '@iconify/icons-carbon/user-avatar-filled-alt';
 import AuthenticationContext from '../contexts/authentication/context';
 
 const Wrapper = styled('div', {
@@ -15,18 +21,36 @@ const NavLink = styled(Link, {
   flexDirection: 'row',
   justifyContent: 'center',
   alignItems: 'center',
-  padding: '10px 20px',
+  padding: '10px 18px',
   textDecoration: 'none',
+
+  "@media screen and (min-width: 600px)" : {
+    padding: '10px 20px',
+  },
+})
+
+const StyledIcon = styled(Icon, {
+  fontSize: '40px',
+  color: THEME.colors.white[0],
+  ':hover' : {
+      color: THEME.colors.contrast[0]
+  },
+
+  [media.above.tablet] : {
+    fontSize: '45px',
+  }
+});
+
+const UserIcon = styled(StyledIcon, {
+  fontSize: '38px',
+
+  [media.above.tablet] : {
+    fontSize: '40px',
+  }
 })
 
 const MainNavbar = () => {
   const { isAuthenticated, user, isLoadingUser} = useContext(AuthenticationContext);
-  const { 
-    Search,
-    RecipeIcon,
-    RecipeBook,
-    User
-  } = Icons
 
   return(
       <Wrapper>
@@ -35,16 +59,16 @@ const MainNavbar = () => {
           null : 
           <>
             <NavLink to = '/search'>
-              <Search color = {THEME.colors.white[0]} size = '40px'/>
+              <StyledIcon icon={bxSearch}/>
             </NavLink>
             <NavLink to = '/recipe'>
-              <RecipeIcon color = {THEME.colors.white[0]} size = '45px'/>
+              <StyledIcon icon={roundRestaurantMenu}/>
             </NavLink>
             <NavLink to = '/recipebook'>
-              <RecipeBook color = {THEME.colors.white[0]} size = '45px'/>
+              <StyledIcon icon={bxBookReader}/>
             </NavLink>
             <NavLink to={user._id && `/user/${user._id}`}>
-              <User color = {THEME.colors.white[0]} size = '40px'/>
+              <UserIcon icon={userAvatarFilledAlt}/>
             </NavLink>
           </>
         }

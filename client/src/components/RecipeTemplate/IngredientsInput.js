@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { styled } from 'styletron-react';
 import THEME from '../../config/theme';
-import InputField from '../inputField';
+import media from '../../config/media';
 import addOutline from '@iconify/icons-gridicons/add-outline';
 import { Icon } from "@iconify/react";
 import TextListItem from './text.listItem';
@@ -20,11 +20,18 @@ const Label = styled('label', {
 const StyledAddIcon = styled(Icon, {
     marginLeft: '1rem',
     colors: THEME.colors.black[0],
-    fontSize: '25px',
+    fontSize: '40px',
 
     ':hover' : {
         color: THEME.colors.contrast[0],
         cursor: 'pointer'
+    },
+
+    [media.above.mobile] : {
+        height: '30px'
+    },
+    [media.above.tablet] : {
+        fontSize: '25px',
     }
 });
 
@@ -40,6 +47,31 @@ const FlexRow = styled('div', {
     width: '100%',
     margin: '1rem 0'
 });
+
+const InputField = styled('input', {
+    width: '100%',
+    padding: '0 0 0 2rem',
+    border: 0,
+    background: 'transparent',
+    borderBottom: '1px solid black',
+    fontWeight: 400, 
+    fontSize: THEME.fontSizes.normal,
+    fontFamily: THEME.fonts.text,
+    letterSpacing: '0.05rem',
+    outline: 0,
+
+    '::placeholder': {
+        fontWeight: 400, 
+        fontSize: THEME.fontSizes.small,
+    },
+    [media.above.mobile] : {
+        fontSize: THEME.fontSizes.large,
+        '::placeholder': {
+            fontWeight: 400, 
+            fontSize: THEME.fontSizes.normal,
+        },
+    },
+})
 
 const IngredientsInput = ({inputValues, updateInputValues}) => {
     const [newIngredient, setNewIngredient] = useState(null);
@@ -118,21 +150,12 @@ const IngredientsInput = ({inputValues, updateInputValues}) => {
             </List> 
             
             <FlexRow>
-                <InputField 
+                <InputField
                     type = "text" 
                     name = "ingredients" 
                     value = {newIngredient}
-                    styling = "underline"
                     placeholder = "I format: Antal Enhet Råvara"
-                    $style = {{
-                        width: '570px',
-                        fontWeight: 400, 
-                            fontSize: '18px', 
-                            '::placeholder': {
-                                fontWeight: 400, 
-                                fontSize: THEME.fontSizes.normal
-                    }}}
-                    handleChange = {(event) => setNewIngredient(event.target.value)}
+                    onChange = {(event) => setNewIngredient(event.target.value)}
                     onKeyDown={(event) => handleEnter(event)}
                 />
                 <StyledAddIcon icon = {addOutline} onClick = {handleAddingListItems}/> 

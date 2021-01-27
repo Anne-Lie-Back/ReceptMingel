@@ -3,8 +3,6 @@ import { useParams } from 'react-router-dom';
 import axios from '../axios';
 import bxBookReader from '@iconify/icons-bx/bx-book-reader';
 import Hero from '../components/Hero';
-//import GridContentWrapper from '../components/GridContentWrapper';
-//import SideMenu from '../components/SideMenu';
 import RecipeBookView from '../components/RecipeBookView';
 import AuthenticationContext from '../contexts/authentication/context';
 
@@ -14,16 +12,6 @@ const RecipeBookPage = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [sharedRecipes, setSharedRecipes] = useState([]);
     const [recipe, setRecipe] = useState(null);
-
-    /* const [userObject, setUserObject] = useState({
-        username : user.username,
-        firstName : user.firstName,
-        lastName : user.lastName,
-        image : user.image,
-        userInfo : user.userInfo,
-        recipeBook : user.recipeBook,
-        imageURL: user.imageURL
-    }); */
 
     let { slug } = useParams();
 

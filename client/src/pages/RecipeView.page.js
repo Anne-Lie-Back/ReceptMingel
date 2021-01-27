@@ -1,19 +1,49 @@
 import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { styled } from 'styletron-react';
+import { Icon } from "@iconify/react";
+import THEME from '../config/theme';
 import axios from '../axios';
 import Hero from '../components/Hero';
 import roundRestaurantMenu from '@iconify/icons-ic/round-restaurant-menu';
+import roundMenu from '@iconify/icons-ic/round-menu';
 import GridContentWrapper from '../components/GridContentWrapper';
 import RecipeView from '../components/RecipeView';
 import RecipeTemplate from '../components/RecipeTemplate';
 import SideMenu from '../components/SideMenu';
 import AuthenticationContext from '../contexts/authentication/context';
 
+const Wrapper = styled('div', {
+    position: 'relative',
+    width: '100%',
+    padding: '2rem 0'
+});
+
+const MenuIcon = styled(Icon, {
+    position: 'absolute',
+    top: '1rem',
+    padding: '0.3rem',
+    backgroundColor: THEME.colors.primary[0],
+    borderTopRightRadius: '5px',
+    borderBottomRightRadius: '5px',
+    color: THEME.colors.white[0],
+    fontSize: '60px',
+    zIndex: 3,
+
+    ':hover' : {
+        color: THEME.colors.contrast[0],
+        cursor: 'pointer',
+    }
+});
+
 const RecipeViewPage = () => {
-    const {user, recipeBook} = useContext(AuthenticationContext);
+    const {user} = useContext(AuthenticationContext);
     const [isEdit, setIsEdit] = useState(false);
     const [isAdd, setIsAdd] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [searchResults, setSearchResults] = useState([]);
     const [usersRecipes, setUsersRecipes] = useState([]);
     const [recipe, setRecipe] = useState(null);
     const [inputValues, setInputValues] = useState({
@@ -55,6 +85,7 @@ const RecipeViewPage = () => {
     useEffect(() => {
         getRecipesByAuthor(user._id)
         window.scrollTo(0, 0)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     console.log('usersRecipe', usersRecipes)
@@ -71,6 +102,23 @@ const RecipeViewPage = () => {
             console.log(error)
         };
     };
+
+    //FilterResult to set which list should be sent in sideview
+    const handleChange = event => {
+        setSearchTerm(event.target.value);
+    };
+
+    //When User writes in filter input field. it makes both input and recipetitles to lowercase to make the search non case sensitive.
+    //As for now the user can only search by title.
+    useEffect(() => {
+        const lowerCased = searchTerm.toLowerCase();
+        const results = usersRecipes.filter(recipe =>
+            recipe.title.toLowerCase().includes(lowerCased)
+        );
+
+        setSearchResults(results);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [searchTerm]);
 
     //Gets the recipe that matches slug when url changes or display users first recipe if slug undefined. 
     //When it is done it sets loading to true again when component has gotten their data
@@ -91,8 +139,17 @@ const RecipeViewPage = () => {
                 title = 'Mina Recept' 
                 icon = {roundRestaurantMenu} 
             />
-            <GridContentWrapper>
-                <SideMenu  recipeList = {usersRecipes} setIsAdd = {setIsAdd} setIsEdit = {setIsEdit}/>
+            <Wrapper>
+                <MenuIcon icon={roundMenu} onClick = {() => setIsOpen(true)}/>
+                    <SideMenu 
+                        recipeList = {usersRecipes}
+                        searchResults = {searchResults}
+                        setIsAdd = {setIsAdd} 
+                        isOpen = {isOpen} 
+                        setIsOpen = {setIsOpen} 
+                        setIsEdit = {setIsEdit}
+                        handleChange = {(event) => handleChange(event)} 
+                    />
                     {/* If no recipes yet, yser gets a little textmessage */}
                     {usersRecipes.length === 0 && isLoading ?
                         <>
@@ -149,7 +206,7 @@ const RecipeViewPage = () => {
                             } 
                         </>
                     }  
-            </GridContentWrapper>  
+            </Wrapper>  
         </>
     );
 };

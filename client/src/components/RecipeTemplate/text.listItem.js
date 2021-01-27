@@ -1,10 +1,10 @@
 import { styled } from 'styletron-react';
 import THEME from './../../config/theme';
+import media from '../../config/media';
 import { Icon } from "@iconify/react";
 import bxCheckCircle from '@iconify/icons-bx/bx-check-circle';
 import minusCircleOutline from '@iconify/icons-eva/minus-circle-outline';
 import bxEditAlt from '@iconify/icons-bx/bx-edit-alt';
-import InputField from '../inputField';
 
 const Wrapper = styled('li', {
     display: 'flex',
@@ -26,6 +26,7 @@ const TextWrapper = styled('div', {
     display: 'flex',
     alignItems: 'center',
     flexDirection: 'row',
+    width: '100%',
     fontFamily: THEME.fonts.text,
     fontSize: THEME.fonts.small,
     color: THEME.colors.black[0],
@@ -33,7 +34,7 @@ const TextWrapper = styled('div', {
 });
 
 const RestrictWidth = styled('div', {
-    width: '440px'
+    width: '100%'
 })
 
 const IconWrapper = styled('div', {
@@ -55,6 +56,21 @@ const StyledIcon = styled(Icon, {
     }
 });
 
+const InputField = styled('input', {
+    width: '100%',
+    outline:'none',
+    fontFamily: THEME.fonts.text,
+    fontSize: THEME.fontSizes.small,
+    letterSpacing: '0.05rem',
+    fontWeight: 400, 
+    backgroundColor: 'orange',
+    '::-webkit-input-placeholder': {
+        fontFamily: THEME.fonts.text,
+        fontWeight: 400, 
+        fontSize: THEME.fontSizes.small
+    }
+});
+
 const TextListItem = ({children, isEditIngredient, isEditStep, value, handleOpenEdit, handleEditItem, handleEnterKey, handleChange, handleRemove}) => {
     
     // JSX checks if edit from ingredient or step is active for this element (checks in parent)
@@ -72,18 +88,7 @@ const TextListItem = ({children, isEditIngredient, isEditStep, value, handleOpen
                             name = "ingredients" 
                             value = {value}
                             rows="3" 
-                            styling = "basic"
-                            $style = {{
-                                width: '457px',
-                                fontFamily: THEME.fonts.text,
-                                fontWeight: 400, 
-                                fontSize: THEME.fontSizes.small,
-                                '::-webkit-input-placeholder': {
-                                    fontFamily: THEME.fonts.text,
-                                    fontWeight: 400, 
-                                    fontSize: THEME.fontSizes.small
-                            }}}
-                            handleChange = {handleChange}
+                            onChange = {handleChange}
                             onKeyDown = {handleEnterKey}
                         />
                     </TextWrapper>

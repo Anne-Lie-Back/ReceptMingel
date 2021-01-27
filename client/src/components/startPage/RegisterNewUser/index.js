@@ -1,19 +1,19 @@
 import { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import axios from '../../../axios';
 import { styled } from 'styletron-react';
+import THEME from '../../../config/theme';
+import media from '../../../config/media'
 import AuthenticationContext from '../../../contexts/authentication/context'
 import Icons from '../../../config/icons';
-import THEME from '../../../config/theme';
+
 import InputField from '../../inputField';
 
 const Wrapper = styled('div', {
     display: 'flex',
     flexDirection: 'column',
-    width: '430px',
-    //height: '440px',
+    width: '300px',
     padding: '30px',
-    marginTop: '7%',
+    margin: '25% 0 1rem 0',
     backgroundColor: '#ffffff',
     border: '1px solid black',
     borderRadius: '5px',
@@ -21,7 +21,21 @@ const Wrapper = styled('div', {
     fontFamily: THEME.fonts.text,
     fontSize: THEME.fontSizes.small,
     fontWeight: 500,
-    letterSpacing: '0.05rem'
+    letterSpacing: '0.05rem',
+
+    [media.above.mobile] : {
+        width: '430px',
+        margin: '15% 0 0 0',
+    },
+
+    [media.above.tablet] : {
+        width: '430px',
+        margin: '10% 0 0 0',
+    },
+
+    [media.above.laptop] : {
+        margin: '8% 0 0 0',
+    },
 });
 
 const Button = styled('button', {
@@ -133,9 +147,7 @@ const RegisterNewUser = ({handleClick}) => {
               setInputValues((prev) => ({ ...prev, image: data.id }));
             }
           })
-      }, [file]);
-
-      console.log('file', file)
+    }, [file]);
 
     const handleSubmit = async () => {
         await registerNewUser(inputValues);

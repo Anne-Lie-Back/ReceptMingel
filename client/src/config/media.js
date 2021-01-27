@@ -1,5 +1,5 @@
-export const breakpoints = [375, 768, 1024, 1440];
-export const labels = ['mobile', 'tablet', 'laptop', 'desktop'];
+export const breakpoints = [375, 500, 768, 1024, 1440];
+export const labels = ['XSmobile', 'mobile', 'tablet', 'laptop', 'desktop'];
 
 //How to use:     
 /*     [media.above.tablet]: {

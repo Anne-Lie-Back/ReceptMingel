@@ -11,27 +11,36 @@ const FlexRow = styled('div', {
 const HeadlineSmall = styled ('h4', {
     fontFamily: THEME.fonts.text,
     color: THEME.colors.black[0],
-    fontSize: THEME.fontSizes.small,
+    fontSize: THEME.fontSizes.Xsmall,
     fontWeight: 700,
-    letterSpacing: '0.05rem'
+    letterSpacing: '0.05rem',
+    "@media screen and (min-width: 700px)": {
+        fontSize: THEME.fontSizes.small,
+    },
 });
 
 const HeadlineMedium = styled ('h3', {
     marginBottom: '0.5rem',
     fontFamily: THEME.fonts.text,
     color: THEME.colors.black[0], 
-    fontSize: THEME.fontSizes.normal,
+    fontSize: THEME.fontSizes.small,
     fontWeight: 700,
-    letterSpacing: '0.05rem'
+    letterSpacing: '0.05rem',
+    "@media screen and (min-width: 700px)": {
+        fontSize: THEME.fontSizes.normal,
+    },
 });
 
 const Text = styled('p', {
-    fontSize: THEME.fontSizes.small,
+    fontSize: THEME.fontSizes.Xsmall,
     fontFamily: THEME.fonts.text,
     color: THEME.colors.black[0],
     fontWeight: 500,
     lineHeight: '167%',
-    letterSpacing: '0.05rem'
+    letterSpacing: '0.05rem',
+    "@media screen and (min-width: 700px)": {
+        fontSize: THEME.fontSizes.small,
+    },
 });
 
 const PortionBox = styled('div', {
@@ -53,14 +62,18 @@ const ListContentWrapper = styled('div', {
 });
 
 const ListItem = styled('li', {
-    margin: '1rem 0 0 0.75rem',
+    margin: '0.75rem 0 0 0.75rem',
     paddingLeft: '1rem',
-    fontSize: THEME.fontSizes.small,
+    fontSize: THEME.fontSizes.Xsmall,
     fontFamily: THEME.fonts.text,
     color: THEME.colors.black[0],
     fontWeight: 500,
     letterSpacing: '0.05rem',
     lineHeight: '167%',
+    "@media screen and (min-width: 700px)": {
+        margin: '1rem 0 0 0.75rem',
+        fontSize: THEME.fontSizes.small,
+    },
 });
 
 const IngredientSection = ({portions, ingredients}) => (

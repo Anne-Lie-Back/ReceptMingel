@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { styled } from 'styletron-react';
 import THEME from '../../config/theme';
+import media from '../../config/media';
 import addOutline from '@iconify/icons-gridicons/add-outline';
 import { Icon } from "@iconify/react";
 import InputField from '../inputField'
@@ -17,8 +18,11 @@ const Wrapper = styled('div', {
 const Label = styled('label', {
     margin: '0 2.55rem 0 0',
     fontFamily: THEME.fonts.text,
-    fontSize: THEME.fontSizes.normal,
-    fontWeight: 700
+    fontSize: THEME.fontSizes.small,
+    fontWeight: 700,
+    [media.above.mobile] : {
+        fontSize: THEME.fontSizes.normal,
+    }
 });
 
 const StyledAddIcon = styled(Icon, {
