@@ -9,8 +9,8 @@ const ListContentWrapper = styled('div', {
 });
 
 const ListItem = styled('li', {
-    margin: '2rem 0 0 1.65rem', 
-    fontSize: THEME.fontSizes.small,
+    margin: '1rem 0 0 1.65rem', 
+    fontSize: THEME.fontSizes.Xsmall,
     fontFamily: THEME.fonts.text,
     color: THEME.colors.black[0],
     fontWeight: 500,
@@ -24,14 +24,24 @@ const ListItem = styled('li', {
         fontFamily: THEME.fonts.text,
         fontWeight: 700,
     },
+
+    "@media screen and (min-width: 700px)": {
+        fontSize: THEME.fontSizes.small,
+        margin: '1.5rem 0 0 1.65rem', 
+    },
 });
 
 const HeadlineMedium = styled ('h3', {
     fontFamily: THEME.fonts.text,
     color: THEME.colors.black[0], 
-    fontSize: THEME.fontSizes.normal,
+    fontSize: THEME.fontSizes.small,
     fontWeight: 700,
-    letterSpacing: '0.05rem'
+    letterSpacing: '0.05rem',
+
+    "@media screen and (min-width: 700px)": {
+        fontSize: THEME.fontSizes.normal,
+        margin: '1.5rem 0 0 1.65rem', 
+    },
 });
 
 const CookingStepsSection = ({cookingSteps}) => (
