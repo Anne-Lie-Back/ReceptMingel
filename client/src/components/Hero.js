@@ -38,15 +38,15 @@ const TitleWrapper = styled('div', {
 
 const Title = styled('h2', {
     fontFamily: THEME.fonts.text,
-    fontSize: '35px',
+    fontSize: '30px',
     color: THEME.colors.white[0],
     textShadow: '0 0 1px black',
 
     [media.above.XSmobile] : {
-        fontSize: '45px',
+        fontSize: '40px',
     },
     [media.above.mobile] : {
-        fontSize: '58px',
+        fontSize: '50px',
     },
     [media.above.tablet] : {
         fontSize: '65px',
@@ -68,7 +68,7 @@ const StyledIcon = styled(Icon, {
     color: THEME.colors.white[0],
 
     [media.above.XSmobile] : {
-        fontSize: '90px',
+        fontSize: '75px',
     },
     [media.above.mobile] : {
         fontSize: '120px',

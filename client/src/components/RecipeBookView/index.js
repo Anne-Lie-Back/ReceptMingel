@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 
 import { styled } from 'styletron-react';
 import THEME from '../../config/theme';
+import media from '../../config/media';
 
 import axios from '../../axios';
 import AuthenticationContext from '../../contexts/authentication/context';
@@ -31,7 +32,13 @@ const DecorativeLine = styled('div', {
     backgroundColor: THEME.colors.grey[0]
 });
 
-const RecipeBookView = ({userObject, setUserObject}) => {
+const LoadingText = styled('p', {
+    padding: '1rem 2rem',
+    fontFamily: THEME.fonts.text,
+    fontSize: THEME.fontSizes.large,
+})
+
+const RecipeBookView = () => {
     const {recipeBook} = useContext(AuthenticationContext);
     const [isLoading, setIsLoading] = useState(true);
     const [recipe, setRecipe] = useState(null)
@@ -91,13 +98,13 @@ const RecipeBookView = ({userObject, setUserObject}) => {
                 route = "/recipeBook/"
             />
             <DecorativeLine/>
-            {recipe === null && !slug ?
-                <p>Hoppas du hittar något smaskigt i din receptbok</p>
+            {(recipe === null && !slug) ?
+                <LoadingText>Hoppas du hittar något smaskigt i din receptbok</LoadingText>
                 :
                 <>
                     {isLoading? 
                         <>
-                            <p>Bakar recept...</p>
+                            <LoadingText>Bakar recept...</LoadingText>
                         </>
                         :
                         <RecipeView 

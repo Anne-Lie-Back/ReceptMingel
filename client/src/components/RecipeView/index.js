@@ -2,6 +2,7 @@ import {useContext, useEffect, useState} from 'react';
 import { useHistory } from 'react-router-dom';
 import { styled } from 'styletron-react';
 import THEME from './../../config/theme';
+import media from './../../config/media';
 import AuthenticationContext from '../../contexts/authentication/context';
 import RecipeContext from '../../contexts/recipe/context';
 
@@ -53,8 +54,19 @@ const HeadlineSmall = styled ('h4', {
 const RecipeWrapper = styled('div', {
     display: 'flex',
     flexDirection: 'column',
-    width: '812px',
-    margin: '1rem 2rem'
+    width: '100%',
+    margin: '1rem 0',
+    padding: '0 0.5rem',
+
+    "@media screen and (min-width: 700px)": {
+        margin: '1rem 2rem',
+    },
+
+    [media.above.tablet] : {
+    },
+    [media.above.laptop] : {
+        width: '1000px',
+    }
 });
 
 const EditDeleteIcon = styled(Icon,{
