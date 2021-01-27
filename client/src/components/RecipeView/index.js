@@ -103,30 +103,15 @@ const SharedIcon = styled(Icon,({$isSharedRecipe})=> ({
 }));
 
 const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, getRecipesByAuthor}) => {
-    const {getSessionUser, user, updateUser} = useContext(AuthenticationContext);
+    const {getSessionUser, getRecipeBook, user, updateUser} = useContext(AuthenticationContext);
     const {patchRecipe, deleteRecipe} = useContext(RecipeContext);
-    //isSharedRecipe helps to display correct icon
     const [isSharedRecipe, setIsShared] = useState(recipe.isShared);
-    //isStarred helps to display correct icon
     const [isStarred, setIsStarred] = useState(false);
     const [recipeBookPage, setRecipeBookPage] = useState(user.recipeBook);
     
     let history = useHistory();
     
-    const removeRecipeBookItem = async (id) => {
-        const newList = recipeBookPage.filter((item) => item !== id);
-        updateUser(user._id, {recipeBook : newList})
-        setRecipeBookPage(newList)
-        setIsStarred(false)
-    }; 
 
-    const addRecipeBookItem = (listItem) => {
-        const newItem = listItem;
-        const newList = [...recipeBookPage, newItem];
-        setRecipeBookPage(newList)
-        updateUser(user._id, {recipeBook : newList})
-        setIsStarred(true) 
-    }; 
 
     useEffect(() => {
         if (view === "RecipeView") getRecipeById(recipe._id)
@@ -147,17 +132,6 @@ const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, ge
         //isSharedRecipe? removeRecipeBookItem(recipe._id) : addRecipeBookItem(recipe._id);
     };
 
-    useEffect(() => {
-        setIsShared(recipe.isShared);
-    }, [recipe.isShared])
-
-    const handleStarRecipe = () => {
-        isStarred? removeRecipeBookItem(recipe._id) : addRecipeBookItem(recipe._id);
-        getRecipeById(recipe._id)
-        setIsStarred(!isStarred);
-        getSessionUser(user._id)
-    }
-
     //Deletes recipe, updates sidemenu-list and redirects user to start-recipe-page
     const handleDelete = (id) => {
         const newList = user.recipeBook.filter((item) => item !== id);
@@ -166,6 +140,39 @@ const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, ge
         getRecipesByAuthor(recipe.authorId);
         history.push('/recipe');
     };
+
+    const removeRecipeBookItem = async (id) => {
+        const newList = recipeBookPage.filter((item) => item !== id);
+        updateUser(user._id, {recipeBook : newList})
+        setRecipeBookPage(newList)
+        setIsStarred(false)
+    }; 
+
+    const addRecipeBookItem = (listItem) => {
+        const newItem = listItem;
+        const newList = [...recipeBookPage, newItem];
+        setRecipeBookPage(newList)
+        updateUser(user._id, {recipeBook : newList})
+        setIsStarred(true) 
+    }; 
+
+    useEffect(() => {
+        setIsShared(recipe.isShared);
+    }, [recipe.isShared])
+
+    const handleStarRecipe = () => {
+        isStarred? removeRecipeBookItem(recipe._id) : addRecipeBookItem(recipe._id);
+        getRecipeById(recipe._id)
+        getSessionUser(user._id)
+        setIsStarred(!isStarred);
+    }
+
+    useEffect(() => {
+        getRecipeBook(user._id)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isStarred])
+
+
 
     //Check if recipe already is saved in recipeBook
    /*  const checkIfAlreadyStarred = () => {
