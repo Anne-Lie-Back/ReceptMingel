@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 
 import { styled } from 'styletron-react';
 import THEME from '../../config/theme';
-import media from '../../config/media';
 
 import axios from '../../axios';
 import AuthenticationContext from '../../contexts/authentication/context';
@@ -57,9 +56,7 @@ const RecipeBookView = () => {
     useEffect(() => {
         const lowerCased = searchTerm.toLowerCase();
         const results = recipeBook.filter(recipe =>
-            recipe.title.toLowerCase().includes(lowerCased)
-        );
-
+        recipe.title.toLowerCase().includes(lowerCased));
         setSearchResults(results);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchTerm]);
@@ -75,6 +72,7 @@ const RecipeBookView = () => {
         };
     };
 
+    //updates the view so recipe id matches slug when slug is changed.
     useEffect(() => {
         if(slug) {
             getRecipeById(slug);
@@ -91,7 +89,8 @@ const RecipeBookView = () => {
                 placeholder = 'Sök i din receptbok här...'
             />
             <RecipeWheel 
-                recipeList = {!searchResults || searchResults.length === 0? recipeBook : searchResults} 
+                /* If user is using the filter-input field the wheel will display the result else, if field is empty, fall back to recipeBook */
+                recipeList = {searchTerm === '' ? recipeBook : searchResults}
                 height = "255px" 
                 bannerTitle = "Filter-resultat"
                 slug = {slug}
@@ -113,6 +112,7 @@ const RecipeBookView = () => {
                             slug = {slug}
                             isLoading = {isLoading}
                             recipe = {recipe}
+                            getRecipeById = {getRecipeById}
                         /> 
                     }
                 </>

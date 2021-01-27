@@ -1,3 +1,5 @@
+//TODO break out the File upload component to it's own component/file
+
 import {useContext, useEffect, useState} from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from '../../axios'
@@ -26,7 +28,7 @@ const FormWrapper = styled('div', {
     flexDirection: 'column',
     width: '100%',
     padding: '1rem 0.5rem',
-    //Edgecase
+    //Edgecase width
     "@media screen and (min-width: 560px)": {
         maxWidth: '680px',
         padding: '1rem 2rem',
@@ -143,9 +145,8 @@ const Button = styled('button', {
     }
 });
 
-const RecipeTemplate = ({ setIsEdit, isEdit, setIsAdd, isAdd, slug, getRecipeById, recipe, getRecipesByAuthor, inputValues, setInputValues }) => {
+const RecipeTemplate = ({ setIsEdit, isEdit, setIsAdd, isAdd, inputValues, setInputValues, getRecipeById, recipe, getRecipesByAuthor, slug }) => {
     const {user, updateUser} = useContext(AuthenticationContext);
-    console.log('user', user)
 
     //stores file-data that goes up to image-bucket at server
     const [file, setFile] = useState(null);
@@ -195,6 +196,7 @@ const RecipeTemplate = ({ setIsEdit, isEdit, setIsAdd, isAdd, slug, getRecipeByI
                 isShared: isEdit? recipe.isShared : false
             })
         } 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[isEdit])
 
     
@@ -223,17 +225,14 @@ const RecipeTemplate = ({ setIsEdit, isEdit, setIsAdd, isAdd, slug, getRecipeByI
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [file]);
 
-
+    //Adds to recipebook on submit
     const addTooRecipeBook = (listItem) => {
-        console.log('user', user)
         const newList = [...user.recipeBook, listItem]
-        console.log('newList', newList)
         updateUser(user._id, {recipeBook: newList})
     }
 
     //sends inputvalues to db.
     const handleSubmit = async() => {
-
         //If user wants to add recipe we will post it
         if(isAdd && !isEdit){
             await axios
@@ -242,7 +241,6 @@ const RecipeTemplate = ({ setIsEdit, isEdit, setIsAdd, isAdd, slug, getRecipeByI
                 //if response is good the user will be redirected to their new recipepage
                 if(res.status === 200) history.push(`/recipe/${res.data._id}`);
                 addTooRecipeBook(res.data._id)
-                console.log('res.data._id', res.data._id)
             })
             .catch(error => console.log(error))    
         };
@@ -262,7 +260,10 @@ const RecipeTemplate = ({ setIsEdit, isEdit, setIsAdd, isAdd, slug, getRecipeByI
         
         //Updates sidemenu with new recipe
         getRecipesByAuthor(user._id);
+
+        //scrolls to correct height for viewing recipe
         window.scrollTo(0, 600)
+        
         //will ensure closed edit-view
         setIsEdit(false);
         setIsAdd(false);

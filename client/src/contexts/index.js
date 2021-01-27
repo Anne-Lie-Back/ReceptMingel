@@ -3,11 +3,12 @@ import RecipeContextProvider from './recipe/recipe.contextProvider';
 
 //Put all contexts here for easy Providing
 const ApplicationContextProvider = ({ children }) => (
-    <AuthenticationContextProvider>
+    
         <RecipeContextProvider>
+            <AuthenticationContextProvider>
             {children}
+            </AuthenticationContextProvider>
         </RecipeContextProvider>
-    </AuthenticationContextProvider>
 );
 
 export default ApplicationContextProvider;

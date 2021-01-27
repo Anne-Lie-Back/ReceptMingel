@@ -77,16 +77,20 @@ const RecipeSchema = new Schema(
     { autoIndex: false }
 );
 
+//Config for mongoose fuzzy search
 RecipeSchema.plugin(mongoose_fuzzy_searching, { 
     fields: [
         {
             name: 'title',
             weight: 3,
+            minSize: 3,
+        },{
+            name: 'preambleHTML',
+            weight: 1,
             minSize: 4,
-        },
-        {
+        },{
             name: 'difficulty',
-            weight: 4,
+            weight: 5,
             minSize: 3
         },
         {
@@ -95,12 +99,12 @@ RecipeSchema.plugin(mongoose_fuzzy_searching, {
         },
         {
             name: 'ingredients',
-            weight: 5,
+            weight: 6,
             minSize: 3
         },
         {
             name: 'mdsaCategories',
-            weight: 5,
+            weight: 6,
             minSize: 3
         },
     ]

@@ -36,7 +36,8 @@ const FlexRow = styled('div', {
     alignItems: 'center',
 });
 
-const FlexRowSpecial = styled(FlexRow, {
+const FlexRowSpecial = styled('div', {
+    display: 'flex',
     flexDirection: 'column',
     alignItems: 'flex-start',
     width: '100%',

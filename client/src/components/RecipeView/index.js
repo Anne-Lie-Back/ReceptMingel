@@ -81,14 +81,19 @@ const EditDeleteIcon = styled(Icon,{
 });
 
 const StarIcon = styled(Icon,({$isStarred})=> ({
-    margin: '0 0.5rem 0 -0.3rem',
-    fontSize: '40px',
+    margin: '0 0.5rem 0 1rem',
+    fontSize: '50px',
     color: $isStarred ? 'gold' : THEME.colors.black[0],
 
     ':hover' : {
         cursor: 'pointer',
         color: $isStarred ? THEME.colors.black[0] : THEME.colors.contrast[0],
-    }
+    },
+
+    "@media screen and (min-width: 700px)": {
+        margin: '0 0.5rem 0 -0.3rem',
+        fontSize: '40px',
+    },
 }));
 
 const SharedIcon = styled(Icon,({$isSharedRecipe})=> ({
@@ -103,25 +108,39 @@ const SharedIcon = styled(Icon,({$isSharedRecipe})=> ({
 }));
 
 const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, getRecipesByAuthor}) => {
-    const {getSessionUser, user, updateUser} = useContext(AuthenticationContext);
+    const {getSessionUser, getRecipeBook, user, updateUser} = useContext(AuthenticationContext);
     const {patchRecipe, deleteRecipe} = useContext(RecipeContext);
-    //isSharedRecipe helps to display correct icon
     const [isSharedRecipe, setIsShared] = useState(recipe.isShared);
-    //isStarred helps to display correct icon
     const [isStarred, setIsStarred] = useState(false);
     const [recipeBookPage, setRecipeBookPage] = useState(user.recipeBook);
-/*     const [userObject, setUserObject] = useState({
-        username : user.username,
-        firstName : user.firstName,
-        lastName : user.lastName,
-        image : user.image,
-        userInfo : user.userInfo,
-        recipeBook : user.recipeBook,
-        imageURL: user.imageURL
-    });  */
     
     let history = useHistory();
+
+    useEffect(() => {
+        if (view === "RecipeView") getRecipeById(recipe._id)
+        if(view === "RecipeBook" || view === "SearchView"){
+            const index = user.recipeBook.indexOf(recipe._id);
+            index === -1? setIsStarred(false) : setIsStarred(true)
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
     
+    //Patches recipe, gets the new recipe and changes icon
+    const handlePatchRecipe = () => {
+        let value = recipe.isShared? {"isShared" : false} : {"isShared" : true}
+        patchRecipe(recipe._id, value)
+        isSharedRecipe? setIsShared(false):setIsShared(true)
+    };
+
+    //Deletes recipe, updates sidemenu-list and redirects user to start-recipe-page
+    const handleDelete = (id) => {
+        const newList = user.recipeBook.filter((item) => item !== id);
+        updateUser(user._id, {recipeBook : newList})
+        deleteRecipe(id);
+        getRecipesByAuthor(recipe.authorId);
+        history.push('/recipe');
+    };
+
     const removeRecipeBookItem = async (id) => {
         const newList = recipeBookPage.filter((item) => item !== id);
         updateUser(user._id, {recipeBook : newList})
@@ -138,54 +157,20 @@ const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, ge
     }; 
 
     useEffect(() => {
-        if (view === "RecipeView") getRecipeById(recipe._id)
-        if(view === "RecipeBook" || view === "SearchView"){
-            const index = user.recipeBook.indexOf(recipe._id);
-            index === -1? setIsStarred(false) : setIsStarred(true)
-        }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
-    
-    //Patches recipe, gets the new recipe and changes icon
-    const handlePatchRecipe = () => {
-        let value = recipe.isShared? {"isShared" : false} : {"isShared" : true}
-        patchRecipe(recipe._id, value)
-        isSharedRecipe? setIsShared(false):setIsShared(true)
-        
-        //TODO test to move this to useEffect that listens to recipe.isShared
-        //isSharedRecipe? removeRecipeBookItem(recipe._id) : addRecipeBookItem(recipe._id);
-    };
-
-    useEffect(() => {
         setIsShared(recipe.isShared);
     }, [recipe.isShared])
 
     const handleStarRecipe = () => {
         isStarred? removeRecipeBookItem(recipe._id) : addRecipeBookItem(recipe._id);
         getRecipeById(recipe._id)
-        setIsStarred(!isStarred);
         getSessionUser(user._id)
+        setIsStarred(!isStarred);
     }
 
-    //Deletes recipe, updates sidemenu-list and redirects user to start-recipe-page
-    const handleDelete = (id) => {
-        const newList = user.recipeBook.filter((item) => item !== id);
-        updateUser(user._id, {recipeBook : newList})
-        deleteRecipe(id);
-        getRecipesByAuthor(recipe.authorId);
-        history.push('/recipe');
-    };
-
-    //Check if recipe already is saved in recipeBook
-   /*  const checkIfAlreadyStarred = () => {
-        const index =  recipeBook.findIndex(recipe._id)
-        if (index > -1){
-            return true
-        }
-        else if(index === -1) {
-            return false
-        }
-    }; */
+    useEffect(() => {
+        getRecipeBook(user._id)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isStarred])
 
     //Transform for easier follow on where the different items are showing and are styled.
     //Keeps id as recipe._id to easier see type of id used
@@ -201,8 +186,6 @@ const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, ge
         mdsaCategories,
         author,
         authorId,
-        // eslint-disable-next-line no-unused-vars
-        isShared
     } = recipe; 
 
     return(
@@ -228,7 +211,17 @@ const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, ge
                                         onClick = {handleStarRecipe}
                                     />
                                     <HeadlineSmall> 
-                                        {isStarred? 'SPARAD I DIN RECEPTBOK':'SPARA I DIN RECEPTBOK'}
+                                        {view === "SearchView" &&
+                                            <>
+                                                {isStarred? 'SPARAD I DIN RECEPTBOK':'SPARA I DIN RECEPTBOK'}
+                                            </>
+                                        }
+                                        {view === "RecipeBook" &&
+                                            <>
+                                                {isStarred? 'SPARAD I DIN RECEPTBOK':'BORTTAGEN. VILL DU ÅNGRA DIG?'}
+                                            </>
+                                        }
+                                        
                                     </HeadlineSmall>
                                 </>
                                 :

@@ -5,7 +5,6 @@ import AuthenticationContext from './context';
 const AuthenticationContextProvider = (props) => {
     const [user, setUser] = useState(null);
     const [recipeBook, setRecipeBook] = useState([]);
-    //const [editRecipeBook, setEditRecipeBook] = useState([]);
     const [isLoadingUser, setIsLoadingUser] = useState(true);
     const [isLoadingBook, setIsLoadingBook] = useState(true)
     const [isLoadingUnauthorized, setIsLoadingUnauthorized] = useState(false);
@@ -18,7 +17,7 @@ const AuthenticationContextProvider = (props) => {
             if(res.data.message && res.data.message === "Authenticated"){
                 setIsAuthenticated(true);
                 setUser(res.data.user);
-                console.log('res.data.user', res.data.user)
+                getRecipeBook(res.data.user._id)
                 setIsLoadingUser(false);
             } else {
                 setIsAuthenticated(false);
@@ -28,25 +27,26 @@ const AuthenticationContextProvider = (props) => {
         })
         .catch(error => console.log(error))
     };
-    console.log('user', user)
 
     useEffect(() => {
         fetchData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     //This should be refactorized when authentication works
     const getSessionUser = async(id) => {
+        setIsLoadingUser(true);
         try{
             let data = await axios.get(`/users/${id}`, { withCredentials: true })
             .then(({data}) => data);
             setUser(data)
+            setIsLoadingUser(false);
         }catch(error){
             console.log(error)
         }
     };
-        
 
-    //TODO BUG? if update recipeBook doesn't work it may be this thing that needs to be somewhere, or remove !isLoadingUser
+    //fetches and populates the updated user.recipeBook array when user is updated.
    useEffect(() => {
         (!isLoadingUser && user) && getRecipeBook(user._id)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -84,8 +84,8 @@ const AuthenticationContextProvider = (props) => {
     const updateUser = async(id, inputValues) => {
         await axios
         .patch(`/users/${id}`, inputValues, {withCredentials: true})
-        .then((res) => {
-            console.log('Updated user', res);
+        .then((data) => {
+            getSessionUser(user._id);
         })
         .catch(error => console.log(error))
     };
@@ -149,20 +149,20 @@ const AuthenticationContextProvider = (props) => {
         <AuthenticationContext.Provider
             {...props}
             value={{
-                user,
-                isAuthenticated,
-                isLoadingUser,
-                isLoadingUnauthorized,
-                registerNewUser,
-                login,
-                logout,
-                removeRecipeBookItem,
                 addRecipeBookItem,
-                updateUser,
-                recipeBook,
+                fetchData,
                 getRecipeBook,
                 getSessionUser,
-                fetchData,
+                isAuthenticated,
+                isLoadingUnauthorized,
+                isLoadingUser,
+                login,
+                logout,
+                recipeBook,
+                registerNewUser,
+                removeRecipeBookItem,
+                updateUser,
+                user,
             }}
         />
     );

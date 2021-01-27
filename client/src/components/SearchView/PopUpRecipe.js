@@ -62,7 +62,8 @@ const PopUpRecipe = ({recipe, getRecipeById, handleClick}) => {
                     <RecipeView 
                         getRecipeById = {getRecipeById} 
                         view = "SearchView" 
-                        recipe = {recipe}></RecipeView>
+                        recipe = {recipe}>
+                    </RecipeView>
                 </ScrollWrapper>
         </Wrapper>
     );
