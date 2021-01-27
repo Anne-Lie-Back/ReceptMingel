@@ -1,12 +1,30 @@
 import { styled } from 'styletron-react';
 import THEME from './../../config/theme';
+import media from '../../config/media';
+
+const Wrapper = styled('div', {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    margin: '2rem',
+
+    [media.above.tablet] : {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        margin: '4rem 1.5rem 3rem 0',
+    }
+});
 
 const FlexRow = styled('div', {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    margin: '4rem 1.5rem 3rem 0'
+    margin: '2rem 0',
+
+    [media.above.tablet] : {
+        margin: '4rem 1.5rem 3rem 0',
+    }
 });
 
 const HeadlineSmall = styled ('h4', {
@@ -33,8 +51,8 @@ const CategoryContainer = styled('div', {
     alignItems: 'center',
     flexWrap: 'wrap',
     width: '100%',
-    maxWidth: '465px',
-    height: '30px',
+    maxWidth: '390px',
+    height: '100%',
 });
 
 const CategoryBox = styled('div', {
@@ -56,7 +74,7 @@ const CategoryBox = styled('div', {
 });
 
 const BottomSection = ({categories, author}) => (
-    <FlexRow>
+    <Wrapper>
         <CategoryContainer>
                 {categories.map(item => (
                     <CategoryBox>{item}</CategoryBox>  
@@ -66,7 +84,7 @@ const BottomSection = ({categories, author}) => (
         <HeadlineSmall>Författat av:</HeadlineSmall>
             <Text>{author}</Text>
         </FlexRow>
-    </FlexRow>
+    </Wrapper>
 );
 
 export default BottomSection;
