@@ -44,7 +44,7 @@ const RecipeBookView = () => {
     const [recipe, setRecipe] = useState(null)
     const [searchTerm, setSearchTerm] = useState("");
     const [searchResults, setSearchResults] = useState([]);
-    const [displayBook, setDisplayBook] = useState([])
+    const [listToShow, setListToShow] = useState([])
 
     let { slug } = useParams();
     
@@ -56,12 +56,14 @@ const RecipeBookView = () => {
     //When User writes in filter input field. it makes both input and recipetitles to lowercase to make the search non case sensitive.
     //As for now the user can only search by title.
     useEffect(() => {
-        const lowerCased = searchTerm.toLowerCase();
-        const results = recipeBook.filter(recipe =>
-            recipe.title.toLowerCase().includes(lowerCased)
-        );
-
-        setSearchResults(results);
+        if(searchTerm === '') {
+            setSearchResults([])
+        }else{
+            const lowerCased = searchTerm.toLowerCase();
+            const results = recipeBook.filter(recipe =>
+            recipe.title.toLowerCase().includes(lowerCased));
+            setSearchResults(results);
+        }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchTerm]);
 
@@ -87,6 +89,29 @@ const RecipeBookView = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [slug]);
 
+    
+/*     const checkRecipeList = () => {
+        if(searchResults.length > 0) {
+            return searchResults
+        } else {
+            return recipeBook
+        }
+    } */
+
+    //console.log('checkRecipeList', checkRecipeList())
+
+/*     useEffect(() => {
+        if(searchResults && searchResults.length > 0){
+            setListToShow(searchResults)
+        } else if (recipeBook && (!searchResults || searchResults === 0)){
+            console.log('HÄR HÄNDER GREJ!')
+            setListToShow(recipeBook)
+        } else {
+            setListToShow([])
+        }
+    }, [searchResults, recipeBook])  */
+
+    console.log('searchResults', searchResults)
 
     return(
         <Wrapper>
@@ -96,8 +121,7 @@ const RecipeBookView = () => {
                 placeholder = 'Sök i din receptbok här...'
             />
             <RecipeWheel 
-                key ={recipeBook}
-                recipeList = {!searchResults || searchResults.length === 0? recipeBook : searchResults} 
+                recipeList = {searchResults.length > 0 ? searchResults : recipeBook}
                 height = "255px" 
                 bannerTitle = "Filter-resultat"
                 slug = {slug}

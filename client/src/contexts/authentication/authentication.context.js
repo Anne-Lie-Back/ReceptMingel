@@ -18,6 +18,7 @@ const AuthenticationContextProvider = (props) => {
             if(res.data.message && res.data.message === "Authenticated"){
                 setIsAuthenticated(true);
                 setUser(res.data.user);
+                getRecipeBook(res.data.user._id)
                 console.log('res.data.user', res.data.user)
                 setIsLoadingUser(false);
             } else {

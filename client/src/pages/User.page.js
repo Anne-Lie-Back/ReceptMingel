@@ -102,7 +102,7 @@ const ContentWrapper = styled('div', {
 });
 
 const UserPage = () => {
-    const { logout, user, recipeBook } = useContext(AuthenticationContext);
+    const { logout, user, recipeBook, getRecipeBook } = useContext(AuthenticationContext);
     const [isLoading, setIsLoading] = useState(true)
     const [privateRecipes, setPrivateRecipes] = useState([]);
 
@@ -119,6 +119,8 @@ const UserPage = () => {
     useEffect(() => {
         window.scrollTo(0, 0)
         getRecipesByIsPrivate(user._id)
+        getRecipeBook(user._id)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
     
     //This is for when the edit-user feature will come
