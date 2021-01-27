@@ -70,6 +70,7 @@ const Flip = styled('div', {
 
 const RecipeWheel = ({bannerTitle, height, recipeList, route}) => (
     <Wrapper $height = {height}>
+        {console.log('LISTA', recipeList)}
         <Banner>
             {bannerTitle}...
         </Banner>

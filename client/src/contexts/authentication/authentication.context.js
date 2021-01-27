@@ -86,8 +86,8 @@ const AuthenticationContextProvider = (props) => {
     const updateUser = async(id, inputValues) => {
         await axios
         .patch(`/users/${id}`, inputValues, {withCredentials: true})
-        .then((res) => {
-            console.log('Updated user', res);
+        .then((data) => {
+            getSessionUser(user._id);
         })
         .catch(error => console.log(error))
     };

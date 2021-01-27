@@ -160,7 +160,6 @@ const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, ge
         getRecipeById(recipe._id)
         getSessionUser(user._id)
         setIsStarred(!isStarred);
-        console.log('isStarred', isStarred)
     }
 
     useEffect(() => {

@@ -44,6 +44,7 @@ const RecipeBookView = () => {
     const [recipe, setRecipe] = useState(null)
     const [searchTerm, setSearchTerm] = useState("");
     const [searchResults, setSearchResults] = useState([]);
+    const [displayBook, setDisplayBook] = useState([])
 
     let { slug } = useParams();
     
@@ -75,17 +76,17 @@ const RecipeBookView = () => {
         };
     };
 
-/*     useEffect(() => {
-        getRecipeBook(user._id)
-    },[user]); */
+    console.log('RECIPEBOOK', recipeBook)
 
     useEffect(() => {
         if(slug) {
             getRecipeById(slug);
             setIsLoading(true);
+            getRecipeBook(user._id)
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [slug]);
+
 
     return(
         <Wrapper>
@@ -95,6 +96,7 @@ const RecipeBookView = () => {
                 placeholder = 'Sök i din receptbok här...'
             />
             <RecipeWheel 
+                key ={recipeBook}
                 recipeList = {!searchResults || searchResults.length === 0? recipeBook : searchResults} 
                 height = "255px" 
                 bannerTitle = "Filter-resultat"
