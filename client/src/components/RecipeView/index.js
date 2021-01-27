@@ -110,15 +110,6 @@ const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, ge
     //isStarred helps to display correct icon
     const [isStarred, setIsStarred] = useState(false);
     const [recipeBookPage, setRecipeBookPage] = useState(user.recipeBook);
-/*     const [userObject, setUserObject] = useState({
-        username : user.username,
-        firstName : user.firstName,
-        lastName : user.lastName,
-        image : user.image,
-        userInfo : user.userInfo,
-        recipeBook : user.recipeBook,
-        imageURL: user.imageURL
-    });  */
     
     let history = useHistory();
     

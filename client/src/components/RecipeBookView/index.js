@@ -113,6 +113,7 @@ const RecipeBookView = () => {
                             slug = {slug}
                             isLoading = {isLoading}
                             recipe = {recipe}
+                            getRecipeById = {getRecipeById}
                         /> 
                     }
                 </>

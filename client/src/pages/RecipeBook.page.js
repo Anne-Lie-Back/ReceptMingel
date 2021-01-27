@@ -23,6 +23,7 @@ const RecipeBookPage = () => {
             setIsLoading(false);
         });
     };
+
     useEffect(() => { 
         getRecipeBook(user._id)
         setIsLoading(true)
