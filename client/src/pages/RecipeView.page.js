@@ -1,18 +1,45 @@
 import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { styled } from 'styletron-react';
+import { Icon } from "@iconify/react";
+import THEME from '../config/theme';
 import axios from '../axios';
 import Hero from '../components/Hero';
 import roundRestaurantMenu from '@iconify/icons-ic/round-restaurant-menu';
+import roundMenu from '@iconify/icons-ic/round-menu';
 import GridContentWrapper from '../components/GridContentWrapper';
 import RecipeView from '../components/RecipeView';
 import RecipeTemplate from '../components/RecipeTemplate';
 import SideMenu from '../components/SideMenu';
 import AuthenticationContext from '../contexts/authentication/context';
 
+const Wrapper = styled('div', {
+    position: 'relative',
+    width: '100%',
+    padding: '2rem 0'
+});
+
+const StyledIcon = styled(Icon, {
+    position: 'absolute',
+    top: '1rem',
+    padding: '0.3rem',
+    backgroundColor: THEME.colors.primary[0],
+    borderTopRightRadius: '5px',
+    borderBottomRightRadius: '5px',
+    color: THEME.colors.white[0],
+    fontSize: '60px',
+    zIndex: 3,
+
+    ':hover' : {
+        color: THEME.colors.contrast[0],
+    }
+});
+
 const RecipeViewPage = () => {
     const {user, recipeBook} = useContext(AuthenticationContext);
     const [isEdit, setIsEdit] = useState(false);
     const [isAdd, setIsAdd] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [usersRecipes, setUsersRecipes] = useState([]);
     const [recipe, setRecipe] = useState(null);
@@ -91,8 +118,15 @@ const RecipeViewPage = () => {
                 title = 'Mina Recept' 
                 icon = {roundRestaurantMenu} 
             />
-            <GridContentWrapper>
-                <SideMenu  recipeList = {usersRecipes} setIsAdd = {setIsAdd} setIsEdit = {setIsEdit}/>
+            <Wrapper>
+                <StyledIcon icon={roundMenu} onClick = {() => setIsOpen(true)}/>
+                    <SideMenu  
+                        recipeList = {usersRecipes} 
+                        setIsAdd = {setIsAdd} 
+                        isOpen = {isOpen} 
+                        setIsOpen = {setIsOpen} 
+                        setIsEdit = {setIsEdit}
+                    />
                     {/* If no recipes yet, yser gets a little textmessage */}
                     {usersRecipes.length === 0 && isLoading ?
                         <>
@@ -149,7 +183,7 @@ const RecipeViewPage = () => {
                             } 
                         </>
                     }  
-            </GridContentWrapper>  
+            </Wrapper>  
         </>
     );
 };

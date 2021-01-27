@@ -36,7 +36,7 @@ const HeadlineSmall = styled ('h4', {
 });
 
 const Text = styled('p', {
-    marginLeft: '1rem', 
+    margin: '0 0 0 1rem', 
     fontSize: THEME.fontSizes.small,
     fontFamily: THEME.fonts.text,
     color: THEME.colors.black[0],

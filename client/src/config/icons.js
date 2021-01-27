@@ -41,7 +41,10 @@ import roundStarRate from '@iconify/icons-ic/round-star-rate';
 import roundRadioButtonUnchecked from '@iconify/icons-ic/round-radio-button-unchecked';
 //ON, shared
 import roundRadioButtonChecked from '@iconify/icons-ic/round-radio-button-checked';
-import THEME from "./theme";
+
+//Menu
+import roundMenu from '@iconify/icons-ic/round-menu';
+
 
 
 
@@ -136,26 +139,31 @@ const SharedIcon = ({size, color, handleClick}) => (
     <StyledIcon icon={roundRadioButtonChecked} $size = {size} $color = {color} onClick = {handleClick}/>
 );
 
+const MenuIcon = ({size, color, handleClick}) => (
+    <StyledIcon icon={roundMenu} $size = {size} $color = {color} onClick = {handleClick}/>
+);
+
 
 
 const Icons = {
     AddIcon,
-    EditSimple,
-    EditBox,
-    Done,
     CloseIcon,
-    ImageIcon,
-    Minus,
-    User,
-    Search,
-    RecipeIcon,
-    RecipeBook,
     CopyrightIcon,
+    Done,
+    EditBox,
+    EditSimple,
+    ImageIcon,
     LinkedinIcon,
-    StarIconUnactive,
+    MenuIcon,
+    Minus,
+    RecipeBook,
+    RecipeIcon,
+    Search,
+    SharedIcon,
     StarIconActive,
+    StarIconUnactive,
     UnsharedIcon,
-    SharedIcon
+    User,
 };
 
 export default Icons;
