@@ -41,7 +41,8 @@ const FlexRow = styled('div', {
     alignItems: 'center',
 });
 
-const FlexRowResponsive = styled(FlexRow, {
+const FlexRowResponsive = styled('div', {
+    display: 'flex',
     gridColumn: '1/2',
     gridRow: '4/5',
     flexDirection: 'column',

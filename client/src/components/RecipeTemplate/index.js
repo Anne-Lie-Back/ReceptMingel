@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import axios from '../../axios'
 import { styled } from 'styletron-react';
 import THEME from '../../config/theme';
+import media from './../../config/media';
 import Icons from '../../config/icons';
 import InputField from '../inputField';
 import CategoriesInput from './CategoriesInput';
