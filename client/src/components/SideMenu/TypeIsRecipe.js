@@ -63,15 +63,10 @@ const FilterInput = styled(InputField, {
     fontSize: THEME.fontSizes.small,
 });
 
-const TypeIsRecipe = ({recipeList, setIsAdd, setIsEdit }) => {
+const TypeIsRecipe = ({recipeList, setIsAdd, setIsEdit, searchResults, handleChange}) => {
     // eslint-disable-next-line no-unused-vars
-    const[filterInput, setFilterInput] = useState('');
     let history = useHistory()
     let slug = useParams()
-
-    const handleChange = (event) => {
-        setFilterInput(event.target.value)
-    };
 
     const handleAddClick = () => {
         setIsAdd(true)
@@ -89,18 +84,35 @@ const TypeIsRecipe = ({recipeList, setIsAdd, setIsEdit }) => {
             <Link to = {'/recipe/'} style = {{textDecoration: 'none'}}>
                 <AddButtonText onClick = {handleAddClick}> Skapa nytt recept </AddButtonText>
             </Link>
-            <FilterInput styling = "basic" handleChange = {(event) => handleChange(event)} placeholder = 'Sök bland dina recept...'/>
+            <FilterInput styling = "basic" handleChange = {(event) => handleChange(event)} placeholder = 'Sök i  dina recept'/>
             <List>
-                {recipeList.map((item, index) => (
-                    <StyledLink to = {`/recipe/${item._id}`}>
-                        <ListItem 
-                            key = {index} 
-                            onClick = {handleMenuClick}
-                        > 
-                            {item.title} 
-                        </ListItem>
-                    </StyledLink>
-                ))}
+                {searchResults.length > 0?
+                    <>
+                        {searchResults.map((item, index) => (
+                            <StyledLink to = {`/recipe/${item._id}`}>
+                                <ListItem 
+                                    key = {index} 
+                                    onClick = {handleMenuClick}
+                                > 
+                                    {item.title} 
+                                </ListItem>
+                            </StyledLink>
+                        ))}
+                    </>
+                :
+                    <>
+                        {recipeList.map((item, index) => (
+                            <StyledLink to = {`/recipe/${item._id}`}>
+                                <ListItem 
+                                    key = {index} 
+                                    onClick = {handleMenuClick}
+                                > 
+                                    {item.title} 
+                                </ListItem>
+                            </StyledLink>
+                        ))}
+                    </>
+                }
             </List>
         </>
     );

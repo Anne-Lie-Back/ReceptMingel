@@ -82,12 +82,7 @@ RecipeSchema.plugin(mongoose_fuzzy_searching, {
         {
             name: 'title',
             weight: 3,
-            minSize: 4
-        },
-        {
-            name: 'preambleHTML',
-            weight: 1,
-            minSize: 4
+            minSize: 4,
         },
         {
             name: 'difficulty',
@@ -101,7 +96,7 @@ RecipeSchema.plugin(mongoose_fuzzy_searching, {
         {
             name: 'ingredients',
             weight: 5,
-            minSize: 4
+            minSize: 3
         },
         {
             name: 'mdsaCategories',

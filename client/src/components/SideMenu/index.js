@@ -23,18 +23,26 @@ const Wrapper = styled('div', ({$isOpen})=> ({
 const StyledIcon = styled(Icon, {
     fontSize: '40px',
     color: THEME.colors.white[0],
+    margin: '0 0 1rem 0',
 
     ':hover' : {
         color: THEME.colors.contrast[0],
+        cursor: 'pointer'
     }
 });
 
-const SideMenu = ({ recipeList, setIsAdd, setIsOpen, isOpen, setIsEdit }) => (
+const SideMenu = ({ recipeList, setIsAdd, setIsOpen, isOpen, setIsEdit, searchResults, handleChange }) => (
         <Wrapper $isOpen = {isOpen}>
-            <div style = {{width: '100%', justifyContent: 'flexEnd'}}>
+            <div style = {{display: 'flex', width: '100%', flexDirection: 'row', justifyContent: 'flex-end'}}>
                 <StyledIcon icon={bxWindowClose} onClick = {() => setIsOpen(false)}/>
             </div>
-            <TypeIsRecipe recipeList = {recipeList} setIsAdd = {setIsAdd} setIsEdit = {setIsEdit}/>
+            <TypeIsRecipe 
+                searchResults = {searchResults}
+                recipeList = {recipeList} 
+                setIsAdd = {setIsAdd} 
+                setIsEdit = {setIsEdit}
+                handleChange = {handleChange}
+            />
         </Wrapper>
 );
 

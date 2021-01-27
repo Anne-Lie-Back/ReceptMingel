@@ -15,7 +15,7 @@ const Wrapper = styled('div', ({$height}) => ({
 const Banner = styled('div', {
     width: '100%',
     height: '30px',
-    padding: '0.5rem 2rem 0.20rem 2rem',
+    padding: '0.5rem 1rem 0.20rem 2rem',
     backgroundColor: THEME.colors.primary[0],
     fontFamily: THEME.fonts.text,
     fontSize: THEME.fontSizes.medium,
@@ -68,82 +68,21 @@ const Flip = styled('div', {
     transform: 'rotateX(180deg)',
 });
 
-const RecipeWheel = ({bannerTitle, height, recipeList, route}) => {
-    
-    //TODO Should be sent from parent (from db)
-    
-    const textWheel = [
-        {
-            title: 'uggla',
-            imageURK: owlTest
-        },
-        {
-            title: 'gubbröra',
-            imageURL: imageTest
-        },
-        {
-            title: 'uggla',
-            imageURL: owlTest
-        },
-        {
-            title: 'gubbröra',
-            imageURL: imageTest
-        },
-        {
-            title: 'uggla',
-            imageURL: owlTest
-        },
-        {
-            title: 'gubbröra',
-            imageURL: imageTest
-        },
-        {
-            title: 'uggla',
-            imageURL: owlTest
-        },
-        {
-            title: 'gubbröra',
-            imageURL: imageTest
-        },
-        {
-            title: 'uggla',
-            imageURL: owlTest
-        },
-        {
-            title: 'gubbröra',
-            imageURL: imageTest
-        },
-        {
-            title: 'uggla',
-            imageURL: owlTest
-        },
-        {
-            title: 'gubbröra',
-            imageURL: imageTest
-        },
-    ]
-    //TODO remove
-    if (!recipeList){
-        recipeList = textWheel
-    }
-
-    
-    return(
-        <Wrapper $height = {height}>
-            <Banner>
-                {bannerTitle}...
-            </Banner>
-            <ScrollWrapper>
-            {recipeList.map((item) => (
-                <Flip>
-                    <StyledLink to = {`${route + item._id}`}>
-                        <RecipeCardSmall key = {item._id} title = {item.title} image = {item.imageURL}/>
-                    </StyledLink>
-                </Flip>
-            ))}   
-            </ScrollWrapper>
-        </Wrapper>
-    );
-};
+const RecipeWheel = ({bannerTitle, height, recipeList, route}) => (
+    <Wrapper $height = {height}>
+        <Banner>
+            {bannerTitle}...
+        </Banner>
+        <ScrollWrapper>
+        {recipeList.map((item) => (
+            <Flip>
+                <StyledLink to = {`${route + item._id}`}>
+                    <RecipeCardSmall key = {item._id} title = {item.title} image = {item.imageURL}/>
+                </StyledLink>
+            </Flip>
+        ))}   
+        </ScrollWrapper>
+    </Wrapper>
+);
 
 export default RecipeWheel;

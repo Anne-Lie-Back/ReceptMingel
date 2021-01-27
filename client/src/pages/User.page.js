@@ -40,7 +40,7 @@ const DescWrapper = styled('div', {
     justifyContent: 'space-Between',
     width: '290px',
     height: '320px',  
-    margin: '1.5rem 1.5rem 3rem 1.5rem',
+    margin: '1.5rem 0.75rem 3rem 1.5rem',
     padding: '1rem 2rem',
     backgroundColor: THEME.colors.white[0],
     borderRadius: '5px',
@@ -53,6 +53,7 @@ const DescWrapper = styled('div', {
     [media.above.mobile] : {
         width: '400px',
         height: '300px',
+        margin: '1.5rem 1.5rem 3rem 1.5rem',
         fontSize: THEME.fontSizes.small,
     },
 
@@ -140,13 +141,13 @@ const UserPage = () => {
             <ContentWrapper>
                 <RecipeWheel 
                     isLoading = {isLoading} 
-                    bannerTitle = "Recept under utveckling..."
+                    bannerTitle = "Recept under utveckling"
                     recipeList = {privateRecipes}
                     route = "/recipe/"
                 />
                 <RecipeWheel 
                     isLoading = {isLoading} 
-                    bannerTitle = "Recept ur din receptbok..."
+                    bannerTitle = "Recept ur din receptbok"
                     recipeList = {recipeBook}
                     route = "/recipeBook/"
                 />
