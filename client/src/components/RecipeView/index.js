@@ -110,8 +110,6 @@ const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, ge
     const [recipeBookPage, setRecipeBookPage] = useState(user.recipeBook);
     
     let history = useHistory();
-    
-
 
     useEffect(() => {
         if (view === "RecipeView") getRecipeById(recipe._id)
@@ -127,9 +125,6 @@ const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, ge
         let value = recipe.isShared? {"isShared" : false} : {"isShared" : true}
         patchRecipe(recipe._id, value)
         isSharedRecipe? setIsShared(false):setIsShared(true)
-        
-        //TODO test to move this to useEffect that listens to recipe.isShared
-        //isSharedRecipe? removeRecipeBookItem(recipe._id) : addRecipeBookItem(recipe._id);
     };
 
     //Deletes recipe, updates sidemenu-list and redirects user to start-recipe-page
@@ -165,25 +160,13 @@ const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, ge
         getRecipeById(recipe._id)
         getSessionUser(user._id)
         setIsStarred(!isStarred);
+        console.log('isStarred', isStarred)
     }
 
     useEffect(() => {
         getRecipeBook(user._id)
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isStarred])
-
-
-
-    //Check if recipe already is saved in recipeBook
-   /*  const checkIfAlreadyStarred = () => {
-        const index =  recipeBook.findIndex(recipe._id)
-        if (index > -1){
-            return true
-        }
-        else if(index === -1) {
-            return false
-        }
-    }; */
 
     //Transform for easier follow on where the different items are showing and are styled.
     //Keeps id as recipe._id to easier see type of id used

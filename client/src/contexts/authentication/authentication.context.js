@@ -36,10 +36,12 @@ const AuthenticationContextProvider = (props) => {
 
     //This should be refactorized when authentication works
     const getSessionUser = async(id) => {
+        setIsLoadingUser(true);
         try{
             let data = await axios.get(`/users/${id}`, { withCredentials: true })
             .then(({data}) => data);
             setUser(data)
+            setIsLoadingUser(false);
         }catch(error){
             console.log(error)
         }

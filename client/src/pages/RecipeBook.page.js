@@ -15,18 +15,19 @@ const RecipeBookPage = () => {
 
     let { slug } = useParams();
 
-    const getRecipesByIsShared = async() => {
+/*     const getRecipesByIsShared = async() => {
         await axios
         .get('recipes/public', { withCredentials: true })
         .then((res) => {
             setSharedRecipes(res.data);
             setIsLoading(false);
         });
-    };
+    }; */
 
+    
     useEffect(() => { 
         getRecipeBook(user._id)
-        setIsLoading(true)
+        //setIsLoading(true)
         window.scrollTo(0, 0)
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);

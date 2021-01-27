@@ -39,7 +39,7 @@ const LoadingText = styled('p', {
 })
 
 const RecipeBookView = () => {
-    const {recipeBook} = useContext(AuthenticationContext);
+    const {recipeBook, getRecipeBook, user} = useContext(AuthenticationContext);
     const [isLoading, setIsLoading] = useState(true);
     const [recipe, setRecipe] = useState(null)
     const [searchTerm, setSearchTerm] = useState("");
@@ -74,6 +74,10 @@ const RecipeBookView = () => {
             console.log(error)
         };
     };
+
+/*     useEffect(() => {
+        getRecipeBook(user._id)
+    },[user]); */
 
     useEffect(() => {
         if(slug) {
