@@ -5,7 +5,6 @@ import AuthenticationContext from './context';
 const AuthenticationContextProvider = (props) => {
     const [user, setUser] = useState(null);
     const [recipeBook, setRecipeBook] = useState([]);
-    //const [editRecipeBook, setEditRecipeBook] = useState([]);
     const [isLoadingUser, setIsLoadingUser] = useState(true);
     const [isLoadingBook, setIsLoadingBook] = useState(true)
     const [isLoadingUnauthorized, setIsLoadingUnauthorized] = useState(false);
@@ -19,7 +18,6 @@ const AuthenticationContextProvider = (props) => {
                 setIsAuthenticated(true);
                 setUser(res.data.user);
                 getRecipeBook(res.data.user._id)
-                console.log('res.data.user', res.data.user)
                 setIsLoadingUser(false);
             } else {
                 setIsAuthenticated(false);
@@ -29,10 +27,10 @@ const AuthenticationContextProvider = (props) => {
         })
         .catch(error => console.log(error))
     };
-    console.log('user', user)
 
     useEffect(() => {
         fetchData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     //This should be refactorized when authentication works
@@ -47,9 +45,8 @@ const AuthenticationContextProvider = (props) => {
             console.log(error)
         }
     };
-        
 
-    //TODO BUG? if update recipeBook doesn't work it may be this thing that needs to be somewhere, or remove !isLoadingUser
+    //fetches and populates the updated user.recipeBook array when user is updated.
    useEffect(() => {
         (!isLoadingUser && user) && getRecipeBook(user._id)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -152,20 +149,20 @@ const AuthenticationContextProvider = (props) => {
         <AuthenticationContext.Provider
             {...props}
             value={{
-                user,
-                isAuthenticated,
-                isLoadingUser,
-                isLoadingUnauthorized,
-                registerNewUser,
-                login,
-                logout,
-                removeRecipeBookItem,
                 addRecipeBookItem,
-                updateUser,
-                recipeBook,
+                fetchData,
                 getRecipeBook,
                 getSessionUser,
-                fetchData,
+                isAuthenticated,
+                isLoadingUnauthorized,
+                isLoadingUser,
+                login,
+                logout,
+                recipeBook,
+                registerNewUser,
+                removeRecipeBookItem,
+                updateUser,
+                user,
             }}
         />
     );

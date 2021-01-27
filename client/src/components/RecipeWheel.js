@@ -2,9 +2,6 @@ import { Link } from 'react-router-dom';
 import { styled } from 'styletron-react';
 import THEME from './../config/theme';
 import RecipeCardSmall from './RecipeCardSmall';
-//TODO remove:
-import owlTest from './../assets/images/owlTest.jpg'
-import imageTest from './../assets/images/imageTest.png';
 
 const Wrapper = styled('div', ({$height}) => ({
     width: '100%',
@@ -33,16 +30,11 @@ const ScrollWrapper = styled('div', {
     overflowY: 'hidden',
     //Puts the scrollbar on top of div
     transform: 'rotateX(180deg)',
-    //TODO check if I need this
-    //'-ms-transform':'rotateX(180deg)', /* IE 9 */
-    //'-webkit-transform':'rotateX(180deg)', 
 
     '::-webkit-scrollbar' : { 
-        //'-webkit-appearance': 'none',
         height: '0.7rem',
         backgroundColor: THEME.colors.grey[0]
     },
-
     '::-webkit-scrollbar-thumb' : {
         borderRadius: '2px',
         border: `1px solid grey`,
@@ -60,8 +52,7 @@ const StyledLink = styled(Link, {
         color: THEME.colors.contrast[0],
         cursor: 'pointer'
     }
-
-})
+});
 
 // Flips the content of the rotated div once again so the content is not upside down.
 const Flip = styled('div', {

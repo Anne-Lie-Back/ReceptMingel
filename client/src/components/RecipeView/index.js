@@ -81,14 +81,19 @@ const EditDeleteIcon = styled(Icon,{
 });
 
 const StarIcon = styled(Icon,({$isStarred})=> ({
-    margin: '0 0.5rem 0 -0.3rem',
-    fontSize: '40px',
+    margin: '0 0.5rem 0 1rem',
+    fontSize: '50px',
     color: $isStarred ? 'gold' : THEME.colors.black[0],
 
     ':hover' : {
         cursor: 'pointer',
         color: $isStarred ? THEME.colors.black[0] : THEME.colors.contrast[0],
-    }
+    },
+
+    "@media screen and (min-width: 700px)": {
+        margin: '0 0.5rem 0 -0.3rem',
+        fontSize: '40px',
+    },
 }));
 
 const SharedIcon = styled(Icon,({$isSharedRecipe})=> ({
@@ -181,8 +186,6 @@ const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, ge
         mdsaCategories,
         author,
         authorId,
-        // eslint-disable-next-line no-unused-vars
-        isShared
     } = recipe; 
 
     return(
@@ -208,7 +211,17 @@ const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, ge
                                         onClick = {handleStarRecipe}
                                     />
                                     <HeadlineSmall> 
-                                        {isStarred? 'SPARAD I DIN RECEPTBOK':'SPARA I DIN RECEPTBOK'}
+                                        {view === "SearchView" &&
+                                            <>
+                                                {isStarred? 'SPARAD I DIN RECEPTBOK':'SPARA I DIN RECEPTBOK'}
+                                            </>
+                                        }
+                                        {view === "RecipeBook" &&
+                                            <>
+                                                {isStarred? 'SPARAD I DIN RECEPTBOK':'BORTTAGEN. VILL DU ÅNGRA DIG?'}
+                                            </>
+                                        }
+                                        
                                     </HeadlineSmall>
                                 </>
                                 :

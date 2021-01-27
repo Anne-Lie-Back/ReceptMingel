@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 
 import { styled } from 'styletron-react';
 import THEME from '../../config/theme';
-import media from '../../config/media';
 
 import axios from '../../axios';
 import AuthenticationContext from '../../contexts/authentication/context';
@@ -39,12 +38,11 @@ const LoadingText = styled('p', {
 })
 
 const RecipeBookView = () => {
-    const {recipeBook, getRecipeBook, user} = useContext(AuthenticationContext);
+    const {recipeBook} = useContext(AuthenticationContext);
     const [isLoading, setIsLoading] = useState(true);
     const [recipe, setRecipe] = useState(null)
     const [searchTerm, setSearchTerm] = useState("");
     const [searchResults, setSearchResults] = useState([]);
-    const [listToShow, setListToShow] = useState([])
 
     let { slug } = useParams();
     
@@ -56,14 +54,10 @@ const RecipeBookView = () => {
     //When User writes in filter input field. it makes both input and recipetitles to lowercase to make the search non case sensitive.
     //As for now the user can only search by title.
     useEffect(() => {
-        if(searchTerm === '') {
-            setSearchResults([])
-        }else{
-            const lowerCased = searchTerm.toLowerCase();
-            const results = recipeBook.filter(recipe =>
-            recipe.title.toLowerCase().includes(lowerCased));
-            setSearchResults(results);
-        }
+        const lowerCased = searchTerm.toLowerCase();
+        const results = recipeBook.filter(recipe =>
+        recipe.title.toLowerCase().includes(lowerCased));
+        setSearchResults(results);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchTerm]);
 
@@ -78,40 +72,14 @@ const RecipeBookView = () => {
         };
     };
 
-    console.log('RECIPEBOOK', recipeBook)
-
+    //updates the view so recipe id matches slug when slug is changed.
     useEffect(() => {
         if(slug) {
             getRecipeById(slug);
             setIsLoading(true);
-            getRecipeBook(user._id)
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [slug]);
-
-    
-/*     const checkRecipeList = () => {
-        if(searchResults.length > 0) {
-            return searchResults
-        } else {
-            return recipeBook
-        }
-    } */
-
-    //console.log('checkRecipeList', checkRecipeList())
-
-/*     useEffect(() => {
-        if(searchResults && searchResults.length > 0){
-            setListToShow(searchResults)
-        } else if (recipeBook && (!searchResults || searchResults === 0)){
-            console.log('HÄR HÄNDER GREJ!')
-            setListToShow(recipeBook)
-        } else {
-            setListToShow([])
-        }
-    }, [searchResults, recipeBook])  */
-
-    console.log('searchResults', searchResults)
 
     return(
         <Wrapper>
@@ -121,7 +89,8 @@ const RecipeBookView = () => {
                 placeholder = 'Sök i din receptbok här...'
             />
             <RecipeWheel 
-                recipeList = {searchResults.length > 0 ? searchResults : recipeBook}
+                /* If user is using the filter-input field the wheel will display the result else, if field is empty, fall back to recipeBook */
+                recipeList = {searchTerm === '' ? recipeBook : searchResults}
                 height = "255px" 
                 bannerTitle = "Filter-resultat"
                 slug = {slug}

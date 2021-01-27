@@ -5,19 +5,34 @@ import media from '../../config/media';
 
 const Wrapper = styled('div', {
     display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
     alignItems: 'center',
+    justifyContent: 'center',
     width: '100%',
-    padding: '2rem 3rem 2rem 3rem',
+    padding: '2rem 1rem 2rem 1rem',
     backgroundColor: THEME.colors.primary[0],
     borderRadius: 0,
     boxShadow: '0 0 2px black',
 
+    [media.above.XSmobile] : {
+        padding: '2rem 3rem 2rem 3rem',
+    },
     [media.above.tablet] : {
         padding: '3rem 4rem 3rem 4rem',
        width: 'auto',
        borderRadius: '5px',
+    }
+});
+
+const AlignWrapper = styled('div', {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    width: '100%',
+    maxWidth: '275px',
+
+    [media.above.mobile] : {
+        maxWidth: '375px',
     }
 });
 
@@ -69,16 +84,18 @@ const Button = styled('button', {
 
 const SearchInputArea = ({setSearchInput, handleClick}) => (
     <Wrapper>
-        <Label for = "search">Vad vill du äta idag?</Label>
-        <FlexRow>
-            <SearchInputField 
-                type = "text"
-                name = "search"
-                styling = "basic"
-                handleChange = {(event) => {setSearchInput(event.target.value)}}
-            />
-            <Button onClick = {handleClick}> Sök </Button> 
-        </FlexRow>
+        <AlignWrapper>
+            <Label for = "search">Vad vill du äta idag?</Label>
+            <FlexRow>
+                <SearchInputField 
+                    type = "text"
+                    name = "search"
+                    styling = "basic"
+                    handleChange = {(event) => {setSearchInput(event.target.value)}}
+                />
+                <Button onClick = {handleClick}> Sök </Button> 
+            </FlexRow>
+        </AlignWrapper>
     </Wrapper>
 );
 
