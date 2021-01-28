@@ -214,8 +214,6 @@ const RecipeTemplate = ({ setIsEdit, isEdit, setIsAdd, isAdd, inputValues, setIn
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[isEdit])
 
-    console.log('object', inputValues.ingredients.length )
-
     const validateInput = () => {
         const validation = 
             inputValues?.title?.length > 0 && 
@@ -229,7 +227,7 @@ const RecipeTemplate = ({ setIsEdit, isEdit, setIsAdd, isAdd, inputValues, setIn
         }else{
             return false
         }
-    }
+    };
 
     //Listens after changes to file-state. If changed to not null, the image will be sent to the bucket and id 
     // set to inputValues.image to link correct image in bucket to user in database.
@@ -325,9 +323,9 @@ const RecipeTemplate = ({ setIsEdit, isEdit, setIsAdd, isAdd, inputValues, setIn
                             <FileUpload
                                 $error = {imageOK.isError}
                                 $preview = {
-                                    (file && URL.createObjectURL(file)) ||
-                                    ((recipe && isEdit && !imageOK.isError && recipe.imageURL) ||
-                                    null)
+                                    ((file && !imageOK.isError && URL.createObjectURL(file)) ||
+                                    ((recipe && isEdit) && recipe.imageURL)) ||
+                                    null
                                 }
                             >
                                 {!file && <ImageIcon color = {THEME.colors.white[0]} size = "70px"/>}
