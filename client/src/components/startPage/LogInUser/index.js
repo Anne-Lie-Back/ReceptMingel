@@ -113,14 +113,6 @@ const LogInUser = ({handleClick}) => {
         }
     }
 
-    const preStateButton = () => {
-        if(inputValues.username <= 0 || inputValues.password <= 0){ 
-            return true 
-        }else{
-            return false
-        }
-    };
-
     const handleLoginReq = async() => {
         await login(inputValues.username, inputValues.password);
         if(!isAuthenticated){

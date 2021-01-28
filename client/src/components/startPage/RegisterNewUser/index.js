@@ -90,7 +90,7 @@ const FileUpload = styled('div', ({$preview, $error}) => ({
     width: '120px',
     height: '120px',
     borderRadius: '50%',
-    border: $error? `2px solid red` : 'none',
+    border: $error? THEME.colors.error : 'none',
     backgroundImage: $preview? `url(${$preview})` : null,
     backgroundColor: THEME.colors.grey[0],
     backgroundPosition: 'center',
@@ -202,16 +202,16 @@ const RegisterNewUser = ({handleClick}) => {
             credentials: "include",
             body: formData, 
         })
-          .then((res) => res.json())
-          .then((data) => {
+        .then((res) => res.json())
+        .then((data) => {
             if (data && data.message === "success") {  
                 console.log('data.message', data.message)
-              setInputValues((prev) => ({ ...prev, image: data.id }));
-              setImageOK(!imageOK.isError)
+                setInputValues((prev) => ({ ...prev, image: data.id }));
+                setImageOK(!imageOK.isError)
             } else {
                 setImageOK({ isError: true, message: "För stor, max 500kb" })
             }
-          })
+        })
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [file]);
 
