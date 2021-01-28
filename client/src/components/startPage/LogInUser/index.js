@@ -30,7 +30,7 @@ const Wrapper = styled('div', {
     }
 });
 
-const Button = styled('button', {
+const Button = styled('button', ({$unactive, $preState}) => ({
     height: '40px',
     backgroundColor: THEME.colors.contrast[0],
     border: 'none',
@@ -44,15 +44,15 @@ const Button = styled('button', {
     textTransform: 'uppercase',
 
     ':disabled' : {
-        backgroundColor: THEME.colors.contrast[1],
+        backgroundColor: $preState ? THEME.colors.contrast[0] : THEME.colors.contrast[1],
         color: THEME.colors.white[0],
     },
 
     ':hover': {
-        cursor:'pointer',
-        backgroundColor:THEME.colors.black[0] 
+        cursor: $unactive? 'not-allowed' : 'pointer',
+        backgroundColor: $unactive? THEME.colors.contrast[1] : THEME.colors.black[0] 
     }
-});
+}));
 
 const Text = styled('p', {
     ':hover': {
@@ -103,7 +103,7 @@ const LogInUser = ({handleClick}) => {
           });
     };
 
-    const ValidateInput = () => {
+    const validateInput = () => {
         const validation = inputValues.password.length >= 4 && inputValues.username.length >= 4
         
         if(!validation){
@@ -112,6 +112,14 @@ const LogInUser = ({handleClick}) => {
             return false
         }
     }
+
+    const preStateButton = () => {
+        if(inputValues.username <= 0 || inputValues.password <= 0){ 
+            return true 
+        }else{
+            return false
+        }
+    };
 
     const handleLoginReq = async() => {
         await login(inputValues.username, inputValues.password);
@@ -148,7 +156,9 @@ const LogInUser = ({handleClick}) => {
             />
             <Button 
                 onClick = {handleLoginReq} 
-                disabled = {ValidateInput()}
+                disabled = {validateInput()}
+                $unactive = {validateInput()}
+                $preState = {inputValues.username <= 0 && inputValues.password <= 0}
             > 
             Logga in 
             </Button>

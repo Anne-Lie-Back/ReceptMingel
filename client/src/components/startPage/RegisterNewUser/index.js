@@ -174,11 +174,11 @@ const RegisterNewUser = ({handleClick}) => {
 
     const handleSubmit = async () => {
         //TODO remove when new is tested
-        /* await registerNewUser(inputValues);
+        await registerNewUser(inputValues);
         if(!isAuthenticated){
             setLoginError({
                 isOk: false,
-                message: "Vi kunde"
+                message: "Användarnamn upptaget"
             });
         } else {
             setLoginError({
@@ -186,20 +186,7 @@ const RegisterNewUser = ({handleClick}) => {
                 message: ""
             });
             history.push(`/user/${user._id}`); 
-        }; */
-        const message = await registerNewUser(inputValues);
-        if (message !== "Authenticated") {
-            setLoginError({
-                isOk: false,
-                message: message
-            });
-        } else {
-            setLoginError({
-                isOk: true,
-                message: ""
-            });
-            history.push(`/user/${user._id}`); 
-        }
+        }; 
     };
 
     //Listens after changes to file-state. If changed to not null, the image will be sent to the bucket and id 
@@ -308,6 +295,7 @@ const RegisterNewUser = ({handleClick}) => {
                 
                 <Button $unactive = {validationHandler()} disabled = {validationHandler()} onClick = {handleSubmit}>Register</Button>
                 <ErrorMessage>{loginError.message}</ErrorMessage>
+                {console.log('message', loginError.message)}
                 <Text onClick = {handleClick}>Redan registrerad? Logga in här</Text>
         </Wrapper>
     )
