@@ -15,36 +15,51 @@ const StyledInputField = styled('input', {
     letterSpacing: '0.05rem',
 });
 
-const BasicInputField = styled(StyledInputField, {
-    padding: '0.5rem 1rem'
-})
+const BasicInputField = styled(StyledInputField, ({$error}) => ({
+    padding: '0.5rem 1rem',
+    border: $error? `2px solid ${THEME.colors.error}` : 1,
+}))
 
-const UnderlineInputField = styled(StyledInputField, {
+const UnderlineInputField = styled(StyledInputField, ({$error}) => ({
     paddingLeft: '2rem',
     border: 0,
     outline: 0,
     background: 'transparent',
-    borderBottom: '1px solid black',
-});
+    borderBottom: $error? `2px solid ${THEME.colors.error}` :'1px solid black',
+}));
 
-const BoxInputField = styled(StyledInputField, {
+const BoxInputField = styled(StyledInputField, ({$error}) => ({
     padding: '0.75rem 1rem',
-    border: 1,
+    border: $error? `2px solid ${THEME.colors.error}` : 1,
     outline: 0,
     background: 'transparent',
-});
+}));
+
+const Required = styled('span', {
+    color: THEME.colors.contrast[0],
+    fontSize: THEME.fontSizes.large,
+    fontWeight: 700
+})
 
 //Error handling in here
 
-const InputField = ( {type, name, label, styling, margin, handleChange, ...rest} ) => (
+const InputField = ( {type, name, label, styling, margin, isRequired, handleChange, error, ...rest} ) => (
     <Wrapper $margin = {margin}>
         {styling === 'underline' &&
             <>
-                {label && <label for = {name}>{label}</label>}
+                {label &&
+                    <label for = {name}> 
+                        {label} 
+                        {isRequired&& 
+                            <Required> * </Required>
+                        }
+                    </label>
+                }
                 <UnderlineInputField
                     type = {type}
                     name = {name} 
                     id = {name}
+                    $error = {error}
                     onChange = {handleChange}
                     {...rest}
                 />
@@ -52,11 +67,19 @@ const InputField = ( {type, name, label, styling, margin, handleChange, ...rest}
         }
         {styling === "box" && 
             <>
-                {label && <label for = {name}>{label}</label>}
+                {label &&
+                    <label for = {name}> 
+                        {label} 
+                        {isRequired&& 
+                            <Required> * </Required>
+                        }
+                    </label>
+                }
                 <BoxInputField
                     type = {type}
                     name = {name} 
                     id = {name}
+                    $error = {error}
                     onChange = {handleChange}
                     {...rest}
                 />
@@ -64,11 +87,19 @@ const InputField = ( {type, name, label, styling, margin, handleChange, ...rest}
         }
         {styling === "basic" && 
             <>
-                {label && <label for = {name}>{label}</label>}
+                {label &&
+                    <label for = {name}> 
+                        {label} 
+                        {isRequired&& 
+                            <Required> * </Required> 
+                        }
+                    </label>
+                }
                 <BasicInputField
                     type = {type}
                     name = {name} 
                     id = {name}
+                    $error = {error}
                     onChange = {handleChange}
                     {...rest}
                 />
