@@ -11,7 +11,7 @@ import AuthenticationContext from '../contexts/authentication/context';
 import Hero from './../components/Hero';
 import RecipeWheel from './../components/RecipeWheel';
 //Default image
-import defaultImage from '../assets/images/defaultImg.png';
+import defaultImage from '../assets/images/defaultImg2.png';
 
 const Avatar = styled('div', ({$avatar}) => ({
     width: '200px',

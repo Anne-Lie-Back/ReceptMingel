@@ -2,7 +2,7 @@ import { styled } from 'styletron-react';
 import THEME from '../../config/theme';
 import media from '../../config/media';
 //default image
-import defaultImage from '../../assets/images/defaultImg2';
+import defaultImage from '../../assets/images/defaultImg2.png';
 
 const TopGridWrapper = styled('div', {
     display: 'grid',
