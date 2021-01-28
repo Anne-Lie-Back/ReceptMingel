@@ -71,7 +71,12 @@ const InputField = styled('input', {
             fontSize: THEME.fontSizes.normal,
         },
     },
-})
+});
+
+const Required = styled('span', {
+    color: THEME.colors.contrast[0],
+    fontSize: THEME.fontSizes.large
+});
 
 const IngredientsInput = ({inputValues, updateInputValues}) => {
     const [newIngredient, setNewIngredient] = useState(null);
@@ -132,7 +137,7 @@ const IngredientsInput = ({inputValues, updateInputValues}) => {
 
     return(
         <Wrapper>
-            <Label>Ingredienser:</Label>
+            <Label>Ingredienser <Required> * </Required> </Label>
             <List>      
                 {inputValues.ingredients.map((ingredient, index)=> (
                         <TextListItem 

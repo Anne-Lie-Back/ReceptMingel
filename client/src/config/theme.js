@@ -2,10 +2,10 @@ const THEME = {
     colors: {
         white: ['#ffffff'],
         black: ['#000000'],
-        grey: ['#E5E5E5'],
+        grey: ['#E5E5E5', '#DEDEDE' ,'#BABABA'],
         primary: ['#416788', '#DEEFFF'],
         secondary: ['#AEE2A2', '#8EBA84', '#769C6D'], 
-        contrast: ['#FA824C'],
+        contrast: ['#FA824C', '#FFB594'],
         error: 'red'
     },
 

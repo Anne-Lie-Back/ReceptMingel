@@ -45,7 +45,7 @@ const RecipeSchema = new Schema(
         }],
         mdsaCategories: [{
             type: String,
-            required: true,
+            required: false,
             text: true,
         }],
         authorId: {
