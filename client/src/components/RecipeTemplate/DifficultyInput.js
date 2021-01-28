@@ -13,7 +13,7 @@ const DifficultyInput = ({inputValues, setInputValues}) => {
             ...inputValues,
             difficulty: value,
         });
-    }
+    };
 
     return(
     <Wrapper>

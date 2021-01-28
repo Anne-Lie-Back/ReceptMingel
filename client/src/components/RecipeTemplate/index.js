@@ -343,7 +343,7 @@ const RecipeTemplate = ({ setIsEdit, isEdit, setIsAdd, isAdd, inputValues, setIn
                     </FlexRowEffort>
                     <FlexRowEffort>
                         <Label htmlFor = "CookingTime"> Tidsåtgång: </Label>
-                        <CookingTimeInput handleChange = {handleChange} cookingTime = {inputValues.cookingTime}/>
+                        <CookingTimeInput inputValues = {inputValues} setInputValues = {setInputValues}/>
                     </FlexRowEffort>
                 </EffortWrapper>
 

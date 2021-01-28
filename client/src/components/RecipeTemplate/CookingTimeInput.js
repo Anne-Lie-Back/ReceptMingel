@@ -5,7 +5,18 @@ const Wrapper = styled('div', {
     margin: '0.5rem 0'
 });
 
-const CookingTimeInput = ({handleChange, cookingTime}) => (
+const CookingTimeInput = ({inputValues, setInputValues}) => {
+
+    const handleChange =(event) => {
+        let value = event.target.value
+        setInputValues({
+            ...inputValues,
+            cookingTime: value,
+        });
+        console.log('value', value)
+    };
+
+    return(
     <Wrapper>
         <select 
             name="cookingTime" 
@@ -27,6 +38,6 @@ const CookingTimeInput = ({handleChange, cookingTime}) => (
             <option value="+2:00h">+2:00h</option>
         </select>
     </Wrapper>
-);
+)};
 
 export default CookingTimeInput;
