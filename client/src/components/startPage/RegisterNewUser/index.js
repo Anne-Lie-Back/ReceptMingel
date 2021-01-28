@@ -135,7 +135,7 @@ const RegisterNewUser = ({handleClick}) => {
     });
 
     //stores file-data that goes up to image-bucket at server
-    const [file, setFile] = useState(null);
+    const [file, setFile] = useState(undefined);
 
     const [imageOK, setImageOK] = useState({
         isError: false,

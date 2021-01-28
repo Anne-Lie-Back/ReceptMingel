@@ -50,9 +50,7 @@ const SearchView = () => {
     const [searchInput, setSearchInput] = useState('');
     const [searchResult, setSearchResult] = useState([]);
     const [recipe, setRecipe] = useState(null);
-    const {getSessionUser, user} = useContext(AuthenticationContext);
     let history = useHistory();
-    let slug = useParams();
 
     //Search through database and get a list of results ordered by hitscore in return.
     const getSearchResult = async(query) => {
@@ -62,16 +60,6 @@ const SearchView = () => {
             setSearchResult(res.data)
         });
     };
-
-    //When component mounts or Recipe is updated it gets an updated version of the search result 
-    //(Needed if a user favourites or unfavourites an recipe)
-    useEffect(() => {
-        getSessionUser(user._id)
-        if(slug) {
-            getRecipeById(slug)
-        }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[recipe]);
 
     const getRecipeById = async(id) => {
         try{

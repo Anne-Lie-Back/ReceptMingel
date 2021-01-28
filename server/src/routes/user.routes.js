@@ -68,7 +68,7 @@ router.post('/session/login', loginUser, (req, res) => {
 
 //LOGOUT USER
 //TODO isAuthenticated
-router.delete('/session/logout', isAuthenticated, logoutUser, (req, res) => {
+router.delete('/session/logout', logoutUser, (req, res) => {
     res.status(200).json({message: "session deleted"})
 })
 
