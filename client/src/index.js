@@ -7,6 +7,7 @@ import {Provider as StyletronProvider} from "styletron-react";
 import {Client as Styletron} from "styletron-engine-atomic"
 import ApplicationContextProvider from './contexts';
 
+//Sets up Styletron for the whole application
 const engine = new Styletron({
   hydrate: document.getElementsByClassName("_styletron_hydrate_")
 });

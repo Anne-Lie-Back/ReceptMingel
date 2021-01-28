@@ -40,7 +40,7 @@ const InputField = ( {type, name, label, styling, margin, handleChange, ...rest}
     <Wrapper $margin = {margin}>
         {styling === 'underline' &&
             <>
-                {label && <label for = {name}>{label}</label>}
+                {label && <label htmlFor = {name}>{label}</label>}
                 <UnderlineInputField
                     type = {type}
                     name = {name} 
@@ -52,7 +52,7 @@ const InputField = ( {type, name, label, styling, margin, handleChange, ...rest}
         }
         {styling === "box" && 
             <>
-                {label && <label for = {name}>{label}</label>}
+                {label && <label htmlFor = {name}>{label}</label>}
                 <BoxInputField
                     type = {type}
                     name = {name} 
@@ -64,7 +64,7 @@ const InputField = ( {type, name, label, styling, margin, handleChange, ...rest}
         }
         {styling === "basic" && 
             <>
-                {label && <label for = {name}>{label}</label>}
+                {label && <label htmlFor= {name}>{label}</label>}
                 <BasicInputField
                     type = {type}
                     name = {name} 

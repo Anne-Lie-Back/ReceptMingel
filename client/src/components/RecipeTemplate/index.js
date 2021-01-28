@@ -338,11 +338,11 @@ const RecipeTemplate = ({ setIsEdit, isEdit, setIsAdd, isAdd, inputValues, setIn
 
                 <EffortWrapper>
                     <FlexRowEffort>
-                        <Label for = "difficulty" > Svårighetsgrad: </Label>
+                        <Label htmlFor = "difficulty" > Svårighetsgrad: </Label>
                         <DifficultyInput handleChange = {handleChange} difficulty = {inputValues.difficulty}/>
                     </FlexRowEffort>
                     <FlexRowEffort>
-                        <Label for = "CookingTime"> Tidsåtgång: </Label>
+                        <Label htmlFor = "CookingTime"> Tidsåtgång: </Label>
                         <CookingTimeInput handleChange = {handleChange} cookingTime = {inputValues.cookingTime}/>
                     </FlexRowEffort>
                 </EffortWrapper>
