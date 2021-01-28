@@ -74,27 +74,16 @@ const getRecipesByAuthorId = (req, res, next) => {
     });
 }; 
 
+//GETS RECIPES THROUGH A FUZZY SEARCH
 const searchRecipe = async(req, res, next) => {
     try{
         const result = await Recipe.fuzzySearch(req.params.term)
-        
-/*         if(error) next(error);
-        if(!result || result.length === 0) throw new ErrorHandler(404, "Vi kunde inte hitta någragit  recept"); */
+
         res.result = result.filter(i => i.isShared === true);
         next()
     }catch(error){
         console.error(error)
     }
-    /* Recipe.find({$text: {$search: req.params.term}}, (error, result) => {
-        try{
-            if(error) next(error);
-            if(!result || result.length === 0) throw new ErrorHandler(404, "Vi kunde inte hitta några recept");
-            res.result = result
-            next()
-        }catch(error){
-            next(error);
-        };
-    }); */
 }
 
 
@@ -141,13 +130,13 @@ const deleteRecipe = (req, res, next) => {
 };
 
 module.exports = {
-    searchRecipe,
+    createRecipe,
+    deleteRecipe,
     getAllRecipes,
     getRecipeByID,
-    getRecipesByIsPublic,
-    getRecipesByIsPrivate,
     getRecipesByAuthorId,
-    createRecipe,
+    getRecipesByIsPrivate,
+    getRecipesByIsPublic,
+    searchRecipe,
     updateRecipe,
-    deleteRecipe
 };
