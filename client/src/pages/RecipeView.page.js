@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import {Helmet} from "react-helmet";
 import { styled } from 'styletron-react';
 import { Icon } from "@iconify/react";
 import THEME from '../config/theme';
@@ -135,6 +136,10 @@ const RecipeViewPage = () => {
 
     return(
         <> 
+            <Helmet>
+                <title>ReceptMingel - Mina recept</title>
+                <meta name="Här kan du skapa och jobba på dina recept När de är klara trycker du bara på dela-knappen för att ge de andra Minglarna åtkomst till ditt recept."/>
+            </Helmet>
             <Hero 
                 title = 'Mina Recept' 
                 icon = {roundRestaurantMenu} 

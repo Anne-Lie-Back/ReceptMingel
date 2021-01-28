@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from 'react'
+import {Helmet} from "react-helmet";
 
 import { styled } from 'styletron-react';
 import THEME from './../config/theme';
@@ -130,6 +131,10 @@ const UserPage = () => {
 
     return(
         <>
+            <Helmet>
+                <title>ReceptMingel - Användarsida</title>
+                <meta name="Det här är din användarsida. Här hittar du lite blandade recept du skapat eller sparat till ditt konto. Funktionaliteten på denna sidan  kommer att öka med tiden. Holl utkik efter spännande nya features."/>
+            </Helmet>
             <Hero>
                 <Avatar $avatar = {user.imageURL && user.imageURL} />
                 <DescWrapper>
