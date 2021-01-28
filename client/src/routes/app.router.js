@@ -29,6 +29,7 @@ const AppRouter = () => {
         <ProtectedRoute exact path = '/recipebook/:slug' component = {RecipeBookPage} />
         <ProtectedRoute exact path = '/recipe/' component = {RecipeViewPage} />
         <ProtectedRoute exact path = '/recipe/:slug' component = {RecipeViewPage} />
+        <Route render={() => <Redirect to="/" />} />
     </Switch>
 )};
 
