@@ -5,6 +5,7 @@ import THEME from '../config/theme'
 import media from '../config/media';
 import RegisterNewUser from '../components/startPage/RegisterNewUser';
 import LogInUser from '../components/startPage/LogInUser';
+import Header from '../Header';
 import heroImage from '../assets/images/heroImage.jpg';
 
 const HeroWrapper = styled('div', ({$height}) =>  ({
@@ -69,6 +70,7 @@ const StartPage = () => {
             </Helmet>
             {isLoggIn?
                 <>
+                    <Header/>
                     <Headline>En samlingsplats för Amatörkockar</Headline>
                     <LogInUser handleClick = {() => setIsLoggedIn(false)}/>
                     <DescHeadline>

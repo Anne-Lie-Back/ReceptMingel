@@ -104,7 +104,7 @@ const RecipeBookView = () => {
                 height = "255px" 
                 bannerTitle = "Filter-resultat"
                 slug = {slug}
-                route = "/recipeBook/"
+                route = "/recipebook/"
             />
             <DecorativeLine/>
             {(recipe === null && !slug) ?

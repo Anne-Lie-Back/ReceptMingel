@@ -10,6 +10,7 @@ import SearchPage from '../pages/Search.page';
 import RecipeViewPage from '../pages/RecipeView.page';
 import RecipeBookPage from '../pages/RecipeBook.page';
 import UserPage from '../pages/User.page';
+import Header from '../Header';
 
 const AppRouter = () => {
     const { isAuthenticated, isLoadingUser, user } = useContext(AuthenticationContext);
@@ -31,6 +32,7 @@ const AppRouter = () => {
         <ProtectedRoute exact path = '/recipe/:slug' component = {RecipeViewPage} />
         {/* If user enters a non-existing location-url they will be redirected to startPage */}
         <Route render={() => <Redirect to="/" />} />
+        <Route path={["/:slug", "*"]} component={Header} />
     </Switch>
 )};
 

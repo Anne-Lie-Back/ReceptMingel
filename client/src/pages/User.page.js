@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react'
 import {Helmet} from "react-helmet";
-
+import Header from '../Header';
 import { styled } from 'styletron-react';
 import THEME from './../config/theme';
 import media from './../config/media';
@@ -136,6 +136,7 @@ const UserPage = () => {
                 <title>ReceptMingel - Användarsida</title>
                 <meta name="Det här är din användarsida. Här hittar du lite blandade recept du skapat eller sparat till ditt konto. Funktionaliteten på denna sidan  kommer att öka med tiden. Holl utkik efter spännande nya features."/>
             </Helmet>
+            <Header/>
             <Hero>
                 <Avatar $avatar = {user?.imageURL && user.imageURL} />
                 <DescWrapper>

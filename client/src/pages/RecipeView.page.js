@@ -6,9 +6,9 @@ import { Icon } from "@iconify/react";
 import THEME from '../config/theme';
 import axios from '../axios';
 import Hero from '../components/Hero';
+import Header from '../Header';
 import roundRestaurantMenu from '@iconify/icons-ic/round-restaurant-menu';
 import roundMenu from '@iconify/icons-ic/round-menu';
-import GridContentWrapper from '../components/GridContentWrapper';
 import RecipeView from '../components/RecipeView';
 import RecipeTemplate from '../components/RecipeTemplate';
 import SideMenu from '../components/SideMenu';
@@ -143,6 +143,7 @@ const RecipeViewPage = () => {
                 <title>ReceptMingel - Mina recept</title>
                 <meta name="Här kan du skapa och jobba på dina recept När de är klara trycker du bara på dela-knappen för att ge de andra Minglarna åtkomst till ditt recept."/>
             </Helmet>
+            <Header/>
             <Hero 
                 title = 'Mina Recept' 
                 icon = {roundRestaurantMenu} 
@@ -162,7 +163,7 @@ const RecipeViewPage = () => {
                     {usersRecipes.length === 0 && isLoading ?
                         <>
                             {!isAdd? 
-                                <p>Skapa ditt första recept med knappen i sidomenyn</p> 
+                                <LoadingText>Skapa ditt första recept med knappen i sidomenyn</LoadingText> 
                                 :
                                 <RecipeTemplate 
                                     setIsEdit = {setIsEdit}

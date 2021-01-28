@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { styled } from 'styletron-react';
 import THEME from '../config/theme';
 import media from '../config/media';
@@ -29,9 +29,9 @@ const NavLink = styled(Link, {
   },
 })
 
-const StyledIcon = styled(Icon, {
+const StyledIcon = styled(Icon, ({$active}) => ({
   fontSize: '40px',
-  color: THEME.colors.white[0],
+  color: $active? THEME.colors.contrast[0] : THEME.colors.white[0],
   ':hover' : {
       color: THEME.colors.contrast[0]
   },
@@ -39,18 +39,21 @@ const StyledIcon = styled(Icon, {
   [media.above.tablet] : {
     fontSize: '45px',
   }
-});
+}));
 
-const UserIcon = styled(StyledIcon, {
+const UserIcon = styled(StyledIcon, ({$active}) => ({
   fontSize: '38px',
+  color: $active? THEME.colors.contrast[0] : THEME.colors.white[0],
 
   [media.above.tablet] : {
     fontSize: '40px',
   }
-})
+}))
 
 const MainNavbar = () => {
-  const { isAuthenticated, user, isLoadingUser} = useContext(AuthenticationContext);
+  const { isAuthenticated, user, isLoadingUser } = useContext(AuthenticationContext);
+  const { pathname } = useLocation();
+  let { slug } = useParams();
 
   return(
       <Wrapper>
@@ -59,16 +62,16 @@ const MainNavbar = () => {
           null : 
           <>
             <NavLink to = '/search'>
-              <StyledIcon icon={bxSearch}/>
+              <StyledIcon icon={bxSearch} $active = {pathname === "/search" || pathname === `/search/${slug}` ? true: false}/>
             </NavLink>
             <NavLink to = '/recipe'>
-              <StyledIcon icon={roundRestaurantMenu}/>
+              <StyledIcon icon={roundRestaurantMenu } $active = {pathname === "/recipe" || pathname === `/recipe/${slug}` ? true: false}/>
             </NavLink>
             <NavLink to = '/recipebook'>
-              <StyledIcon icon={bxBookReader}/>
+              <StyledIcon icon={bxBookReader} $active = {pathname === "/recipebook" || pathname === `/recipebook/${slug}` ? true: false}/>
             </NavLink>
             <NavLink to={user._id && `/user/${user._id}`}>
-              <UserIcon icon={userAvatarFilledAlt}/>
+              <UserIcon icon={userAvatarFilledAlt} $active = {pathname === `/user/${user._id}`}/>
             </NavLink>
           </>
         }

@@ -63,15 +63,16 @@ const FilterInput = styled(InputField, {
     fontSize: THEME.fontSizes.small,
 });
 
-const TypeIsRecipe = ({recipeList, setIsAdd, setIsEdit, searchResults, handleChange}) => {
+const TypeIsRecipe = ({recipeList, setIsAdd, setIsEdit, setIsOpen, searchResults, handleChange}) => {
     // eslint-disable-next-line no-unused-vars
     let history = useHistory()
     let slug = useParams()
 
     const handleAddClick = () => {
         setIsAdd(true)
-        if(!slug) history.push(`/recipeBook/`)
+        if(!slug) history.push(`/recipe/`)
         setIsEdit(false)
+        setIsOpen()
     };
 
     const handleMenuClick = () => {
