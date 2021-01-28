@@ -6,7 +6,7 @@ import media from '../../../config/media';
 import InputField from '../../inputField';
 import AuthenticationContext from '../../../contexts/authentication/context';
 
-const Wrapper = styled('div', {
+const Wrapper = styled('form', {
     display: 'grid',
     gridTemplateColumns: '1fr',
     gridTemplateRows: '1fr 1fr 1fr 1fr',

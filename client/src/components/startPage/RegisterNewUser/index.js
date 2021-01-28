@@ -8,7 +8,7 @@ import Icons from '../../../config/icons';
 
 import InputField from '../../inputField';
 
-const Wrapper = styled('div', {
+const Wrapper = styled('form', {
     display: 'flex',
     flexDirection: 'column',
     width: '300px',

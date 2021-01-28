@@ -10,14 +10,15 @@ import AuthenticationContext from '../contexts/authentication/context';
 
 import Hero from './../components/Hero';
 import RecipeWheel from './../components/RecipeWheel';
-import imageTest from '../assets/images/imageTest.png';
+//Default image
+import defaultImage from '../assets/images/defaultImg.png';
 
 const Avatar = styled('div', ({$avatar}) => ({
     width: '200px',
     height: '200px',
     margin: '10rem 0 0 0',
     borderRadius: '50%',
-    backgroundImage: $avatar ? `url(${$avatar})`:`url(${imageTest})`,
+    backgroundImage: $avatar ? `url(${$avatar})`:`url(${defaultImage})`,
     backgroundPosition: 'center',
     backgroundRepeat:' no-repeat',
     backgroundSize: 'cover',
@@ -136,7 +137,7 @@ const UserPage = () => {
                 <meta name="Det här är din användarsida. Här hittar du lite blandade recept du skapat eller sparat till ditt konto. Funktionaliteten på denna sidan  kommer att öka med tiden. Holl utkik efter spännande nya features."/>
             </Helmet>
             <Hero>
-                <Avatar $avatar = {user.imageURL && user.imageURL} />
+                <Avatar $avatar = {user?.imageURL && user.imageURL} />
                 <DescWrapper>
                     {user.userInfo}
                     <FlexRow>
