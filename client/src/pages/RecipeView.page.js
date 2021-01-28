@@ -68,11 +68,7 @@ const RecipeViewPage = () => {
         author: user.username,
         isShared: isEdit? recipe.isShared : false
     });
-    
-    
-
-    console.log('user.recipeBook', user.recipeBook)
-
+  
     //For getting ID to recipe so we can get it and display it
     let { slug } = useParams();
 
@@ -95,8 +91,6 @@ const RecipeViewPage = () => {
         window.scrollTo(0, 0)
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
-
-    console.log('usersRecipe', usersRecipes)
 
     //Gets correct recipe from db by using url-slug and sets loading to false when fetching is done
     // so we know data isn't null on rendering

@@ -295,7 +295,6 @@ const RegisterNewUser = ({handleClick}) => {
                 
                 <Button $unactive = {validationHandler()} disabled = {validationHandler()} onClick = {handleSubmit}>Register</Button>
                 <ErrorMessage>{loginError.message}</ErrorMessage>
-                {console.log('message', loginError.message)}
                 <Text onClick = {handleClick}>Redan registrerad? Logga in här</Text>
         </Wrapper>
     )

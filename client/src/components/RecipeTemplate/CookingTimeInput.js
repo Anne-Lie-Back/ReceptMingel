@@ -13,7 +13,6 @@ const CookingTimeInput = ({inputValues, setInputValues}) => {
             ...inputValues,
             cookingTime: value,
         });
-        console.log('value', value)
     };
 
     return(
