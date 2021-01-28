@@ -2,7 +2,7 @@ import { styled } from 'styletron-react';
 import PartingStrip from '../PartingStrip';
 import THEME from '../../config/theme';
 import media from '../../config/media';
-import defaultImage from '../../assets/images/defaultImage2.png';
+import defaultImage from '../../assets/images/defaultImg2.png';
 
 const Wrapper = styled('div', {
     width: '100%',
