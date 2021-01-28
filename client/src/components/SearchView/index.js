@@ -1,10 +1,9 @@
-import {useContext, useEffect, useState} from 'react';
-import {useHistory, useParams} from 'react-router-dom';
+import {useState} from 'react';
+import {useHistory} from 'react-router-dom';
 import { styled } from 'styletron-react';
 import THEME from '../../config/theme';
 import axios from '../../axios';
 import media from '../../config/media';
-import AuthenticationContext from '../../contexts/authentication/context';
 import SearchInputArea from './SearchInputArea';
 import ResultCard from './ResultCard';
 import PartingStrip from '../PartingStrip';

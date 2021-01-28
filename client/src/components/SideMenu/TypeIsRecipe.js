@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useHistory, Link, useParams } from 'react-router-dom';
 import { styled } from 'styletron-react';
 import THEME from '../../config/theme';
