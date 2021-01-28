@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 
 import { styled } from 'styletron-react';
 import THEME from '../../config/theme';
+import media from '../../config/media';
 
 import axios from '../../axios';
 import AuthenticationContext from '../../contexts/authentication/context';
@@ -33,9 +34,17 @@ const DecorativeLine = styled('div', {
 
 const LoadingText = styled('p', {
     height: '800px',
-    padding: '1rem 2rem',
+    padding: '2rem 3rem',
     fontFamily: THEME.fonts.text,
-    fontSize: THEME.fontSizes.large,
+    fontSize: THEME.fontSizes.normal,
+
+    [media.above.mobil] : {
+        fontSize: THEME.fontSizes.large,
+    },
+    [media.above.tablet] : {
+        padding: '3rem 5rem',
+        fontSize: THEME.fontSizes.smallHeader,
+    }
 })
 
 const RecipeBookView = () => {
@@ -99,7 +108,7 @@ const RecipeBookView = () => {
             />
             <DecorativeLine/>
             {(recipe === null && !slug) ?
-                <LoadingText>Hoppas du hittar något smaskigt i din receptbok</LoadingText>
+                <LoadingText>Hoppas du hittar något smaskigt i din receptbok.</LoadingText>
                 :
                 <>
                     {isLoading? 

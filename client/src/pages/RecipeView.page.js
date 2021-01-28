@@ -38,10 +38,12 @@ const MenuIcon = styled(Icon, {
 });
 
 const LoadingText = styled('p', {
+    width: '100%',
     height: '900px',
-    padding: '1rem 2rem',
+    padding: '2rem 2rem',
     fontFamily: THEME.fonts.text,
-    fontSize: THEME.fontSizes.large,
+    fontSize: THEME.fontSizes.smallHeader,
+    textAlign: 'center'
 })
 
 const RecipeViewPage = () => {

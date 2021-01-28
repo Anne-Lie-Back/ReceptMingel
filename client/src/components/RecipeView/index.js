@@ -24,6 +24,7 @@ const Wrapper = styled('div', {
     display: 'flex',
     justifyContent: 'center',
     width: '100%',
+    minHeight: '1000px',
     margin: '3rem 0',
 });
 
@@ -45,10 +46,17 @@ const SpaceBetweenWrapper = styled('div', {
 const HeadlineSmall = styled ('h4', {
     fontFamily: THEME.fonts.text,
     color: THEME.colors.black[0],
-    fontSize: THEME.fontSizes.normal,
+    fontSize: THEME.fontSizes.Xsmall,
     fontWeight: 500,
     letterSpacing: '0.05rem',
-    textTransform: 'uppercase'
+    textTransform: 'uppercase',
+
+    [media.above.XSmobile] : {
+        fontSize: THEME.fontSizes.small,
+    },
+    [media.above.tablet] : {
+        fontSize: THEME.fontSizes.normal,
+    }
 });
 
 const RecipeWrapper = styled('div', {
@@ -267,22 +275,26 @@ const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, ge
                 <PartingStrip width = '100%'/>
                 {(!slug && view === "RecipeView") &&
                     <HeadlineSmall $style = {{marginTop: '0.5rem', fontSize: THEME.fontSizes.small}}> 
-                        Ditt senast skapade recept: 
+                        Du hittar dina recept i menyn till vänster.
                     </HeadlineSmall>
                 }
-                <TopSection 
-                    title = {title} 
-                    description = {preambleHTML} 
-                    image = {imageURL} 
-                    difficulty = {difficulty} 
-                    cookingTime = {cookingTime}
-                />
-                <PartingStrip width = '100%'/>
-                <IngredientSection portions = {portions} ingredients = {ingredients}/>
-                <PartingStrip width = "200px" />
-                <CookingStepsSection cookingSteps = {cookingSteps}/>
-                <PartingStrip width = "100%" />
-                <BottomSection categories = {mdsaCategories} author = {author}/>
+                {slug &&
+                    <>
+                        <TopSection 
+                            title = {title} 
+                            description = {preambleHTML} 
+                            image = {imageURL} 
+                            difficulty = {difficulty} 
+                            cookingTime = {cookingTime}
+                        />
+                        <PartingStrip width = '100%'/>
+                        <IngredientSection portions = {portions} ingredients = {ingredients}/>
+                        <PartingStrip width = "200px" />
+                        <CookingStepsSection cookingSteps = {cookingSteps}/>
+                        <PartingStrip width = "100%" />
+                        <BottomSection categories = {mdsaCategories} author = {author}/>
+                    </>
+                }
             </RecipeWrapper>
 }
         </Wrapper>
