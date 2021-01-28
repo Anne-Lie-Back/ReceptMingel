@@ -53,7 +53,7 @@ const writeSingleImage = (req, res, next) => {
   upload(req, res, (error) => {
     try {
       if (error) next(error)
-      if (!req.file.id) throw new ErrorHandler(500, "Couldn't save the image")
+      if (!req.file.id) throw new ErrorHandler(500, "Bilden är för stor")
       res.id = req.file.id;
       next();
     } catch (error) {

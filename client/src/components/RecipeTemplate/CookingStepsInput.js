@@ -71,6 +71,11 @@ const StyledInput = styled('input', {
     }
 });
 
+const Required = styled('span', {
+    color: THEME.colors.contrast[0],
+    fontSize: THEME.fontSizes.large
+});
+
 const CookingStepsInput = ({inputValues, updateInputValues}) => {
     const [newStep, setNewStep] = useState('');
     const [editInput, setEditedInput] = useState('');
@@ -131,7 +136,7 @@ const CookingStepsInput = ({inputValues, updateInputValues}) => {
 
     return(
         <Wrapper>
-            <Label>Steg för steg-instruktioner:</Label>
+            <Label>Steg för steg-instruktioner <Required> * </Required></Label>
             <List>      
                 {inputValues.cookingSteps.map((step, index) => (
                         <TextListItem 

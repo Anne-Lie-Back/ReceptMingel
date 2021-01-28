@@ -81,7 +81,7 @@ const CategoriesInput = ({inputValues, updateInputValues}) => {
     return(
         <Wrapper>
             <InputWrapper>
-                <Label>Kategorier:</Label>
+                <Label>Kategorier</Label>
                 <InputField 
                     type = "text" 
                     name = "mdsaCategories" 

@@ -83,13 +83,14 @@ const FileUploadWrapper = styled('div', {
     },
 });
 
-const FileUpload = styled('div', ({$preview}) => ({
+const FileUpload = styled('div', ({$error, $preview}) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
     height: '90%',
-    backgroundImage: $preview && `url(${$preview})`,
+    border: $error? THEME.colors.error : 'none',
+    backgroundImage: $preview? `url(${$preview})` : null,
     backgroundColor: THEME.colors.grey[0],
     backgroundPosition: 'center',
     backgroundRepeat:' no-repeat',
@@ -124,7 +125,7 @@ const FlexRowEffort = styled(FlexRow, {
     justifyContent: 'space-between',
 });
 
-const Button = styled('button', {
+const Button = styled('button', ({$unactive}) => ({
     width: '100%',
     padding: '0.5rem',
     margin: '2.5rem 0 1rem 0',
@@ -139,10 +140,20 @@ const Button = styled('button', {
     color: THEME.colors.white[0],
     letterSpacing: '0.05rem',
 
+    ':disabled' : {
+        backgroundColor: THEME.colors.contrast[1],
+        color: THEME.colors.white[0],
+    },
+
     ':hover': {
-        cursor:'pointer',
-        backgroundColor: THEME.colors.black[0]
+        cursor: $unactive? 'not-allowed' : 'pointer',
+        backgroundColor: $unactive? THEME.colors.contrast[1] : THEME.colors.black[0] 
     }
+}));
+
+const Required = styled('span', {
+    color: THEME.colors.contrast[0],
+    fontSize: THEME.fontSizes.large
 });
 
 const RecipeTemplate = ({ setIsEdit, isEdit, setIsAdd, isAdd, inputValues, setInputValues, getRecipeById, recipe, getRecipesByAuthor, slug }) => {
@@ -150,6 +161,10 @@ const RecipeTemplate = ({ setIsEdit, isEdit, setIsAdd, isAdd, inputValues, setIn
 
     //stores file-data that goes up to image-bucket at server
     const [file, setFile] = useState(null);
+    const [imageOK, setImageOK] = useState({
+        isError: false,
+        message: '' 
+    })
 
     let history = useHistory()
     const { ImageIcon } = Icons;
@@ -199,7 +214,20 @@ const RecipeTemplate = ({ setIsEdit, isEdit, setIsAdd, isAdd, inputValues, setIn
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[isEdit])
 
-    
+    const validateInput = () => {
+        const validation = 
+            inputValues?.title?.length > 0 && 
+            inputValues?.preambleHTML?.length > 0 &&
+            inputValues?.portions > 0 &&
+            inputValues?.ingredients?.length > 0 &&
+            inputValues?.cookingSteps?.length > 0 
+
+        if(!validation){
+            return true
+        }else{
+            return false
+        }
+    };
 
     //Listens after changes to file-state. If changed to not null, the image will be sent to the bucket and id 
     // set to inputValues.image to link correct image in bucket to user in database.
@@ -218,10 +246,11 @@ const RecipeTemplate = ({ setIsEdit, isEdit, setIsAdd, isAdd, inputValues, setIn
         .then((data) => {
             if (data && data.message === "success") {  
                 setInputValues((prev) => ({ ...prev, image: data.id }));
+                setImageOK(!imageOK.isError)
+            } else {
+                setImageOK({ isError: true, message: "För stor, max 500kb" })
             }
-        }
-
-        )
+          })
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [file]);
 
@@ -277,7 +306,7 @@ const RecipeTemplate = ({ setIsEdit, isEdit, setIsAdd, isAdd, inputValues, setIn
                         type = "text"  
                         name = "title"
                         value = {inputValues.title}
-                        placeholder = "Titel"
+                        placeholder = "Titel *"
                         styling = "underline"
                         $style = {{ 
                             fontWeight: 700, 
@@ -292,15 +321,16 @@ const RecipeTemplate = ({ setIsEdit, isEdit, setIsAdd, isAdd, inputValues, setIn
                     <FileUploadWrapper>
                         <label htmlFor="upload-image" style = {{height: '100%'}}>
                             <FileUpload
+                                $error = {imageOK.isError}
                                 $preview = {
-                                    (file && URL.createObjectURL(file)) ||
-                                    ((recipe && isEdit) && recipe.imageURL) ||
+                                    ((file && !imageOK.isError && URL.createObjectURL(file)) ||
+                                    ((recipe && isEdit) && recipe.imageURL)) ||
                                     null
                                 }
                             >
                                 {!file && <ImageIcon color = {THEME.colors.white[0]} size = "70px"/>}
                             </FileUpload>
-                        <p>{file && file.name }</p>
+                            <p style = {{textAlign: 'center'}}> {imageOK.isError?(imageOK.message) : (file && file.name )}</p>
                         </label>
                         <InputField 
                             type = "file" 
@@ -315,7 +345,7 @@ const RecipeTemplate = ({ setIsEdit, isEdit, setIsAdd, isAdd, inputValues, setIn
                     <InputField 
                         $as = "textarea" 
                         name = "preambleHTML" 
-                        placeholder = "Beskrivning"
+                        placeholder = "Beskrivning *"
                         value = {inputValues.preambleHTML}
                         rows="6" 
                         cols="80"  
@@ -338,11 +368,11 @@ const RecipeTemplate = ({ setIsEdit, isEdit, setIsAdd, isAdd, inputValues, setIn
 
                 <EffortWrapper>
                     <FlexRowEffort>
-                        <Label htmlFor = "difficulty" > Svårighetsgrad: </Label>
+                        <Label htmlFor = "difficulty" > Svårighetsgrad <Required> * </Required></Label>
                         <DifficultyInput inputValues = {inputValues} setInputValues = {setInputValues}/>
                     </FlexRowEffort>
                     <FlexRowEffort>
-                        <Label htmlFor = "CookingTime"> Tidsåtgång: </Label>
+                        <Label htmlFor = "CookingTime"> Tidsåtgång <Required> * </Required></Label>
                         <CookingTimeInput inputValues = {inputValues} setInputValues = {setInputValues}/>
                     </FlexRowEffort>
                 </EffortWrapper>
@@ -350,7 +380,7 @@ const RecipeTemplate = ({ setIsEdit, isEdit, setIsAdd, isAdd, inputValues, setIn
                 <CategoriesInput inputValues = {inputValues} updateInputValues = {setInputValues}/>
                 
                 <FlexRow $style = {{margin: '3.5rem 0 0.5rem 0'}}>
-                    <Label>Antal portioner: </Label>
+                    <Label>Antal portioner <Required> * </Required>  </Label>
                     <InputField 
                         type = "number" 
                         name = "portions" 
@@ -367,7 +397,12 @@ const RecipeTemplate = ({ setIsEdit, isEdit, setIsAdd, isAdd, inputValues, setIn
                 <PartingStrip width = "200px"/>
                 <CookingStepsInput inputValues = {inputValues} updateInputValues = {setInputValues}/>
                 <PartingStrip width = "200px"/>
-                <Button onClick = {handleSubmit}>Spara Recept</Button>
+                <Button 
+                    disabled = {validateInput()} 
+                    $unactive = {validateInput()}
+                    onClick = {handleSubmit}>
+                        Spara Recept
+                </Button>
             </FormWrapper>
         </Wrapper>
     )

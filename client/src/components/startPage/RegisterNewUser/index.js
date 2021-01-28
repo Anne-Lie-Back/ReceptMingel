@@ -38,7 +38,7 @@ const Wrapper = styled('form', {
     },
 });
 
-const Button = styled('button', {
+const Button = styled('button', ({$unactive}) =>({
     height: '40px',
     margin: '1rem 0',
     backgroundColor: THEME.colors.contrast[0],
@@ -52,11 +52,15 @@ const Button = styled('button', {
     color: THEME.colors.white[0],
     textTransform: 'uppercase',
 
+    ':disabled' : {
+        backgroundColor: THEME.colors.contrast[1],
+        color: THEME.colors.white[0],
+    },
     ':hover': {
-        cursor:'pointer',
-        backgroundColor:THEME.colors.black[0] 
+        cursor: $unactive? 'not-allowed' : 'pointer',
+        backgroundColor: $unactive? THEME.colors.contrast[1] : THEME.colors.black[0] 
     }
-});
+}));
 
 const Text = styled('p', {
     width: '100%',
@@ -79,14 +83,15 @@ const FileUploadWrapper = styled('div', {
     fontWeight: 400
 });
 
-const FileUpload = styled('div', ({$preview}) => ({
+const FileUpload = styled('div', ({$preview, $error}) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     width: '120px',
     height: '120px',
     borderRadius: '50%',
-    backgroundImage: $preview && `url(${$preview})`,
+    border: $error? THEME.colors.error : 'none',
+    backgroundImage: $preview? `url(${$preview})` : null,
     backgroundColor: THEME.colors.grey[0],
     backgroundPosition: 'center',
     backgroundRepeat:' no-repeat',
@@ -98,7 +103,23 @@ const FileUpload = styled('div', ({$preview}) => ({
     }
 }));
 
+const ErrorMessage = styled('p', {
+    width: '180px',
+    margin: '0 0 0.4rem 0',
+    fontFamily: THEME.fonts.text,
+    fontSize: THEME.fontSizes.small,
+    color: THEME.colors.error,
+    letterSpacing: '0.05rem',
+    fontWeight: 700,
+    textAlign: 'center',
+
+    [media.above.mobile] : {
+        width: '100%',
+    }
+})
+
 const RegisterNewUser = ({handleClick}) => {
+
     const [inputValues, setInputValues] = useState({
         username: '',
         password: '',
@@ -107,14 +128,22 @@ const RegisterNewUser = ({handleClick}) => {
         image: '',
         userInfo: ''
     });
-
-    const {registerNewUser, user, isAuthenticated} = useContext(AuthenticationContext);
-    //stores file-data that goes up to image-bucket at server
-    const [file, setFile] = useState(null);
+    
     const [loginError, setLoginError] = useState({
         isOk: true,
         message: ''
     });
+
+    //stores file-data that goes up to image-bucket at server
+    const [file, setFile] = useState(null);
+
+    const [imageOK, setImageOK] = useState({
+        isError: false,
+        message: '' 
+    })
+
+    const {registerNewUser, user, isAuthenticated} = useContext(AuthenticationContext);
+
     const history = useHistory();
 
     const { ImageIcon } = Icons;
@@ -126,6 +155,38 @@ const RegisterNewUser = ({handleClick}) => {
             ...inputValues,
             [name]: value,
         });
+    };
+
+    const validationHandler = () => {
+
+        const validate = 
+            inputValues.username.length >= 4 &&
+            inputValues.password.length >= 4 &&
+            inputValues.firstName.length >= 2 &&
+            inputValues.lastName.length >= 2
+
+        if (validate) {
+            return false
+        } else {
+            return true
+        }
+    };
+
+    const handleSubmit = async () => {
+        //TODO remove when new is tested
+        await registerNewUser(inputValues);
+        if(!isAuthenticated){
+            setLoginError({
+                isOk: false,
+                message: "Användarnamn upptaget"
+            });
+        } else {
+            setLoginError({
+                isOk: true,
+                message: ""
+            });
+            history.push(`/user/${user._id}`); 
+        }; 
     };
 
     //Listens after changes to file-state. If changed to not null, the image will be sent to the bucket and id 
@@ -141,89 +202,61 @@ const RegisterNewUser = ({handleClick}) => {
             credentials: "include",
             body: formData, 
         })
-          .then((res) => res.json())
-          .then((data) => {
+        .then((res) => res.json())
+        .then((data) => {
             if (data && data.message === "success") {  
-              setInputValues((prev) => ({ ...prev, image: data.id }));
+                console.log('data.message', data.message)
+                setInputValues((prev) => ({ ...prev, image: data.id }));
+                setImageOK(!imageOK.isError)
+            } else {
+                setImageOK({ isError: true, message: "För stor, max 500kb" })
             }
-          })
+        })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [file]);
-
-    const handleSubmit = async () => {
-        await registerNewUser(inputValues);
-        if(!isAuthenticated){
-            setLoginError({
-                isOk: false,
-                message: "Kunde inte skapa en ny användare"
-            });
-        } else {
-            setLoginError({
-                isOk: true,
-                message: ""
-            });
-            history.push(`/user/${user._id}`); 
-        };
-    };
-
-    //TODO remove later when sure everything is still working
-    //sends inputvalues to db
-    /* const handleSubmit = (event) => {
-        event.preventDefault();
-        fetch('http://localhost:8080/api/users/', {
-            method: 'POST',
-            credentials: "include",
-            headers: {
-                "Content-Type" : "application/json"
-            },
-            body: JSON.stringify(inputValues)
-        })
-        .then((res) => {
-            //if response is good the user will be redirected to their userpage
-            if(res.ok) history.push('/user');
-            res.json()
-        })
-        .catch((error) => {
-            console.log('error', error);
-        })
-    }; */
 
     return(
         <Wrapper>
                 <InputField 
                     type = "text"  
                     name = "username" 
-                    label = "Användarnamn (unikt):"
+                    label = "Användarnamn (unikt)"
                     styling = "basic"
                     margin = "0 0 0.5rem 0"
+                    isRequired = {true}
                     handleChange = {handleChange}
                 />
 
                 <InputField 
                     type = "password" 
                     name = "password" 
-                    label = "Lösenord:"
+                    label = "Lösenord (minst 4 tecken)"
                     styling = "basic"
                     margin = "0.5rem 0"
+                    isRequired = {true}
                     handleChange = {handleChange}
                 />
                 
                 <InputField 
                     type = "text" 
                     name = "firstName" 
-                    label = "Förnamn:"
+                    label = "Förnamn"
                     styling = "basic"
                     margin = "0.5rem 0"
+                    isRequired = {true}
                     handleChange = {handleChange}
                 />
 
                 <InputField 
                     type = "text"  
                     name = "lastName" 
-                    label = "Efternamn:" 
+                    label = "Efternamn" 
                     styling = "basic"
                     margin = "0.5rem 0"
+                    isRequired = {true}
                     handleChange = {handleChange}
                 />
+
                 <InputField 
                     $as = "textarea" 
                     name = "userInfo" 
@@ -238,13 +271,16 @@ const RegisterNewUser = ({handleClick}) => {
                 <FileUploadWrapper>
                         <label htmlFor="upload-image" style = {{height: '100%'}}>
                             <FileUpload
+                                $error = {imageOK.isError}
                                  $preview = {
-                                    file && URL.createObjectURL(file)
+                                    file && !imageOK.isError && URL.createObjectURL(file)
                                 }
                             >
                                 {!file && <ImageIcon color = {THEME.colors.white[0]} size = "70px"/>}
                             </FileUpload>
-                        <p style = {{textAlign: 'center'}}>{file && file.name }</p>
+                        
+                        <p style = {{textAlign: 'center'}}> {imageOK.isError?(imageOK.message) : (file && file.name )}</p>
+
                         </label>
                         <InputField 
                             type = "file" 
@@ -257,7 +293,9 @@ const RegisterNewUser = ({handleClick}) => {
                         />
                     </FileUploadWrapper>
                 
-                <Button onClick = {handleSubmit}>Register</Button>
+                <Button $unactive = {validationHandler()} disabled = {validationHandler()} onClick = {handleSubmit}>Register</Button>
+                <ErrorMessage>{loginError.message}</ErrorMessage>
+                {console.log('message', loginError.message)}
                 <Text onClick = {handleClick}>Redan registrerad? Logga in här</Text>
         </Wrapper>
     )
