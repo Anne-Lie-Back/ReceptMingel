@@ -32,6 +32,7 @@ const DecorativeLine = styled('div', {
 });
 
 const LoadingText = styled('p', {
+    height: '800px',
     padding: '1rem 2rem',
     fontFamily: THEME.fonts.text,
     fontSize: THEME.fontSizes.large,

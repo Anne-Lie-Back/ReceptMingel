@@ -37,6 +37,13 @@ const MenuIcon = styled(Icon, {
     }
 });
 
+const LoadingText = styled('p', {
+    height: '900px',
+    padding: '1rem 2rem',
+    fontFamily: THEME.fonts.text,
+    fontSize: THEME.fontSizes.large,
+})
+
 const RecipeViewPage = () => {
     const {user} = useContext(AuthenticationContext);
     const [isEdit, setIsEdit] = useState(false);
@@ -48,9 +55,9 @@ const RecipeViewPage = () => {
     const [usersRecipes, setUsersRecipes] = useState([]);
     const [recipe, setRecipe] = useState(null);
     const [inputValues, setInputValues] = useState({
-        title: null,
+        title: '',
         preambleHTML: '',
-        image: null,
+        image: '',
         portions: 0,
         cookingTime: '0-15min',
         difficulty: 'lätt',
@@ -180,7 +187,7 @@ const RecipeViewPage = () => {
                         <>
                             {/* If loading of data isn't done yet, user will se a loading-text, 
                             else we will check if user wants to edit/add a recipe or not and show correct view */}
-                            {isLoading? <p>is Loading...</p> :   
+                            {isLoading? <LoadingText>Bakar Recept...</LoadingText> :   
                                 <>
                                     {isEdit || isAdd? 
                                         <RecipeTemplate 

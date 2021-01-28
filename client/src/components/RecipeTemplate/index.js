@@ -184,7 +184,7 @@ const RecipeTemplate = ({ setIsEdit, isEdit, setIsAdd, isAdd, inputValues, setIn
             setInputValues({
                 title: '',
                 preambleHTML: '',
-                image: null,
+                image: '',
                 portions: 0,
                 cookingTime: '0-15min',
                 difficulty: 'lätt',
@@ -339,7 +339,7 @@ const RecipeTemplate = ({ setIsEdit, isEdit, setIsAdd, isAdd, inputValues, setIn
                 <EffortWrapper>
                     <FlexRowEffort>
                         <Label htmlFor = "difficulty" > Svårighetsgrad: </Label>
-                        <DifficultyInput handleChange = {handleChange} difficulty = {inputValues.difficulty}/>
+                        <DifficultyInput inputValues = {inputValues} setInputValues = {setInputValues}/>
                     </FlexRowEffort>
                     <FlexRowEffort>
                         <Label htmlFor = "CookingTime"> Tidsåtgång: </Label>

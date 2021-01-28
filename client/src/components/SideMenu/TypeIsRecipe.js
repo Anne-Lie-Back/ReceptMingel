@@ -102,9 +102,8 @@ const TypeIsRecipe = ({recipeList, setIsAdd, setIsEdit, searchResults, handleCha
                 :
                     <>
                         {recipeList.map((item, index) => (
-                            <StyledLink to = {`/recipe/${item._id}`}>
+                            <StyledLink key = {index}  to = {`/recipe/${item._id}`}>
                                 <ListItem 
-                                    key = {index} 
                                     onClick = {handleMenuClick}
                                 > 
                                     {item.title} 

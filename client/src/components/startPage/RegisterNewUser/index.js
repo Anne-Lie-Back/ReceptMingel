@@ -104,7 +104,7 @@ const RegisterNewUser = ({handleClick}) => {
         password: '',
         firstName: '',
         lastName: '',
-        image: null,
+        image: '',
         userInfo: ''
     });
 
