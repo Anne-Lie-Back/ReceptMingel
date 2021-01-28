@@ -93,8 +93,8 @@ const CategoriesInput = ({inputValues, updateInputValues}) => {
                 <StyledAddIcon icon = {addOutline} onClick = {handleAddingListItems}/>
             </InputWrapper>
             <InputValueArea>
-                {inputValues.mdsaCategories.map(category => (
-                        <ListItemCategories handleRemove = { () => handleListDeletion(category) }>
+                {inputValues.mdsaCategories.map((category, index) => (
+                        <ListItemCategories key = {index} handleRemove = { () => handleListDeletion(category) }>
                             {category}
                         </ListItemCategories>
                 ))}

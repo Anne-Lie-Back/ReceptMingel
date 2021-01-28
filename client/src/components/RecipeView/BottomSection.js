@@ -76,8 +76,8 @@ const CategoryBox = styled('div', {
 const BottomSection = ({categories, author}) => (
     <Wrapper>
         <CategoryContainer>
-                {categories.map(item => (
-                    <CategoryBox>{item}</CategoryBox>  
+                {categories.map((item, index) => (
+                    <CategoryBox key = {index}>{item}</CategoryBox>  
                 ))}
         </CategoryContainer>
         <FlexRow>
