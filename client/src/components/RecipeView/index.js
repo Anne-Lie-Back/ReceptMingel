@@ -125,22 +125,13 @@ const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, ge
     let history = useHistory();
 
     useEffect(() => {
-        if (view === "RecipeView") getRecipeById(recipe._id)
+        //if (view === "RecipeView") getRecipeById(recipe._id)
         if(view === "RecipeBook" || view === "SearchView"){
             const index = user.recipeBook.indexOf(recipe._id);
             index === -1? setIsStarred(false) : setIsStarred(true)
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
-
-    useEffect(() => {
-        if (view === "RecipeView") getRecipeById(recipe._id)
-        if(view === "RecipeBook" || view === "SearchView"){
-            const index = user.recipeBook.indexOf(recipe._id);
-            index === -1? setIsStarred(false) : setIsStarred(true)
-        }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [slug])
     
     //Patches recipe, gets the new recipe and changes icon
     const handlePatchRecipe = () => {
