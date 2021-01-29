@@ -83,13 +83,13 @@ const FileUploadWrapper = styled('div', {
     },
 });
 
-const FileUpload = styled('div', ({$error, $preview}) => ({
+const FileUpload = styled('div', ({$preview}) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
     height: '90%',
-    border: $error? THEME.colors.error : 'none',
+    border: `2px solid ${THEME.colors.contrast[0]}`,
     backgroundImage: $preview? `url(${$preview})` : null,
     backgroundColor: THEME.colors.grey[0],
     backgroundPosition: 'center',
@@ -220,7 +220,8 @@ const RecipeTemplate = ({ setIsEdit, isEdit, setIsAdd, isAdd, inputValues, setIn
             inputValues?.preambleHTML?.length > 0 &&
             inputValues?.portions > 0 &&
             inputValues?.ingredients?.length > 0 &&
-            inputValues?.cookingSteps?.length > 0 
+            inputValues?.cookingSteps?.length > 0 &&
+            inputValues.image !== null
 
         if(!validation){
             return true
