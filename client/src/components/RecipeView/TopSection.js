@@ -145,7 +145,6 @@ const EffortBox = styled('div', {
     marginLeft: '1rem',
     backgroundColor: THEME.colors.secondary[0],
     border: `1px solid ${THEME.colors.black[0]}`,
-    borderRadius: '5px',
     textTransform: 'uppercase'
 });
 

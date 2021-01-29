@@ -53,7 +53,6 @@ const CategoryContainer = styled('div', {
     width: '100%',
     maxWidth: '390px',
     height: '100%',
-    borderRadius: '5px'
 });
 
 const CategoryBox = styled('div', {
