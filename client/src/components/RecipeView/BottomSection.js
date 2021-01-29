@@ -65,6 +65,7 @@ const CategoryBox = styled('div', {
     padding: '0.5rem 0.5rem',
     backgroundColor: THEME.colors.primary[1],
     border: `1px solid ${THEME.colors.black[0]}`,
+    borderRadius: '5px',
     fontSize: THEME.fontSizes.Xsmall,
     fontFamily: THEME.fonts.text,
     color: THEME.colors.black[0],
