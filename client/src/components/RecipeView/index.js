@@ -115,7 +115,7 @@ const SharedIcon = styled(Icon,({$isSharedRecipe})=> ({
     }
 }));
 
-const RecipeView = ({view, setIsEdit, isLoading, getRecipeById, recipe, getRecipesByAuthor}) => {
+const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, getRecipesByAuthor}) => {
     const {getSessionUser, getRecipeBook, user, updateUser} = useContext(AuthenticationContext);
     const {patchRecipe, deleteRecipe} = useContext(RecipeContext);
     const [isSharedRecipe, setIsShared] = useState(recipe.isShared);
@@ -123,21 +123,15 @@ const RecipeView = ({view, setIsEdit, isLoading, getRecipeById, recipe, getRecip
     const [recipeBookPage, setRecipeBookPage] = useState(user.recipeBook);
     
     let history = useHistory();
-    let {slug} = useParams()
 
     useEffect(() => {
-        //if (view === "RecipeView") getRecipeById(slug)
+        if (view === "RecipeView") getRecipeById(recipe._id)
         if(view === "RecipeBook" || view === "SearchView"){
             const index = user.recipeBook.indexOf(recipe._id);
             index === -1? setIsStarred(false) : setIsStarred(true)
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
-
-    useEffect(() => {
-        if (view === "RecipeView") getRecipeById(slug)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [slug])
     
     //Patches recipe, gets the new recipe and changes icon
     const handlePatchRecipe = () => {
