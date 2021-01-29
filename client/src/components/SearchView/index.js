@@ -91,7 +91,7 @@ const SearchView = () => {
     useEffect(() => {
         const lowerCased = searchTerm.toLowerCase();
         const results = allRecipies.filter(recipe =>
-        recipe.title.toLowerCase().includes(lowerCased));
+        recipe.toLowerCase().includes(lowerCased));
         setSearchResults(results);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchTerm]);
