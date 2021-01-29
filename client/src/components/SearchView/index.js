@@ -90,9 +90,18 @@ const SearchView = () => {
     //As for now the user can only search by title.
     useEffect(() => {
         const lowerCased = searchTerm.toLowerCase();
-        const results = allRecipies.filter(recipe =>
-        recipe.toLowerCase().includes(lowerCased));
-        setSearchResults(results);
+        const resultsTitle = allRecipies.filter(recipe =>
+            recipe.title.toLowerCase().includes(lowerCased));
+        const resultsCat = allRecipies.mdsaCategories.filter(recipe =>
+            recipe.toLowerCase().includes(lowerCased));
+        const resultsDifficulty = allRecipies.filter(recipe =>
+            recipe.difficulty.toLowerCase().includes(lowerCased));
+        const resultsIngred = allRecipies.ingredients.filter(recipe =>
+            recipe.toLowerCase().includes(lowerCased));
+        const resultsAuthor = allRecipies.filter(recipe =>
+            recipe.resultsAuthor.toLowerCase().includes(lowerCased));
+        
+        setSearchResults([...resultsTitle, ...resultsCat, ...resultsDifficulty, ...resultsIngred, ...resultsAuthor]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchTerm]);
 
