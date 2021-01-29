@@ -1,4 +1,4 @@
-GET http://localhost:3333/api/users/all
+GET https://receptmingel.herokuapp.com/api/users/all
 
 ###
 GET http://localhost:8080/api/users/
@@ -10,15 +10,16 @@ GET https://receptmingel.herokuapp.com/api/users/600806e24c55ab2c8c310f77
 GET https://receptmingel.herokuapp.com/api/users/recipebook/600806e24c55ab2c8c310f77
 
 ###
-POST http://localhost:8080/api/users/
+POST https://receptmingel.herokuapp.com/api/users/
 Content-Type: application/json
 
 {
-    "username" : "Ninja",
+    "username" : "Skitunge",
     "password" : "secret",
     "firstName" : "Annely",
     "lastName" : "Back",
     "userInfo" : "Jag gillar mat ännu mer",
+    "image" : '',
     "recipeBook" : [],
     "externalRecipes" : []
 }

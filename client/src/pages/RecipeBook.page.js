@@ -1,5 +1,7 @@
 import { useContext, useEffect } from 'react';
+import {Helmet} from "react-helmet";
 import bxBookReader from '@iconify/icons-bx/bx-book-reader';
+import Header from '../Header';
 import Hero from '../components/Hero';
 import RecipeBookView from '../components/RecipeBookView';
 import AuthenticationContext from '../contexts/authentication/context';
@@ -17,6 +19,11 @@ const RecipeBookPage = () => {
 
     return(
         <>
+            <Helmet>
+                <title>ReceptMingel - Min Receptbok</title>
+                <meta name="Här hittar du dina recept och dina sparade recept från andra Minglare"/>
+            </Helmet>
+            <Header/>
             <Hero 
                 title = 'Min Receptbok' 
                 icon = {bxBookReader} 

@@ -63,7 +63,6 @@ const InputField = styled('input', {
     fontSize: THEME.fontSizes.small,
     letterSpacing: '0.05rem',
     fontWeight: 400, 
-    backgroundColor: 'orange',
     '::-webkit-input-placeholder': {
         fontFamily: THEME.fonts.text,
         fontWeight: 400, 

@@ -66,9 +66,9 @@ const RecipeWheel = ({bannerTitle, height, recipeList, route}) => (
         </Banner>
         <ScrollWrapper>
         {recipeList.map((item) => (
-            <Flip>
+            <Flip key = {item._id}>
                 <StyledLink to = {`${route + item._id}`}>
-                    <RecipeCardSmall key = {item._id} title = {item.title} image = {item.imageURL}/>
+                    <RecipeCardSmall title = {item.title} image = {item.imageURL}/>
                 </StyledLink>
             </Flip>
         ))}   

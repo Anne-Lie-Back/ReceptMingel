@@ -27,7 +27,7 @@ connectToDb().catch(error => console.log(error));
 app.use(
     cors({
         //PROD
-        origin: ["https://wonderful-shaw-bf821f.netlify.app", "https://receptmingel.herokuapp.com"],
+        origin: ["https://receptmingel.netlify.app", "https://receptmingel.herokuapp.com"],
         //DEV
         //origin: "http://localhost:3000",
         credentials: true,

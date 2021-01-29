@@ -1,13 +1,14 @@
 import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import {Helmet} from "react-helmet";
 import { styled } from 'styletron-react';
 import { Icon } from "@iconify/react";
 import THEME from '../config/theme';
 import axios from '../axios';
 import Hero from '../components/Hero';
+import Header from '../Header';
 import roundRestaurantMenu from '@iconify/icons-ic/round-restaurant-menu';
 import roundMenu from '@iconify/icons-ic/round-menu';
-import GridContentWrapper from '../components/GridContentWrapper';
 import RecipeView from '../components/RecipeView';
 import RecipeTemplate from '../components/RecipeTemplate';
 import SideMenu from '../components/SideMenu';
@@ -36,6 +37,15 @@ const MenuIcon = styled(Icon, {
     }
 });
 
+const LoadingText = styled('p', {
+    width: '100%',
+    height: '900px',
+    padding: '2rem 2rem',
+    fontFamily: THEME.fonts.text,
+    fontSize: THEME.fontSizes.smallHeader,
+    textAlign: 'center'
+})
+
 const RecipeViewPage = () => {
     const {user} = useContext(AuthenticationContext);
     const [isEdit, setIsEdit] = useState(false);
@@ -47,9 +57,9 @@ const RecipeViewPage = () => {
     const [usersRecipes, setUsersRecipes] = useState([]);
     const [recipe, setRecipe] = useState(null);
     const [inputValues, setInputValues] = useState({
-        title: null,
+        title: '',
         preambleHTML: '',
-        image: null,
+        image: '',
         portions: 0,
         cookingTime: '0-15min',
         difficulty: 'lätt',
@@ -60,11 +70,7 @@ const RecipeViewPage = () => {
         author: user.username,
         isShared: isEdit? recipe.isShared : false
     });
-    
-    
-
-    console.log('user.recipeBook', user.recipeBook)
-
+  
     //For getting ID to recipe so we can get it and display it
     let { slug } = useParams();
 
@@ -87,8 +93,6 @@ const RecipeViewPage = () => {
         window.scrollTo(0, 0)
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
-
-    console.log('usersRecipe', usersRecipes)
 
     //Gets correct recipe from db by using url-slug and sets loading to false when fetching is done
     // so we know data isn't null on rendering
@@ -135,6 +139,11 @@ const RecipeViewPage = () => {
 
     return(
         <> 
+            <Helmet>
+                <title>ReceptMingel - Mina recept</title>
+                <meta name="Här kan du skapa och jobba på dina recept När de är klara trycker du bara på dela-knappen för att ge de andra Minglarna åtkomst till ditt recept."/>
+            </Helmet>
+            <Header/>
             <Hero 
                 title = 'Mina Recept' 
                 icon = {roundRestaurantMenu} 
@@ -154,7 +163,7 @@ const RecipeViewPage = () => {
                     {usersRecipes.length === 0 && isLoading ?
                         <>
                             {!isAdd? 
-                                <p>Skapa ditt första recept med knappen i sidomenyn</p> 
+                                <LoadingText>Skapa ditt första recept med knappen i sidomenyn</LoadingText> 
                                 :
                                 <RecipeTemplate 
                                     setIsEdit = {setIsEdit}
@@ -175,7 +184,7 @@ const RecipeViewPage = () => {
                         <>
                             {/* If loading of data isn't done yet, user will se a loading-text, 
                             else we will check if user wants to edit/add a recipe or not and show correct view */}
-                            {isLoading? <p>is Loading...</p> :   
+                            {isLoading? <LoadingText>Bakar Recept...</LoadingText> :   
                                 <>
                                     {isEdit || isAdd? 
                                         <RecipeTemplate 

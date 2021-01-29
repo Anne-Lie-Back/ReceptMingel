@@ -37,6 +37,7 @@ const SideMenu = ({ recipeList, setIsAdd, setIsOpen, isOpen, setIsEdit, searchRe
                 <StyledIcon icon={bxWindowClose} onClick = {() => setIsOpen(false)}/>
             </div>
             <TypeIsRecipe 
+                setIsOpen = {() => setIsOpen(false)}
                 searchResults = {searchResults}
                 recipeList = {recipeList} 
                 setIsAdd = {setIsAdd} 

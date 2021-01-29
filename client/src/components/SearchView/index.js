@@ -1,10 +1,9 @@
-import {useContext, useEffect, useState} from 'react';
-import {useHistory, useParams} from 'react-router-dom';
+import {useEffect, useState} from 'react';
+import {useHistory} from 'react-router-dom';
 import { styled } from 'styletron-react';
 import THEME from '../../config/theme';
 import axios from '../../axios';
 import media from '../../config/media';
-import AuthenticationContext from '../../contexts/authentication/context';
 import SearchInputArea from './SearchInputArea';
 import ResultCard from './ResultCard';
 import PartingStrip from '../PartingStrip';
@@ -48,30 +47,29 @@ const ResultArea = styled('div', {
 const SearchView = () => {
     const [popUpOpen, setPopUpOpen] = useState(false)
     const [searchInput, setSearchInput] = useState('');
-    const [searchResult, setSearchResult] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [searchResult, setSearchResults] = useState([]);
+    const [allRecipies, setAllRecipies] = useState([]);
     const [recipe, setRecipe] = useState(null);
-    const {getSessionUser, user} = useContext(AuthenticationContext);
     let history = useHistory();
-    let slug = useParams();
 
-    //Search through database and get a list of results ordered by hitscore in return.
-    const getSearchResult = async(query) => {
-        await axios
-        .get(`/recipes/search/${query}`, { withCredentials: true })
-        .then((res) => {
-            setSearchResult(res.data)
-        });
-    };
-
-    //When component mounts or Recipe is updated it gets an updated version of the search result 
-    //(Needed if a user favourites or unfavourites an recipe)
     useEffect(() => {
-        getSessionUser(user._id)
-        if(slug) {
-            getRecipeById(slug)
+        getAllRecipes()
+    },[]);
+
+    //Temprary solution until better backendsolution. Gets all recipes and filters out the private ones.
+    //The user can then filter after suiting recipes
+    //works well now when recipes ar not that many. 
+    const getAllRecipes = async() => {
+        try{
+            let data = await axios.get('/recipes', { withCredentials: true })
+            .then(({data}) => data);
+            data = data.filter(i => i.isShared === true);
+            setAllRecipies(data)
+        }catch(error){
+            console.log(error)
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[recipe]);
+    };
 
     const getRecipeById = async(id) => {
         try{
@@ -84,6 +82,20 @@ const SearchView = () => {
         }
     };
 
+    const handleOnClick = searchInput => {
+        setSearchTerm(searchInput);
+    };
+    
+    //When User writes in filter input field. it makes both input and recipetitles to lowercase to make the search non case sensitive.
+    //As for now the user can only search by title.
+    useEffect(() => {
+        const lowerCased = searchTerm.toLowerCase();
+        const results = allRecipies.filter(recipe =>
+        recipe.title.toLowerCase().includes(lowerCased));
+        setSearchResults(results);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [searchTerm]);
+
     //Redirects to new slug and gets the recipe for that slug
     const handleResultClick = (id) =>{
         getRecipeById(id);
@@ -93,7 +105,7 @@ const SearchView = () => {
      //When user closes popup the slug will be removed
     const handleClosePopUp = () => {
         history.push(`/search/`)
-        getSearchResult(searchInput)
+        getAllRecipes(searchInput)
         setPopUpOpen(false) 
     };
 
@@ -101,7 +113,7 @@ const SearchView = () => {
         <Wrapper>
             <SearchInputArea
                 setSearchInput = {setSearchInput}   
-                handleClick = {() => getSearchResult(searchInput)} 
+                handleClick = {() => handleOnClick(searchInput)} 
             />
             {popUpOpen && 
                 <PopUpRecipe recipe = {recipe} getRecipeById = {getRecipeById} handleClick = {handleClosePopUp}/>

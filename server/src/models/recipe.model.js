@@ -77,21 +77,18 @@ const RecipeSchema = new Schema(
     { autoIndex: false }
 );
 
-//Config for mongoose fuzzy search
-RecipeSchema.plugin(mongoose_fuzzy_searching, { 
+//Config for mongoose fuzzy search. Faulty and taken out while looking for solution or alternative
+/* RecipeSchema.plugin(mongoose_fuzzy_searching, { 
     fields: [
         {
             name: 'title',
             weight: 3,
-            minSize: 3,
         },{
             name: 'preambleHTML',
             weight: 1,
-            minSize: 4,
         },{
             name: 'difficulty',
             weight: 5,
-            minSize: 3
         },
         {
             name: 'author',
@@ -105,13 +102,11 @@ RecipeSchema.plugin(mongoose_fuzzy_searching, {
         {
             name: 'mdsaCategories',
             weight: 6,
-            minSize: 3
         },
     ]
-});
+}); */
 
 //Create Index for search-functionality
-RecipeSchema.index({'$**': 'text'});
 
 //handles getting avatar-image-file
 RecipeSchema.virtual("imageURL").get(function () {

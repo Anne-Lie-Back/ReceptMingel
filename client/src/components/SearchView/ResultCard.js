@@ -2,8 +2,7 @@ import { styled } from 'styletron-react';
 import PartingStrip from '../PartingStrip';
 import THEME from '../../config/theme';
 import media from '../../config/media';
-//TODO change to a real default image
-import owlTest from '../../assets/images/owlTest.jpg';
+import defaultImage from '../../assets/images/defaultImg2.png';
 
 const Wrapper = styled('div', {
     width: '100%',
@@ -79,7 +78,7 @@ const EffortBox = styled('div', {
 const Image = styled('div',({$imageURL}) => ({
     width: '120px',
     height: '90px',
-    backgroundImage: $imageURL? `url(${$imageURL})` : `url(${owlTest})`,
+    backgroundImage: $imageURL? `url(${$imageURL})` : `url(${defaultImage})`,
     backgroundPosition: 'center',
     backgroundRepeat:' no-repeat',
     backgroundSize: 'cover',

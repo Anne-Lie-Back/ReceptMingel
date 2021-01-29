@@ -160,7 +160,7 @@ const RecipeTemplate = ({ setIsEdit, isEdit, setIsAdd, isAdd, inputValues, setIn
     const {user, updateUser} = useContext(AuthenticationContext);
 
     //stores file-data that goes up to image-bucket at server
-    const [file, setFile] = useState(null);
+    const [file, setFile] = useState(undefined);
     const [imageOK, setImageOK] = useState({
         isError: false,
         message: '' 
@@ -199,7 +199,7 @@ const RecipeTemplate = ({ setIsEdit, isEdit, setIsAdd, isAdd, inputValues, setIn
             setInputValues({
                 title: '',
                 preambleHTML: '',
-                image: null,
+                image: '',
                 portions: 0,
                 cookingTime: '0-15min',
                 difficulty: 'lätt',
@@ -368,12 +368,12 @@ const RecipeTemplate = ({ setIsEdit, isEdit, setIsAdd, isAdd, inputValues, setIn
 
                 <EffortWrapper>
                     <FlexRowEffort>
-                        <Label for = "difficulty" > Svårighetsgrad <Required> * </Required> </Label>
-                        <DifficultyInput handleChange = {handleChange} difficulty = {inputValues.difficulty}/>
+                        <Label htmlFor = "difficulty" > Svårighetsgrad <Required> * </Required></Label>
+                        <DifficultyInput inputValues = {inputValues} setInputValues = {setInputValues}/>
                     </FlexRowEffort>
                     <FlexRowEffort>
-                        <Label for = "CookingTime"> Tidsåtgång <Required> * </Required>  </Label>
-                        <CookingTimeInput handleChange = {handleChange} cookingTime = {inputValues.cookingTime}/>
+                        <Label htmlFor = "CookingTime"> Tidsåtgång <Required> * </Required></Label>
+                        <CookingTimeInput inputValues = {inputValues} setInputValues = {setInputValues}/>
                     </FlexRowEffort>
                 </EffortWrapper>
 

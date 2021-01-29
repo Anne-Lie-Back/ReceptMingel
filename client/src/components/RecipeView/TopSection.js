@@ -1,8 +1,8 @@
 import { styled } from 'styletron-react';
 import THEME from '../../config/theme';
 import media from '../../config/media';
-//TODO change to a default image
-import owlTest from '../../assets/images/owlTest.jpg';
+//default image
+import defaultImage from '../../assets/images/defaultImg1.png';
 
 const TopGridWrapper = styled('div', {
     display: 'grid',
@@ -121,7 +121,7 @@ const Image = styled('div',({$image}) => ({
     gridRow: '2/3',
     width: '100%',
     height: '300px',
-    backgroundImage: $image? `url(${$image})` : `url(${owlTest})`,
+    backgroundImage: $image? `url(${$image})` : `url(${defaultImage})`,
     backgroundPosition: 'center',
     backgroundRepeat:' no-repeat',
     backgroundSize: 'cover',

@@ -1,4 +1,4 @@
-import { useContext, useState} from 'react';
+import { useContext, useEffect,  useState} from 'react';
 import { useHistory } from 'react-router-dom';
 import { styled } from 'styletron-react';
 import THEME from '../../../config/theme';
@@ -79,7 +79,7 @@ const ErrorMessage = styled('p', {
 })
 
 const LogInUser = ({handleClick}) => {
-    //TODO Add functionality
+    const [didMount, setDidMount] = useState(false); 
     const [inputValues, setInputValues] = useState({
         username: '',
         password: '',
@@ -94,6 +94,16 @@ const LogInUser = ({handleClick}) => {
 
     let history = useHistory();
     const { isAuthenticated, login, user } = useContext(AuthenticationContext);
+
+    //To make sure that if the component is unmounted it is not trying to fetch something.
+    useEffect(() => {
+        setDidMount(true);
+        return () => setDidMount(false);
+    }, [])
+
+    if(!didMount) {
+        return null;
+    }
 
     const handleChange = (event) => {
         const {name, value} = event.target;

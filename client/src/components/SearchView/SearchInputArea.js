@@ -85,7 +85,7 @@ const Button = styled('button', {
 const SearchInputArea = ({setSearchInput, handleClick}) => (
     <Wrapper>
         <AlignWrapper>
-            <Label for = "search">Vad vill du äta idag?</Label>
+            <Label htmlFor = "search">Vad vill du äta idag?</Label>
             <FlexRow>
                 <SearchInputField 
                     type = "text"

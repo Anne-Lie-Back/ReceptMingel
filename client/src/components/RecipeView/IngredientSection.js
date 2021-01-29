@@ -89,8 +89,8 @@ const IngredientSection = ({portions, ingredients}) => (
         <ListContentWrapper>
             <HeadlineMedium>Ingredienser:</HeadlineMedium>
             <ul>
-                {ingredients.map(item => (
-                    <ListItem>{item}</ListItem>
+                {ingredients.map((item, index) => (
+                    <ListItem key = {index}>{item}</ListItem>
                 ))}
             </ul>
         </ListContentWrapper>

@@ -141,6 +141,7 @@ const IngredientsInput = ({inputValues, updateInputValues}) => {
             <List>      
                 {inputValues.ingredients.map((ingredient, index)=> (
                         <TextListItem 
+                            key = {index}
                             isEditIngredient={activeEdit === index}
                             value = {editInput}
                             handleOpenEdit = {() => handleOpenEdit(index, ingredient)} 

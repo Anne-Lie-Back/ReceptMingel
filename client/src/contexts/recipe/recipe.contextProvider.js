@@ -69,9 +69,6 @@ const RecipeContextProvider = (props) => {
     const updateRecipe = async(id, value) => {
         await axios
         .put(`/recipes/${id}`, {value}, { withCredentials: true })
-        .then((res) => {
-            console.log('resUpdate', res);
-        })
         .catch(error => console.log(error))
     };
 
@@ -79,9 +76,6 @@ const RecipeContextProvider = (props) => {
     const patchRecipe = async(id, value) => {
         await axios
         .patch(`/recipes/${id}`, value, { withCredentials: true })
-        .then((res) => {
-            console.log('resPatch', res);
-        })
         .catch(error => console.log(error))
     };
 

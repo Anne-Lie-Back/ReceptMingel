@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { styled } from 'styletron-react';
 import { Icon } from "@iconify/react";
 import bxWindowClose from '@iconify/icons-bx/bx-window-close';
@@ -54,6 +55,10 @@ const StyledIcon = styled(Icon, {
 const PopUpRecipe = ({recipe, getRecipeById, handleClick}) => {
     //Sets hight for wrapper so content can have scroll auto.
     const height = `${window.innerHeight}px`
+
+    useEffect(() => {
+        console.log('recipe', recipe)
+    },[])
 
     return(
         <Wrapper>

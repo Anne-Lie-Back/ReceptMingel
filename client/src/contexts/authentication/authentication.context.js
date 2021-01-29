@@ -6,11 +6,13 @@ const AuthenticationContextProvider = (props) => {
     const [user, setUser] = useState(null);
     const [recipeBook, setRecipeBook] = useState([]);
     const [isLoadingUser, setIsLoadingUser] = useState(true);
+    // eslint-disable-next-line no-unused-vars
     const [isLoadingBook, setIsLoadingBook] = useState(true)
     const [isLoadingUnauthorized, setIsLoadingUnauthorized] = useState(false);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-    async function fetchData(){
+    //FETCH FUNCTION DISABLED BECAUSE COOKIES ANS SESSIONS NOT WORKING ATM BECAUSE NETLIFY DON'T TRUST HEROKU's 3RD PARTY COOKIE
+ /*  async function fetchData(){
         await axios
         .get('/users', { withCredentials: true })
         .then((res) => {
@@ -31,7 +33,7 @@ const AuthenticationContextProvider = (props) => {
     useEffect(() => {
         fetchData()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, []);  */
 
     //This should be refactorized when authentication works
     const getSessionUser = async(id) => {
@@ -101,6 +103,7 @@ const AuthenticationContextProvider = (props) => {
                     setUser(res.data.user);
                     setIsLoadingUser(false)
                 } else {
+                    console.log('user')
                     setIsAuthenticated(false);
                     setUser(null);
                     setIsLoadingUnauthorized(true)
@@ -150,7 +153,7 @@ const AuthenticationContextProvider = (props) => {
             {...props}
             value={{
                 addRecipeBookItem,
-                fetchData,
+                //fetchData,
                 getRecipeBook,
                 getSessionUser,
                 isAuthenticated,

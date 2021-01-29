@@ -52,8 +52,8 @@ const CookingStepsSection = ({cookingSteps}) => (
                 listStyle: 'none',
                 counterReset: 'item',
                 }}>
-            {cookingSteps.map(item => (
-                <ListItem>
+            {cookingSteps.map((item, index) => (
+                <ListItem key = {index}>
                     {item}
                 </ListItem>
             ))}

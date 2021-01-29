@@ -48,7 +48,7 @@ const InputField = ( {type, name, label, styling, margin, isRequired, handleChan
         {styling === 'underline' &&
             <>
                 {label &&
-                    <label for = {name}> 
+                    <label htmlFor = {name}> 
                         {label} 
                         {isRequired&& 
                             <Required> * </Required>
@@ -68,7 +68,7 @@ const InputField = ( {type, name, label, styling, margin, isRequired, handleChan
         {styling === "box" && 
             <>
                 {label &&
-                    <label for = {name}> 
+                    <label htmlFor = {name}> 
                         {label} 
                         {isRequired&& 
                             <Required> * </Required>
@@ -88,7 +88,7 @@ const InputField = ( {type, name, label, styling, margin, isRequired, handleChan
         {styling === "basic" && 
             <>
                 {label &&
-                    <label for = {name}> 
+                    <label htmlFor = {name}> 
                         {label} 
                         {isRequired&& 
                             <Required> * </Required> 

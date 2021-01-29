@@ -9,18 +9,17 @@ GET https://receptmingel.herokuapp.com/api/recipes/6005daeb83df2937ec206ee6
 ###
 
 //GET RECIPE BY FREETEXT SEARCH
-GET  https://receptmingel.herokuapp.com/api/recipes/search/hamburgare
-//Content-Type: application/json
+GET https://receptmingel.herokuapp.com/api/recipes/public
 
 ###
 
 //GET RECIPE BY AuthorId
-GET https://receptmingel.herokuapp.com/api/recipes/author/600806e24c55ab2c8c310f77
+GET https://receptmingel.herokuapp.com/api/recipes/author/6013584abf27160015adb335
 
 ###
 
 //GET RECIPE BY private and authorID
-GET https://receptmingel.herokuapp.com/api/recipes/private/600375ea73a3593db003383e
+GET https://receptmingel.herokuapp.com/api/recipes/private/6013584abf27160015adb335
 
 ###
 

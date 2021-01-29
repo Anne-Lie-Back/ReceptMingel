@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useHistory, Link, useParams } from 'react-router-dom';
 import { styled } from 'styletron-react';
 import THEME from '../../config/theme';
@@ -63,15 +62,16 @@ const FilterInput = styled(InputField, {
     fontSize: THEME.fontSizes.small,
 });
 
-const TypeIsRecipe = ({recipeList, setIsAdd, setIsEdit, searchResults, handleChange}) => {
+const TypeIsRecipe = ({recipeList, setIsAdd, setIsEdit, setIsOpen, searchResults, handleChange}) => {
     // eslint-disable-next-line no-unused-vars
     let history = useHistory()
     let slug = useParams()
 
     const handleAddClick = () => {
         setIsAdd(true)
-        if(!slug) history.push(`/recipeBook/`)
+        if(!slug) history.push(`/recipe/`)
         setIsEdit(false)
+        setIsOpen()
     };
 
     const handleMenuClick = () => {
@@ -102,9 +102,8 @@ const TypeIsRecipe = ({recipeList, setIsAdd, setIsEdit, searchResults, handleCha
                 :
                     <>
                         {recipeList.map((item, index) => (
-                            <StyledLink to = {`/recipe/${item._id}`}>
+                            <StyledLink key = {index}  to = {`/recipe/${item._id}`}>
                                 <ListItem 
-                                    key = {index} 
                                     onClick = {handleMenuClick}
                                 > 
                                     {item.title} 
