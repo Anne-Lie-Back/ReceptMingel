@@ -132,11 +132,6 @@ const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, ge
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
-
-    useEffect(() => {
-        if (view === "RecipeView") getRecipeById(recipe._id)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [slug])
     
     //Patches recipe, gets the new recipe and changes icon
     const handlePatchRecipe = () => {
