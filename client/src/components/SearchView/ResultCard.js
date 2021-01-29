@@ -69,6 +69,7 @@ const EffortBox = styled('div', {
     fontFamily: THEME.fonts.text,
     fontSize: '10px',
     fontWeight: 400,
+    borderRadius: '5px',
 
     [media.above.tablet] : {
         margin: '0 0 0 1rem',
