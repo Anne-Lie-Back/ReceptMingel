@@ -34,10 +34,10 @@ const getRecipeByID = (req, res, next) => {
 
 //GET RECIPE BY IsShared
 const getRecipesByIsPublic = (req, res, next) => {
-    Recipe.find({isShared: true}, (error, recipesByIsPublic) => {
+    Recipe.find({isShared}, (error, recipesByIsPublic) => {
         try{
             if(error) next(error);
-            if(!recipesByIsPublic || recipesByIsPublic.length === 0) throw new ErrorHandler(404, "Vi kunde inte hitta några recept");
+            //if(!recipesByIsPublic || recipesByIsPublic.length === 0) throw new ErrorHandler(404, "Vi kunde inte hitta några recept");
             res.recipesByIsPublic = recipesByIsPublic
             next()
         }catch(error){
