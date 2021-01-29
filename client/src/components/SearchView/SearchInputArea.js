@@ -93,8 +93,7 @@ const SearchInputArea = ({setSearchInput, handleClick}) => (
                     styling = "basic"
                     handleChange = {(event) => {setSearchInput(event.target.value)}}
                 />
-                {/* Disabled until I can get a better search up and running */}
-               {/*  <Button onClick = {handleClick}> Sök </Button>  */}
+                <Button onClick = {handleClick}> Sök </Button> 
             </FlexRow>
         </AlignWrapper>
     </Wrapper>
