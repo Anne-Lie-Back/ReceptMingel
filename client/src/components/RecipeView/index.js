@@ -126,7 +126,7 @@ const RecipeView = ({view, setIsEdit, isLoading, getRecipeById, recipe, getRecip
     let {slug} = useParams()
 
     useEffect(() => {
-        if (view === "RecipeView") getRecipeById(slug)
+        //if (view === "RecipeView") getRecipeById(slug)
         if(view === "RecipeBook" || view === "SearchView"){
             const index = user.recipeBook.indexOf(recipe._id);
             index === -1? setIsStarred(false) : setIsStarred(true)
