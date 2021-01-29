@@ -81,27 +81,20 @@ const SearchView = () => {
             console.log(error)
         }
     };
-
-    const handleOnClick = searchInput => {
-        setSearchTerm(searchInput);
-    };
     
     //When User writes in filter input field. it makes both input and recipetitles to lowercase to make the search non case sensitive.
     //As for now the user can only search by title.
     useEffect(() => {
         const lowerCased = searchTerm.toLowerCase();
+
         const resultsTitle = allRecipies.filter(recipe =>
             recipe.title.toLowerCase().includes(lowerCased));
-        const resultsCat = allRecipies.mdsaCategories.filter(recipe =>
-            recipe.toLowerCase().includes(lowerCased));
         const resultsDifficulty = allRecipies.filter(recipe =>
             recipe.difficulty.toLowerCase().includes(lowerCased));
-        const resultsIngred = allRecipies.ingredients.filter(recipe =>
-            recipe.toLowerCase().includes(lowerCased));
         const resultsAuthor = allRecipies.filter(recipe =>
             recipe.resultsAuthor.toLowerCase().includes(lowerCased));
         
-        setSearchResults([...resultsTitle, ...resultsCat, ...resultsDifficulty, ...resultsIngred, ...resultsAuthor]);
+        setSearchResults([...resultsTitle, ...resultsDifficulty, ...resultsAuthor]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchTerm]);
 
@@ -122,7 +115,7 @@ const SearchView = () => {
         <Wrapper>
             <SearchInputArea
                 setSearchInput = {setSearchInput}   
-                handleClick = {() => handleOnClick(searchInput)} 
+                handleChange = {() => setSearchTerm(searchInput)} 
             />
             {popUpOpen && 
                 <PopUpRecipe recipe = {recipe} getRecipeById = {getRecipeById} handleClick = {handleClosePopUp}/>
