@@ -278,7 +278,7 @@ const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, ge
                         Du hittar dina recept i menyn till vänster.
                     </HeadlineSmall>
                 }
-                {slug &&
+                {(slug || view === "SearchView") &&
                     <>
                         <TopSection 
                             title = {title} 

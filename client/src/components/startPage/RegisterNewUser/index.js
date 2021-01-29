@@ -8,7 +8,7 @@ import Icons from '../../../config/icons';
 
 import InputField from '../../inputField';
 
-const Wrapper = styled('form', {
+const Wrapper = styled('div', {
     display: 'flex',
     flexDirection: 'column',
     width: '300px',
@@ -90,7 +90,7 @@ const FileUpload = styled('div', ({$preview, $error}) => ({
     width: '120px',
     height: '120px',
     borderRadius: '50%',
-    border: $error? THEME.colors.error : 'none',
+    border: `2px solid ${THEME.colors.contrast[0]}`,
     backgroundImage: $preview? `url(${$preview})` : null,
     backgroundColor: THEME.colors.grey[0],
     backgroundPosition: 'center',
@@ -125,7 +125,7 @@ const RegisterNewUser = ({handleClick}) => {
         password: '',
         firstName: '',
         lastName: '',
-        image: '',
+        image: null,
         userInfo: ''
     });
     
@@ -163,7 +163,8 @@ const RegisterNewUser = ({handleClick}) => {
             inputValues.username.length >= 4 &&
             inputValues.password.length >= 4 &&
             inputValues.firstName.length >= 2 &&
-            inputValues.lastName.length >= 2
+            inputValues.lastName.length >= 2 &&
+            inputValues.image !== null
 
         if (validate) {
             return false
@@ -171,6 +172,8 @@ const RegisterNewUser = ({handleClick}) => {
             return true
         }
     };
+
+    console.log('inputValue.image', inputValues.image)
 
     const handleSubmit = async () => {
         //TODO remove when new is tested
@@ -278,9 +281,7 @@ const RegisterNewUser = ({handleClick}) => {
                             >
                                 {!file && <ImageIcon color = {THEME.colors.white[0]} size = "70px"/>}
                             </FileUpload>
-                        
                         <p style = {{textAlign: 'center'}}> {imageOK.isError?(imageOK.message) : (file && file.name )}</p>
-
                         </label>
                         <InputField 
                             type = "file" 

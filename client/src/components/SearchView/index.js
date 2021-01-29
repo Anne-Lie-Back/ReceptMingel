@@ -73,6 +73,7 @@ const SearchView = () => {
 
     //Redirects to new slug and gets the recipe for that slug
     const handleResultClick = (id) =>{
+        console.log('id', id)
         getRecipeById(id);
         history.push(`/search/${id}`);
     };
