@@ -125,7 +125,7 @@ const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, ge
     let history = useHistory();
 
     useEffect(() => {
-        if (view === "RecipeView") getRecipeById(recipe._id)
+        //if (view === "RecipeView") getRecipeById(recipe._id)
         if(view === "RecipeBook" || view === "SearchView"){
             const index = user.recipeBook.indexOf(recipe._id);
             index === -1? setIsStarred(false) : setIsStarred(true)
