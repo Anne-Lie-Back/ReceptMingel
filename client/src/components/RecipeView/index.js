@@ -1,4 +1,4 @@
-import {useContext, useEffect, useState} from 'react';
+import {useContext, useEffect, useParams, useState} from 'react';
 import { useHistory } from 'react-router-dom';
 import { styled } from 'styletron-react';
 import THEME from './../../config/theme';
@@ -115,7 +115,7 @@ const SharedIcon = styled(Icon,({$isSharedRecipe})=> ({
     }
 }));
 
-const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, getRecipesByAuthor}) => {
+const RecipeView = ({view, setIsEdit, isLoading, getRecipeById, recipe, getRecipesByAuthor}) => {
     const {getSessionUser, getRecipeBook, user, updateUser} = useContext(AuthenticationContext);
     const {patchRecipe, deleteRecipe} = useContext(RecipeContext);
     const [isSharedRecipe, setIsShared] = useState(recipe.isShared);
@@ -123,9 +123,10 @@ const RecipeView = ({view, setIsEdit, isLoading, slug, getRecipeById, recipe, ge
     const [recipeBookPage, setRecipeBookPage] = useState(user.recipeBook);
     
     let history = useHistory();
+    let {slug} = useParams()
 
     useEffect(() => {
-        if (view === "RecipeView") getRecipeById(recipe._id)
+        if (view === "RecipeView") getRecipeById(slug)
         if(view === "RecipeBook" || view === "SearchView"){
             const index = user.recipeBook.indexOf(recipe._id);
             index === -1? setIsStarred(false) : setIsStarred(true)
